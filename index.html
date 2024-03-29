@@ -1,0 +1,2732 @@
+<!DOCTYPE html>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1609993827735056"
+     crossorigin="anonymous"></script>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<title>StrongDog XP</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #2e2e2e; /* Dark grey background */
+    }
+    .navbar {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+	.categories {
+    display: flex;
+    gap: 20px; /* Spacing between categories */
+}
+
+.categories a:hover {
+    background-color: #565656; /* Light grey background on hover */
+    transform: scale(1.05); /* Slight increase in size */
+}
+
+.categories a {
+    text-decoration: none;
+    color: white;
+    transition: all 0.3s ease;
+    padding: 5px 10px; /* Padding for touch area */
+    border-radius: 5px; /* Rounded corners */
+}
+
+    .navbar .logo {
+        color: white;
+        font-weight: bold;
+    }
+    .navbar .logo .xp {
+        color: orange;
+    }
+    .navbar a, .navbar a:visited, .navbar .logo span {
+        text-decoration: none;
+        margin-right: 20px;
+    }
+    .search-bar {
+        padding: 5px;
+        font-size: 1em;
+        border-radius: 5px;
+        border: none;
+		width: 100%;
+    }
+    .games-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        padding: 10px;
+		justify-content: center;
+    }
+    .card {
+        background-color: #fff;
+    border-radius: 10px;
+    margin: 5px; /* Reduced margin */
+    width: 120px;
+    height: 120px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    position: relative;
+		overflow: hidden;
+        position: relative;
+    }
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.29);
+    }
+    .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    .card:hover img {
+        transform: scale(1.02); /* subtle zoom on the image */
+    }
+    .card figcaption {
+        position: absolute;
+        bottom: -30px; /* start hidden */
+        left: 0;
+        width: 100%;
+        background-color: rgb(74, 74, 74);
+        color: white;
+        text-align: center;
+        padding: 5px;
+        transition: bottom 0.5s ease; /* smoother and slower */
+        overflow: hidden;
+    }
+    .card:hover figcaption {
+        bottom: 0; /* slide up on hover */
+    }
+	.card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+    transform: rotate(30deg) translate(-50%, -50%);
+    transition: transform 0.5s, opacity 0.5s;
+    opacity: 0;
+    pointer-events: none; /* This ensures the shine doesn't interfere with clicking the card */
+}
+
+.card:hover::before {
+    transform: rotate(30deg) translate(100%, -50%);
+    opacity: 1;
+}
+
+.search-results {
+	position: absolute;
+        right: 20px;
+        top: 60px;
+        background-color: white;
+        color: black;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 250px; /* Adjusted for image display */
+        display: none;
+        z-index: 1000;
+        transform-origin: left; /* Anchor the transformation to the left */
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        border-radius: 5px; /* Rounded corners for the search results box */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.search-results a {
+	display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: black;
+        border-bottom: 1px solid #eee;
+        padding: 5px;
+        transition: all 0.3s ease;
+}
+
+.search-results img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.search-results a:last-child {
+    border-bottom: none;
+}
+
+.news {
+    max-width: 800px; /* Set a maximum width */
+    margin: 0 auto; /* Center align */
+    padding: 20px;
+    background-color: #444; /* Slightly darker background */
+    color: white;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* Subtle shadow */
+}
+
+.news a {
+    display: block; /* Make each item take its own line */
+    margin: 5px 0; /* Spacing between items */
+    color: #ccc; /* Lighter text color */
+    text-decoration: none; /* Remove underline */
+}
+
+.news-title {
+    color: orange; /* Color to match your theme */
+    font-weight: bold;
+}
+
+.news-content {
+    color: #ddd; /* Slightly lighter color for content */
+}
+
+/* Styling for the All  label */
+h2 {
+    text-align: center;
+    color: white;
+    margin: 20px 0; /* Spacing above and below */
+    font-size: 1.5em; /* Larger font size */
+}
+
+.card figcaption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(95,95,95,0.8);
+    color: white;
+    text-align: center;
+    padding: 5px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateY(100%); /* Start off-screen */
+    opacity: 0;
+}
+
+.card:hover figcaption {
+    height: 30px; /* Show text on hover */
+    background-color: rgb(95, 95, 95); /* Non-transparent background on hover */
+	transform: translateY(0); /* Slide up to visible */
+    opacity: 1;
+}
+</style>
+</head>
+<body>
+	
+<div class="navbar">
+    <a href="index.html" class="logo">StrongDog<span class="xp">XP</span></a>
+	<div class="categories">
+		<a href="new.html">New</a>
+        <a href="favs.html">Favs</a>
+        <a href="all.html">All</a>
+        <a href="#" id="randomGame">Random</a>
+        <a href="#" id="blockLanschool">Block Lanschool</a>
+    </div>
+
+	<div class="search-container">
+		<input type="text" class="search-bar" placeholder="Search..." id="searchInput">
+		<div class="search-results" id="searchResults"></div>
+	</div>
+</div>
+<h2 style="text-align: center;"><strong>Top 10</strong></h2>
+<div class="games-grid">
+    <a href="./html/drive-mad/index.html" class="card">
+		<img src="./img/drivemad.jpg"></img>
+		<figcaption style="color:black">drive mad</figcaption>
+	</a>
+
+
+	<a href="./html/eaglecraft/game/Offline_Download_Version.html" class="card">
+		<img src="./img/minecraft.jpeg"></img>
+		<figcaption style="color:black">minecraft</figcaption>
+	</a>
+	<a href="./html/retro bowl college/index.html" class="card">
+		<img src="./img/retro bowl college.png"></img>
+		<figcaption style="color:black">retro bowl college</figcaption>
+	
+	</a>
+
+	<a href="./html/1v1/index.html" class="card">
+		<img src="./img/1v1.webp"></img>
+		<figcaption style="color:black">1v1.lol</figcaption>
+	</a>
+
+
+	<a href="./html/ovo/index.html" class="card">
+		<img src="./img/ovo.png"></img>
+		<figcaption>ovo</figcaption>
+	</a>
+
+	<a href="./html/planetlife/index.html" class="card">
+		<img src="./img/planetlife.jpg"></img>
+		<figcaption style="color:black">Planet life</figcaption>
+	</a>
+
+	<a href="./html/infinitecraft/index.html" class="card">
+		<img src="./img/infinitecraft.png"></img>
+		<figcaption style="color:black">infinite craft</figcaption>
+	
+	</a>
+
+	<a href="./html/jptragar/web/index.html" class="card">
+		<img src="./img/agar.jpeg"></img>
+		<figcaption style="color:black">agar.io</figcaption>
+	</a>
+
+	<a href="./html/drift-boss/index.html" class="card">
+		<img src="./img/drift-boss.png"></img>
+		<figcaption style="color:black">Drift boss</figcaption>
+	</a>
+
+	<a href="./html/snow-rider-3d/index.html" class="card">
+		<img src="./img/snow-rider-3d-unblocked.png"></img>
+		<figcaption style="color:black">snow riders 3d</figcaption>
+	</a>
+</div>
+ 
+	<h2 style="text-align: center;"><strong>All</strong></h2>
+
+
+<div class="games-grid">
+	<a href="./html/resent/Resent-4.0-Patch-2-English.html" class="card">
+		<img src="./img/resent.png"></img>
+		<figcaption style="color:black">Resent client (mc)</figcaption>
+	
+	</a>
+	<a href="./html/pixelshooter/index.html" class="card">
+		<img src="./img/pixelshooter.jpeg"></img>
+		<figcaption style="color:black">Pixel shooter</figcaption>
+	
+	</a>
+	<a href="./html/polytrack/index.html" class="card">
+		<img src="./img/polytrack.jfif"></img>
+		<figcaption style="color:black">Poly track</figcaption>
+	
+	</a>
+
+	<a href="./html/infinitecraft/index.html" class="card">
+		<img src="./img/infinitecraft.png"></img>
+		<figcaption style="color:black">infinite craft</figcaption>
+	
+	</a>
+
+	<a href="./html/retro bowl college/index.html" class="card">
+		<img src="./img/retro bowl college.png"></img>
+		<figcaption style="color:black">retro bowl college</figcaption>
+	
+	</a>
+	
+	
+	<a href="./html/jptragar/web/index.html" class="card">
+		<img src="./img/agar.jpeg"></img>
+		<figcaption style="color:black">agar.io</figcaption>
+	</a>
+	
+	<a href="https://jman1593.github.io/agar/" class="card">
+		<img src="./img/agarskin.webp"></img>
+		<figcaption style="color:black">agar.io skins</figcaption>
+	</a>
+			
+	<a href="./html/giraffe/index.html" class="card">
+		<img src="./img/giraffe.png"></img>
+		<figcaption style="color:black">giraffes volleyball</figcaption>
+	
+	</a>
+	
+	
+	
+	
+	<a href="./html/yin and yang/index.html" class="card">
+		<img src="./img/yin and yang.jpg"></img>
+		<figcaption style="color:black">yin and yang</figcaption>
+	
+	</a>
+	
+	
+	<a href="./swf/arcuz/base.html" class="card">
+		<img src="./img/arcuz.jpg"></img>
+		<figcaption style="color:black">arcuz</figcaption>
+	
+	</a>
+	
+	<a href="./swf/age of war/base.html" class="card">
+		<img src="./img/age of war.jpg"></img>
+		<figcaption style="color:black">age of war</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/winter gifts/index.html" class="card">
+		<img src="./img/winter gifts.jpg"></img>
+		<figcaption style="color:black">winter gifts</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/tough growth/index.html" class="card">
+		<img src="./img/tough growth.jpg"></img>
+		<figcaption style="color:black">tough growth</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/the dark one/index.html" class="card">
+		<img src="./img/the dark one.jpg"></img>
+		<figcaption style="color:black">the dark one</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/tactical weapon pack/index.html" class="card">
+		<img src="./img/tactical weapon pack.png"></img>
+		<figcaption style="color:black">tactical weapon pack</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/soul mirror/index.html" class="card">
+		<img src="./img/soul mirror.jpg"></img>
+		<figcaption style="color:black">soul mirror</figcaption>
+	
+	</a>
+	
+	
+	<a href="./html/push/index.html" class="card">
+		<img src="./img/push.jpg"></img>
+		<figcaption style="color:black">push</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/progress knight/index.html" class="card">
+		<img src="./img/progress knight.png"></img>
+		<figcaption style="color:black">progress knight</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/pe norie/index.html" class="card">
+		<img src="./img/pe norie.jpg"></img>
+		<figcaption style="color:black">pe norie</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/orange/index.html" class="card">
+		<img src="./img/orange.png"></img>
+		<figcaption style="color:black">orange</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/one trick mage/index.html" class="card">
+		<img src="./img/one trick mage.png"></img>
+		<figcaption style="color:black">one trick mage</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/mini sticky/index.html" class="card">
+		<img src="./img/mini sticky.avif"></img>
+		<figcaption style="color:black">mini sticky</figcaption>
+	
+	</a>
+	
+	<a href="#" class="card ad-card">
+		<!-- Your Ad Script -->
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1609993827735056"
+			crossorigin="anonymous"></script>
+		<ins class="adsbygoogle"
+			style="display:inline-block;width:120px;height:120px"
+			data-ad-client="ca-pub-1609993827735056"
+			data-ad-slot="7660202824"></ins>
+		<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+		<!-- Optionally, you can add a caption or placeholder below the ad -->
+		<figcaption style="color:black">Advertisement</figcaption>
+	</a>
+	
+	<a href="./html/mini jumps/index.html" class="card">
+		<img src="./img/mini jumps.png"></img>
+		<figcaption style="color:black">mini jumps</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/life in the static/index.html" class="card">
+		<img src="./img/life in the static.jpg"></img>
+		<figcaption style="color:black">life in the static</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/laqueus escape chapter 1/index.html" class="card">
+		<img src="./img/laqueus escape chapter 1.avif"></img>
+		<figcaption style="color:black">laqueus escape chapter 1</figcaption>
+	
+	</a>
+	
+	
+	<a href="./html/just passing/index.html" class="card">
+		<img src="./img/just passing.png"></img>
+		<figcaption style="color:black">just passing</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/hexa knot/index.html" class="card">
+		<img src="./img/hexa knot.png"></img>
+		<figcaption style="color:black">hexa knot</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/hasty shaman/index.html" class="card">
+		<img src="./img/hasty shaman.png"></img>
+		<figcaption style="color:black">hasty shaman</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/goodbye doggy/index.html" class="card">
+		<img src="./img/goodbye doggy.jpg"></img>
+		<figcaption style="color:black">goodbye doggy</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/generic fishing game/index.html" class="card">
+		<img src="./img/generic fishing game.png"></img>
+		<figcaption style="color:black">generic fishing game</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/dubstep raven/index.html" class="card">
+		<img src="./img/dubstep raven.png"></img>
+		<figcaption style="color:black">dubstep raven</figcaption>
+	
+	</a>
+	
+	
+	<a href="./html/doodle alive/index.html" class="card">
+		<img src="./img/doodle alive.jpg"></img>
+		<figcaption style="color:black">doodle alive</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/detective bass fish/index.html" class="card">
+		<img src="./img/detective bass fish.webp"></img>
+		<figcaption style="color:black">detective bass fish</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/cursed travels below/index.html" class="card">
+		<img src="./img/cursed travels below.png"></img>
+		<figcaption style="color:black">cursed travels below</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/clickventure castaway/index.html" class="card">
+		<img src="./img/clickventure castaway.jpg"></img>
+		<figcaption style="color:black">clickventure castaway</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/choppy orc/index.html" class="card">
+		<img src="./img/choppy orc.jpg"></img>
+		<figcaption style="color:black">choppy orc</figcaption>
+	
+	</a>
+	
+	
+	<a href="./html/cataractae/index.html" class="card">
+		<img src="./img/cataractae.jpg"></img>
+		<figcaption style="color:black">cataractae</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/cat house/index.html" class="card">
+		<img src="./img/cat house.avif"></img>
+		<figcaption style="color:black">cat house</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/cardinal chains/index.html" class="card">
+		<img src="./img/cardinal chains.png"></img>
+		<figcaption style="color:black">cardinal chains</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/bunnies carrot/index.html" class="card">
+		<img src="./img/bunnies carrot.jpg"></img>
+		<figcaption style="color:black">bunnies carrot</figcaption>
+	
+	</a>
+	
+	
+	
+	
+	<a href="./html/aspiring artist/index.html" class="card">
+		<img src="./img/aspiring artist.webp"></img>
+		<figcaption style="color:black">aspiring artist</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/arcade wizard/index.html" class="card">
+		<img src="./img/arcade wizard.png"></img>
+		<figcaption style="color:black">arcade wizard</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/ant art tycoon/index.html" class="card">
+		<img src="./img/ant art tycoon.png"></img>
+		<figcaption style="color:black">ant art tycoon</figcaption>
+	
+	</a>
+	
+	
+	<a href="./swf/swords and souls/base.html" class="card">
+		<img src="./img/swords and souls.avif"></img>
+		<figcaption style="color:black">swords and souls</figcaption>
+	
+	</a>
+	
+	<a href="./swf/sonny2/base.html" class="card">
+		<img src="./img/sonny2.jpg"></img>
+		<figcaption style="color:black">sonny2</figcaption>
+	
+	</a>
+	
+	<a href="./swf/sonny/base.html" class="card">
+		<img src="./img/sonny.png"></img>
+		<figcaption style="color:black">sonny</figcaption>
+	
+	</a>
+	
+	<a href="./swf/kingdom rush frontie/base.html" class="card">
+		<img src="./img/kingdom rush frontie.jpg"></img>
+		<figcaption style="color:black">kingdom rush frontie</figcaption>
+	
+	</a>
+	
+	
+	<a href="./swf/kingdom rush/base.html" class="card">
+		<img src="./img/kingdom rush.jpg"></img>
+		<figcaption style="color:black">kingdom rush</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/worlds within worlds/index.html" class="card">
+		<img src="./img/worlds within worlds.png"></img>
+		<figcaption style="color:black">worlds within worlds</figcaption>
+	
+	</a>
+	
+	<a href="#" class="card ad-card">
+		<!-- Your Ad Script -->
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1609993827735056"
+			crossorigin="anonymous"></script>
+		<ins class="adsbygoogle"
+			style="display:inline-block;width:120px;height:120px"
+			data-ad-client="ca-pub-1609993827735056"
+			data-ad-slot="7660202824"></ins>
+		<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+		<!-- Optionally, you can add a caption or placeholder below the ad -->
+		<figcaption style="color:black">Advertisement</figcaption>
+	</a>
+	
+	<a href="./html/unloop/index.html" class="card">
+		<img src="./img/unloop.jpg"></img>
+		<figcaption style="color:black">unloop</figcaption>
+	
+	</a>
+
+	
+	
+	
+	<a href="./html/tower of the scorche/index.html" class="card">
+		<img src="./img/tower of the scorche.png"></img>
+		<figcaption style="color:black">tower of the scorche</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/there is no game/index.html" class="card">
+		<img src="./img/there is no game.jpg"></img>
+		<figcaption style="color:black">there is no game</figcaption>
+	
+	</a>
+	
+	
+	
+	
+	
+	
+	<a href="./html/scalak/index.html" class="card">
+		<img src="./img/scalak.jpg"></img>
+		<figcaption style="color:black">scalak</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/sabotage/index.html" class="card">
+		<img src="./img/sabotage.webp"></img>
+		<figcaption style="color:black">sabotage</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/roots/index.html" class="card">
+		<img src="./img/roots.jpg"></img>
+		<figcaption style="color:black">roots</figcaption>
+	
+	</a>
+	
+	
+	<a href="./html/rogue fable/index.html" class="card">
+		<img src="./img/rogue fable.jpg"></img>
+		<figcaption style="color:black">rogue fable</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/pixoji/index.html" class="card">
+		<img src="./img/pixoji.png"></img>
+		<figcaption style="color:black">pixoji</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/pink/index.html" class="card">
+		<img src="./img/pink.png"></img>
+		<figcaption style="color:black">pink</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/knight errant/index.html" class="card">
+		<img src="./img/knight errant.png"></img>
+		<figcaption style="color:black">knight errant</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/hexologic/index.html" class="card">
+		<img src="./img/hexlogic.jpg"></img>
+		<figcaption style="color:black">hexologic</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/gragyriss/index.html" class="card">
+		<img src="./img/gragyriss.avif"></img>
+		<figcaption style="color:black">gragyriss</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/gem twins/index.html" class="card">
+		<img src="./img/gem twins.png"></img>
+		<figcaption style="color:black">gem twins</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/dinogen arena/index.html" class="card">
+		<img src="./img/dinogen arena.webp"></img>
+		<figcaption style="color:black">dinogen arena</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/cursed travels flame/index.html" class="card">
+		<img src="./img/cursed travels flame.png"></img>
+		<figcaption style="color:black">cursed travels flame</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/clickventure/index.html" class="card">
+		<img src="./img/clickbenture.jpg"></img>
+		<figcaption style="color:black">clickventure</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/blue/index.html" class="card">
+		<img src="./img/blue.png"></img>
+		<figcaption style="color:black">blue</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/beam/index.html" class="card">
+		<img src="./img/beam.png"></img>
+		<figcaption style="color:black">beam</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/a grim love tale/index.html" class="card">
+		<img src="./img/a grim love tale.jpg"></img>
+		<figcaption style="color:black">a grim love tale</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/a grim chase/index.html" class="card">
+		<img src="./img/a grim chase.jpg"></img>
+		<figcaption style="color:black">a grim chase</figcaption>
+	
+	</a>
+	
+	
+				<a href="./html/canvas/canvas.html" class="card">
+				<img src="./img/canvas.png"></img>
+				<figcaption style="color:black">canvas</figcaption>
+	</a>
+	
+	<a href="./html/babel tower/index.html" class="card">
+		<img src="./img/Babel tower.avif"></img>
+		<figcaption style="color:black">babel tower</figcaption>
+	
+	</a>
+	
+	
+	<a href="./html/tavern master/index.html" class="card">
+		<img src="./img/tavern master.png"></img>
+		<figcaption style="color:black">tavern master</figcaption>
+	
+	</a>
+	
+	<a href="./html/green/index.html" class="card">
+		<img src="./img/green.png"></img>
+		<figcaption style="color:black">green</figcaption>
+	
+	</a>
+	
+	<a href="./swf/stealing the diamond/base.html" class="card">
+		<img src="./img/stealing the diamond.jpg"></img>
+		<figcaption style="color:black">stealing the diamond</figcaption>
+	
+	</a>
+	
+	<a href="./swf/infiltrating the airship/base.html" class="card">
+		<img src="./img/infiltrating the airship.jpg"></img>
+		<figcaption style="color:black">infiltrating the airship</figcaption>
+	
+	</a>
+	
+	<a href="./swf/fleeing the complex/base.html" class="card">
+		<img src="./img/fleeing the complex.jpg"></img>
+		<figcaption style="color:black">fleeing the complex</figcaption>
+	
+	</a>
+	
+	<a href="./swf/escaping the prison/base.html" class="card">
+		<img src="./img/escaping the pirson.jpg"></img>
+		<figcaption style="color:black">escaping the prison</figcaption>
+	
+	</a>
+	
+	<a href="./swf/breaking the bank/base.html" class="card">
+		<img src="./img/breaking the bank.jpg"></img>
+		<figcaption style="color:black">breaking the bank</figcaption>
+	
+	</a>
+	
+	<a href="./html/tanuki sunset/index.html" class="card">
+		<img src="./img/tanuki sunset.jpg"></img>
+		<figcaption style="color:black">tanuki sunset</figcaption>
+	
+	</a>
+	
+	<a href="./html/Soccer Random/index.html" class="card">
+		<img src="./img/Soccor Random.avif"></img>
+		<figcaption style="color:black">Soccer Random</figcaption>
+	
+	</a>
+	
+	<a href="./html/ricochet arrow/index.html" class="card">
+		<img src="./img/ricochet arrow.jpg"></img>
+		<figcaption style="color:black">ricochet arrow</figcaption>
+	
+	</a>
+	
+	<a href="./html/Pixel Battles/index.html" class="card">
+		<img src="./img/Pixel Battles.jpg"></img>
+		<figcaption style="color:black">Pixel Battles</figcaption>
+	
+	</a>
+	
+	<a href="./html/oil race/index.html" class="card">
+		<img src="./img/oil race.avif"></img>
+		<figcaption style="color:black">oil race</figcaption>
+	
+	</a>
+	
+	<a href="./html/Mountain Biking/index.html" class="card">
+		<img src="./img/Mountain Biking.jpg"></img>
+		<figcaption style="color:black">Mountain Biking</figcaption>
+	
+	</a>
+	
+	<a href="./html/monkey mart/index.html" class="card">
+		<img src="./img/monkey mart.png"></img>
+		<figcaption style="color:black">monkey mart</figcaption>
+	
+	</a>
+	
+	
+	<a href="./html/maptroid/index.html" class="card">
+		<img src="./img/maptroid.jpg"></img>
+		<figcaption style="color:black">maptroid</figcaption>
+	
+	</a>
+	
+	<a href="./html/hover racer drive/index.html" class="card">
+		<img src="./img/hover racer drive.png"></img>
+		<figcaption style="color:black">hover racer drive</figcaption>
+	
+	</a>
+	
+	<a href="./html/hole.io/index.html" class="card">
+		<img src="./img/hole.io.jpg"></img>
+		<figcaption style="color:black">hole.io</figcaption>
+	
+	</a>
+	
+	<a href="./html/erase box/index.html" class="card">
+		<img src="./img/erase box.jpg"></img>
+		<figcaption style="color:black">erase box</figcaption>
+	
+	</a>
+	
+	<a href="./html/Basket Random/index.html" class="card">
+		<img src="./img/Basket Random.jpg"></img>
+		<figcaption style="color:black">Basket Random</figcaption>
+	
+	</a>
+	
+	<a href="#" class="card ad-card">
+		<!-- Your Ad Script -->
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1609993827735056"
+			crossorigin="anonymous"></script>
+		<ins class="adsbygoogle"
+			style="display:inline-block;width:120px;height:120px"
+			data-ad-client="ca-pub-1609993827735056"
+			data-ad-slot="7660202824"></ins>
+		<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+		<!-- Optionally, you can add a caption or placeholder below the ad -->
+		<figcaption style="color:black">Advertisement</figcaption>
+	</a>
+	
+	<a href="./swf/gun mayhem 2/base.html" class="card">
+		<img src="./img/gun mayhem 2.jpg"></img>
+		<figcaption style="color:black">gun mayhem 2</figcaption>
+	
+	</a>
+	
+	<a href="./html/shortcut race/index.html" class="card">
+		<img src="./img/shortcut race.jpg"></img>
+		<figcaption style="color:black">shortcut race</figcaption>
+	
+	</a>
+	
+			<a href="./swf/alienthief/base.html" class="card">
+				<img src="./img/alienthief.jpg"></img>
+				<figcaption style="color:black">alien theif</figcaption>
+			</a>
+	
+			<a href="./swf/checkpoint/base.html" class="card">
+				<img src="./img/checkpoint.jpg"></img>
+				<figcaption style="color:black">checkpoint</figcaption>
+			</a>
+			<a href="./swf/chimneytrouble/base.html" class="card">
+				<img src="./img/chimneytrouble.jpg"></img>
+				<figcaption style="color:black">chimney trouble</figcaption>
+			</a>
+			<a href="./swf/diasterwillstrike/base.html" class="card">
+				<img src="./img/disasterwillstrike.jpg"></img>
+				<figcaption style="color:black">disaster will strike</figcaption>
+			</a>
+			<a href="./swf/drakeandthewizards/base.html" class="card">
+				<img src="./img/drakeandthewizards.jpg"></img>
+				<figcaption style="color:black">drake and the wizards</figcaption>
+			</a>
+			<a href="./swf/electricman2/base.html" class="card">
+				<img src="./img/electricman2.jpg"></img>
+				<figcaption style="color:black">electric man 2</figcaption>
+			</a>
+			<a href="./swf/freegear/base.html" class="card">
+				<img src="./img/freegear.jpg"></img>
+				<figcaption style="color:black">freegear</figcaption>
+			</a>
+			<a href="./swf/gooballs/base.html" class="card">
+				<img src="./img/gooballs.jpg"></img>
+				<figcaption style="color:black">gooballs</figcaption>
+			</a>
+			<a href="./swf/hoshisaga1/base.html" class="card">
+				<img src="./img/hoshisaga1.png"></img>
+				<figcaption style="color:black">hoshi saga 1</figcaption>
+			</a>
+			<a href="./swf/hoshisaga2/base.html" class="card">
+				<img src="./img/hoshisaga2.jpg"></img>
+				<figcaption style="color:black">hoshi saga 2</figcaption>
+			</a>
+			<a href="./swf/hoshisaga3/base.html" class="card">
+				<img src="./img/hoshisaga3.jpg"></img>
+				<figcaption style="color:black">hoshi saga 3</figcaption>
+			</a>
+			<a href="./swf/iqball/base.html" class="card">
+				<img src="./img/iqball.jpg"></img>
+				<figcaption style="color:black">iq ball</figcaption>
+			</a>
+			<a href="./swf/iwannawin/base.html" class="card">
+				<img src="./img/iwannawin.jpg"></img>
+				<figcaption style="color:black">i wanna win</figcaption>
+			</a>
+			<a href="./swf/jellygo/base.html" class="card">
+				<img src="./img/jellygo.jpg"></img>
+				<figcaption style="color:black">jelly go!</figcaption>
+			</a>
+	
+	
+			<a href="./swf/littlewheel/base.html" class="card">
+				<img src="./img/littlewheel.jpg"></img>
+				<figcaption style="color:black">little wheel</figcaption>
+			</a>
+			<a href="./swf/miniputt3/base.html" class="card">
+				<img src="./img/miniputt3.jpg"></img>
+				<figcaption style="color:black">mini putt 3</figcaption>
+			</a>
+			<a href="./swf/minitrain/base.html" class="card">
+				<img src="./img/minitrain.jpg"></img>
+				<figcaption style="color:black">mini train</figcaption>
+			</a>
+			<a href="./swf/papabakeria/base.html" class="card">
+				<img src="./img/papasbakeria.jpg"></img>
+				<figcaption style="color:black">papas bakeria</figcaption>
+			</a>
+			<a href="./swf/papaburgeria/base.html" class="card">
+				<img src="./img/papasburgeria.jpg"></img>
+				<figcaption style="color:black">papas burgeria</figcaption>
+			</a>
+			<a href="./swf/papacheeseria/base.html" class="card">
+				<img src="./img/papascheeseria.jpg"></img>
+				<figcaption style="color:black">papas cheeseria</figcaption>
+			</a>
+			<a href="./swf/papacupcakeria/base.html" class="card">
+				<img src="./img/papascupcakeria.jpg"></img>
+				<figcaption style="color:black">papas cupcakeria</figcaption>
+			</a>
+			<a href="./swf/papadonuteria/base.html" class="card">
+				<img src="./img/papadonuteria.jpg"></img>
+				<figcaption style="color:black">papas donuteria</figcaption>
+			</a>
+			<a href="./swf/papafreezeria/base.html" class="card">
+				<img src="./img/papasfreezeria.jpg"></img>
+				<figcaption style="color:black">papas freezeria</figcaption>
+			</a>
+			<a href="./swf/papahotdoggeria/base.html" class="card">
+				<img src="./img/papashotdoggeria.jpg"></img>
+				<figcaption style="color:black">papas hotdoggeria</figcaption>
+			</a>
+			<a href="./swf/papapancakeria/base.html" class="card">
+				<img src="./img/papaspancakeria.jpg"></img>
+				<figcaption style="color:black">papas pancakeria</figcaption>
+			</a>
+			<a href="./swf/papapasteria/base.html" class="card">
+				<img src="./img/papaspasteria.jpg"></img>
+				<figcaption style="color:black">papas pasteria</figcaption>
+			</a>
+			<a href="./swf/papapizzeria/base.html" class="card">
+				<img src="./img/papaspizzeria.jpg"></img>
+				<figcaption style="color:black">papas pizzeria</figcaption>
+			</a>
+			<a href="./swf/papascooperia/base.html" class="card">
+				<img src="./img/papasscooperia.jpg"></img>
+				<figcaption style="color:black">papas scooperia</figcaption>
+			</a>
+			<a href="./swf/papasushiria/base.html" class="card">
+				<img src="./img/papassushiria.jpg"></img>
+				<figcaption style="color:black">papas sushiria</figcaption>
+			</a>
+			<a href="./swf/papataco/base.html" class="card">
+				<img src="./img/papataco.jpg"></img>
+				<figcaption style="color:black">papas taco mia</figcaption>
+			</a>
+			<a href="./swf/papawingeria/base.html" class="card">
+				<img src="./img/papawingeria.jpg"></img>
+				<figcaption style="color:black">papas wingeria</figcaption>
+			</a>
+			<a href="./swf/portal/base.html" class="card">
+				<img src="./img/portal.jpg"></img>
+				<figcaption style="color:black">portal</figcaption>
+			</a>
+			<a href="./swf/pvz2/base.html" class="card">
+				<img src="./img/pvz2.jpg"></img>
+				<figcaption style="color:black">pvz 2</figcaption>
+			</a>
+			<a href="./swf/raftwars/base.html" class="card">
+				<img src="./img/raftwars.jpg"></img>
+				<figcaption style="color:black">raft wars</figcaption>
+			</a>
+	
+	
+			<a href="./swf/scrapmeatalheros/base.html" class="card">
+				<img src="./img/scrapmeatalheros.jpg"></img>
+				<figcaption style="color:black">scrap meatal heros</figcaption>
+			</a>
+			<a href="./swf/shapeshifter/base.html" class="card">
+				<img src="./img/shapeshifter.png"></img>
+				<figcaption style="color:black">shape shifter</figcaption>
+			</a>
+			<a href="./swf/squarehero/base.html" class="card">
+				<img src="./img/squarehero.jpg"></img>
+				<figcaption style="color:black">square hero</figcaption>
+			</a>
+			<a href="./swf/tarzanball/base.html" class="card">
+				<img src="./img/tarzanball.jpg"></img>
+				<figcaption style="color:black">tarzan ball</figcaption>
+			</a>
+			<a href="./swf/tastyplanetdinotime/base.html" class="card">
+				<img src="./img/tastyplanetdinotime.jpg"></img>
+				<figcaption style="color:black">tasty planet dinotime</figcaption>
+			</a>
+			<a href="./swf/truckloader/base.html" class="card">
+				<img src="./img/truckloader.jpg"></img>
+				<figcaption style="color:black">truck loader</figcaption>
+			</a>
+			<a href="./swf/workingstiffs/base.html" class="card">
+				<img src="./img/workingstiffs.jpg"></img>
+				<figcaption style="color:black">working stiffs</figcaption>
+			</a>
+	
+	
+			<a href="#" class="card ad-card">
+				<!-- Your Ad Script -->
+				<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1609993827735056"
+					crossorigin="anonymous"></script>
+				<ins class="adsbygoogle"
+					style="display:inline-block;width:120px;height:120px"
+					data-ad-client="ca-pub-1609993827735056"
+					data-ad-slot="7660202824"></ins>
+				<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+				<!-- Optionally, you can add a caption or placeholder below the ad -->
+				<figcaption style="color:black">Advertisement</figcaption>
+			</a>
+	
+			<a href="./html/eaglecraft/game/Offline_Download_Version.html" class="card">
+				<img src="./img/minecraft.jpeg"></img>
+				<figcaption style="color:black">minecraft</figcaption>
+			</a>
+	
+			<a href="./html/sm64/index.html" class="card">
+				<img src="./img/sm64.jpg"></img>
+				<figcaption style="color:black">super mario 64</figcaption>
+			</a>
+	
+			<a href="./html/rocket league/index.html" class="card">
+				<img src="./img/rocketleague.jpg"></img>
+				<figcaption style="color:black">rocket league</figcaption>
+			</a>
+	
+			<a href="./html/google-snake/index.html" class="card">
+				<img src="./img/googlesnake.jpg"></img>
+				<figcaption style="color:black">google snake</figcaption>
+			</a>
+	
+			<a href="./html/stickman-hook/index.html" class="card">
+				<img src="./img/stickmanhook.jpg"></img>
+				<figcaption style="color:black">stickman hook</figcaption>
+			</a>
+	
+	
+			<a href="./html/slope2/index.html" class="card">
+				<img src="./img/slope2.jpg"></img>
+				<figcaption style="color:black">slope 2</figcaption>
+			</a>
+	
+			<a href="./html/slope/index.html" class="card">
+				<img src="./img/slope.webp"></img>
+				<figcaption style="color:black">slope</figcaption>
+			</a>
+	
+			<a href="./html/bitlife/index.html" class="card">
+				<img src="./img/bitlife.jpg"></img>
+				<figcaption style="color:black">bitlife</figcaption>
+			</a>
+			
+			<a href="./html/drift-boss/index.html" class="card">
+				<img src="./img/drift-boss.png"></img>
+				<figcaption style="color:black">Drift boss</figcaption>
+			</a>
+	
+			<a href="./html/snow-rider-3d/index.html" class="card">
+				<img src="./img/snow-rider-3d-unblocked.png"></img>
+				<figcaption style="color:black">snow riders 3d</figcaption>
+			</a>
+	
+			<a href="./html/planetlife/index.html" class="card">
+				<img src="./img/planetlife.jpg"></img>
+				<figcaption style="color:black">Planet life</figcaption>
+			</a>
+	
+			<a href="./swf/findingsanta/base.html" class="card">
+				<img src="./img/santa.png"></img>
+				<figcaption style="color:black">finding santa</figcaption>
+			</a>
+	
+			<a href="./swf/hauntthehouse/base.html" class="card">
+				<img src="./img/hauntthehouse.jpg"></img>
+				<figcaption>haunt the house</figcaption>
+			</a>
+	
+			<a href="./html/houseofhazards/index.html" class="card">
+				<img src="./img/houseofhazards.jpg"></img>
+				<figcaption>house of hazards</figcaption>
+			</a>
+	
+			<a href="./html/couch2048/index.html" class="card">
+				<img src="./img/couch.jpg"></img>
+				<figcaption>couch 2048</figcaption>
+			</a>
+			<a href="./html/tabs/index.html" class="card">
+				<img src="./img/tabs.jpeg"></img>
+				<figcaption style="color:black">tabs</figcaption>
+			</a>
+	
+			<a href="./html/catpitolists/advcap.html" class="card">
+				<img src="./img/capitolist.jpeg"></img>
+				<figcaption style="color:black">adVenture capitolists</figcaption>
+			</a>
+	
+			<a href="./swf/ducklife1/base.html" class="card">
+					<img src="./img/ducklife.webp"></img>
+					<figcaption style="color:black">duck life</figcaption>
+				</a>
+	
+	
+				<a href="./swf/ducklife2/base.html" class="card">
+					<img src="./img/ducklife2.webp"></img>
+					<figcaption style="color:black">duck life 2</figcaption>
+				</a>
+	
+				<a href="./swf/ducklife3/base.html" class="card">
+					<img src="./img/ducklife3.webp"></img>
+					<figcaption style="color:black">duck life 3</figcaption>
+				</a>
+	
+	
+				<a href="./swf/factoryballs1/base.html" class="card">
+					<img src="./img/factoryballs1.jpeg"></img>
+					<figcaption style="color:black">factory balls 1</figcaption>
+				</a>
+	
+				<a href="./swf/factoryballs2/base.html" class="card">
+					<img src="./img/factoryballs2.jpeg"></img>
+					<figcaption style="color:black">factory balls 2</figcaption>
+				</a>
+	
+				<a href="./swf/factoryballs3/base.html" class="card">
+					<img src="./img/factoryballs3.jpeg"></img>
+					<figcaption style="color:black">factory balls 3</figcaption>
+				</a>
+	
+				<a href="./swf/factoryballs4/base.html" class="card">
+					<img src="./img/factoryballs4.jpeg"></img>
+					<figcaption style="color:black">factory balls 4</figcaption>
+				</a>
+	
+				<a href="./swf/run/base.html" class="card">
+					<img src="./img/run.jpeg"></img>
+					<figcaption style="color:black">run 1</figcaption>
+				</a>
+	
+				<a href="./swf/run2/base.html" class="card">
+					<img src="./img/run2.jpeg"></img>
+					<figcaption style="color:black">run 2</figcaption>
+				</a>
+	
+			<a href="./html/bitts/index.html" class="card">
+				<img src="./img/bitts.png"></img>
+				<figcaption>big ice tower tiny square</figcaption>
+			</a>
+	
+			<a href="./swf/fancy1/base.html" class="card">
+				<img src="./img/fancy1.jpg"></img>
+				<figcaption>fancy pants 1</figcaption>
+			</a>
+	
+			<a href="./swf/fancy3/base.html" class="card">
+				<img src="./img/fancy3.jpg"></img>
+				<figcaption>fancy pants 3</figcaption>
+			</a>
+	
+			<a href="./swf/penguin/base.html" class="card">
+				<img src="./img/penguin.jpeg"></img>
+				<figcaption>penguin dinner</figcaption>
+			</a>
+	
+			<a href="./swf/bombit/base.html" class="card">
+				<img src="./img/bombit.jpeg"></img>
+				<figcaption>bombit 1</figcaption>
+			</a>
+	
+			<a href="./swf/bombit2/base.html" class="card">
+				<img src="./img/bombit2.jpeg"></img>
+				<figcaption>bombit 2</figcaption>
+			</a>
+	
+			<a href="./swf/bombit3/base.html" class="card">
+				<img src="./img/bombit3.jpg"></img>
+				<figcaption>bombit 3</figcaption>
+			</a>
+	
+			<a href="./swf/comicbook/base.html" class="card">
+				<img src="./img/comicbook.jpeg"></img>
+				<figcaption>comic book cody</figcaption>
+			</a>
+	
+			<a href="./swf/hotdogbush/base.html" class="card">
+				<img src="./img/hotdogbush.jpeg"></img>
+				<figcaption>hot dog bush</figcaption>
+			</a>
+	
+			<a href="./swf/louie1/base.html" class="card">
+				<img src="./img/louie1.jpeg"></img>
+				<figcaption>papa louies 1</figcaption>
+			</a>
+	
+			<a href="./swf/minhero/base.html" class="card">
+				<img src="./img/minhero.jpeg"></img>
+				<figcaption>min hero tower of sages</figcaption>
+			</a>
+	
+			<a href="./swf/pandas1/base.html" class="card">
+				<img src="./img/pandas1.jpeg"></img>
+				<figcaption>3 pandas 1</figcaption>
+			</a>
+	
+	
+			<a href="./swf/shapeswitch/base.html" class="card">
+				<img src="./img/shapeswitcher.jpeg"></img>
+				<figcaption>shape switcher</figcaption>
+			</a>
+	
+			<a href="./swf/strikeforcekitty/base.html" class="card">
+				<img src="./img/strikeforcekitty.jpeg"></img>
+				<figcaption>strike force kitty 1</figcaption>
+			</a>
+	
+			<a href="./swf/strikeforcekitty2/base.html" class="card">
+				<img src="./img/strikeforcekitty2.jpeg"></img>
+				<figcaption>strike force kitty 2</figcaption>
+			</a>
+	
+			<a href="./swf/strikeforcekitty3/base.html" class="card">
+				<img src="./img/strikeforcekitty3.jpeg"></img>
+				<figcaption>strike force kitty 3</figcaption>
+			</a>
+	
+			<a href="./swf/sugar/base.html" class="card">
+				<img src="./img/sugar.jpeg"></img>
+				<figcaption>sugar, sugar</figcaption>
+			</a>
+	
+			<a href="./swf/waterboy/index.html" class="card">
+				<img src="./img/fireboy.png"></img>
+				<figcaption>fire boy and water girl</figcaption>
+			</a>
+	
+			<a href="./html/finalearth2/index.html" class="card">
+				<img src="./img/finalearth2.png"></img>
+				<figcaption style="color:black">final earth 2</figcaption>
+			</a>
+	
+			<a href="./html/drive-mad/index.html" class="card">
+				<img src="./img/drivemad.jpg"></img>
+				<figcaption style="color:black">drive mad</figcaption>
+			</a>
+	
+			<a href="./html/among-us/index.html" class="card">
+				<img src="./img/amongus.png"></img>
+				<figcaption>among us</figcaption>
+			</a>
+	
+			<a href="./html/bob-the-robber-2/index.html" class="card">
+				<img src="./img/bob.jpeg"></img>
+				<figcaption>bob the robber 2</figcaption>
+			</a>
+	
+			<a href="./html/tiny-fishing/index.html" class="card">
+				<img src="./img/fishing.jpeg"></img>
+				<figcaption>tiny fishing</figcaption>
+			</a>
+	
+	
+			<a href="./html/2048-master/2048-master/index.html" class="card">
+				<img src="img/2048.png"></img>
+				<figcaption>2048</figcaption>
+			</a>
+	
+			
+	
+			<a href="./html/adarkroom/index.html" class="card">
+				<img src="img/adarkroom.png"></img>
+				<figcaption style="color:black">a dark room</figcaption>
+			</a>
+	
+			<a href="./html/algaes-escapade/index.html" class="card">
+				<img src="img/apple-touch-icon-114x114.png"></img>
+				<figcaption style="color:black">algaes escapade</figcaption>
+			</a>
+	
+			<a href="./html/Alien Invasion/Alien Invasion/index.html" class="card">
+				<img src="./img/alien.png"></img>
+				<figcaption style="color:yellow">alien Invasion</figcaption>
+			</a>
+	
+	
+	
+	
+		<a href="./html/Appel/game/Appel.html" class="card">
+				<img src="./img/appel.png"></img>
+				<figcaption style="color:black">appel</figcaption>
+		</a>
+			
+		<a href="./html/asciispace/index.html" class="card">
+					<img src="./img/asciispace.png"></img>
+					<figcaption>asciispace</figcaption>
+		</a>
+	
+	
+		<a href="#" class="card ad-card">
+			<!-- Your Ad Script -->
+			<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1609993827735056"
+				crossorigin="anonymous"></script>
+			<ins class="adsbygoogle"
+				style="display:inline-block;width:120px;height:120px"
+				data-ad-client="ca-pub-1609993827735056"
+				data-ad-slot="7660202824"></ins>
+			<script>
+				(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+			<!-- Optionally, you can add a caption or placeholder below the ad -->
+			<figcaption style="color:black">Advertisement</figcaption>
+		</a>
+	
+	
+		<a href="./html/asteroids/index.html" class="card">
+			<img src="./img/asteroids.png"></img>
+			<figcaption style="color:black">asteroids</figcaption>
+		</a>
+	
+		<a href="./html/astray/index.html" class="card">
+			<img src="./img/astray.png"></img>
+			<figcaption>astray</figcaption>
+		</a>
+	
+		<a href="./html/ball platformer/game/ball platformer.html" class="card">
+			<img src="./img/ball platformer.png"></img>
+			<figcaption style="color:black">ball platformer</figcaption>
+		</a>
+	
+	
+		<a href="./html/blackholesquare/index.html" class="card">
+			<img src="./img/BlackHoleSquare.png"></img>
+			<figcaption>blackholesquare</figcaption>
+		</a>
+	
+		<a href="./html/bloxorz/game/index.html" class="card">
+			<img src="./img/bloxorz.png"></img>
+			<figcaption>bloxorz</figcaption>
+		</a>
+	
+	
+		<a href="./html/bounceback/index.html" class="card">
+			<img src="./img/bounceback.png"></img>
+			<figcaption>bounceback</figcaption>
+		</a>
+	
+		<a href="./html/breaklock/index.html" class="card">
+			<img src="./img/breaklock.png"></img>
+			<figcaption>breaklock</figcaption>
+		</a>
+	
+		<a href="./html/breakout/index.html" class="card">
+			<img src="./img/breakout.png"></img>
+			<figcaption>breakout</figcaption>
+		</a>
+		
+	
+	
+		<a href="./html/Bubble Scratch/game/Bubble Scratch.html" class="card">
+			<img src="./img/bubble scratch.png"></img>
+			<figcaption style="color:black">bubble scratch</figcaption>
+		</a>
+	
+		<a href="./html/c4/index.html" class="card">
+			<img src="./img/c4.png"></img>
+			<figcaption>connect 4</figcaption>
+		</a>
+	
+		<a href="./html/captaincallisto/index.html" class="card">
+			<img src="./img/capain.png"></img>
+			<figcaption>captain callisto</figcaption>
+		</a>
+	
+		<a href="./html/chess/index.html" class="card">
+			<img src="./img/chess.png"></img>
+			<figcaption style="color:black">chess</figcaption>
+		</a>
+	
+		<a href="./html/chroma/index.html" class="card">
+			<img src="./img/chroma.png"></img>
+			<figcaption>chroma</figcaption>
+		</a>
+		
+	
+		<a href="./html/cookieclicker/index.html" class="card">
+			<img src="./img/cookie.png"></img>
+			<figcaption>cookie clicker</figcaption>
+		</a>
+	
+		<a href="./html/Crystal Seeker.html" class="card">
+			<img src="./img/crystal.png"></img>
+			<figcaption>crystal Seeker</figcaption>
+		</a>
+	
+	
+		<a href="./html/Cube Miner/game/Cube Miner.html" class="card">
+			<img src="./img/cube.png"></img>
+			<figcaption>Cube Miner</figcaption>
+		</a>
+	
+		<a href="./html/cubefield/index.html" class="card">
+			<img src="./img/cubefeild.png"></img>
+			<figcaption>cubefield</figcaption>
+		</a>
+	
+		<a href="./html/digger-main/digger-main/index.html" class="card">
+			<img src="./img/diggermain.png"></img>
+			<figcaption>digger main</figcaption>
+		</a>
+	
+		<a href="./html/dinosaur/index.html" class="card">
+			<img src="./img/dino.png"></img>
+			<figcaption style="color:black">dinosaur</figcaption>
+		</a>
+	
+	
+		<a href="./html/edgenotfound/index.html" class="card">
+			<img src="./img/edge.png"></img>
+			<figcaption style="color:black">edge Not Found</figcaption>
+		</a>
+	
+	
+		<a href="./html/evilglitch/index.html" class="card">
+			<img src="./img/EvilGlitch.png"></img>
+			<figcaption>Evil Glich</figcaption>
+		</a>
+	
+		<a href="./html/flappy-2048/index.html" class="card">
+			<img src="./img/flappy2048.png"></img>
+			<figcaption>flappy 2048</figcaption>
+		</a>
+	
+		<a href="./html/flappybird/index.html" class="card">
+			<img src="./img/FlappyBird.png"></img>
+			<figcaption>flappy Bird</figcaption>
+		</a>
+	
+		<a href="./html/Fortnite Z/game/Fortnite Z.html" class="card">
+			<img src="./img/fornitez.png"></img>
+			<figcaption style="color:yellow">Fortnite Z</figcaption>
+		</a>
+	
+		<a href="./html/fruitninja/index.html" class="card">
+			<img src="./img/fruit.png"></img>
+			<figcaption>Fruit Ninja</figcaption>
+		</a>
+	
+		<a href="./html/Geometry Dash Meltdown/game/Geometry Dash Meltdown.html" class="card">
+			<img src="./img/dashmeltdown.png"></img>
+			<figcaption>geometry Dash Meltdown</figcaption>
+		</a>
+	
+		<a href="./html/Geometry Dash Subzero/game/Geometry Dash Subzero.html" class="card">
+			<img src="./img/dashsubzero.png"></img>
+			<figcaption>geometry Dash Subzero</figcaption>
+		</a>
+	
+		<a href="./html/Geometry Dash v1/game/Geometry Dash v1.html" class="card">
+			<img src="./img/dash.png"></img>
+			<figcaption>geometry Dash</figcaption>
+		</a>
+	
+		<a href="./html/Geometry Dash World Toxic factory/game/Geometry Dash World Toxic factory.html" class="card">
+			<img src="./img/dashtoxic.png"></img>
+			<figcaption>geometry Dash World Toxic</figcaption>
+		</a>
+	
+		<a href="./html/Getting Over It v1/game/Getting Over It v1.html" class="card">
+			<img src="./img/over.png"></img>
+			<figcaption>getting over it</figcaption>
+		</a>
+	
+		<a href="./html/hearse mster/-=HORSE MASTER=- The Game of Horse Mastery.html" class="card">
+			<img src="./img/horse.png"></img>
+			<figcaption>horse master</figcaption>
+		</a>
+	
+		<a href="./html/hextris/index.html" class="card">
+			<img src="./img/hex.png"></img>
+			<figcaption>hextris</figcaption>
+		</a>
+	
+		<a href="./html/html5-farming-demo-master/html5-farming-demo-master/farming.html" class="card">
+			<img src="./img/farm.png"></img>
+			<figcaption>farming</figcaption>
+		</a>
+	
+		<a href="./html/konnekt/index.html" class="card">
+			<img src="./img/cone.png"></img>
+			<figcaption>konnekt</figcaption>
+		</a>
+	
+		<a href="./html/Mario/game/Mario.html" class="card">
+			<img src="./img/Mario.png"></img>
+			<figcaption>mario</figcaption>
+		</a>
+	
+		<a href="./html/minekhan/index.html" class="card">
+			<img src="./img/khan.png"></img>
+			<figcaption>mineKahn</figcaption>
+		</a>
+	
+		<a href="./html/Paper Minecraft/game/Paper Minecraft.html" class="card">
+			<img src="./img/papermc.png"></img>
+			<figcaption>paper Minecraft</figcaption>
+		</a>
+	
+		<a href="./html/packabunchas/index.html" class="card">
+			<img src="./img/pack.png"></img>
+			<figcaption style="color:black">packabunchas</figcaption>
+		</a>
+	
+	
+	
+		<a href="./html/pico 8/PICO-8 Cartridge1.html" class="card">
+			<img src="./img/oneboss.png"></img>
+			<figcaption>just one boss</figcaption>
+		</a>
+	
+		<a href="./html/pushback/index.html" class="card">
+			<img src="./img/back.png"></img>
+			<figcaption style="color:black">push back</figcaption>
+		</a>
+	
+		<a href="./html/racer/index.html" class="card">
+			<img src="img/racer.jpeg"></img>
+			<figcaption>racer</figcaption>
+		</a>
+	
+		<a href="./html/radius raid/radius raid/index.html" class="card">
+			<img src="./img/radius.png"></img>
+			<figcaption>radius raid</figcaption>
+		</a>
+	
+		<a href="./html/pico-8/PICO-8 Cartridge.html" class="card">
+			<img src="./img/pcraft.png"></img>
+			<figcaption>p-craft</figcaption>
+		</a>
+	
+	
+	
+		<a href="./html/retrohaunt/index.html" class="card">
+			<img src="./img/retro.jpeg"></img>
+			<figcaption>retrohaunt</figcaption>
+		</a>
+	
+		<a href="./html/roadblocks/index.html" class="card">
+			<img src="./img/roadblocks.jpeg"></img>
+			<figcaption style="color:black">roadblocks</figcaption>
+		</a>
+	
+	
+		<a href="./html/shuttledeck/index.html" class="card">
+			<img src="./img/shuttle.png"></img>
+			<figcaption>shuttledeck</figcaption>
+		</a>
+	
+		<a href="./html/sleeping beauty/sleeping beauty/index.html" class="card">
+			<img src="./img/sleeping.png"></img>
+			<figcaption>sleeping beauty</figcaption>
+		</a>
+	
+		<a href="./html/spacecompany/index.html" class="card">
+			<img src="./img/images.png"></img>
+			<figcaption style="color:black">space company</figcaption>
+		</a>
+	
+	
+		<a href="./html/spacegarden/index.html" class="card">
+			<img src="./img/garden.jpeg"></img>
+			<figcaption>space garden</figcaption>
+		</a>
+	
+		<a href="./html/spacehuggers/index.html" class="card">
+			<img src="./img/huggers.jpeg"></img>
+			<figcaption>space huggers</figcaption>
+		</a>
+	
+		<a href="./html/stack/stack/index.html" class="card">
+			<img src="./img/stack.jpeg"></img>
+			<figcaption style="color:black">stack</figcaption>
+		</a>
+	
+		<a href="./html/tetris advanced/index.html" class="card">
+			<img src="./img/tetris.jpeg"></img>
+			<figcaption>tetris</figcaption>
+		</a>
+	
+		<a href="./html/trimps/index.html" class="card">
+			<img src="./img/trimps.png"></img>
+			<figcaption>trimps</figcaption>
+		</a>
+	
+	
+		<a href="./html/xx142-b2exe/index.html" class="card">
+			<img src="./img/xx.png"></img>
+			<figcaption>xx142-b2exe</figcaption>
+		</a>
+	
+		<a href="./html/Sand and Water v3.html" class="card">
+			<img src="./img/sand.png"></img>
+			<figcaption>sand and water</figcaption>
+		</a>
+	
+		<a href="./html/Scratch Brawl 2.html" class="card">
+			<img src="./img/scratchb.jpg"></img>
+			<figcaption>scratch brawl 2</figcaption>
+		</a>
+	
+		<a href="./html/slither.io v1.html" class="card">
+			<img src="./img/slither.png"></img>
+			<figcaption>slither.io</figcaption>
+		</a>
+	
+		<a href="./html/Terrain Generator.html" class="card">
+			<img src="./img/terrain.png"></img>
+			<figcaption style="color:black">terrain generator</figcaption>
+		</a>
+	
+	
+	
+		<a href="./html/Terraria.html" class="card">
+			<img src="./img/terraria.jpg"></img>
+			<figcaption>terraria</figcaption>
+		</a>
+	
+	
+			<a href="./html/The Ninja.html" class="card">
+				<img src="./img/n1.webp"></img>
+				<figcaption>the ninja</figcaption>
+			</a>
+	
+			<a href="./html/The Ninja 2.html" class="card">
+				<img src="./img/n2.png"></img>
+				<figcaption style="color:black">the ninja 2</figcaption>
+			</a>
+	
+	
+			<a href="#" class="card ad-card">
+				<!-- Your Ad Script -->
+				<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1609993827735056"
+					crossorigin="anonymous"></script>
+				<ins class="adsbygoogle"
+					style="display:inline-block;width:120px;height:120px"
+					data-ad-client="ca-pub-1609993827735056"
+					data-ad-slot="7660202824"></ins>
+				<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+				<!-- Optionally, you can add a caption or placeholder below the ad -->
+				<figcaption style="color:black">Advertisement</figcaption>
+			</a>
+	
+			<a href="./html/The Ninja 3.html" class="card">
+				<img src="./img/n3.webp"></img>
+				<figcaption style="color:black">the ninja 3</figcaption>
+			</a>
+	
+			<a href="./html/The Ninja 4.html" class="card">
+				<img src="./img/n4.jpg"></img>
+				<figcaption style="color:black">the ninja 4</figcaption>
+			</a>
+	
+	
+			<a href="./html/The Ninja 5.html" class="card">
+				<img src="./img/n5.webp"></img>
+				<figcaption>the ninja 5</figcaption>
+			</a>
+	
+	
+			<a href="./html/The Ninja 5 Hacked!.html" class="card">
+				<img src="./img/n5h.png"></img>
+				<figcaption style="color:black">the ninja 5 hacked</figcaption>
+			</a>
+	
+			<a href="./html/100uc.html" class="card">
+				<img src="./img/100uc.png"></img>
+				<figcaption style="color:black">$100 unicorn</figcaption>
+			</a>
+	
+			<a href="./html/theexocutor" class="card">
+				<img src="./img/executor.png"></img>
+				<figcaption style="color:black">the executor</figcaption>
+			</a>
+	
+			<a href="./html/1v1/index.html" class="card">
+				<img src="./img/1v1.webp"></img>
+				<figcaption style="color:black">1v1.lol</figcaption>
+			</a>
+	
+	
+			<a href="./html/1v1space/index.html" class="card">
+				<img src="./img/1v1space.webp"></img>
+				<figcaption style="color:black">1v1 space</figcaption>
+			</a>
+	
+	
+			<a href="./html/10-minutes-till-dawn/index.html" class="card">
+				<img src="./img/10m.webp"></img>
+				<figcaption style="color:black">10 minutes till dawn</figcaption>
+			</a>
+	
+			<a href="./html/100-player-pong/index.html" class="card">
+				<img src="./img/100pong.webp"></img>
+				<figcaption style="color:black">100 pong</figcaption>
+			</a>
+	
+	
+			<a href="./html/9007199254740992/index.html" class="card">
+				<img src="./img/900.webp"></img>
+				<figcaption style="color:black">9007199...</figcaption>
+			</a>
+	
+	
+			<a href="./html/achievementunlocked/index.html" class="card">
+				<img src="./img/ache.webp"></img>
+				<figcaption style="color:black">achievementunlocked</figcaption>
+			</a>
+	
+		
+	
+			<a href="./html/ages-of-conflict/index.html" class="card">
+				<img src="./img/ages-of-conflict.webp"></img>
+				<figcaption style="color:black">ages of conflict</figcaption>
+			</a>
+	
+			<a href="./html/alienhominid/index.html" class="card">
+				<img src="./img/alienhominid.webp"></img>
+				<figcaption style="color:black">alien hominid</figcaption>
+			</a>
+	
+			<a href="./html/amidst-the-clouds/index.html" class="card">
+				<img src="./img/amidst-the-clouds.webp"></img>
+				<figcaption style="color:black">amidst the clouds</figcaption>
+			</a>
+	
+			<a href="./html/avalanche/index.html" class="card">
+				<img src="./img/avalanche.webp"></img>
+				<figcaption style="color:black">avalanche</figcaption>
+			</a>
+	
+			<a href="./html/backrooms/index.html" class="card">
+				<img src="./img/backrooms.webp"></img>
+				<figcaption style="color:black">backrooms</figcaption>
+			</a>
+	
+		
+	
+			<a href="./html/bad-ice-cream-2/index.html" class="card">
+				<img src="./img/bad-ice-cream-2.webp"></img>
+				<figcaption style="color:black">bad icecream 2</figcaption>
+	
+				<a href="./html/bad-ice-cream-3/index.html" class="card">
+					<img src="./img/bad-ice-cream-3.webp"></img>
+					<figcaption style="color:black">bad icecream 2</figcaption>
+				</a>
+	
+				<a href="./html/bad-ice-cream/index.html" class="card">
+					<img src="./img/bad-ice-cream.webp"></img>
+					<figcaption style="color:black">bad icecream</figcaption>
+				</a>
+	
+				<a href="./html/baldis-basics/index.html" class="card">
+					<img src="./img/baldis-basics.webp"></img>
+					<figcaption style="color:black">baldis basics</figcaption>
+				</a>
+	
+				<a href="./html/ball-hop/index.html" class="card">
+					<img src="./img/ballhop.webp"></img>
+					<figcaption style="color:black">ballhop</figcaption>
+				</a>
+	
+	
+	
+				<a href="./html/ballistic-chickens/index.html" class="card">
+					<img src="./img/ballistic-chickens.webp"></img>
+					<figcaption style="color:black">ballistic chickens</figcaption>
+				</a>
+	
+				<a href="./html/basketball-stars/index.html" class="card">
+					<img src="./img/BAS.webp"></img>
+					<figcaption style="color:black">basketball stars</figcaption>
+				</a>
+	
+				<a href="./html/biters-io/index.html" class="card">
+					<img src="./img/biters.webp"></img>
+					<figcaption style="color:black">biters</figcaption>
+				</a>
+	
+	
+				<a href="./html/blocky-tower/index.html" class="card">
+					<img src="./img/blocky.webp"></img>
+					<figcaption style="color:black">blocky tower</figcaption>
+				</a>
+	
+				
+	
+				<a href="./html/bloonstd/index.html" class="card">
+					<img src="./img/bloonstd.webp"></img>
+					<figcaption style="color:black">bloonstd</figcaption>
+				</a>
+	
+	
+	
+				<a href="./html/bloonstd2/index.html" class="card">
+					<img src="./img/bloonstd2.webp"></img>
+					<figcaption style="color:black">bloonstd 2</figcaption>
+				</a>
+	
+				<a href="./html/bloonstd4/index.html" class="card">
+					<img src="./img/bloonstd4.webp"></img>
+					<figcaption style="color:black">bloonstd 4</figcaption>
+				</a>
+	
+				<a href="./html/boxing-physics/index.html" class="card">
+					<img src="./img/box.webp"></img>
+					<figcaption style="color:black">boxing</figcaption>
+				</a>
+	
+				<a href="./html/breakout/index.html" class="card">
+					<img src="./img/breakout.webp"></img>
+					<figcaption style="color:black">breakout</figcaption>
+				</a>
+	
+		
+	
+				<a href="./html/browserquest/index.html" class="card">
+					<img src="./img/BrowserQuest.webp"></img>
+					<figcaption style="color:black">browserquest</figcaption>
+				</a>
+	
+	
+	
+				<a href="./html/big-tower-tiny-square/index.html" class="card">
+					<img src="./img/btts.webp"></img>
+					<figcaption style="color:black">btts</figcaption>
+				</a>
+	
+				<a href="./html/circlo/index.html" class="card">
+					<img src="./img/circlo.webp"></img>
+					<figcaption style="color:black">circlo</figcaption>
+				</a>
+	
+				<a href="./html/cluster-rush/index.html" class="card">
+					<img src="./img/cluster.webp"></img>
+					<figcaption style="color:black">cluster rush</figcaption>
+				</a>
+	
+				<a href="./html/connect3/index.html" class="card">
+					<img src="./img/con3.webp"></img>
+					<figcaption style="color:black">connect 3</figcaption>
+				</a>
+	
+				<a href="./html/core-ball/index.html" class="card">
+					<img src="./img/coreball.webp"></img>
+					<figcaption>coreball</figcaption>
+				</a>
+	
+	
+				<a href="./html/crossyroad/index.html" class="card">
+					<img src="./img/crossyroad.webp"></img>
+					<figcaption style="color:black">crossyroad</figcaption>
+				</a>
+	
+				<a href="./html/csgo-clicker/index.html" class="card">
+					<img src="./img/CSGO.webp"></img>
+					<figcaption style="color:black">csgo clicker</figcaption>
+				</a>
+	
+				<a href="./html/cuttherope/index.html" class="card">
+					<img src="./img/ctr.webp"></img>
+					<figcaption style="color:black">cut the rope</figcaption>
+				</a>
+	
+				<a href="./html/cupcakes/index.html" class="card">
+					<img src="./img/cupcakes.webp"></img>
+					<figcaption style="color:black">cupcake 2048</figcaption>
+				</a>
+	
+				<a href="./html/cyber-city-driver/index.html" class="card">
+					<img src="./img/cyber.webp"></img>
+					<figcaption style="color:black">cyber city driver</figcaption>
+				</a>
+	
+	
+	
+	
+				<a href="./html/dogeminer/index.html" class="card">
+					<img src="./img/Dogecoin.webp"></img>
+					<figcaption style="color:black">dogeminer</figcaption>
+				</a>
+	
+				<a href="./html/doodlejump/index.html" class="card">
+					<img src="./img/doodle.webp"></img>
+					<figcaption style="color:black">doodle jump</figcaption>
+				</a>
+	
+				<a href="./html/drift-city/index.html" class="card">
+					<img src="./img/driftc.webp"></img>
+					<figcaption style="color:black">drift city</figcaption>
+				</a>
+	
+				<a href="./html/driftking/index.html" class="card">
+					<img src="./img/driftking.webp"></img>
+					<figcaption style="color:black">drift king</figcaption>
+				</a>
+	
+	
+	
+				<a href="./html/dunkers-fight/index.html" class="card">
+					<img src="./img/dunk.webp"></img>
+					<figcaption style="color:black">dunkers fight</figcaption>
+				</a>
+	
+	
+	
+	
+	
+				<a href="./html/eatio/index.html" class="card">
+					<img src="./img/eatio.webp"></img>
+					<figcaption style="color:black">eatio</figcaption>
+				</a>
+	
+				<a href="./html/edge-surf/index.html" class="card">
+					<img src="./img/edge-surf.webp"></img>
+					<figcaption style="color:black">ede surf</figcaption>
+				</a>
+	
+				<a href="./html/eel-slap/index.html" class="card">
+					<img src="./img/eel-slap.webp"></img>
+					<figcaption style="color:black">eel slap</figcaption>
+				</a>
+	
+				<a href="./html/eggy-car/index.html" class="card">
+					<img src="./img/eggy-car.webp"></img>
+					<figcaption style="color:black">eggy car</figcaption>
+				</a>
+	
+	
+				<a href="./html/steal-this-election/index.html" class="card">
+					<img src="./img/elec.webp"></img>
+					<figcaption style="color:black">steal this election</figcaption>
+				</a>
+	
+	
+	
+				<a href="./html/endlesswar3/index.html" class="card">
+					<img src="./img/endlesswar3.webp"></img>
+					<figcaption style="color:black">endless war 3</figcaption>
+				</a>
+	
+				<a href="./html/evolution/index.html" class="card">
+					<img src="./img/evolution.webp"></img>
+					<figcaption style="color:black">evolution</figcaption>
+				</a>
+	
+	
+				<a href="./html/exo/index.html" class="card">
+					<img src="./img/exo.webp"></img>
+					<figcaption>exo</figcaption>
+				</a>
+	
+	
+				<a href="./html/flappyplane/index.html" class="card">
+					<img src="./img/flappyplae.jpeg"></img>
+					<figcaption style="color:black">flappy plane</figcaption>
+				</a>
+	
+				<a href="./html/fliphero/index.html" class="card">
+					<img src="./img/fliphero.webp"></img>
+					<figcaption style="color:black">flip hero</figcaption>
+				</a>
+	
+				<a href="./html/fnaf/index.html" class="card">
+					<img src="./img/fnaf.webp"></img>
+					<figcaption style="color:black">fnaf</figcaption>
+				</a>
+	
+	
+	
+				<a href="./html/fnaf2/index.html" class="card">
+					<img src="./img/fnaf.webp"></img>
+					<figcaption style="color:black">fnaf 2</figcaption>
+				</a>
+	
+				<a href="./html/fnaf3/index.html" class="card">
+					<img src="./img/fnaf.webp"></img>
+					<figcaption style="color:black">fnaf 3</figcaption>
+				</a>
+	
+	
+	
+				<a href="./html/fnaf4/index.html" class="card">
+					<img src="./img/fnaf.webp"></img>
+					<figcaption style="color:black">fnaf 4</figcaption>
+				</a>
+	
+				<a href="./html/fruitninja/index.html" class="card">
+					<img src="./img/fruitninja.webp"></img>
+					<figcaption style="color:black">fruit ninja</figcaption>
+				</a>
+	
+				<a href="./html/funnyshooter/index.html" class="card">
+					<img src="./img/funnyshooter.webp"></img>
+					<figcaption style="color:black">funny shooter</figcaption>
+				</a>
+	
+	
+	
+				<a href="./html/goodnight/index.html" class="card">
+					<img src="./img/gn.webp"></img>
+					<figcaption style="color:black">goodnight</figcaption>
+				</a>
+	
+				<a href="./html/idle-breakout/index.html" class="card">
+					<img src="./img/idlebreakout.webp"></img>
+					<figcaption style="color:black">ide breakout</figcaption>
+				</a>
+	
+				<a href="./html/impossiblequiz/index.html" class="card">
+					<img src="./img/impossiblequiz.webp"></img>
+					<figcaption style="color:black">impossible quiz</figcaption>
+				</a>
+	
+				<a href="./html/interactivebuddy/index.html" class="card">
+					<img src="./img/interactivebuddy.webp"></img>
+					<figcaption style="color:black">interactive buddy</figcaption>
+				</a>
+	
+				<a href="./html/jetpack-joyride/index.html" class="card">
+					<img src="./img/jetpack-joyride.webp"></img>
+					<figcaption style="color:black">jetpack joyride</figcaption>
+				</a>
+	
+		
+	
+				<a href="./html/just-fall/index.html" class="card">
+					<img src="./img/just-fall.webp"></img>
+					<figcaption style="color:black">just fall</figcaption>
+				</a>
+	
+				<a href="./html/kitchen-gun-game/index.html" class="card">
+					<img src="./img/kitchen-gun-game.webp"></img>
+					<figcaption style="color:black">kitchen gun game</figcaption>
+				</a>
+	
+				<a href="#" class="card ad-card">
+					<!-- Your Ad Script -->
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1609993827735056"
+						crossorigin="anonymous"></script>
+					<ins class="adsbygoogle"
+						style="display:inline-block;width:120px;height:120px"
+						data-ad-client="ca-pub-1609993827735056"
+						data-ad-slot="7660202824"></ins>
+					<script>
+						(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>
+					<!-- Optionally, you can add a caption or placeholder below the ad -->
+					<figcaption style="color:black">Advertisement</figcaption>
+				</a>
+	
+				<a href="./html/kittencannon/index.html" class="card">
+					<img src="./img/kittencannon.webp"></img>
+					<figcaption style="color:black">kitten cannon</figcaption>
+				</a>
+	
+				<a href="./html/krunker/index.html" class="card">
+					<img src="./img/krunker.webp"></img>
+					<figcaption style="color:black">krunker</figcaption>
+				</a>
+	
+				<a href="./html/learntofly/index.html" class="card">
+					<img src="./img/learntofly.webp"></img>
+					<figcaption style="color:black">learn to fly</figcaption>
+				</a>
+	
+	
+	
+				<a href="./html/motox3m-spooky/index.html" class="card">
+					<img src="./img/moto-spook.webp"></img>
+					<figcaption style="color:black">motox3m spooky</figcaption>
+				</a>
+	
+	
+	
+				<a href="./html/motox3m-pool/index.html" class="card">
+					<img src="./img/motox3m-pool.webp"></img>
+					<figcaption style="color:black">motox3m pool</figcaption>
+				</a>
+	
+				<a href="./html/motox3m-winter/index.html" class="card">
+					<img src="./img/motox3m-winter.webp"></img>
+					<figcaption style="color:black">motox3m winter</figcaption>
+				</a>
+	
+				<a href="./html/motox3m/index.html" class="card">
+					<img src="./img/motox3m.webp"></img>
+					<figcaption style="color:black">motox3m</figcaption>
+				</a>
+	
+	
+				<a href="./html/motox3m2/index.html" class="card">
+					<img src="./img/motox3m2.webp"></img>
+					<figcaption style="color:black">motox3m 2</figcaption>
+				</a>
+	
+				<a href="./html/2048-multitask/index.html" class="card">
+					<img src="./img/multit.webp"></img>
+					<figcaption style="color:black">2048 multitask</figcaption>
+				</a>
+	
+	
+	
+				<a href="./html/pacman/index.html" class="card">
+					<img src="./img/pacman.webp"></img>
+					<figcaption style="color:black">pacman</figcaption>
+				</a>
+	
+				<a href="./html/paperio/index.html" class="card">
+					<img src="./img/paperio.webp"></img>
+					<figcaption style="color:black">paper.io</figcaption>
+				</a>
+	
+				<a href="./html/papery-planes/index.html" class="card">
+					<img src="./img/paperplane.webp"></img>
+					<figcaption style="color:black">papery planes</figcaption>
+				</a>
+	
+				
+	
+				<a href="./html/particle-clicker/index.html" class="card">
+					<img src="./img/parclick.webp"></img>
+					<figcaption style="color:black">particle clicker</figcaption>
+				</a>
+	
+				<a href="./html/picky-package/index.html" class="card">
+					<img src="./img/pickyback.webp"></img>
+					<figcaption style="color:black">picky package</figcaption>
+				</a>
+	
+	
+	
+				<a href="./html/pokemonfirered/index.html" class="card">
+					<img src="./img/PokemonFireRed.webp"></img>
+					<figcaption style="color:black">pokemon fire red</figcaption>
+				</a>
+	
+				<a href="./html/pong/index.html" class="card">
+					<img src="./img/pong.webp"></img>
+					<figcaption style="color:black">pong</figcaption>
+				</a>
+	
+				<a href="./html/racer/index.html" class="card">
+					<img src="./img/Racer.webp"></img>
+					<figcaption style="color:black">racer</figcaption>
+				</a>
+	
+				
+	
+				<a href="./html/retrobowl/index.html" class="card">
+					<img src="./img/retrobowl.webp"></img>
+					<figcaption style="color:black">retro bowl</figcaption>
+				</a>
+	
+	
+				<a href="./html/rooftop-snipers-2/index.html" class="card">
+					<img src="./img/Rooftop-Snipers.webp"></img>
+					<figcaption style="color:black">rooftop snipers</figcaption>
+				</a>
+				
+				<a href="./html/sans/index.html" class="card">
+					<img src="./img/sans.webp"></img>
+					<figcaption style="color:black">sans</figcaption>
+				</a>
+	
+				<a href="./html/idle-shark/index.html" class="card">
+					<img src="./img/sharkgame.webp"></img>
+					<figcaption style="color:black">idle shark</figcaption>
+				</a>
+	
+	
+				<a href="./html/spaceinvaders/index.html" class="card">
+					<img src="./img/spaceinv.webp"></img>
+					<figcaption style="color:black">space invaders</figcaption>
+				</a>
+	
+				<a href="./html/stack/index.html" class="card">
+					<img src="./img/stack.webp"></img>
+					<figcaption style="color:black">stack</figcaption>
+				</a>
+	
+				
+	
+				<a href="./html/stack-ball/index.html" class="card">
+					<img src="./img/stackball.webp"></img>
+					<figcaption style="color:black">stack ball</figcaption>
+				</a>
+	
+	
+				<a href="./html/subwaysurferssanfrancisco/index.html" class="card">
+					<img src="./img/subsan.webp"></img>
+					<figcaption style="color:black">subway surfers san</figcaption>
+				</a>
+	
+	
+				<a href="./html/subwaysurfersbeijing/index.html" class="card">
+					<img src="./img/subwaysurferbeijing.webp"></img>
+					<figcaption style="color:black">subway surfers beij</figcaption>
+				</a>
+	
+				<a href="./html/subwaysurfershouston/index.html" class="card">
+					<img src="./img/subwaysurfershouston.webp"></img>
+					<figcaption style="color:black">subway surfers hous</figcaption>
+				</a>
+	
+				
+	
+				<a href="./html/subwaysurfersmonaco/index.html" class="card">
+					<img src="./img/SubwayMonaco.webp"></img>
+					<figcaption style="color:black">subway surfers mon</figcaption>
+				</a>
+	
+				<a href="./html/temple-run-2/index.html" class="card">
+					<img src="./img/templerun.webp"></img>
+					<figcaption style="color:black">temple run 2</figcaption>
+				</a>
+	
+	
+	
+				<a href="./html/thesquare/index.html" class="card">
+					<img src="./img/thesquare.webp"></img>
+					<figcaption style="color:black">the square</figcaption>
+				</a>
+	
+				<a href="./html/timeshooter/index.html" class="card">
+					<img src="./img/timeshooters.webp"></img>
+					<figcaption style="color:black">time shooters</figcaption>
+				</a>
+	
+	
+				<a href="./html/tic-tac-toe/index.html" class="card">
+					<img src="./img/toe.webp"></img>
+					<figcaption style="color:black">tick tac toe</figcaption>
+				</a>
+	
+				<a href="./html/tic-tac-toe-ai/index.html" class="card">
+					<img src="./img/toeai.webp"></img>
+					<figcaption style="color:black">tic tac toe ai</figcaption>
+				</a>
+	
+	
+				<a href="./html/towermaster/index.html" class="card">
+					<img src="./img/towermaster.webp"></img>
+					<figcaption style="color:black">tower master</figcaption>
+				</a>
+	
+				
+	
+				<a href="./html/tunnelrush/index.html" class="card">
+					<img src="./img/tunnelrush.webp"></img>
+					<figcaption style="color:black">tunnel rush</figcaption>
+				</a>
+	
+				<a href="./html/tv-static/index.html" class="card">
+					<img src="./img/tv-static.webp"></img>
+					<figcaption style="color:black">tv static</figcaption>
+				</a>
+	
+				<a href="./html/veloce/index.html" class="card">
+					<img src="./img/VELOCE.webp"></img>
+					<figcaption style="color:black">veloce</figcaption>
+				</a>
+	
+				<a href="./html/vex3/index.html" class="card">
+					<img src="./img/vex3.webp"></img>
+					<figcaption style="color:black">vex 3</figcaption>
+				</a>
+	
+	
+	
+				<a href="./html/vex4/index.html" class="card">
+					<img src="./img/vex4.webp"></img>
+					<figcaption style="color:black">vex 4</figcaption>
+				</a>
+	
+				
+	
+				<a href="./html/vex5/index.html" class="card">
+					<img src="./img/vex5.webp"></img>
+					<figcaption style="color:black">vex 5</figcaption>
+				</a>
+	
+				<a href="./html/vex6/index.html" class="card">
+					<img src="./img/vex6.webp"></img>
+					<figcaption style="color:black">vex 6</figcaption>
+				</a>
+	
+				<a href="./html/vex7/index.html" class="card">
+					<img src="./img/vex7.webp"></img>
+					<figcaption style="color:black">vex 7</figcaption>
+				</a>
+	
+				<a href="./html/wallsmash/index.html" class="card">
+					<img src="./img/wallsmash.webp"></img>
+					<figcaption style="color:black">wall smash</figcaption>
+				</a>
+	
+	
+	
+				<a href="./html/waterworks/index.html" class="card">
+					<img src="./img/waterworks.webp"></img>
+					<figcaption style="color:black">water works</figcaption>
+				</a>
+	
+				<a href="#" class="card ad-card">
+					<!-- Your Ad Script -->
+					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1609993827735056"
+						crossorigin="anonymous"></script>
+					<ins class="adsbygoogle"
+						style="display:inline-block;width:120px;height:120px"
+						data-ad-client="ca-pub-1609993827735056"
+						data-ad-slot="7660202824"></ins>
+					<script>
+						(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>
+					<!-- Optionally, you can add a caption or placeholder below the ad -->
+					<figcaption style="color:black">Advertisement</figcaption>
+				</a>
+				
+				<a href="./html/weavesilk/index.html" class="card">
+					<img src="./img/weavesilk.webp"></img>
+					<figcaption style="color:black">weave silk</figcaption>
+				</a>
+	
+				<a href="./html/webgl-fluid-simulation/index.html" class="card">
+					<img src="./img/webgl-fluid-simulation.webp"></img>
+					<figcaption style="color:black">fluid simulation</figcaption>
+				</a>
+	
+				<a href="./html/webretro/index.html" class="card">
+					<img src="./img/webretro.webp"></img>
+					<figcaption style="color:black">web retro</figcaption>
+				</a>
+	
+				<a href="./html/whac-a-mole/index.html" class="card">
+					<img src="./img/Whac-A-Mole.webp"></img>
+					<figcaption style="color:black">whac-a-mole</figcaption>
+				</a>
+	
+	
+				<a href="./html/worlds-hardest-game/index.html" class="card">
+					<img src="./img/whg.webp"></img>
+					<figcaption style="color:black">worlds hardest game</figcaption>
+				</a>
+	
+				
+	
+				<a href="./html/wordle/index.html" class="card">
+					<img src="./img/wordle.webp"></img>
+					<figcaption style="color:black">wordle</figcaption>
+				</a>
+	
+				<a href="./html/x-trial-racing/index.html" class="card">
+					<img src="./img/xtr.webp"></img>
+					<figcaption style="color:black">x trial racing</figcaption>
+				</a>
+	
+				<a href="./html/yoshifabrication/index.html" class="card">
+					<img src="./img/YFS.webp"></img>
+					<figcaption style="color:black">yoshi fabricator</figcaption>
+				</a>
+				
+	
+				<a href="./html/zombs-royale/index.html" class="card">
+					<img src="./img/zombs-royale.webp"></img>
+					<figcaption style="color:black">zombs royale</figcaption>
+				</a>
+	
+	
+				<a href="./html/zoro/index.html" class="card">
+					<img src="./img/zoro.webp"></img>
+					<figcaption style="color:black">zoro</figcaption>
+				</a>
+	
+	
+				<a href="./html/lozmaker/game/lozmaker.html" class="card">
+					<img src="./img/lozmaker.png"></img>
+					<figcaption>ledegnd of zelda maker</figcaption>
+				</a>
+	
+				<a href="./html/towerdef.html" class="card">
+					<img src="./img/towerdef.png"></img>
+					<figcaption>tower defence</figcaption>
+				</a>
+	
+				<a href="./html/yetanotherworld.html" class="card">
+					<img src="./img/yetanotherworld.png"></img>
+					<figcaption>yet another world</figcaption>
+				</a>
+	
+	
+				
+	
+				<a href="./html/afterlife/game/afterlife.html" class="card">
+					<img src="./img/afterlife.png"></img>
+					<figcaption>afterlife</figcaption>
+				</a>
+	
+				<a href="./html/earthsausage/game/earthsausage.html" class="card">
+					<img src="./img/earth.png"></img>
+					<figcaption>earth sausage</figcaption>
+				</a>
+	
+				<a href="./html/flatguys/game/flatguys.html" class="card">
+					<img src="./img/flatguys.png"></img>
+					<figcaption>flat guys</figcaption>
+				</a>
+	
+				<a href="./html/monke/game/monke.html" class="card">
+					<img src="./img/monke.png"></img>
+					<figcaption>monke</figcaption>
+				</a>
+	
+				<a href="./html/pixelbearadventure/game/pixelbearadventure.html" class="card">
+					<img src="./img/pixelbearadventure.png"></img>
+					<figcaption>pixel bear adventure</figcaption>
+				</a>
+	
+	
+				
+	
+				<a href="./html/pixelspeedrun/game/pixelspeedrun.html" class="card">
+					<img src="./img/pixelspeedrun.png"></img>
+					<figcaption>pixel speedrun</figcaption>
+				</a>
+	
+				<a href="./html/pizzachallenge/game/pizzachallenge.html" class="card">
+					<img src="./img/pizzachallenge.png"></img>
+					<figcaption>pizza challange</figcaption>
+				</a>
+	
+				<a href="./html/retro speed/game/retro speed.html speed.html" class="card">
+					<img src="./img/retro speed.png"></img>
+					<figcaption>retro speed</figcaption>
+				</a>
+	
+				<a href="./html/tank trouble 2.html" class="card">
+					<img src="./img/tank trouble 2.png"></img>
+					<figcaption>tank trouble 2</figcaption>
+				</a>
+	
+				<a href="./html/throwapotato.html" class="card">
+					<img src="./img/throwapotato.png"></img>
+					<figcaption>throw a potato</figcaption>
+				</a>
+	
+	
+				
+	
+				<a href="./html/throwapotato2.html" class="card">
+					<img src="./img/throwapotato2.png"></img>
+					<figcaption>throw a potato 2</figcaption>
+				</a>
+	
+				<a href="./html/throwapotato3.html" class="card">
+					<img src="./img/throwapotato3.png"></img>
+					<figcaption>throw a potato in space</figcaption>
+				</a>
+</div>
+
+<h2 style="text-align: center;"><strong>StrongDog LLC:</strong></h2>
+
+	<div class="news">
+        <a class="news-title">Executives:</a>
+        <a>CEO: Joshua Pettit</a>
+        <a class="news-content">Coders:</a>
+        <a>Joshua Pettit</a>
+        <a class="news-content">Canvas designer:</a>
+        <a>Noah ross</a>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.querySelector('.search-bar');
+    const searchResults = document.getElementById('searchResults');
+    const cards = Array.from(document.querySelectorAll('.card'));
+
+    // Show results when the search bar is focused
+    searchInput.addEventListener('focus', function() {
+        searchResults.style.display = 'block';
+        updateSearchResults();
+    });
+
+    // Update the search results based on the input
+    searchInput.addEventListener('input', updateSearchResults);
+
+    // Hide results when clicking outside the search bar and results
+    document.addEventListener('click', function(event) {
+        if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
+            searchResults.style.display = 'none';
+        }
+    });
+
+    // Function to update the search results
+    function updateSearchResults() {
+        const searchText = searchInput.value.toLowerCase();
+        const filteredCards = cards.filter(card => 
+            !card.classList.contains('ad-card') &&  // Exclude ad cards
+            card.textContent.toLowerCase().includes(searchText)
+        ).slice(0, 7); // Top 7 results
+
+        searchResults.innerHTML = '';
+        filteredCards.forEach(card => {
+            const gameTitle = card.querySelector('figcaption').textContent;
+            const gameImage = card.querySelector('img').src;
+
+            const resultLink = document.createElement('a');
+            resultLink.href = card.getAttribute('href');
+            resultLink.innerHTML = `<img src="${gameImage}" alt="${gameTitle}"><span>${gameTitle}</span>`;
+            searchResults.appendChild(resultLink);
+        });
+    }
+});
+
+</script>
+
+
+</body>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+    const randomGameButton = document.getElementById('randomGame');
+    const blockLanschoolButton = document.getElementById('blockLanschool');
+    const cards = Array.from(document.querySelectorAll('.card'));
+
+    randomGameButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (cards.length > 0) {
+            const randomIndex = Math.floor(Math.random() * cards.length);
+            const randomCardHref = cards[randomIndex].getAttribute('href');
+            window.location.href = randomCardHref;
+        }
+    });
+
+	blockLanschoolButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    var url = "https://jman1593.github.io";
+    var newTab = window.open();
+    newTab.document.write('<html><body style="margin: 0; height: 100vh;"><iframe src="' + url + '" style="border: none; width: 100%; height: 100%;"></iframe></body></html>');
+    newTab.document.close();
+    });
+}); 
+
+</script>
+</html>

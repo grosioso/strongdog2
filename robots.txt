@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /games/
+Allow: /index.html 

@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StrongDog XP Games</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #2e2e2e; /* Dark grey background */
+    }
+    .navbar {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+	.categories {
+    display: flex;
+    gap: 20px; /* Spacing between categories */
+}
+
+.categories a:hover {
+    background-color: #565656; /* Light grey background on hover */
+    transform: scale(1.05); /* Slight increase in size */
+}
+
+.categories a {
+    text-decoration: none;
+    color: white;
+    transition: all 0.3s ease;
+    padding: 5px 10px; /* Padding for touch area */
+    border-radius: 5px; /* Rounded corners */
+}
+
+    .navbar .logo {
+        color: white;
+        font-weight: bold;
+    }
+    .navbar .logo .xp {
+        color: orange;
+    }
+    .navbar a, .navbar a:visited, .navbar .logo span {
+        text-decoration: none;
+        margin-right: 20px;
+    }
+    .search-bar {
+        padding: 5px;
+        font-size: 1em;
+        border-radius: 5px;
+        border: none;
+		width: 100%;
+    }
+    .games-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        padding: 10px;
+		justify-content: center;
+    }
+    .card {
+        background-color: #fff;
+    border-radius: 10px;
+    margin: 5px; /* Reduced margin */
+    width: 120px;
+    height: 120px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    position: relative;
+		overflow: hidden;
+        position: relative;
+    }
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.29);
+    }
+    .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    .card:hover img {
+        transform: scale(1.02); /* subtle zoom on the image */
+    }
+    .card figcaption {
+        position: absolute;
+        bottom: -30px; /* start hidden */
+        left: 0;
+        width: 100%;
+        background-color: rgb(74, 74, 74);
+        color: white;
+        text-align: center;
+        padding: 5px;
+        transition: bottom 0.5s ease; /* smoother and slower */
+        overflow: hidden;
+    }
+    .card:hover figcaption {
+        bottom: 0; /* slide up on hover */
+    }
+	.card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+    transform: rotate(30deg) translate(-50%, -50%);
+    transition: transform 0.5s, opacity 0.5s;
+    opacity: 0;
+    pointer-events: none; /* This ensures the shine doesn't interfere with clicking the card */
+}
+
+.card:hover::before {
+    transform: rotate(30deg) translate(100%, -50%);
+    opacity: 1;
+}
+
+.search-results {
+	position: absolute;
+        right: 20px;
+        top: 60px;
+        background-color: white;
+        color: black;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 250px; /* Adjusted for image display */
+        display: none;
+        z-index: 1000;
+        transform-origin: left; /* Anchor the transformation to the left */
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        border-radius: 5px; /* Rounded corners for the search results box */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.search-results a {
+	display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: black;
+        border-bottom: 1px solid #eee;
+        padding: 5px;
+        transition: all 0.3s ease;
+}
+
+.search-results img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.search-results a:last-child {
+    border-bottom: none;
+}
+
+.news {
+    max-width: 800px; /* Set a maximum width */
+    margin: 0 auto; /* Center align */
+    padding: 20px;
+    background-color: #444; /* Slightly darker background */
+    color: white;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* Subtle shadow */
+}
+
+.news a {
+    display: block; /* Make each item take its own line */
+    margin: 5px 0; /* Spacing between items */
+    color: #ccc; /* Lighter text color */
+    text-decoration: none; /* Remove underline */
+}
+
+.news-title {
+    color: orange; /* Color to match your theme */
+    font-weight: bold;
+}
+
+.news-content {
+    color: #ddd; /* Slightly lighter color for content */
+}
+
+/* Styling for the All Games label */
+h2 {
+    text-align: center;
+    color: white;
+    margin: 20px 0; /* Spacing above and below */
+    font-size: 1.5em; /* Larger font size */
+}
+
+.card figcaption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(95,95,95,0.8); /* Non-transparent background */
+    color: white;
+    text-align: center;
+    padding: 5px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateY(100%); /* Start off-screen */
+    opacity: 0;
+}
+
+.card:hover figcaption {
+    height: 30px; /* Show text on hover */
+    background-color: rgb(95, 95, 95); /* Non-transparent background on hover */
+	transform: translateY(0); /* Slide up to visible */
+    opacity: 1;
+}
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1609993827735056"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="index.html" class="logo">StrongDog<span class="xp">XP</span></a>
+	<div class="categories">
+		<a href="new.html">New</a>
+        <a href="favs.html">Favs</a>
+        <a href="all.html">All</a>
+        <a href="#" id="randomGame">Random Game</a>
+        <a href="#" id="blockLanschool">Block Lanschool</a>
+    </div>
+
+	<div class="search-container">
+		<input type="text" class="search-bar" placeholder="Search games..." id="searchInput">
+		<div class="search-results" id="searchResults"></div>
+	</div>
+</div>
+
+	<h2 style="text-align: center;"><strong>New Games</strong></h2>
+<div class="games-grid">
+    <a href="./html/resent/Resent-4.0-Patch-2-English.html" class="card">
+		<img src="./img/resent.png"></img>
+		<figcaption style="color:black">Resent client (mc)</figcaption>
+	
+	</a>
+    <a href="./html/pixelshooter/index.html" class="card">
+		<img src="./img/pixelshooter.jpeg"></img>
+		<figcaption style="color:black">Pixel shooter</figcaption>
+	
+	</a>
+    
+    <a href="./html/polytrack/index.html" class="card">
+		<img src="./img/polytrack.jfif"></img>
+		<figcaption style="color:black">Poly track</figcaption>
+	
+	</a>
+    
+    <a href="./html/infinitecraft/index.html" class="card">
+		<img src="./img/infinitecraft.png"></img>
+		<figcaption style="color:black">infinite craft</figcaption>
+	
+	</a>
+	<a href="./html/retro bowl college/index.html" class="card">
+		<img src="./img/retro bowl college.png"></img>
+		<figcaption style="color:black">retro bowl college</figcaption>
+	
+	</a>
+	
+	
+	<a href="./html/jptragar/web/index.html" class="card">
+		<img src="./img/agar.jpeg"></img>
+		<figcaption style="color:black">agar.io</figcaption>
+	</a>
+	
+	<a href="https://jman1593.github.io/agar/" class="card">
+		<img src="./img/agarskin.webp"></img>
+		<figcaption style="color:black">agar.io skins</figcaption>
+	</a>
+			
+	<a href="./html/giraffe/index.html" class="card">
+		<img src="./img/giraffe.png"></img>
+		<figcaption style="color:black">giraffes volleyball</figcaption>
+	
+	</a>
+	
+	
+	
+	
+	<a href="./html/yin and yang/index.html" class="card">
+		<img src="./img/yin and yang.jpg"></img>
+		<figcaption style="color:black">yin and yang</figcaption>
+	
+	</a>
+	
+	
+	<a href="./swf/arcuz/base.html" class="card">
+		<img src="./img/arcuz.jpg"></img>
+		<figcaption style="color:black">arcuz</figcaption>
+	
+	</a>
+	
+	<a href="./swf/age of war/base.html" class="card">
+		<img src="./img/age of war.jpg"></img>
+		<figcaption style="color:black">age of war</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/winter gifts/index.html" class="card">
+		<img src="./img/winter gifts.jpg"></img>
+		<figcaption style="color:black">winter gifts</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/tough growth/index.html" class="card">
+		<img src="./img/tough growth.jpg"></img>
+		<figcaption style="color:black">tough growth</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/the dark one/index.html" class="card">
+		<img src="./img/the dark one.jpg"></img>
+		<figcaption style="color:black">the dark one</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/tactical weapon pack/index.html" class="card">
+		<img src="./img/tactical weapon pack.png"></img>
+		<figcaption style="color:black">tactical weapon pack</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/soul mirror/index.html" class="card">
+		<img src="./img/soul mirror.jpg"></img>
+		<figcaption style="color:black">soul mirror</figcaption>
+	
+	</a>
+	
+	
+	<a href="./html/push/index.html" class="card">
+		<img src="./img/push.jpg"></img>
+		<figcaption style="color:black">push</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/progress knight/index.html" class="card">
+		<img src="./img/progress knight.png"></img>
+		<figcaption style="color:black">progress knight</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/pe norie/index.html" class="card">
+		<img src="./img/pe norie.jpg"></img>
+		<figcaption style="color:black">pe norie</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/orange/index.html" class="card">
+		<img src="./img/orange.png"></img>
+		<figcaption style="color:black">orange</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/one trick mage/index.html" class="card">
+		<img src="./img/one trick mage.png"></img>
+		<figcaption style="color:black">one trick mage</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/mini sticky/index.html" class="card">
+		<img src="./img/mini sticky.avif"></img>
+		<figcaption style="color:black">mini sticky</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/mini jumps/index.html" class="card">
+		<img src="./img/mini jumps.png"></img>
+		<figcaption style="color:black">mini jumps</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/life in the static/index.html" class="card">
+		<img src="./img/life in the static.jpg"></img>
+		<figcaption style="color:black">life in the static</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/laqueus escape chapter 1/index.html" class="card">
+		<img src="./img/laqueus escape chapter 1.avif"></img>
+		<figcaption style="color:black">laqueus escape chapter 1</figcaption>
+	
+	</a>
+	
+	
+	<a href="./html/just passing/index.html" class="card">
+		<img src="./img/just passing.png"></img>
+		<figcaption style="color:black">just passing</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/hexa knot/index.html" class="card">
+		<img src="./img/hexa knot.png"></img>
+		<figcaption style="color:black">hexa knot</figcaption>
+	
+	</a>
+
+	
+	
+	
+	<a href="./html/goodbye doggy/index.html" class="card">
+		<img src="./img/goodbye doggy.jpg"></img>
+		<figcaption style="color:black">goodbye doggy</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/generic fishing game/index.html" class="card">
+		<img src="./img/generic fishing game.png"></img>
+		<figcaption style="color:black">generic fishing game</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/dubstep raven/index.html" class="card">
+		<img src="./img/dubstep raven.png"></img>
+		<figcaption style="color:black">dubstep raven</figcaption>
+	
+	</a>
+	
+	
+	<a href="./html/doodle alive/index.html" class="card">
+		<img src="./img/doodle alive.jpg"></img>
+		<figcaption style="color:black">doodle alive</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/detective bass fish/index.html" class="card">
+		<img src="./img/detective bass fish.webp"></img>
+		<figcaption style="color:black">detective bass fish</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/cursed travels below/index.html" class="card">
+		<img src="./img/cursed travels below.png"></img>
+		<figcaption style="color:black">cursed travels below</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/clickventure castaway/index.html" class="card">
+		<img src="./img/clickventure castaway.jpg"></img>
+		<figcaption style="color:black">clickventure castaway</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/cataractae/index.html" class="card">
+		<img src="./img/cataractae.jpg"></img>
+		<figcaption style="color:black">cataractae</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/cat house/index.html" class="card">
+		<img src="./img/cat house.avif"></img>
+		<figcaption style="color:black">cat house</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/cardinal chains/index.html" class="card">
+		<img src="./img/cardinal chains.png"></img>
+		<figcaption style="color:black">cardinal chains</figcaption>
+	
+	</a>
+	
+	
+	
+	<a href="./html/bunnies carrot/index.html" class="card">
+		<img src="./img/bunnies carrot.jpg"></img>
+		<figcaption style="color:black">bunnies carrot</figcaption>
+	
+	</a>
+</div>
+
+<h2 style="text-align: center;"><strong>StrongDog LLC:</strong></h2>
+
+	<div class="news">
+        <a class="news-title">Executives:</a>
+        <a>CEO: Joshua Pettit</a>
+        <a class="news-content">Coders:</a>
+        <a>Joshua Pettit</a>
+        <a class="news-content">Canvas designer:</a>
+        <a>Noah ross</a>
+        <a class="news-title">Where we got games:</a>
+        <a>reunlocked.lol</a>
+        <a>scratch.mit.edu</a>
+        <a>construct.net</a>
+        <a>github.com</a>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.querySelector('.search-bar');
+    const searchResults = document.getElementById('searchResults');
+    const cards = Array.from(document.querySelectorAll('.card'));
+
+    // Show results when the search bar is focused
+    searchInput.addEventListener('focus', function() {
+        searchResults.style.display = 'block';
+        updateSearchResults();
+    });
+
+    // Update the search results based on the input
+    searchInput.addEventListener('input', updateSearchResults);
+
+    // Hide results when clicking outside the search bar and results
+    document.addEventListener('click', function(event) {
+        if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
+            searchResults.style.display = 'none';
+        }
+    });
+
+    // Function to update the search results
+    function updateSearchResults() {
+        const searchText = searchInput.value.toLowerCase();
+        const filteredCards = cards.filter(card => 
+            !card.classList.contains('ad-card') &&  // Exclude ad cards
+            card.textContent.toLowerCase().includes(searchText)
+        ).slice(0, 7); // Top 7 results
+
+        searchResults.innerHTML = '';
+        filteredCards.forEach(card => {
+            const gameTitle = card.querySelector('figcaption').textContent;
+            const gameImage = card.querySelector('img').src;
+
+            const resultLink = document.createElement('a');
+            resultLink.href = card.getAttribute('href');
+            resultLink.innerHTML = `<img src="${gameImage}" alt="${gameTitle}"><span>${gameTitle}</span>`;
+            searchResults.appendChild(resultLink);
+        });
+    }
+});
+
+</script>
+
+
+</body>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+    const randomGameButton = document.getElementById('randomGame');
+    const blockLanschoolButton = document.getElementById('blockLanschool');
+    const cards = Array.from(document.querySelectorAll('.card'));
+
+    randomGameButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (cards.length > 0) {
+            const randomIndex = Math.floor(Math.random() * cards.length);
+            const randomCardHref = cards[randomIndex].getAttribute('href');
+            window.location.href = randomCardHref;
+        }
+    });
+
+    blockLanschoolButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    var url = "https://jman1593.github.io";
+    var newTab = window.open();
+    newTab.document.write('<html><body style="margin: 0; height: 100vh;"><iframe src="' + url + '" style="border: none; width: 100%; height: 100%;"></iframe></body></html>');
+    newTab.document.close();
+    });
+});
+
+</script>
+</html>
