@@ -220,6 +220,30 @@ h2 {
 	transform: translateY(0); /* Slide up to visible */
     opacity: 1;
 }
+.pagination {
+    text-align: center;
+    margin: 20px 0;
+    background-color: #2e2e2e; /* Dark grey background, same as body */
+}
+
+.pagination a {
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #444; /* Slightly lighter border for visibility */
+    margin: 0 4px;
+}
+
+.pagination a.active {
+    background-color: #444; /* Slightly darker for the active link */
+    border: 1px solid #666;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #444; /* On hover */
+}
+
 </style>
 </head>
 <body>
@@ -252,6 +276,11 @@ h2 {
 	<img src="./img/resent.png"></img>
 	<figcaption style="color:black">Resent client (mc)</figcaption>
 </a>
+</div>
+
+<div class="pagination">
+    <a href="https://jman1593.github.io" id="page1">1</a>
+    <a href="#" id="page1">2</a>
 </div>
 
 <h2 style="text-align: center;"><strong>StrongDog LLC:</strong></h2>
