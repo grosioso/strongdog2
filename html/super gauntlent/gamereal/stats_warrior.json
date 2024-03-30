@@ -1,0 +1,14 @@
+{
+    "c2dictionary": true,
+    "data": {
+        "max_hp": 6,
+        "hp": 6,
+        "shoots_per_second": 2,
+        "damage": 5,
+        "max_distance": 1,
+        "move_speed": 1,
+        "wall_through": 1,
+        "bullets_per_shoot": 1,
+        "bullets_scale": 1
+    }
+}
