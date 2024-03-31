@@ -220,12 +220,15 @@ h2 {
 	transform: translateY(0); /* Slide up to visible */
     opacity: 1;
 }
-.pagination {
+.centered-content {
     text-align: center;
-    margin: 20px 0;
-    background-color: #2e2e2e; /* Dark grey background, same as body */
+    margin-bottom: 20px; /* Adds space below the StrongDog LLC section */
 }
 
+.pagination {
+    text-align: center;
+    margin-top: 20px; /* Adds space above the pagination section */
+}
 .pagination a {
     color: white;
     padding: 8px 16px;
@@ -242,6 +245,11 @@ h2 {
 
 .pagination a:hover:not(.active) {
     background-color: #444; /* On hover */
+}
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
 }
 
 </style>
@@ -341,15 +349,14 @@ h2 {
 	<figcaption style="color:black">Resent client (mc)</figcaption>
 </a>
 </div>
-
+<div class="clearfix">
 <div class="pagination">
     <a href="https://jman1593.github.io" id="page1">1</a>
     <a href="#" id="page1">2</a>
 </div>
-
-<h2 style="text-align: center;"><strong>StrongDog LLC:</strong></h2>
-
-	<div class="news">
+<div class="centered-content">
+    <h2><strong>StrongDog LLC:</strong></h2>
+    <div class="news">
         <a class="news-title">Executives:</a>
         <a>CEO: Joshua Pettit</a>
         <a class="news-content">Coders:</a>
@@ -357,7 +364,8 @@ h2 {
         <a class="news-content">Canvas designer:</a>
         <a>Noah ross</a>
     </div>
-
+</div>
+</div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.querySelector('.search-bar');
