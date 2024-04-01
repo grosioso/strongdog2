@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: #555555;
+    color: #444;
+}
+
+#chat-app {
+    display: flex;
+    height: 89vh;
+}
+
+#chat-list {
+    width: 300px;
+    background-color: #666666;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+#new-chat-button {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#new-chat-button:hover {
+    background-color: #45a049;
+}
+
+#chat-list ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#chat-list li {
+    cursor: pointer;
+    padding: 10px;
+    margin-bottom: -1px;
+    background-color: #7b7b7b;
+}
+
+#chat-list li:hover {
+    background-color: #636262;
+}
+
+#chat-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #7b7b7b;
+    padding: 20px;
+    position: relative; /* Added for positioning children */
+}
+
+#chat-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background-color: #7b7b7b; /* Adjust as needed */
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+#messages {
+    position: absolute;
+    top: 50px; /* Height of chat header */
+    bottom: 60px; /* Height of input container */
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    list-style-type: none;
+    padding: 0;
+    overflow-y: auto;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+#messages::-webkit-scrollbar {
+    display: none; /* For Webkit browsers like Chrome/Safari */
+}
+
+#messages li {
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 18px;
+    max-width: 60%;
+    word-wrap: break-word;
+    line-height: 1.5;
+}
+
+.sent {
+    background-color: #007bff;
+    color: white;
+    align-self: flex-end;
+}
+
+.received {
+    background-color: #e0e0e0;
+    align-self: flex-start;
+}
+
+#input-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    margin-top: 20px;
+    padding-top: 20px;
+    padding: 10px;
+    background-color: #7b7b7b; /* Same as chat-container for seamless look */
+    border-top: none; /* Remove if not needed */
+}
+
+#message-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+#send-message-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#send-message-button:hover {
+    background-color: #45a049;
+}
+
+#sign-out-button {
+    padding: 10px 20px;
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#sign-out-button:hover {
+    background-color: #cc0000;
+}
+
+.auth-button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+
+        .auth-button:hover {
+            background-color: #0056b3;
+        }
+
+        .remove-chat-button {
+    padding: 6px 8px !important;
+    font-size: 10px !important;
+    background-color: #ff4444 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    margin-left: 5px !important;
+    line-height: normal !important;
+    float: right !important;
+}
+
+.remove-chat-button:hover {
+    background-color: #cc0000 !important;
+}
+
+.chat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* This ensures vertical centering of children */
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+.chat-item:hover {
+    background-color: #eee;
+}
+
+.chat-name {
+    flex-grow: 1; /* Allow chat name to take up remaining space */
+    margin-right: 10px; /* Add some space between chat name and remove button */
+}
+#login-status{
+    color: #2a2a2a;
+}
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Chat</title>
+</head>
+<body>
+    <div id="login-status">Not logged in</div>
+    <button id="sign-out-button" style="display: none;">Sign Out</button>
+    <button class="auth-button" onclick="window.location.href='signup.html'">Sign Up</button>
+    <button class="auth-button" onclick="window.location.href='login.html'">Login</button>
+    <div id="chat-app">
+        <div id="chat-list">
+            <button id="new-chat-button">New Chat</button>
+            <ul id="chats"></ul>
+        </div>
+        <div id="chat-container" style="display:none;">
+            <div id="chat-header">Select a chat</div>
+            <ul id="messages"></ul>
+            <div id="input-container">
+                <input id="message-input" type="text" placeholder="Type here...">
+                <button id="send-message-button">Send Message</button>
+            </div>
+        </div>
+    </div>
+    
+
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+    
+
+    <!-- Your web app's Firebase configuration -->
+    <script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyCqk5PE-8ziN2JzAciTNSB19ynVrLnjMKw",
+    authDomain: "chat-aa0b2.firebaseapp.com",
+    databaseURL: "https://chat-aa0b2-default-rtdb.firebaseio.com",
+    projectId: "chat-aa0b2",
+    storageBucket: "chat-aa0b2.appspot.com",
+    messagingSenderId: "487874472529",
+    appId: "1:487874472529:web:88d0e46dd863a2d7232670",
+    measurementId: "G-D88TDDVPGJ"
+  };
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+// Authentication State Change
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        // User is signed in
+        document.getElementById("login-status").textContent = "Logged in as: " + user.email;
+        document.getElementById("sign-out-button").style.display = "block";
+        loadChatList();
+    } else {
+        // User is signed out
+        document.getElementById("login-status").textContent = "Not logged in";
+        document.getElementById("sign-out-button").style.display = "none";
+        document.getElementById("chats").innerHTML = ""; // Clear chat list
+        document.getElementById("chat-container").style.display = "none";
+    }
+});
+
+document.getElementById('sign-out-button').addEventListener('click', function() {
+    firebase.auth().signOut();
+});
+
+document.getElementById('new-chat-button').addEventListener('click', function() {
+    if (firebase.auth().currentUser) {
+        var chatName = prompt("Enter chat name:");
+        if (chatName) {
+            joinChat(chatName);
+        }
+    } else {
+        alert("Please sign in to create a new chat.");
+    }
+});
+
+
+function joinChat(chatName) {
+    const chatRef = firebase.database().ref('chats/' + chatName);
+    const messagesRef = firebase.database().ref('messages/' + chatName);
+    const user = firebase.auth().currentUser;
+
+    chatRef.transaction(currentData => {
+        if (currentData === null) {
+            let hasPassword = prompt("Set a password for this chat? (y/n)") === 'y';
+            let password = hasPassword ? prompt("Enter the chat password:") : null;
+
+            // Send a message that a new chat is being created
+            messagesRef.push({
+                text: "Creating new chat...",
+                sender: "System",
+                timestamp: firebase.database.ServerValue.TIMESTAMP,
+                isSystemMessage: true
+            });
+
+            // Add the chat creator as the first participant
+            return {
+                createdOn: new Date().toISOString(),
+                participants: { [user.uid]: true },
+                password: password
+            };
+        } else {
+            if (currentData.password) {
+                let enteredPassword = prompt("Enter the chat password:");
+                if (enteredPassword !== currentData.password) {
+                    alert("Incorrect password.");
+                    return; // Exit without joining the chat
+                }
+            }
+
+            // Send a message that a new user has joined
+            messagesRef.push({
+                text: (user.displayName || user.email) + " joined the chat!",
+                sender: "System",
+                timestamp: firebase.database.ServerValue.TIMESTAMP,
+                isSystemMessage: true
+            });
+
+            if (!currentData.participants) {
+                currentData.participants = {};
+            }
+            currentData.participants[user.uid] = true;
+            return currentData;
+        }
+    }, function(error, committed, snapshot) {
+        if (error) {
+            console.error("Transaction failed: ", error);
+        } else if (committed) {
+            // Transaction committed: display the chat
+            displayChat(chatName);
+        }
+    });
+}
+
+
+
+
+
+function loadChatList() {
+    const chatsRef = firebase.database().ref('chats/');
+    chatsRef.on('child_added', snapshot => {
+        const chatName = snapshot.key;
+        addChatToList(chatName);
+    });
+}
+
+function addChatToList(chatName) {
+    const chatList = document.getElementById("chats");
+    const chatItem = document.createElement("li");
+    chatItem.className = 'chat-item';
+    chatItem.setAttribute('data-chat-name', chatName);
+
+    // Clickable chat name
+    const chatNameSpan = document.createElement("span");
+    chatNameSpan.textContent = chatName;
+    chatNameSpan.className = "chat-name";
+
+    // Remove button
+    const removeButton = document.createElement("button");
+    removeButton.textContent = "Remove";
+    removeButton.className = "remove-chat-button";
+    removeButton.onclick = (e) => {
+        e.stopPropagation(); // Prevents the entire list item click
+        removeChat(chatName);
+    };
+
+    chatItem.appendChild(chatNameSpan);
+    chatItem.appendChild(removeButton);
+    
+    // Add click event to the entire list item
+    chatItem.onclick = () => displayChat(chatName);
+
+    chatList.appendChild(chatItem);
+}
+
+
+
+
+
+function displayChat(chatName) {
+    document.getElementById("chat-header").textContent = chatName;
+    document.getElementById("chat-container").style.display = "block";
+    document.getElementById("messages").innerHTML = ''; // Clear existing messages
+    listenForMessages(chatName);
+}
+
+var currentChatRef;
+
+function listenForMessages(chatName) {
+    if (currentChatRef) {
+        currentChatRef.off(); // Stop listening to the previous chat
+    }
+    currentChatRef = firebase.database().ref('messages/' + chatName);
+    currentChatRef.on('child_added', function(snapshot) {
+        var childData = snapshot.val();
+        displayMessage(childData);
+    });
+}
+
+function displayMessage(messageData) {
+    const messagesContainer = document.getElementById("messages");
+    const msgElement = document.createElement("li");
+
+    const user = firebase.auth().currentUser;
+    if (messageData.sender === (user.displayName || user.email)) { // Adjust this comparison as needed
+        msgElement.className = 'sent';
+        msgElement.textContent = "You: " + messageData.text;
+    } else if (messageData.isSystemMessage) {
+        msgElement.style.color = "green";
+        msgElement.style.textAlign = "center";
+        msgElement.textContent = messageData.text;
+    } else {
+        msgElement.className = 'received';
+        msgElement.textContent = messageData.sender + ": " + messageData.text;
+    }
+
+    messagesContainer.prepend(msgElement); // Use prepend to add new messages at the top
+}
+
+
+
+
+document.getElementById('send-message-button').addEventListener('click', function() {
+    const messageInput = document.getElementById('message-input');
+    const messageText = messageInput.value;
+    const currentChat = document.getElementById("chat-header").textContent;
+    if (messageText && currentChat) {
+        sendMessage(currentChat, messageText);
+        messageInput.value = '';
+    }
+});
+
+function sendMessage(chatName, messageText) {
+    const user = firebase.auth().currentUser;
+    if (user) {
+        const messageData = {
+            text: messageText,
+            sender: user.displayName || user.email, // Use displayName if available
+            timestamp: firebase.database.ServerValue.TIMESTAMP
+        };
+        firebase.database().ref('messages/' + chatName).push(messageData);
+    }
+}
+
+function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault(); // Prevents form submission
+        const messageInput = document.getElementById('message-input');
+        const messageText = messageInput.value;
+        const currentChat = document.getElementById("chat-header").textContent;
+        if (messageText && currentChat) {
+            sendMessage(currentChat, messageText);
+            messageInput.value = '';
+        }
+    }
+}
+
+function removeChat(chatName) {
+    const chatRef = firebase.database().ref('chats/' + chatName);
+    const user = firebase.auth().currentUser;
+    const currentChat = document.getElementById("chat-header").textContent;
+
+    chatRef.once('value', snapshot => {
+        const chatData = snapshot.val();
+        if (chatData && chatData.participants) {
+            if (chatData.participants[user.uid]) {
+                const isOnlyParticipant = Object.keys(chatData.participants).length === 1;
+                const leaveMessage = {
+                    text: (user.displayName || user.email) + " left the chat!",
+                    sender: "System",
+                    timestamp: firebase.database.ServerValue.TIMESTAMP,
+                    isSystemMessage: true
+                };
+
+                if (isOnlyParticipant) {
+                    chatRef.remove();
+                    firebase.database().ref('messages/' + chatName).remove();
+                    alert("Chat removed as you were the only participant.");
+                } else {
+                    chatRef.child('participants/' + user.uid).remove();
+                    firebase.database().ref('messages/' + chatName).push(leaveMessage);
+                    alert("You have left the chat: " + chatName);
+                }
+
+                removeChatFromUI(chatName);
+
+                if (currentChat === chatName) {
+                    closeChatDisplay();
+                }
+            } else {
+                alert("You are not a participant of this chat.");
+            }
+        } else {
+            alert("Chat data not found.");
+        }
+    }, error => {
+        console.error('Error reading chat data: ', error);
+    });
+}
+
+function removeChatFromUI(chatName) {
+    const chatList = document.getElementById("chats");
+    const chatItems = chatList.querySelectorAll('.chat-item');
+    chatItems.forEach(chatItem => {
+        if (chatItem.getAttribute('data-chat-name') === chatName) {
+            chatList.removeChild(chatItem);
+        }
+    });
+}
+
+function closeChatDisplay() {
+    document.getElementById("chat-container").style.display = "none";
+    document.getElementById("chat-header").textContent = "Select a chat";
+    document.getElementById("messages").innerHTML = '';
+}
+
+
+function closeChatDisplay() {
+    document.getElementById("chat-container").style.display = "none";
+    document.getElementById("chat-header").textContent = "Select a chat";
+    document.getElementById("messages").innerHTML = '';
+}
+
+function removeChatFromUI(chatName) {
+    const chatList = document.getElementById("chats");
+    const chatItems = chatList.querySelectorAll('.chat-item');
+
+    chatItems.forEach(chatItem => {
+        if (chatItem.getAttribute('data-chat-name') === chatName) {
+            chatList.removeChild(chatItem);
+        }
+    });
+}
+
+
+
+function leaveChat(chatName) {
+    const chatRef = firebase.database().ref('chats/' + chatName + '/participants/' + firebase.auth().currentUser.uid);
+    chatRef.remove();
+}
+
+document.getElementById('message-input').addEventListener('keypress', handleKeyPress);
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Strongdog Chat - Sign Up</title>
+    <style>
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #282828, #4e4e4e);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+    }
+
+    #signup-form {
+        width: 300px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.18);
+    }
+
+        #signup-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #signup-form input {
+            width: calc(100% - 20px); /* Adjust width accounting for padding */
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            border: none;
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        #signup-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #494949;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+    }
+
+    #signup-form button:hover {
+        background-color: #555555;
+    }
+
+        #error-message {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="signup-form">
+        <h2>Sign Up</h2>
+        <input type="text" id="name" placeholder="Name" autofocus>
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+        <button id="sign-up-button">Sign Up</button>
+        <p id="error-message"></p>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCqk5PE-8ziN2JzAciTNSB19ynVrLnjMKw",
+            authDomain: "chat-aa0b2.firebaseapp.com",
+            databaseURL: "https://chat-aa0b2-default-rtdb.firebaseio.com",
+            projectId: "chat-aa0b2",
+            storageBucket: "chat-aa0b2.appspot.com",
+            messagingSenderId: "487874472529",
+            appId: "1:487874472529:web:88d0e46dd863a2d7232670",
+            measurementId: "G-D88TDDVPGJ"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        const signupButton = document.getElementById('sign-up-button');
+        signupButton.addEventListener('click', signUp);
+
+        document.getElementById('signup-form').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                signUp();
+            }
+        });
+
+        function signUp() {
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                return userCredential.user.updateProfile({
+                    displayName: name
+                });
+            })
+            .then(() => {
+                window.location.href = 'index.html'; // Redirect after successful signup
+            })
+            .catch((error) => {
+                document.getElementById('error-message').textContent = error.message;
+            });
+        }
+
+        document.getElementById('signup-form').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        signUp();
+    }
+});
+
+    </script>
+</body>
+</html>
