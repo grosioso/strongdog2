@@ -11,18 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      # Create a temporary directory and move all files except the temp directory itself into it
-      - name: Reorganize files
-        run: |
-          mkdir tempdir
-          shopt -s extglob dotglob
-          mv !(tempdir) tempdir
-          mv tempdir strongdog2
-
-      # Sync with S3
+      # Sync the repository contents to the 'strongdog2' folder in the S3 bucket
       - uses: jakejarvis/s3-sync-action@master
         with:
-          args: --acl public-read --follow-symlinks --delete --exclude '.git*/*'
+          args: --acl public-read --follow-symlinks --exclude '.git*/*' --source-dir 'strongdog2'
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
