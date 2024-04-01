@@ -11,12 +11,13 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      # Create strongdog2 directory and move all files into it
+      # Create a temporary directory and move all files except the temp directory itself into it
       - name: Reorganize files
         run: |
-          mkdir strongdog2
-          shopt -s dotglob
-          mv * strongdog2
+          mkdir tempdir
+          shopt -s extglob dotglob
+          mv !(tempdir) tempdir
+          mv tempdir strongdog2
 
       # Sync with S3
       - uses: jakejarvis/s3-sync-action@master
