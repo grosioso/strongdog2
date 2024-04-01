@@ -1,4 +1,4 @@
-name: Upload strongdog2 Folder
+name: Upload Repository to strongdog2 Folder
 
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@master
       - uses: jakejarvis/s3-sync-action@master
         with:
-          args: --acl public-read --follow-symlinks --exclude '*' --include 'strongdog2/*'
+          args: --acl public-read --follow-symlinks --delete --exclude '.git*/*' --destination 'strongdog2/'
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
