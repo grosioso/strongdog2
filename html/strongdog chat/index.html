@@ -297,58 +297,65 @@ function joinChat(chatName) {
     const messagesRef = firebase.database().ref('messages/' + chatName);
     const user = firebase.auth().currentUser;
 
-    chatRef.transaction(currentData => {
-        if (currentData === null) {
-            let hasPassword = prompt("Set a password for this chat? (y/n)") === 'y';
-            let password = hasPassword ? prompt("Enter the chat password:") : null;
-
-            // Send a message that a new chat is being created
-            messagesRef.push({
-                text: "Creating new chat...",
-                sender: "System",
-                timestamp: firebase.database.ServerValue.TIMESTAMP,
-                isSystemMessage: true
-            });
-
-            // Add the chat creator as the first participant
-            return {
-                createdOn: new Date().toISOString(),
-                participants: { [user.uid]: true },
-                password: password
-            };
+    // Check if the chat already exists
+    chatRef.once('value', snapshot => {
+        if (snapshot.exists()) {
+            // The chat exists, join it
+            joinExistingChat(chatRef, messagesRef, user, chatName, snapshot.val());
         } else {
-            if (currentData.password) {
-                let enteredPassword = prompt("Enter the chat password:");
-                if (enteredPassword !== currentData.password) {
-                    alert("Incorrect password.");
-                    return; // Exit without joining the chat
-                }
-            }
-
-            // Send a message that a new user has joined
-            messagesRef.push({
-                text: (user.displayName || user.email) + " joined the chat!",
-                sender: "System",
-                timestamp: firebase.database.ServerValue.TIMESTAMP,
-                isSystemMessage: true
-            });
-
-            if (!currentData.participants) {
-                currentData.participants = {};
-            }
-            currentData.participants[user.uid] = true;
-            return currentData;
-        }
-    }, function(error, committed, snapshot) {
-        if (committed) {
-            // Add chat to the user's personal chat list
-            const userChatsRef = firebase.database().ref('userChats/' + user.uid + '/' + chatName);
-            userChatsRef.set(true);
-            displayChat(chatName);
+            // The chat does not exist, create a new one
+            createNewChat(chatRef, messagesRef, user, chatName);
         }
     });
 }
 
+function createNewChat(chatRef, messagesRef, user, chatName) {
+    let hasPassword = prompt("Set a password for this chat? (y/n)") === 'y';
+    let password = hasPassword ? prompt("Enter the chat password:") : null;
+
+    messagesRef.push({
+        text: "Creating new chat...",
+        sender: "System",
+        timestamp: firebase.database.ServerValue.TIMESTAMP,
+        isSystemMessage: true
+    });
+
+    chatRef.set({
+        createdOn: new Date().toISOString(),
+        participants: { [user.uid]: true },
+        password: password
+    }).then(() => {
+        addUserChat(user.uid, chatName);
+        displayChat(chatName);
+    });
+}
+
+function joinExistingChat(chatRef, messagesRef, user, chatName, chatData) {
+    if (chatData.password) {
+        let enteredPassword = prompt("Enter the chat password:");
+        if (enteredPassword !== chatData.password) {
+            alert("Incorrect password.");
+            return; // Exit without joining the chat
+        }
+    }
+
+    messagesRef.push({
+        text: (user.displayName || user.email) + " joined the chat!",
+        sender: "System",
+        timestamp: firebase.database.ServerValue.TIMESTAMP,
+        isSystemMessage: true
+    });
+
+    chatRef.child('participants/' + user.uid).set(true).then(() => {
+        addUserChat(user.uid, chatName);
+        displayChat(chatName);
+    });
+}
+
+function addUserChat(userId, chatName) {
+    const userChatsRef = firebase.database().ref('userChats/' + userId + '/' + chatName);
+    userChatsRef.set(true);
+}
 
 
 
