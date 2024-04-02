@@ -554,45 +554,52 @@ function handleKeyPress(event) {
 function removeChat(chatName) {
     const chatRef = firebase.database().ref('chats/' + chatName);
     const user = firebase.auth().currentUser;
-    const currentChat = document.getElementById("chat-header").textContent;
+
+    if (!user) {
+        console.log("User not signed in");
+        return;
+    }
 
     chatRef.once('value', snapshot => {
         const chatData = snapshot.val();
-        if (chatData && chatData.participants) {
-            if (chatData.participants[user.uid]) {
-                const isOnlyParticipant = Object.keys(chatData.participants).length === 1;
-                const leaveMessage = {
-                    text: (user.displayName || user.email) + " left the chat!",
-                    sender: "System",
-                    timestamp: firebase.database.ServerValue.TIMESTAMP,
-                    isSystemMessage: true
-                };
+        if (chatData && chatData.participants && chatData.participants[user.uid]) {
+            const isOnlyParticipant = Object.keys(chatData.participants).length === 1;
+            const leaveMessage = {
+                text: (user.displayName || user.email) + " left the chat!",
+                sender: "System",
+                timestamp: firebase.database.ServerValue.TIMESTAMP,
+                isSystemMessage: true
+            };
 
-                if (isOnlyParticipant) {
-                    chatRef.remove();
-                    firebase.database().ref('messages/' + chatName).remove();
-                    alert("Chat removed as you were the only participant.");
-                } else {
-                    chatRef.child('participants/' + user.uid).remove();
-                    firebase.database().ref('messages/' + chatName).push(leaveMessage);
-                    alert("You have left the chat: " + chatName);
-                }
+            if (isOnlyParticipant) {
+                // Remove chat and messages
+                chatRef.remove();
+                firebase.database().ref('messages/' + chatName).remove();
+            } else {
+                // Remove user from chat participants
+                chatRef.child('participants/' + user.uid).remove();
+                firebase.database().ref('messages/' + chatName).push(leaveMessage);
+            }
 
+            // Remove chat from user's chat list
+            const userChatRef = firebase.database().ref('userChats/' + user.uid + '/' + chatName);
+            userChatRef.remove().then(() => {
                 removeChatFromUI(chatName);
 
                 if (currentChat === chatName) {
                     closeChatDisplay();
                 }
-            } else {
-                alert("You are not a participant of this chat.");
-            }
+                alert("Chat '" + chatName + "' has been removed.");
+            });
+
         } else {
-            alert("Chat data not found.");
+            alert("You are not a participant of this chat or chat does not exist.");
         }
     }, error => {
         console.error('Error reading chat data: ', error);
     });
 }
+
 
 function removeChatFromUI(chatName) {
     const chatList = document.getElementById("chats");
