@@ -76,7 +76,9 @@
 
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
     <script>
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCqk5PE-8ziN2JzAciTNSB19ynVrLnjMKw",
             authDomain: "chat-aa0b2.firebaseapp.com",
@@ -88,44 +90,53 @@
             measurementId: "G-D88TDDVPGJ"
         };
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
-        const signupButton = document.getElementById('sign-up-button');
-        signupButton.addEventListener('click', signUp);
+const signupButton = document.getElementById('sign-up-button');
+signupButton.addEventListener('click', signUp);
 
-        document.getElementById('signup-form').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                signUp();
-            }
-        });
+function signUp() {
+    var name = document.getElementById('name').value;
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
 
-        function signUp() {
-            var name = document.getElementById('name').value;
-            var email = document.getElementById('email').value;
-            var password = document.getElementById('password').value;
-
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                return userCredential.user.updateProfile({
-                    displayName: name
-                });
-            })
-            .then(() => {
-                window.location.href = 'index.html'; // Redirect after successful signup
-            })
-            .catch((error) => {
-                document.getElementById('error-message').textContent = error.message;
-            });
+    // Check if the display name already exists
+    const displayNameRef = firebase.database().ref('displayNames/' + name);
+    displayNameRef.once('value', snapshot => {
+        if (snapshot.exists()) {
+            document.getElementById('error-message').textContent = 'Display Name already taken. Please choose another.';
+        } else {
+            createUser(email, password, name);
         }
+    });
+}
 
-        document.getElementById('signup-form').addEventListener('keypress', function(event) {
+function createUser(email, password, name) {
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+        // Save the display name in a separate node
+        const displayNameRef = firebase.database().ref('displayNames/' + name);
+        displayNameRef.set(userCredential.user.uid);
+
+        return userCredential.user.updateProfile({
+            displayName: name
+        });
+    })
+    .then(() => {
+        window.location.href = 'index.html'; // Redirect after successful signup
+    })
+    .catch((error) => {
+        document.getElementById('error-message').textContent = error.message;
+    });
+}
+
+document.getElementById('signup-form').addEventListener('keypress', function(event) {
     if (event.key === 'Enter') {
         event.preventDefault();
         signUp();
     }
 });
-
-    </script>
+</script>
 </body>
 </html>
