@@ -214,6 +214,15 @@ body {
 #login-status{
     color: #2a2a2a;
 }
+.owner-badge {
+    background-color: darkgrey;
+    color: white;
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-right: 5px;
+    font-size: 12px;
+}
+
 </style>
 <head>
     <meta charset="UTF-8">
@@ -428,21 +437,26 @@ function displayMessage(messageData) {
     const msgElement = document.createElement("li");
 
     const user = firebase.auth().currentUser;
-    if (messageData.sender === (user.displayName || user.email)) { // Adjust this comparison as needed
-        msgElement.className = 'sent';
-        msgElement.textContent = "You: " + messageData.text;
-    } else if (messageData.isSystemMessage) {
-        msgElement.style.color = "green";
-        msgElement.style.textAlign = "center";
-        msgElement.textContent = messageData.text;
-    } else {
-        msgElement.className = 'received';
-        msgElement.textContent = messageData.sender + ": " + messageData.text;
+    let badge = "";
+
+    // Check for the specific display name or email and set the badge
+    if (messageData.sender === "josh" || messageData.senderEmail === "josh@pettits.net") {
+        badge = "<span class='owner-badge'>Owner</span> ";
     }
 
-    messagesContainer.prepend(msgElement); // Use prepend to add new messages at the top
-}
+    let senderDisplayName = badge + messageData.sender;
 
+    if (messageData.sender === (user.displayName || user.email)) {
+        msgElement.className = 'sent';
+    } else if (messageData.isSystemMessage) {
+        msgElement.className = 'system-message';
+    } else {
+        msgElement.className = 'received';
+    }
+
+    msgElement.innerHTML = senderDisplayName + ": " + messageData.text;
+    messagesContainer.prepend(msgElement);
+}
 
 
 
