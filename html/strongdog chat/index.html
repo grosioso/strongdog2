@@ -381,10 +381,23 @@ function loadChatList() {
         const userChatsRef = firebase.database().ref('userChats/' + user.uid);
         userChatsRef.on('child_added', snapshot => {
             const chatName = snapshot.key;
-            addChatToList(chatName);
+            // Check if the user is still a participant of this chat
+            const chatRef = firebase.database().ref('chats/' + chatName + '/participants/' + user.uid);
+            chatRef.once('value', participantSnapshot => {
+                if (participantSnapshot.exists()) {
+                    // User is still a participant, add the chat to the list
+                    addChatToList(chatName);
+                } else {
+                    // User is no longer a participant, remove the chat from the list
+                    removeChatFromUI(chatName);
+                    // Also remove the chat from the user's chat list in the database
+                    userChatsRef.child(chatName).remove();
+                }
+            });
         });
     }
 }
+
 
 function addChatToList(chatName) {
     const chatList = document.getElementById("chats");
