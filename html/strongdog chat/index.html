@@ -82,14 +82,12 @@ body {
     right: 0;
     overflow-y: auto;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column; /* Changed to standard column layout */
     list-style-type: none;
     padding: 0;
     overflow-y: auto;
     flex-grow: 1;
-    overflow-y: auto;
 }
-
 #messages::-webkit-scrollbar {
     display: none; /* For Webkit browsers like Chrome/Safari */
 }
@@ -221,6 +219,15 @@ body {
     padding: 2px 6px;
     margin-right: 5px;
     font-size: 12px;
+}
+
+.new-message-indicator {
+    height: 10px;
+    width: 10px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 5px;
 }
 
 </style>
@@ -384,7 +391,7 @@ function addChatToList(chatName) {
     const chatItem = document.createElement("li");
     chatItem.className = 'chat-item';
     chatItem.setAttribute('data-chat-name', chatName);
-
+    checkForNewMessages(chatName, chatItem);
     // Clickable chat name
     const chatNameSpan = document.createElement("span");
     chatNameSpan.textContent = chatName;
@@ -417,6 +424,20 @@ function displayChat(chatName) {
     document.getElementById("chat-container").style.display = "block";
     document.getElementById("messages").innerHTML = ''; // Clear existing messages
     listenForMessages(chatName);
+    updateLastReadTimestamp(chatName); // Update last read timestamp when chat is opened
+    removeNewMessageIndicator(chatName); // Remove the red dot when chat is opened
+}
+
+function removeNewMessageIndicator(chatName) {
+    const chatListItems = document.getElementById("chats").querySelectorAll('.chat-item');
+    chatListItems.forEach(item => {
+        if (item.getAttribute('data-chat-name') === chatName) {
+            const redDot = item.querySelector('.new-message-indicator');
+            if (redDot) {
+                redDot.remove();
+            }
+        }
+    });
 }
 
 var currentChatRef;
@@ -434,12 +455,13 @@ function listenForMessages(chatName) {
 
 function displayMessage(messageData) {
     const messagesContainer = document.getElementById("messages");
-    const msgElement = document.createElement("li");
+    const shouldScroll = isScrolledToBottom(messagesContainer);
 
+    const msgElement = document.createElement("li");
     const user = firebase.auth().currentUser;
     let badge = "";
 
-    // Check for the specific display name or email and set the badge
+    // Add the owner badge if the conditions are met
     if (messageData.sender === "josh" || messageData.senderEmail === "josh@pettits.net") {
         badge = "<span class='owner-badge'>Owner</span> ";
     }
@@ -455,10 +477,44 @@ function displayMessage(messageData) {
     }
 
     msgElement.innerHTML = senderDisplayName + ": " + messageData.text;
-    messagesContainer.prepend(msgElement);
+    messagesContainer.appendChild(msgElement); // Append the message
+
+    // Auto-scroll to bottom if the user was already there
+    if (shouldScroll) {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
 }
 
+function isScrolledToBottom(el) {
+    return el.scrollHeight - el.clientHeight <= el.scrollTop + 1;
+}
 
+function updateLastReadTimestamp(chatName) {
+    const user = firebase.auth().currentUser;
+    if (user) {
+        const lastReadRef = firebase.database().ref('lastRead/' + user.uid + '/' + chatName);
+        lastReadRef.set(firebase.database.ServerValue.TIMESTAMP);
+    }
+}
+
+function checkForNewMessages(chatName, chatItem) {
+    const user = firebase.auth().currentUser;
+    if (user) {
+        const lastReadRef = firebase.database().ref('lastRead/' + user.uid + '/' + chatName);
+        lastReadRef.once('value', lastReadSnapshot => {
+            const lastReadTimestamp = lastReadSnapshot.val() || 0;
+            const messagesRef = firebase.database().ref('messages/' + chatName);
+            messagesRef.orderByChild('timestamp').startAt(lastReadTimestamp).once('value', messagesSnapshot => {
+                if (messagesSnapshot.exists() && messagesSnapshot.numChildren() > 1) {
+                    // Add a red dot to indicate new messages
+                    const redDot = document.createElement("span");
+                    redDot.className = "new-message-indicator";
+                    chatItem.querySelector('.chat-name').appendChild(redDot);
+                }
+            });
+        });
+    }
+}
 
 document.getElementById('send-message-button').addEventListener('click', function() {
     const messageInput = document.getElementById('message-input');
