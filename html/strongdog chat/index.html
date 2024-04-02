@@ -340,10 +340,10 @@ function joinChat(chatName) {
             return currentData;
         }
     }, function(error, committed, snapshot) {
-        if (error) {
-            console.error("Transaction failed: ", error);
-        } else if (committed) {
-            // Transaction committed: display the chat
+        if (committed) {
+            // Add chat to the user's personal chat list
+            const userChatsRef = firebase.database().ref('userChats/' + user.uid + '/' + chatName);
+            userChatsRef.set(true);
             displayChat(chatName);
         }
     });
@@ -352,13 +352,15 @@ function joinChat(chatName) {
 
 
 
-
 function loadChatList() {
-    const chatsRef = firebase.database().ref('chats/');
-    chatsRef.on('child_added', snapshot => {
-        const chatName = snapshot.key;
-        addChatToList(chatName);
-    });
+    const user = firebase.auth().currentUser;
+    if (user) {
+        const userChatsRef = firebase.database().ref('userChats/' + user.uid);
+        userChatsRef.on('child_added', snapshot => {
+            const chatName = snapshot.key;
+            addChatToList(chatName);
+        });
+    }
 }
 
 function addChatToList(chatName) {
