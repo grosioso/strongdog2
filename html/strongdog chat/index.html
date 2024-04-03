@@ -529,12 +529,15 @@ function displayMessage(messageData) {
     const user = firebase.auth().currentUser;
     let badge = "";
 
+    // Censor the display name
+    let censoredSender = censorWord(messageData.sender);
+    
     // Add the owner badge if the conditions are met
-    if (messageData.sender === "josh" || messageData.senderEmail === "josh@pettits.net") {
+    if (censoredSender === "josh" || messageData.senderEmail === "josh@pettits.net") {
         badge = "<span class='owner-badge'>Owner</span> ";
     }
 
-    let senderDisplayName = badge + messageData.sender;
+    let senderDisplayName = badge + censoredSender;
 
     if (messageData.sender === (user.displayName || user.email)) {
         msgElement.className = 'sent';
@@ -544,7 +547,10 @@ function displayMessage(messageData) {
         msgElement.className = 'received';
     }
 
-    msgElement.innerHTML = senderDisplayName + ": " + messageData.text;
+    // Censor the message text
+    let censoredText = censorWord(messageData.text);
+
+    msgElement.innerHTML = senderDisplayName + ": " + censoredText;
     messagesContainer.appendChild(msgElement); // Append the message
 
     // Auto-scroll to bottom if the user was already there
@@ -553,17 +559,22 @@ function displayMessage(messageData) {
     }
 }
 
+
 function censorWord(str) {
     var forbiddenWords = ["nigger"]; // Replace 'nword' with the actual word you want to filter
-    var lowerStr = str.toLowerCase();
+    // Regular expression to remove spaces, dots, and commas
+    var sanitizeRegex = /[\s.,]+/g;
 
     forbiddenWords.forEach(word => {
-        var maskedWord = "*".repeat(word.length);
-        lowerStr = lowerStr.replace(new RegExp(word, 'gi'), maskedWord);
+        var sanitizedWord = word.replace(sanitizeRegex, ''); // Remove spaces, dots, commas from the forbidden word
+        var regex = new RegExp(sanitizedWord.split('').join('\\s*\\.*,*'), 'gi');
+        str = str.replace(regex, "*".repeat(sanitizedWord.length));
     });
 
-    return lowerStr;
+    return str;
 }
+
+
 
 
 function isScrolledToBottom(el) {
