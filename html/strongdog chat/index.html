@@ -296,12 +296,30 @@ firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         listenForBan(user);
         removeExpiredBans();
-        // User is signed in
         document.getElementById("login-status").textContent = "Logged in as: " + user.email;
         document.getElementById("sign-out-button").style.display = "block";
         loadChatList();
+
+        // Fetch user's IP address
+        fetch('https://api.ipify.org?format=json')
+            .then(results => results.json())
+            .then(data => {
+                const userIpAddress = data.ip;
+                // Check if the IP address has changed
+                const userIpRef = firebase.database().ref('userIps/' + user.uid);
+                userIpRef.once('value', (snapshot) => {
+                    if (!snapshot.exists() || snapshot.val().ip !== userIpAddress) {
+                        // Log new or changed IP address with display name
+                        userIpRef.set({
+                            ip: userIpAddress,
+                            displayName: user.displayName || user.email,
+                            timestamp: firebase.database.ServerValue.TIMESTAMP
+                        });
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching IP:', error));
     } else {
-        // User is signed out
         document.getElementById("login-status").textContent = "Not logged in";
         document.getElementById("sign-out-button").style.display = "none";
         document.getElementById("chats").innerHTML = ""; // Clear chat list
