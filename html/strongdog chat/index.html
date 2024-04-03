@@ -280,6 +280,7 @@ firebase.initializeApp(firebaseConfig);
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         listenForBan(user);
+        removeExpiredBans();
         // User is signed in
         document.getElementById("login-status").textContent = "Logged in as: " + user.email;
         document.getElementById("sign-out-button").style.display = "block";
@@ -329,6 +330,21 @@ function formatBanDuration(milliseconds) {
     if (minutes > 0) durationMessage += minutes + " minutes";
 
     return durationMessage.trim();
+}
+
+function removeExpiredBans() {
+    const bansRef = firebase.database().ref('bans');
+    bansRef.once('value', snapshot => {
+        if (snapshot.exists()) {
+            snapshot.forEach(childSnapshot => {
+                const banInfo = childSnapshot.val();
+                if (!banInfo.permanent && banInfo.end && Date.now() > banInfo.end) {
+                    // Ban has expired
+                    bansRef.child(childSnapshot.key).remove();
+                }
+            });
+        }
+    });
 }
 
 document.getElementById('sign-out-button').addEventListener('click', function() {
