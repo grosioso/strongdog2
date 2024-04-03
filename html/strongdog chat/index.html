@@ -221,6 +221,15 @@ body {
     font-size: 12px;
 }
 
+.trex-badge {
+    background-color: rgb(9, 255, 0);
+    color: rgb(0, 0, 0);
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-right: 5px;
+    font-size: 12px;
+}
+
 .new-message-indicator {
     height: 10px;
     width: 10px;
@@ -536,8 +545,12 @@ function displayMessage(messageData) {
 
     // Add the owner badge if the conditions are met
     let badge = "";
-    if (messageData.sender === "josh" || messageData.senderEmail === "josh@pettits.net") {
+    if (messageData.sender === "josh") {
         badge = "<span class='owner-badge'>Owner</span> ";
+    }
+
+    if (messageData.sender === "trexdonuts (austin)") {
+        badge = "<span class='trex-badge'>da real trex</span> ";
     }
 
     let senderDisplayName = badge + censorWord(messageData.sender);
