@@ -279,6 +279,7 @@ firebase.initializeApp(firebaseConfig);
 // Authentication State Change
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
+        listenForBan(user);
         // User is signed in
         document.getElementById("login-status").textContent = "Logged in as: " + user.email;
         document.getElementById("sign-out-button").style.display = "block";
@@ -291,6 +292,44 @@ firebase.auth().onAuthStateChanged(function(user) {
         document.getElementById("chat-container").style.display = "none";
     }
 });
+function listenForBan(user) {
+    if (!user || !user.displayName) {
+        console.log("No user logged in or displayName is missing.");
+        return;
+    }
+
+    const bansRef = firebase.database().ref('bans/' + user.displayName);
+    bansRef.on('value', (snapshot) => {
+        console.log('Checking ban status for:', user.displayName);
+        if (snapshot.exists()) {
+            const banInfo = snapshot.val();
+            console.log('Ban info:', banInfo);
+            if ((banInfo.permanent || (banInfo.end && Date.now() < banInfo.end)) && banInfo.reason) {
+                let banDurationMessage = banInfo.permanent ? "permanently" : "for " + formatBanDuration(banInfo.end - Date.now());
+                alert("You have been banned. Reason: " + banInfo.reason + ". Duration: " + banDurationMessage);
+                firebase.auth().signOut().then(() => {
+                    window.location.href = 'login.html';
+                });
+            }
+        } else {
+            console.log('No ban record found for this user.');
+        }
+    });
+}
+
+function formatBanDuration(milliseconds) {
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+
+    let durationMessage = '';
+    if (days > 0) durationMessage += days + " days ";
+    if (hours > 0) durationMessage += hours + " hours ";
+    if (minutes > 0) durationMessage += minutes + " minutes";
+
+    return durationMessage.trim();
+}
 
 document.getElementById('sign-out-button').addEventListener('click', function() {
     firebase.auth().signOut();
@@ -498,6 +537,19 @@ function displayMessage(messageData) {
     }
 }
 
+function censorWord(str) {
+    var forbiddenWords = ["nigger"]; // Replace 'nword' with the actual word you want to filter
+    var lowerStr = str.toLowerCase();
+
+    forbiddenWords.forEach(word => {
+        var maskedWord = "*".repeat(word.length);
+        lowerStr = lowerStr.replace(new RegExp(word, 'gi'), maskedWord);
+    });
+
+    return lowerStr;
+}
+
+
 function isScrolledToBottom(el) {
     return el.scrollHeight - el.clientHeight <= el.scrollTop + 1;
 }
@@ -542,8 +594,10 @@ document.getElementById('send-message-button').addEventListener('click', functio
 function sendMessage(chatName, messageText) {
     const user = firebase.auth().currentUser;
     if (user) {
+        const censoredText = censorWord(messageText);
+
         const messageData = {
-            text: messageText,
+            text: censoredText,
             sender: user.displayName || user.email, // Use displayName if available
             timestamp: firebase.database.ServerValue.TIMESTAMP
         };
