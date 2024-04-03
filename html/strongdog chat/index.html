@@ -230,6 +230,12 @@ body {
     margin-left: 5px;
 }
 
+.timestamp {
+    font-size: 0.8em; /* Smaller font size */
+    color: rgb(73, 73, 73); /* Light grey color */
+    margin-top: 8px; /* Double spacing from the message */
+    display: block; /* Ensures it appears on a new line */
+}
 </style>
 <head>
     <meta charset="UTF-8">
@@ -527,17 +533,15 @@ function displayMessage(messageData) {
 
     const msgElement = document.createElement("li");
     const user = firebase.auth().currentUser;
-    let badge = "";
 
-    // Censor the display name
-    let censoredSender = censorWord(messageData.sender);
-    
     // Add the owner badge if the conditions are met
-    if (censoredSender === "josh" || messageData.senderEmail === "josh@pettits.net") {
+    let badge = "";
+    if (messageData.sender === "josh" || messageData.senderEmail === "josh@pettits.net") {
         badge = "<span class='owner-badge'>Owner</span> ";
     }
 
-    let senderDisplayName = badge + censoredSender;
+    let senderDisplayName = badge + censorWord(messageData.sender);
+    let messageTime = formatTimestamp(messageData.timestamp);
 
     if (messageData.sender === (user.displayName || user.email)) {
         msgElement.className = 'sent';
@@ -547,10 +551,7 @@ function displayMessage(messageData) {
         msgElement.className = 'received';
     }
 
-    // Censor the message text
-    let censoredText = censorWord(messageData.text);
-
-    msgElement.innerHTML = senderDisplayName + ": " + censoredText;
+    msgElement.innerHTML = `<div>${senderDisplayName}: ${censorWord(messageData.text)}</div><div class='message-time' style='color:rgb(73, 73, 73); margin-top: 8px;'>${messageTime}</div>`;
     messagesContainer.appendChild(msgElement); // Append the message
 
     // Auto-scroll to bottom if the user was already there
@@ -558,7 +559,17 @@ function displayMessage(messageData) {
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 }
+function formatTimestamp(timestamp) {
+    var date = new Date(timestamp);
+    var year = date.getFullYear();
+    var month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months start at 0
+    var day = date.getDate().toString().padStart(2, '0');
+    var hours = date.getHours().toString().padStart(2, '0');
+    var minutes = date.getMinutes().toString().padStart(2, '0');
 
+    // Format: YYYY-MM-DD HH:MM
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+}
 
 function censorWord(str) {
     var forbiddenWords = ["nigger"]; // Replace 'nword' with the actual word you want to filter
