@@ -493,19 +493,26 @@ document.getElementById('new-chat-button').addEventListener('click', function() 
     }
 });
 
+const forbiddenWords = ["nigger","nigga","fuck","shit","ass","bitch","fucker","beiner","cunt","kkk","nigg@"]; // Add your forbidden words here
 
 function joinChat(chatName) {
+    // Check if the chat name contains any forbidden words
+    for (let word of forbiddenWords) {
+        if (chatName.toLowerCase().includes(word.toLowerCase())) {
+            alert("The chat name contains forbidden words. Please choose a different name.");
+            return; // Exit the function
+        }
+    }
+
+    // Continue with the rest of the function
     const chatRef = firebase.database().ref('chats/' + chatName);
     const messagesRef = firebase.database().ref('messages/' + chatName);
     const user = firebase.auth().currentUser;
 
-    // Check if the chat already exists
     chatRef.once('value', snapshot => {
         if (snapshot.exists()) {
-            // The chat exists, join it
             joinExistingChat(chatRef, messagesRef, user, chatName, snapshot.val());
         } else {
-            // The chat does not exist, create a new one
             createNewChat(chatRef, messagesRef, user, chatName);
         }
     });
