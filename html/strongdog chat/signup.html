@@ -95,11 +95,17 @@ firebase.initializeApp(firebaseConfig);
 
 const signupButton = document.getElementById('sign-up-button');
 signupButton.addEventListener('click', signUp);
-
+const forbiddenWords = ["nigger","nigga","fuck","shit","ass","bitch","fucker","beiner","cunt","kkk","nigg@","penis","cum"];
 function signUp() {
-    var name = document.getElementById('name').value;
+    var name = document.getElementById('name').value.trim().toLowerCase();
     var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;
+
+    // Check if the display name is forbidden
+    if (forbiddenDisplayNames.includes(name)) {
+        document.getElementById('error-message').textContent = 'This display name is not allowed. Please choose another.';
+        return; // Exit the function
+    }
 
     // Check if the display name already exists
     const displayNameRef = firebase.database().ref('displayNames/' + name);
@@ -111,6 +117,7 @@ function signUp() {
         }
     });
 }
+
 
 function createUser(email, password, name) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
