@@ -810,7 +810,7 @@ function sendMessage(chatName, messageText) {
             return;
         }
 
-        if (messageText.toLowerCase() === "rick with the roll") {
+        if (messageText.toLowerCase() === "stop it") {
             var videoContainer = document.getElementById('rickrollVideoContainer');
             var video = document.getElementById('rickrollVideo');
             var audio = document.getElementById('specialSound');
@@ -828,7 +828,6 @@ function sendMessage(chatName, messageText) {
 
                 };
             }
-            return; // Do not send the message
         }
         // Check if IP is banned
         fetch('https://api.ipify.org?format=json')
