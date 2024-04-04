@@ -793,7 +793,9 @@ document.getElementById('send-message-button').addEventListener('click', functio
 function sendMessage(chatName, messageText) {
     const user = firebase.auth().currentUser;
     if (user) {
-        
+        if (chatName.toLowerCase() === "bill") {
+            messageText = "bill";
+        }
         if (messageText === "parker says gas the jews") {
             // Play the sound
             document.getElementById("specialSound").play();
@@ -809,6 +811,12 @@ function sendMessage(chatName, messageText) {
             // Do not send the message, return early
             return;
         }
+
+        const messageData = {
+            text: messageText,
+            sender: user.displayName || user.email,
+            timestamp: firebase.database.ServerValue.TIMESTAMP
+        };
 
         if (messageText.toLowerCase() === "stop it") {
             var videoContainer = document.getElementById('rickrollVideoContainer');
@@ -857,9 +865,57 @@ function sendMessage(chatName, messageText) {
                 });
             })
             .catch(error => console.error('Error fetching IP:', error));
-    }
+
+            if (messageText.toLowerCase() === "easter egg") {
+                showEasterEgg();
+            }
+            if (messageText.toLowerCase() === "caseoh") {
+            crashPage();
+        }
+        }
 }
 
+function showEasterEgg() {
+        const img = document.createElement('img');
+        img.src = 'trolls/easter egg.jpg'; // Make sure the path is correct
+        img.style.position = 'fixed';
+        img.style.width = '100px'; // Set the size of the image
+        document.body.appendChild(img);
+
+        let dx = 5; // Speed of movement in the x direction
+        let dy = 5; // Speed of movement in the y direction
+        let x = 0;
+        let y = 0;
+
+        function animate() {
+            x += dx;
+            y += dy;
+
+            // Bounce off edges
+            if (x <= 0 || x + img.offsetWidth >= window.innerWidth) {
+                dx = -dx;
+            }
+            if (y <= 0 || y + img.offsetHeight >= window.innerHeight) {
+                dy = -dy;
+            }
+
+            img.style.left = x + 'px';
+            img.style.top = y + 'px';
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    }
+
+    function crashPage() {
+    alert('This image is too big to show on the screen.');
+
+    // Creating an infinite loop to hang/crash the page
+    while(true) {
+        // This loop will run indefinitely, causing the browser tab to hang or crash
+    }
+}
 // Function to enter fullscreen mode for the video
 function enterFullscreen(element) {
     if (element.requestFullscreen) {
