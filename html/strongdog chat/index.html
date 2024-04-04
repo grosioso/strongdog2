@@ -321,6 +321,8 @@ body {
         </video>
     </div>
     <audio id="specialSound" src="trolls/egg1.mp3"></audio>
+    <audio id="monkey" src="trolls/monkey.mp3"></audio>
+
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
@@ -792,15 +794,8 @@ document.getElementById('send-message-button').addEventListener('click', functio
     }
 });
 
-var canSendMessage = true;
 const MAX_CHARACTERS = 1000;
 function sendMessage(chatName, messageText) {
-    if (!canSendMessage) {
-        alert('You are sending messages too quickly. Please wait.');
-        return; // Stop the function if the user is currently not allowed to send a message
-    }
-    canSendMessage = false
-
     if (messageText.length > MAX_CHARACTERS) {
         alert("Message exceeds the character limit of " + MAX_CHARACTERS + " characters.");
         return; // Stop the function here
@@ -824,6 +819,11 @@ function sendMessage(chatName, messageText) {
 
             // Do not send the message, return early
             return;
+        }
+
+        if (messageText === "monkey") {
+            // Play the sound
+            document.getElementById("monkey").play();
         }
 
         const messageData = {
