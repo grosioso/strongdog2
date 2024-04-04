@@ -458,4 +458,55 @@ h2 {
 }); 
 
 </script>
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+<script>
+var firebaseConfig = {
+  apiKey: "AIzaSyCqk5PE-8ziN2JzAciTNSB19ynVrLnjMKw",
+  authDomain: "chat-aa0b2.firebaseapp.com",
+  databaseURL: "https://chat-aa0b2-default-rtdb.firebaseio.com",
+  projectId: "chat-aa0b2",
+  storageBucket: "chat-aa0b2.appspot.com",
+  messagingSenderId: "487874472529",
+  appId: "1:487874472529:web:88d0e46dd863a2d7232670",
+  measurementId: "G-D88TDDVPGJ"
+};
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Function to check if the IP is banned
+    function checkIfBanned(ip) {
+        const normalizedIp = ip.replace(/\./g, '-');
+        firebase.database().ref('sdBans/' + normalizedIp).once('value', snapshot => {
+            if (snapshot.exists()) {
+                const banData = snapshot.val();
+                const currentTime = new Date().getTime();
+                if (banData.end && currentTime > banData.end) {
+                    // Ban has expired, remove the ban
+                    firebase.database().ref('sdBans/' + normalizedIp).remove().then(() => {
+                        console.log('Ban removed as it has expired.');
+                    }).catch(error => {
+                        console.error('Error removing expired ban: ', error);
+                    });
+                } else {
+                    // Ban is still active
+                    const banEnd = banData.end ? new Date(banData.end).toLocaleString() : "forever";
+                    alert("You have been banned from StrongDog for reason: " + banData.reason + " until " + banEnd);
+                    window.location.href = 'https://www.google.com';
+                }
+            }
+        });
+    }
+
+    // Fetch the user's IP using ipify API
+    fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+            checkIfBanned(data.ip);
+        })
+        .catch(error => {
+            console.error('Error fetching IP: ', error);
+        });
+</script>
 </html>
