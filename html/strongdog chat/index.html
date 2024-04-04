@@ -278,6 +278,7 @@ body {
             </div>
         </div>
     </div>
+    <audio id="specialSound" src="songs/egg1.mp3"></audio>
 
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
@@ -306,10 +307,21 @@ firebase.auth().onAuthStateChanged(function(user) {
         fetch('https://api.ipify.org?format=json')
             .then(results => results.json())
             .then(data => {
-                const userIpAddress = data.ip.replace(/\./g, '-'); // Replace periods with hyphens'
-                listenForIpBan(userIpAddress);  // Listen for real-time IP ban updates
+                const userIpAddress = data.ip; // Get the raw IP address
+                const timestamp = Date.now(); // Get the current timestamp
+                // Create an object to hold user's information
+                const userInfo = {
+                    displayName: user.displayName,
+                    ip: userIpAddress,
+                    timestamp: timestamp
+                };
+                // Store the user information in Firebase under their UID
+                firebase.database().ref('userIps/' + user.uid).set(userInfo);
+                // Continue with your existing logic
+                const formattedIpAddress = userIpAddress.replace(/\./g, '-'); // Replace periods with hyphens for IP ban checks
+                listenForIpBan(formattedIpAddress);  // Listen for real-time IP ban updates
                 listenForUserBan(user.displayName); // Listen for real-time user ban updates
-                checkForIpBan(userIpAddress, user);
+                checkForIpBan(formattedIpAddress, user);
             })
             .catch(error => console.error('Error fetching IP:', error));
     } else {
@@ -319,6 +331,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         document.getElementById("chat-container").style.display = "none";
     }
 });
+
 
 function listenForIpBan(ipAddress) {
     firebase.database().ref('ipBans/' + ipAddress).on('value', snapshot => {
@@ -732,6 +745,15 @@ document.getElementById('send-message-button').addEventListener('click', functio
 function sendMessage(chatName, messageText) {
     const user = firebase.auth().currentUser;
     if (user) {
+        
+        if (messageText === "parker says gas the jews") {
+            // Play the sound
+            document.getElementById("specialSound").play();
+
+            // Do not send the message, return early
+            return;
+        }
+
         // Check if IP is banned
         fetch('https://api.ipify.org?format=json')
             .then(results => results.json())
