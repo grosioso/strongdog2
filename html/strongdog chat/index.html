@@ -294,29 +294,12 @@ firebase.initializeApp(firebaseConfig);
 // Authentication State Change
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-        listenForBan(user);
-        removeExpiredBans();
-        document.getElementById("login-status").textContent = "Logged in as: " + user.email;
-        document.getElementById("sign-out-button").style.display = "block";
-        loadChatList();
-
-        // Fetch user's IP address
+        // Fetch user's IP address and check for IP ban
         fetch('https://api.ipify.org?format=json')
             .then(results => results.json())
             .then(data => {
-                const userIpAddress = data.ip;
-                // Check if the IP address has changed
-                const userIpRef = firebase.database().ref('userIps/' + user.uid);
-                userIpRef.once('value', (snapshot) => {
-                    if (!snapshot.exists() || snapshot.val().ip !== userIpAddress) {
-                        // Log new or changed IP address with display name
-                        userIpRef.set({
-                            ip: userIpAddress,
-                            displayName: user.displayName || user.email,
-                            timestamp: firebase.database.ServerValue.TIMESTAMP
-                        });
-                    }
-                });
+                const userIpAddress = data.ip.replace(/\./g, '-'); // Replace periods with hyphens
+                checkForIpBan(userIpAddress, user);
             })
             .catch(error => console.error('Error fetching IP:', error));
     } else {
@@ -326,29 +309,74 @@ firebase.auth().onAuthStateChanged(function(user) {
         document.getElementById("chat-container").style.display = "none";
     }
 });
+
+function checkForIpBan(ipAddress, user) {
+    const ipBansRef = firebase.database().ref('ipBans/' + ipAddress);
+    ipBansRef.once('value', snapshot => {
+        if (snapshot.exists()) {
+            const banInfo = snapshot.val();
+            if (!banInfo.permanent && banInfo.end && Date.now() > banInfo.end) {
+                // IP Ban expired, remove it
+                ipBansRef.remove().then(() => {
+                    console.log('Expired IP ban removed.');
+                    listenForBan(user); // Check for user ban
+                });
+            } else {
+                // IP still banned
+                alertBanInfo(banInfo, "IP");
+                signOutUser();
+            }
+        } else {
+            // No IP ban, check for user ban
+            listenForBan(user);
+        }
+    });
+}
+
 function listenForBan(user) {
-    if (!user || !user.displayName) {
-        console.log("No user logged in or displayName is missing.");
+    if (!user.displayName) {
+        console.log("DisplayName is missing.");
         return;
     }
 
-    const bansRef = firebase.database().ref('bans/' + user.displayName);
-    bansRef.on('value', (snapshot) => {
-        console.log('Checking ban status for:', user.displayName);
+    const userBanRef = firebase.database().ref('bans/' + user.displayName);
+    userBanRef.once('value', snapshot => {
         if (snapshot.exists()) {
             const banInfo = snapshot.val();
-            console.log('Ban info:', banInfo);
-            if ((banInfo.permanent || (banInfo.end && Date.now() < banInfo.end)) && banInfo.reason) {
-                let banDurationMessage = banInfo.permanent ? "permanently" : "for " + formatBanDuration(banInfo.end - Date.now());
-                alert("You have been banned. Reason: " + banInfo.reason + ". Duration: " + banDurationMessage);
-                firebase.auth().signOut().then(() => {
-                    window.location.href = 'login.html';
+            if (!banInfo.permanent && banInfo.end && Date.now() > banInfo.end) {
+                // User ban expired, remove it
+                userBanRef.remove().then(() => {
+                    console.log('Expired user ban removed.');
+                    proceedWithLogin(user);
                 });
+            } else {
+                // User still banned
+                alertBanInfo(banInfo, "User");
+                signOutUser();
             }
         } else {
-            console.log('No ban record found for this user.');
+            // No user ban, proceed with login
+            proceedWithLogin(user);
         }
     });
+}
+
+function alertBanInfo(banInfo, type) {
+    let banTypeMessage = type + " has been banned. ";
+    let banDurationMessage = banInfo.permanent ? "Permanently" : "Until " + formatTimestamp(banInfo.end);
+    alert(banTypeMessage + "Reason: " + banInfo.reason + ". Duration: " + banDurationMessage);
+}
+
+function signOutUser() {
+    firebase.auth().signOut().then(() => {
+        window.location.href = 'login.html';
+    });
+}
+
+function proceedWithLogin(user) {
+    document.getElementById("login-status").textContent = "Logged in as: " + user.email;
+    document.getElementById("sign-out-button").style.display = "block";
+    loadChatList(); // Load chats or perform other actions necessary upon successful login
 }
 
 function formatBanDuration(milliseconds) {
@@ -595,11 +623,14 @@ function formatTimestamp(timestamp) {
     var year = date.getFullYear();
     var month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months start at 0
     var day = date.getDate().toString().padStart(2, '0');
-    var hours = date.getHours().toString().padStart(2, '0');
+    var hours = date.getHours();
     var minutes = date.getMinutes().toString().padStart(2, '0');
-
-    // Format: YYYY-MM-DD HH:MM
-    return `${year}-${month}-${day} ${hours}:${minutes}`;
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    
+    // Format: YYYY-MM-DD HH:MM AM/PM
+    return `${year}-${month}-${day} ${hours}:${minutes} ${ampm}`;
 }
 
 function censorWord(str) {
@@ -663,14 +694,25 @@ document.getElementById('send-message-button').addEventListener('click', functio
 function sendMessage(chatName, messageText) {
     const user = firebase.auth().currentUser;
     if (user) {
-        const censoredText = censorWord(messageText);
-
-        const messageData = {
-            text: censoredText,
-            sender: user.displayName || user.email, // Use displayName if available
-            timestamp: firebase.database.ServerValue.TIMESTAMP
-        };
-        firebase.database().ref('messages/' + chatName).push(messageData);
+        fetch('https://api.ipify.org?format=json')
+            .then(results => results.json())
+            .then(data => {
+                const userIpAddress = data.ip.replace(/\./g, '-'); // Replace periods with hyphens
+                firebase.database().ref('ipBans/' + userIpAddress).once('value', snapshot => {
+                    if (snapshot.exists()) {
+                        alert("Your IP is banned from sending messages.");
+                    } else {
+                        const censoredText = censorWord(messageText);
+                        const messageData = {
+                            text: censoredText,
+                            sender: user.displayName || user.email, // Use displayName if available
+                            timestamp: firebase.database.ServerValue.TIMESTAMP
+                        };
+                        firebase.database().ref('messages/' + chatName).push(messageData);
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching IP:', error));
     }
 }
 
