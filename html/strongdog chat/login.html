@@ -92,7 +92,11 @@
             login();
         });
 
-        document.getElementById('login-button').addEventListener('click', login);
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    login();
+});
+
 
         function login() {
             var email = document.getElementById('email').value;

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings</title>
+<style>
+    body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+}
+
+#settings-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+#settings-sidebar {
+    flex-basis: 25%;
+    background-color: #f2f2f2;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.settings-option {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #e7e7e7;
+    cursor: pointer;
+}
+
+.settings-option:hover {
+    background-color: #d3d3d3;
+}
+
+#setting-details {
+    flex-grow: 1;
+    background-color: white;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#settings-options ul {
+    list-style: none;
+    padding: 0;
+}
+
+#settings-options li {
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+#settings-options li:hover {
+    background-color: #eee;
+}
+
+#divider {
+    width: 1px;
+    background-color: #ddd;
+}
+</style>
+</head>
+<body>
+    <div id="settings-container">
+        <div id="settings-sidebar">
+            <div class="settings-option" onclick="showDisplayNameSetting()">Display Name</div>
+            <div class="settings-option" onclick="showAccountSetting()">Account</div>
+        </div>
+        <div id="setting-details">
+        <div id="divider"></div>
+        <div id="setting-details"></div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+<script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyCqk5PE-8ziN2JzAciTNSB19ynVrLnjMKw",
+    authDomain: "chat-aa0b2.firebaseapp.com",
+    databaseURL: "https://chat-aa0b2-default-rtdb.firebaseio.com",
+    projectId: "chat-aa0b2",
+    storageBucket: "chat-aa0b2.appspot.com",
+    messagingSenderId: "487874472529",
+    appId: "1:487874472529:web:88d0e46dd863a2d7232670",
+    measurementId: "G-D88TDDVPGJ"
+  };
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                checkUserBan(user);
+            } else {
+                // User not logged in, redirect to login
+                window.location.href = 'login.html';
+            }
+        });
+
+        function checkUserBan(user) {
+            const userBanRef = firebase.database().ref('bans/' + user.displayName);
+            userBanRef.once('value', snapshot => {
+                if (snapshot.exists()) {
+                    const banInfo = snapshot.val();
+                    if (banInfo.permanent || (banInfo.end && Date.now() < banInfo.end)) {
+                        // User is banned, redirect to login
+                        window.location.href = 'login.html';
+                    }
+                    // If not banned, no additional action is needed
+                }
+                // If no ban record is found, no additional action is needed
+            });
+        }
+
+// Function to display the display name setting
+function showDisplayNameSetting() {
+    const settingDetails = document.getElementById('setting-details');
+    const user = firebase.auth().currentUser;
+
+    if (user) {
+        settingDetails.innerHTML = `
+            <div>Display Name: <input type="text" id="displayNameInput" value="${user.displayName}" disabled></div>
+            <button id="editDisplayNameButton">Edit Display Name</button>
+        `;
+
+        document.getElementById('editDisplayNameButton').addEventListener('click', function() {
+            const input = document.getElementById('displayNameInput');
+            input.disabled = !input.disabled;
+
+            if (input.disabled) {
+                this.textContent = 'Edit Display Name';
+                updateDisplayName(input.value);
+            } else {
+                this.textContent = 'Done';
+                input.focus();
+            }
+        });
+    }
+}
+
+function toggleInput(editButtonId, inputId) {
+    const editButton = document.getElementById(editButtonId);
+    const input = document.getElementById(inputId);
+    input.disabled = !input.disabled;
+
+    if (input.disabled) {
+        editButton.textContent = 'Edit Display Name';
+        updateDisplayName(input.value);
+    } else {
+        editButton.textContent = 'Done';
+        input.focus();
+    }
+}
+
+// Simplify the showDisplayNameSetting function
+function showDisplayNameSetting() {
+    const settingDetails = document.getElementById('setting-details');
+    const user = firebase.auth().currentUser;
+
+    if (user) {
+        settingDetails.innerHTML = `
+            <div>Display Name: <input type="text" id="displayNameInput" value="${user.displayName}" disabled></div>
+            <button id="editDisplayNameButton" onclick="toggleInput('editDisplayNameButton', 'displayNameInput')">Edit Display Name</button>
+        `;
+    }
+}
+
+function updateDisplayName(newDisplayName) {
+    const user = firebase.auth().currentUser;
+    const oldDisplayName = user.displayName; // Store old display name
+
+    if (user) {
+        // Check if new display name is not already in use
+        const displayNameRef = firebase.database().ref('displayNames/' + newDisplayName.toLowerCase());
+        displayNameRef.once('value', snapshot => {
+            if (snapshot.exists()) {
+                alert('Display Name already in use. Please choose another.');
+            } else {
+                user.updateProfile({
+                    displayName: newDisplayName
+                }).then(() => {
+                    // Update display name in all messages
+                    updateDisplayNameInMessages(oldDisplayName, newDisplayName);
+
+                    // Delete old display name from Firebase
+                    deleteDisplayName(oldDisplayName.toLowerCase());
+
+                    // Set new display name in Firebase
+                    const newDisplayNameRef = firebase.database().ref('displayNames/' + newDisplayName.toLowerCase());
+                    newDisplayNameRef.set(user.uid);
+
+                    alert('Display Name updated successfully.');
+                }).catch(error => {
+                    alert('Error updating display name: ' + error.message);
+                });
+            }
+        });
+    }
+}
+
+
+function updateDisplayNameInMessages(oldDisplayName, newDisplayName) {
+    // Reference to the messages node in your Firebase Database
+    const messagesRef = firebase.database().ref('messages');
+
+    // Retrieve all messages
+    messagesRef.once('value', snapshot => {
+        snapshot.forEach(chatSnapshot => {
+            chatSnapshot.forEach(messageSnapshot => {
+                let message = messageSnapshot.val();
+                // Check if the message sender is the user
+                if (message.sender === oldDisplayName) {
+                    // Update the display name in each message
+                    messageSnapshot.ref.update({ sender: newDisplayName });
+                }
+            });
+        });
+    });
+}
+
+function deleteDisplayName(displayName) {
+    const displayNameRef = firebase.database().ref('displayNames/' + displayName);
+    displayNameRef.remove();
+}
+
+
+// Function to display the account setting
+function showAccountSetting() {
+    const settingDetails = document.getElementById('setting-details');
+    settingDetails.innerHTML = `
+        <button id="deleteAccountButton" style="background-color: red; color: white;">Delete Account</button>
+    `;
+
+    document.getElementById('deleteAccountButton').addEventListener('click', function() {
+        const password = prompt("Please enter your password to confirm:");
+        deleteAccount(password);
+    });
+}
+
+function deleteAccount(password) {
+    const user = firebase.auth().currentUser;
+
+    // Step 1: Authenticate the user
+    const credential = firebase.auth.EmailAuthProvider.credential(user.email, password);
+    user.reauthenticateWithCredential(credential).then(() => {
+        // Step 2: Delete all messages sent by the user
+        deleteAllUserMessages(user);
+
+        // Step 3: Delete the user's display name reference
+        deleteDisplayName(user.displayName.toLowerCase());
+
+        // Step 4: Delete the user account
+        user.delete().then(() => {
+            alert('Account and associated data deleted successfully.');
+        }).catch(error => {
+            alert('Error deleting account: ' + error.message);
+        });
+    }).catch(error => {
+        alert('Password incorrect: ' + error.message);
+    });
+}
+
+function deleteAllUserMessages(user) {
+    const messagesRef = firebase.database().ref('messages');
+
+    messagesRef.once('value', snapshot => {
+        snapshot.forEach(chatSnapshot => {
+            chatSnapshot.forEach(messageSnapshot => {
+                let message = messageSnapshot.val();
+                if (message.sender === user.displayName) {
+                    messageSnapshot.ref.remove();
+                }
+            });
+        });
+    });
+}
+</script>
+</body>
+</html>
