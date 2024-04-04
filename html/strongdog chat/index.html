@@ -340,6 +340,7 @@ body {
   };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+var lastMessageTime = 0;
 
 // Authentication State Change
 firebase.auth().onAuthStateChanged(function(user) {
@@ -781,6 +782,7 @@ function checkForNewMessages(chatName, chatItem) {
 }
 
 document.getElementById('send-message-button').addEventListener('click', function() {
+    const currentTime = Date.now();
     const messageInput = document.getElementById('message-input');
     const messageText = messageInput.value;
     const currentChat = document.getElementById("chat-header").textContent;
@@ -790,7 +792,12 @@ document.getElementById('send-message-button').addEventListener('click', functio
     }
 });
 
+const MAX_CHARACTERS = 1000;
 function sendMessage(chatName, messageText) {
+    if (messageText.length > MAX_CHARACTERS) {
+        alert("Message exceeds the character limit of " + MAX_CHARACTERS + " characters.");
+        return; // Stop the function here
+    }
     const user = firebase.auth().currentUser;
     if (user) {
         if (chatName.toLowerCase() === "bill") {
@@ -1041,6 +1048,28 @@ function removeChatFromUI(chatName) {
     });
 }
 
+function deleteOldMessages() {
+    const messagesRef = firebase.database().ref('messages');
+    const oneMonthAgo = Date.now() - (30 * 24 * 60 * 60 * 1000); // 30 days in milliseconds
+
+    messagesRef.once('value', snapshot => {
+        snapshot.forEach(chatSnapshot => {
+            chatSnapshot.forEach(messageSnapshot => {
+                if (messageSnapshot.val().timestamp < oneMonthAgo) {
+                    messageSnapshot.ref.remove();
+                }
+            });
+        });
+    });
+}
+
+// Ensure Firebase is initialized before calling this function
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        // Existing authentication state change logic...
+        deleteOldMessages(); // Call this function here
+    }
+});
 
 
 function leaveChat(chatName) {
