@@ -792,8 +792,15 @@ document.getElementById('send-message-button').addEventListener('click', functio
     }
 });
 
+var canSendMessage = true;
 const MAX_CHARACTERS = 1000;
 function sendMessage(chatName, messageText) {
+    if (!canSendMessage) {
+        alert('You are sending messages too quickly. Please wait.');
+        return; // Stop the function if the user is currently not allowed to send a message
+    }
+    canSendMessage = false
+
     if (messageText.length > MAX_CHARACTERS) {
         alert("Message exceeds the character limit of " + MAX_CHARACTERS + " characters.");
         return; // Stop the function here
@@ -880,7 +887,11 @@ function sendMessage(chatName, messageText) {
             crashPage();
         }
         }
+        setTimeout(function() {
+        canSendMessage = true;
+    }, 2000);
 }
+
 
 function showEasterEgg() {
         const img = document.createElement('img');
