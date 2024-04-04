@@ -298,7 +298,9 @@ firebase.auth().onAuthStateChanged(function(user) {
         fetch('https://api.ipify.org?format=json')
             .then(results => results.json())
             .then(data => {
-                const userIpAddress = data.ip.replace(/\./g, '-'); // Replace periods with hyphens
+                const userIpAddress = data.ip.replace(/\./g, '-'); // Replace periods with hyphens'
+                listenForIpBan(userIpAddress);  // Listen for real-time IP ban updates
+                listenForUserBan(user.displayName); // Listen for real-time user ban updates
                 checkForIpBan(userIpAddress, user);
             })
             .catch(error => console.error('Error fetching IP:', error));
@@ -309,6 +311,30 @@ firebase.auth().onAuthStateChanged(function(user) {
         document.getElementById("chat-container").style.display = "none";
     }
 });
+
+function listenForIpBan(ipAddress) {
+    firebase.database().ref('ipBans/' + ipAddress).on('value', snapshot => {
+        if (snapshot.exists()) {
+            console.log('IP Ban detected. Signing out...');
+            signOutUser();
+        }
+    });
+}
+
+function listenForUserBan(displayName) {
+    firebase.database().ref('bans/' + displayName).on('value', snapshot => {
+        if (snapshot.exists()) {
+            console.log('User Ban detected. Signing out...');
+            signOutUser();
+        }
+    });
+}
+
+function signOutUser() {
+    firebase.auth().signOut().then(() => {
+        window.location.href = 'login.html';
+    });
+}
 
 function checkForIpBan(ipAddress, user) {
     const ipBansRef = firebase.database().ref('ipBans/' + ipAddress);
@@ -634,9 +660,9 @@ function formatTimestamp(timestamp) {
 }
 
 function censorWord(str) {
-    var forbiddenWords = ["nigger"]; // Replace 'nword' with the actual word you want to filter
+    var forbiddenWords = ["nigger","nigga","fuck","shit","ass","bitch","fucker","beiner","cunt","kkk","nigg@"]; // Replace 'nword' with the actual word you want to filter
     // Regular expression to remove spaces, dots, and commas
-    var sanitizeRegex = /[\s.,]+/g;
+    var sanitizeRegex = /[\s.,/]+/g;
 
     forbiddenWords.forEach(word => {
         var sanitizedWord = word.replace(sanitizeRegex, ''); // Remove spaces, dots, commas from the forbidden word
@@ -694,26 +720,45 @@ document.getElementById('send-message-button').addEventListener('click', functio
 function sendMessage(chatName, messageText) {
     const user = firebase.auth().currentUser;
     if (user) {
+        // Check if IP is banned
         fetch('https://api.ipify.org?format=json')
             .then(results => results.json())
             .then(data => {
                 const userIpAddress = data.ip.replace(/\./g, '-'); // Replace periods with hyphens
-                firebase.database().ref('ipBans/' + userIpAddress).once('value', snapshot => {
-                    if (snapshot.exists()) {
+                firebase.database().ref('ipBans/' + userIpAddress).once('value', ipSnapshot => {
+                    if (ipSnapshot.exists()) {
                         alert("Your IP is banned from sending messages.");
                     } else {
-                        const censoredText = censorWord(messageText);
-                        const messageData = {
-                            text: censoredText,
-                            sender: user.displayName || user.email, // Use displayName if available
-                            timestamp: firebase.database.ServerValue.TIMESTAMP
-                        };
-                        firebase.database().ref('messages/' + chatName).push(messageData);
+                        // IP not banned, check for user ban
+                        firebase.database().ref('bans/' + user.displayName).once('value', userSnapshot => {
+                            if (userSnapshot.exists()) {
+                                const banInfo = userSnapshot.val();
+                                if (banInfo.permanent || (banInfo.end && Date.now() < banInfo.end)) {
+                                    alert("You are banned from sending messages.");
+                                } else {
+                                    // User not banned, proceed to send message
+                                    sendChatMessage(chatName, messageText, user);
+                                }
+                            } else {
+                                // No user ban found, proceed to send message
+                                sendChatMessage(chatName, messageText, user);
+                            }
+                        });
                     }
                 });
             })
             .catch(error => console.error('Error fetching IP:', error));
     }
+}
+
+function sendChatMessage(chatName, messageText, user) {
+    const censoredText = censorWord(messageText);
+    const messageData = {
+        text: censoredText,
+        sender: user.displayName || user.email, // Use displayName if available
+        timestamp: firebase.database.ServerValue.TIMESTAMP
+    };
+    firebase.database().ref('messages/' + chatName).push(messageData);
 }
 
 function handleKeyPress(event) {
