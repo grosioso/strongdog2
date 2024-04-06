@@ -1,0 +1,310 @@
+
+
+<head>
+    <title>Your Website Title</title>
+    <script>
+        window.addEventListener('load', function() {
+            // Create intro container
+            var introDiv = document.createElement('div');
+            introDiv.id = 'intro';
+
+            // Create and add STRONGDOG text
+            var strongDogDiv = document.createElement('div');
+            strongDogDiv.id = 'strongdog';
+            strongDogDiv.innerText = 'STRONGDOG';
+            strongDogDiv.style.opacity = '0'; // Start invisible
+            introDiv.appendChild(strongDogDiv);
+
+            // Create and add XP text
+            var xpDiv = document.createElement('div');
+            xpDiv.id = 'xp';
+            xpDiv.innerText = 'XP';
+            xpDiv.style.opacity = '0'; // Start invisible
+            introDiv.appendChild(xpDiv);
+
+            // Create and add image
+            var uploadedImage = document.createElement('img');
+            uploadedImage.id = 'uploadedImage';
+            uploadedImage.src = '../../../strongdog.webp'; // Path to your image
+            uploadedImage.style.display = 'none';
+            introDiv.appendChild(uploadedImage);
+
+            // Append intro to body
+            document.body.insertBefore(introDiv, document.body.firstChild);
+
+            // Add styles
+            var css = `
+                #intro {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(33, 33, 33, 1);
+                    z-index: 1000;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    transition: transform 0.5s ease-in-out;
+                }
+
+                #strongdog, #xp {
+                    font-size: 3em;
+                    font-weight: bold;
+                    opacity: 0;
+                    animation: fadeInSlam 1s ease forwards;
+                }
+
+                #strongdog {
+                    color: white;
+                }
+
+                #xp {
+                    color: orange;
+                    animation-delay: 0.5s; 
+                }
+
+                @keyframes fadeInSlam {
+                    0% { transform: scale(0); opacity: 0; }
+                    50% { transform: scale(1.2); opacity: 1; }
+                    100% { transform: scale(1); opacity: 1; }
+                }
+
+                @keyframes riseUp {
+                    0% { transform: translateY(0); }
+                    100% { transform: translateY(-100px); }
+                }
+
+                #uploadedImage {
+                    width: 100%;
+                    max-width: 600px;
+                    opacity: 0;
+                    transform: scale(0);
+                    animation: growAndSettle 1s ease forwards;
+                }
+
+                @keyframes growAndSettle {
+                    0% { transform: scale(0); opacity: 0; }
+                    50% { transform: scale(1.1); opacity: 1; }
+                    75% { transform: scale(0.9); }
+                    100% { transform: scale(1); }
+                }
+            `;
+            var styleSheet = document.createElement('style');
+            styleSheet.type = 'text/css';
+            styleSheet.innerText = css;
+            document.head.appendChild(styleSheet);
+
+            // Trigger image fade-in and text fade-out
+            setTimeout(() => {
+                uploadedImage.style.display = 'block';
+                uploadedImage.style.opacity = 1;
+                strongDogDiv.style.opacity = 0;
+                xpDiv.style.opacity = 0;
+            }, 1500);
+
+            // Slide up and remove intro
+            setTimeout(() => {
+                introDiv.style.transform = 'translateY(-100%)';
+                setTimeout(() => { introDiv.remove(); }, 500);
+            }, 3200);
+        });
+    </script>
+</head>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0" > 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width, height=device-height, target-densitydpi=device-dpi">-->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="stylesheet" href="styles.min.css">
+  <script src="script.min.js" defer></script>
+  <script src="bonus.min.js"></script>
+  <script src="sound.min.js"></script>
+  <title>HANDLE</title>
+  <!--<link rel="icon" type="image/x-icon" href="./images/favicon.ico">-->
+</head>
+<body>
+  <div class="intro">
+    <a href="https://armorgames.com/?utm_source=shortURL&utm_medium=link&utm_term=MoreGames&utm_content=home&utm_campaign=ShortURL-MoreGames" target="_blank">
+      <video id="intro-video" autoplay muted playsinline height="590" width="885">
+        <source src="https://files.armorgames.com/intro/648x432_v1.m4v" type="video/mp4">
+        <source src="https://files.armorgames.com/intro/648x432_v1.ogv" type="video/ogg">
+      </video>
+    </a>
+  </div>
+  <div class="screen">
+      <div class="alert-container" data-alert-container></div>
+      <audio id="musicTheme" src="sound/handle-theme.mp3"></audio>
+      <audio id="applauseSound" src="sound/applause.ogg"></audio>
+      <audio id="gameOverSound" src="sound/game-over.mp3"></audio>
+      <audio id="openSound" src="sound/open.ogg"></audio>
+      <audio id="deathSound" src="sound/death.ogg"></audio>
+
+      <div data-hand_grid class="hand_grid">
+        <div id="card1"></div>
+        <div id="card2"></div>
+        <div id="card3"></div>
+        <div id="card4"></div>
+        <div id="card5"></div>
+        <div id="info"></div>
+      </div>
+      <div data-guess-grid class="guess-grid">
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+
+      </div>
+
+      <div class="image-container">
+
+        <a href="https://armorgames.com/?utm_source=shortURL&utm_medium=link&utm_term=MoreGames&utm_content=home&utm_campaign=ShortURL-MoreGames" target="_blank">
+          <img src="images/AG-more.png" alt="Fixed Image" id="fixed-image" height="45" width="180">
+        </a>
+        <div class="space"></div><div class="space"></div>
+        <a href="https://www.facebook.com/ArmorGames/" target="_blank">
+          <img src="images/FB-logo.png" alt="Fixed Image2" id="fixed-image2" height="28" width="35">
+        </a>
+        
+        <a href="https://twitter.com/ArmorGames" target="_blank">
+          <img src="images/TW-logo.png" alt="Fixed Image3" id="fixed-image3" height="28" width="35">
+        </a>
+      </div>
+
+      <div data-keyboard class="keyboard">
+        <!--<div class="space"></div>-->
+        <button class="key" data-blanko></button>
+
+        <button style="color:firebrick" class="key" data-key="A♦ ">A♦</button>
+        <button style="color:firebrick" class="key" data-key="A♥ ">A♥</button>
+        <button class="key" data-key="A♣ ">A♣</button>
+        <button class="key" data-key="A♠ ">A♠</button>
+        <button style="color:firebrick" class="key" data-key="K♦ ">K♦</button>
+        <button style="color:firebrick" class="key" data-key="K♥ ">K♥</button>
+        <button class="key" data-key="K♣ ">K♣</button>
+        <button class="key" data-key="K♠ ">K♠</button>
+        <button style="color:firebrick" class="key" data-key="Q♦ ">Q♦</button>
+        <button style="color:firebrick" class="key" data-key="Q♥ ">Q♥</button>
+        <button class="key" data-key="Q♣ ">Q♣</button>
+        <button class="key" data-key="Q♠ ">Q♠</button>
+        <button style="color:firebrick" class="key" data-key="J♦ ">J♦</button>
+        <button style="color:firebrick" class="key" data-key="J♥ ">J♥</button>
+        <button class="key" data-key="J♣ ">J♣</button>
+        <button class="key" data-key="J♠ ">J♠</button>
+        <button style="color:firebrick" class="key" data-key="10♦">10♦</button>
+        <button style="color:firebrick" class="key" data-key="10♥">10♥</button>
+        <button class="key" data-key="10♣">10♣</button>
+        <button class="key" data-key="10♠">10♠</button>
+        <button style="color:firebrick" class="key" data-key="9♦ ">9♦</button>
+        <button style="color:firebrick" class="key" data-key="9♥ ">9♥</button>
+        <button class="key" data-key="9♣ ">9♣</button>
+        <button class="key" data-key="9♠ ">9♠</button>
+        <button style="color:firebrick" class="key" data-key="8♦ ">8♦</button>
+        <button style="color:firebrick" class="key" data-key="8♥ ">8♥</button>
+        <button class="key" data-key="8♣ ">8♣</button>
+        <button class="key" data-key="8♠ ">8♠</button>
+        <button style="color:firebrick" class="key" data-key="7♦ ">7♦</button>
+        <button style="color:firebrick" class="key" data-key="7♥ ">7♥</button>
+        <button class="key" data-key="7♣ ">7♣</button>
+        <button class="key" data-key="7♠ ">7♠</button>
+        <button style="color:firebrick" class="key" data-key="6♦ ">6♦</button>
+        <button style="color:firebrick" class="key" data-key="6♥ ">6♥</button>
+        <button class="key" data-key="6♣ ">6♣</button>
+        <button class="key" data-key="6♠ ">6♠</button>
+        <button style="color:firebrick" class="key" data-key="5♦ ">5♦</button>
+        <button style="color:firebrick" class="key" data-key="5♥ ">5♥</button>
+        <button class="key" data-key="5♣ ">5♣</button>
+        <button class="key" data-key="5♠ ">5♠</button>
+        <button style="color:firebrick" class="key" data-key="4♦ ">4♦</button>
+        <button style="color:firebrick" class="key" data-key="4♥ ">4♥</button>
+        <button class="key" data-key="4♣ ">4♣</button>
+        <button class="key" data-key="4♠ ">4♠</button>
+        <button style="color:firebrick" class="key" data-key="3♦ ">3♦</button>
+        <button style="color:firebrick" class="key" data-key="3♥ ">3♥</button>
+        <button class="key" data-key="3♣ ">3♣</button>
+        <button class="key" data-key="3♠ ">3♠</button>
+        <button style="color:firebrick" class="key" data-key="2♦ ">2♦</button>
+        <button style="color:firebrick" class="key" data-key="2♥ ">2♥</button>
+        <button class="key" data-key="2♣ ">2♣</button>
+        <button class="key" data-key="2♠ ">2♠</button>
+        
+
+        <button class="key" data-delete></button>
+
+        <button class="key" data-enter>ENTER</button>
+        
+
+      </div>
+
+      <div data-scoreboard1-grid class="scoreboard1-grid">
+        <button onclick="toggleGameMusic()" style="background: transparent; border: none;">
+          <img id="musicImage" src="images/music-off.png" alt="Music Image" class="music-icon">
+        </button>
+        <br/>
+        <button onclick="toggleGameSound()" style="background: transparent; border: none;">
+          <img id="soundImage" src="images/sound-on.png" alt="Sound Image" class="sound-icon">
+        </button>
+        <div class="space"></div><div class="space"></div>
+        <button class="key" data-reload>NEW GAME</button>
+
+        <div class="rules-container">
+          <button id="rulesButton" class="key" data-rules>RULES</button>
+          <div id="rulesPopup" class="rules">
+            <div class="close-button" id="closeButton">X</div>
+            <!-- Rules content here -->
+          </div>
+        </div>
+      </div>
+      <div data-scoreboard2-grid class="scoreboard2-grid">
+        <div id="score"></div>
+        <div id="lives"></div>
+        <div id="level"></div>
+        <button id="creditButton" class="key" data-credit>C R E D I T</button>
+          <div id="creditPopup" class="credit">
+            <div class="close2-button" id="close2Button">X</div>
+            <!-- Credit content here -->
+          </div>
+      </div>
+  </div>    
+    <!--<div data-scoreboard-grid class="scoreboard-grid">
+      <div id="level"></div>
+
+      <span id="level"></span>
+    </div> -->
+  
+</body>
+</html>

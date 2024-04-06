@@ -1,0 +1,12 @@
+{
+  "_comments1_array_member": "size, useMask, offsetX, offsetY, maskX, maskY, maskW, MaskH",
+  "dialog_a": [
+    ["big", false],
+    ["big", false],
+    ["big", false]
+  ],
+  "finish_a": [
+    ["big", false],
+    ["big", false]
+  ]
+}
