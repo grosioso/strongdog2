@@ -1,0 +1,16 @@
+precision mediump float;
+
+attribute vec3 aVertexPosition;
+attribute vec2 aVertexTexCoord;
+uniform mat4 uVPMatrix;
+uniform mat4 uMMatrix;
+
+varying vec2 texCoord;
+
+void main(void) {
+	vec4 pos =  uMMatrix * vec4(aVertexPosition,  1.0);
+	vec4 clipPos = uVPMatrix * pos;
+	clipPos.z -= 0.05;
+	texCoord = aVertexTexCoord;
+	gl_Position =  clipPos;
+}

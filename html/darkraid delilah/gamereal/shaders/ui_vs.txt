@@ -1,0 +1,18 @@
+attribute vec3 aVertexScreenPosition;
+attribute vec2 aVertexTexCoord; 
+uniform vec4 uTextureRect; //startX, startY, width, height
+
+uniform float uAspectRatio;
+uniform vec2 uRotationSinCos;
+uniform vec2 uGUIPos;
+uniform vec2 uGUIScale;
+
+varying vec2 texCoord;
+
+void main(void){
+	vec2 vertpos = aVertexScreenPosition.xy *uGUIScale;
+	vertpos = vec2( vertpos.x * uRotationSinCos.y - vertpos.y * uRotationSinCos.x, vertpos.x * uRotationSinCos.x + vertpos.y * uRotationSinCos.y);
+	vertpos.x *= uAspectRatio;
+	gl_Position =  vec4( vertpos + uGUIPos ,0., 1.);
+	texCoord = vec2(uTextureRect.x + (aVertexTexCoord.x)*uTextureRect[2], uTextureRect.y + (aVertexTexCoord.y)*uTextureRect[3]);
+}

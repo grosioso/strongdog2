@@ -1,0 +1,17 @@
+precision mediump float;
+
+uniform sampler2D uSampler;
+uniform float uLifebarStats;
+uniform float uLifebarMax;
+
+varying vec2 vPos;
+
+void main(void){
+	float barCount = uLifebarMax/20.;
+	
+	vec2 uv = vec2(vPos.x, uLifebarStats);
+	vec4 color = texture2D(uSampler, uv );
+	color.rgb *= ((vPos.y+0.8)+(vPos.y*0.3))* min(1., fract( vPos.x *barCount)*1.5);
+
+	gl_FragColor = color;
+}

@@ -1,0 +1,17 @@
+precision mediump float;
+
+uniform vec3 uTint;
+uniform sampler2D uSampler;
+uniform float uTransparency;
+uniform float uAlphaTreshold;
+varying vec2 texCoord;
+
+void main(void){
+	vec4 tex = texture2D(uSampler,texCoord);
+	if(tex.a < uAlphaTreshold){
+		discard;
+	}
+	tex.a *= uTransparency;
+	tex.rgb*=uTint;
+	gl_FragColor = tex;
+}

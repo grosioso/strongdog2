@@ -1,0 +1,29 @@
+attribute vec3 aVertexPosition;
+attribute vec3 aVertexColor;
+attribute vec2 aVertexTexCoord;
+
+uniform mat4 uShadowMVPMatrix;
+uniform vec3 uModelPos;
+
+uniform vec2 uRotationSinCos;
+
+uniform vec3 uWindVector;
+uniform vec3 uWindOffset;
+
+varying vec4 vPos;
+varying vec2 texCoord;
+
+void main(void) {
+	float scale = sqrt( dot(uRotationSinCos, uRotationSinCos));//BEST TRICK EVER?
+	float detailEffect = (aVertexColor.g/255.);
+	float windEffect = (aVertexColor.r/255.);
+	float uniqueDetailOffset = uModelPos.x+uModelPos.y; 
+	
+	float detailWind = 0.1*sin(uWindOffset.b + aVertexColor.b/255. * 6.283 + uniqueDetailOffset)*detailEffect;
+	vec3 localPos = vec3( aVertexPosition.x * uRotationSinCos.y - aVertexPosition.y * uRotationSinCos.x, aVertexPosition.x * uRotationSinCos.x + aVertexPosition.y * uRotationSinCos.y , aVertexPosition.z*scale );
+	vec3 mPos = uModelPos + vec3(localPos.xy, localPos.z +  detailWind) + (uWindVector +  vec3(uWindOffset.r, uWindOffset.g, 0.))*windEffect;
+
+	vPos = uShadowMVPMatrix * vec4(mPos , 1.0);
+	texCoord = aVertexTexCoord;
+	gl_Position = vPos;
+}

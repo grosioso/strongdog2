@@ -1,0 +1,38 @@
+precision mediump float;
+
+uniform sampler2D uSampler;
+
+uniform sampler2D uFowSampler;
+uniform vec3 uFowPos;
+
+uniform vec3 uFogColor;
+uniform vec4 uZFogColor;
+uniform vec4 uFogSize;
+
+uniform vec3 uAmbientColor;
+uniform vec3 uLocalLightColor;
+uniform mediump vec3 uLightColor;
+uniform float uAlphaTreshold;
+uniform float uCutoffZ;
+
+varying vec3 vDiffuse;
+varying vec3 vFill;
+varying vec2 texCoord;
+varying vec3 vModelPos;
+
+
+void main(void){
+	vec4 tex = texture2D(uSampler,texCoord);
+	if(tex.a < uAlphaTreshold || vModelPos.z > uCutoffZ){
+		discard;
+	}
+	
+	MACRO_fowTex
+	
+	float shadow = fowTex.g;
+	MACRO_LOCAL_LIGHT
+	MACRO_HORIZONTAL_FOG
+	vec3 color = tex.rgb*((vDiffuse)*shadow + (uAmbientColor + vFill)*MACRO_AO  + local);
+	MACRO_DISTANCE_FOG
+	MACRO_FragColor_OPAQUE
+}

@@ -1,0 +1,138 @@
+precision mediump float;
+
+uniform sampler2D uSampler;
+uniform sampler2D uFowSampler;
+uniform sampler2D uBlendSampler;
+uniform sampler2D uRefractionSampler;
+uniform sampler2D uReflectionSampler;
+uniform sampler2D uRippleSampler;
+uniform sampler2D uFoamSampler;
+
+uniform vec2 uTerrainTexCoordMultiplier;
+uniform vec3 uFowPos;
+uniform highp mat3 uNMatrix;
+
+uniform vec3 uFogColor;
+uniform vec4 uZFogColor;
+uniform vec4 uFogSize;
+
+uniform vec3 uWaterOffset;
+uniform float uGlossiness;
+//(waviness, rippleOpacity) 
+uniform vec2 uWaterWaviness;
+uniform float uShoreFactor;
+
+uniform vec3 uAmbientColor;
+uniform vec3 uLocalLightColor;
+uniform vec3 uGroundColor;
+uniform vec3 uTint;
+uniform vec3 uRefractionTint;
+uniform vec2 uReflectionParams;
+uniform vec2 uDistortionParams;
+
+uniform float uTransparency;
+uniform mediump vec3 uLightPos;
+uniform mediump vec3 uLightColor;
+uniform vec3 uFillPos;
+uniform mediump vec3 uFillColor;
+
+uniform vec3 uEyePos;
+
+varying vec3 vModelPos;
+varying vec3 vNorm;
+varying vec3 vEyeDir;
+varying vec3 vReflPos;
+varying vec4 vScreenPos;
+varying vec3 vWaterPos;
+
+
+uniform sampler2D uShadowSampler;
+uniform float uShadowPerturb;
+varying vec3 vShadowPos;
+const float shadowBias = 0.01;
+const float pcf = 0.0012;
+const float reflection_hdr = MACRO_REFLECTION_HDR;
+
+void main(void){
+	vec2 flow = uWaterOffset.xy * uWaterOffset.z;
+	vec2 tcoord = (vWaterPos.xy + (flow) * 0.3 ) / 8.;
+	vec2 tcoord3 = (vWaterPos.xy + (flow)).yx / 6.;
+
+	vec4 tex = texture2D(uSampler, tcoord ) - 0.5;
+	vec4 tex3 = texture2D(uSampler, tcoord3 ) - 0.5;
+
+	
+	tex += tex3;
+	tex.rg *= uWaterWaviness[0];
+	vec2 rippleCoord = vec2(0.5, 0.5) + (vModelPos.xy - uFowPos.xy) * uFowPos.z;
+	vec4 rippleTex = texture2D(uRippleSampler, rippleCoord)*2.-1.;
+	tex.rg += (rippleTex.rg)*20.*rippleTex.a*uWaterWaviness[1];
+	float foamFactor = ( - rippleTex.b)*8.;
+	float foamTreshold = (1.-tex3.a+0.5)*0.8 ;
+	foamFactor = clamp((foamFactor-foamTreshold)  * 2. - 0.5, 0.,1.);
+	vec3 localNorm = vNorm + vec3(tex.rg, 1.);
+	
+	vec2 perturb = vec2(tex.r, tex.g)* uShadowPerturb * 0.3;
+	vec2 shadowPerturb = perturb * max(0.2, 1. - foamFactor);
+	vec4 shadowfrag = texture2D( uShadowSampler , vShadowPos.xy - shadowPerturb + vec2(pcf, pcf));
+	vec4 shadowfrag4 = texture2D( uShadowSampler , vShadowPos.xy - shadowPerturb + vec2(-pcf,-pcf));
+	float shadow = (step(vShadowPos.z, shadowfrag.a)  +step(vShadowPos.z, shadowfrag4.a))*0.5;
+	
+	vec3 transformedNormal = normalize(uNMatrix*localNorm);
+	vec3 reflDir  = reflect( - (uLightPos) , transformedNormal); 
+	float fresnelPower =  clamp(min(1., pow((1. - transformedNormal.z), 1.6)* uReflectionParams.y + (1. - uReflectionParams.y) )*uReflectionParams.x, 0., 1.);
+	//float reflGradient = clamp(localNorm.z * 5. +0.1, 0.,1.);
+
+	MACRO_fowTex
+	//shadow on foam is reduced
+	shadow = mix(shadow, 0.5+shadow*0.5, foamFactor)*fowTex.g;
+	
+	float spec = pow(max(dot(reflDir, vEyeDir), 0.0), uGlossiness );
+	
+	vec3 local = fowTex.b * uLocalLightColor;
+	
+	MACRO_HORIZONTAL_FOG
+	
+	float ao = MACRO_AO;
+	
+	vec3 diffuse = max(dot(transformedNormal, (uLightPos)), 0.0) *uLightColor;
+	vec3 fill = max(dot(transformedNormal, (uFillPos)), 0.0) *uFillColor;
+	
+	//used for bloody water effect
+	vec4 blendMap = texture2D( uBlendSampler, vWaterPos.xy*uTerrainTexCoordMultiplier/8.+tex3.ga*0.01); 
+	
+	vec3 color = mix(uTint,vec3(0.25,-.23,-.25),blendMap.a)*(diffuse*shadow + (uAmbientColor+fill)*ao + local) /* fowTex.r*/;
+	float foamDiffuseTexture = (tex.b+0.5+ tex3.b+0.5)*0.5;
+	vec3 foamColor = foamDiffuseTexture*(0.62*uLightColor*shadow + (uAmbientColor+fill)*ao + local);
+	
+	vec2 screenpos =(vScreenPos.xy/vScreenPos.w)*0.5 + 0.5;
+	
+	vec4 refrac_sample = texture2D(uRefractionSampler, screenpos).rgba;
+	
+	float shoreFactor = max(uShoreFactor, mix(uShoreFactor, 4., blendMap.a)); //bloody water has at least a shorefactor of 4
+	float shoreDepth = clamp(shoreFactor*(refrac_sample.a - 0.25 +vModelPos.z) , 0., 1.);
+	float shoreDepth_refl = clamp(max(4., shoreFactor)*(refrac_sample.a - 0.18 +vModelPos.z), 0., 1.);
+	vec2 distortion = - perturb * shoreDepth * 0.5;
+	refrac_sample = texture2D(uRefractionSampler, screenpos+distortion*uDistortionParams.x).rgba;
+	//Diffraction
+	//refrac_sample.g = texture2D(uRefractionSampler, screenpos+distortion*uDistortionParams.x*2.).g;
+	//refrac_sample.b = texture2D(uRefractionSampler, screenpos+distortion*uDistortionParams.x*3.).b;
+	
+	vec3 refracZFogShadowEffect = mix( vec3(1.,1.,1.), (uAmbientColor+fill)*ao + local, (horizontalFog*uZFogColor.a)); //HACK, for details read Enviroment.js
+	vec3 refraction = refrac_sample.rgb * mix(vec3(1.,1.,1.), uRefractionTint, shoreDepth) * refracZFogShadowEffect;
+	color = mix(refraction, color * fow, min(1., (uTransparency+blendMap.a)*shoreDepth) );
+	
+	spec *= shadow;
+	float reflectionMix = clamp(shoreDepth_refl* fresnelPower, 0., 1.);
+	screenpos.y = 1. -screenpos.y;
+	vec3 reflColor = texture2D(uReflectionSampler, screenpos-distortion*uDistortionParams.y).rgb /* fowTex.r*/;
+	
+	reflColor = (max(color, reflColor*reflection_hdr) + reflColor*reflection_hdr)*0.5;
+	color = mix(color, mix( MACRO_FOW_COLOR ,reflColor,fow) , reflectionMix);
+	color = color + fow * uLightColor*spec * min(1., shoreDepth*3.) /* fowTex.r*/;
+	color = mix(color, foamColor*fow, min(1.,foamFactor));
+	
+	MACRO_DISTANCE_FOG
+	
+	MACRO_FragColor_WATER;
+}

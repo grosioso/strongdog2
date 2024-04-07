@@ -1,0 +1,247 @@
+
+
+{
+    "frames": { 
+        "game_back_moire.png": {
+	    "name": "game_back_moire.png",
+		
+            "rect": [446, 735, 282, 282],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_back_pattern.png": {
+	    "name": "game_back_pattern.png",
+		
+            "rect": [738, 797, 220, 220],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_0001.png": {
+	    "name": "game_line_0001.png",
+		
+            "rect": [149, 516, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_0010.png": {
+	    "name": "game_line_0010.png",
+		
+            "rect": [7, 459, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_0011.png": {
+	    "name": "game_line_0011.png",
+		
+            "rect": [466, 615, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_0100.png": {
+	    "name": "game_line_0100.png",
+		
+            "rect": [586, 615, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_0101.png": {
+	    "name": "game_line_0101.png",
+		
+            "rect": [466, 495, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_0110.png": {
+	    "name": "game_line_0110.png",
+		
+            "rect": [586, 495, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_1000.png": {
+	    "name": "game_line_1000.png",
+		
+            "rect": [269, 484, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_1001.png": {
+	    "name": "game_line_1001.png",
+		
+            "rect": [127, 396, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_1010.png": {
+	    "name": "game_line_1010.png",
+		
+            "rect": [7, 339, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_1100.png": {
+	    "name": "game_line_1100.png",
+		
+            "rect": [706, 469, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_back_effect.png": {
+	    "name": "game_line_back_effect.png",
+		
+            "rect": [826, 469, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_back_void.png": {
+	    "name": "game_line_back_void.png",
+		
+            "rect": [389, 375, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_ball.png": {
+	    "name": "game_line_ball.png",
+		
+            "rect": [247, 364, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_direction_1.png": {
+	    "name": "game_line_direction_1.png",
+		
+            "rect": [127, 276, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_direction_2.png": {
+	    "name": "game_line_direction_2.png",
+		
+            "rect": [7, 219, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_direction_3.png": {
+	    "name": "game_line_direction_3.png",
+		
+            "rect": [509, 375, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_start.png": {
+	    "name": "game_line_start.png",
+		
+            "rect": [7, 99, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_target.png": {
+	    "name": "game_line_target.png",
+		
+            "rect": [335, 604, 121, 121],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_target0.png": {
+	    "name": "game_line_target0.png",
+		
+            "rect": [127, 156, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_target_detail.png": {
+	    "name": "game_line_target_detail.png",
+		
+            "rect": [127, 36, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_target_detail_done.png": {
+	    "name": "game_line_target_detail_done.png",
+		
+            "rect": [247, 244, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_line_target_mark_done.png": {
+	    "name": "game_line_target_mark_done.png",
+		
+            "rect": [247, 124, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_particle_ring.png": {
+	    "name": "game_particle_ring.png",
+		
+            "rect": [193, 778, 141, 141],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_tile.png": {
+	    "name": "game_tile.png",
+		
+            "rect": [367, 255, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_tile_highlite.png": {
+	    "name": "game_tile_highlite.png",
+		
+            "rect": [367, 135, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_tile_over.png": {
+	    "name": "game_tile_over.png",
+		
+            "rect": [367, 15, 110, 110],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_tile_shadow.png": {
+	    "name": "game_tile_shadow.png",
+		
+            "rect": [193, 636, 132, 132],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_tile_shadow2.png": {
+	    "name": "game_tile_shadow2.png",
+		
+            "rect": [7, 579, 132, 132],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_tutorial_hand1.png": {
+	    "name": "game_tutorial_hand1.png",
+		
+            "rect": [738, 589, 176, 198],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_tutorial_hand2.png": {
+	    "name": "game_tutorial_hand2.png",
+		
+            "rect": [7, 721, 176, 198],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_tutorial_image.png": {
+	    "name": "game_tutorial_image.png",
+		
+            "rect": [7, 929, 429, 88],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }
+    },
+    "meta": {
+        "exporter": "playcanvas",
+        "image": "game_tiles.png",
+        "size": {
+            "w": 1024,
+            "h": 1024
+        },
+        "version": "1.0"
+    }
+}
+

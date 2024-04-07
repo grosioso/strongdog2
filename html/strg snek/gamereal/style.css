@@ -1,0 +1,19 @@
+canvas, #ag { 
+	position: absolute; 
+}
+
+html, body, div, canvas, #ag {
+    margin: 0;
+    padding: 0;
+}
+
+#ag{ z-index: 5 }
+#textAbove{ z-index: 4 }
+#ui{ z-index: 3 }
+#text{ z-index: 2 }
+#bg { z-index: 1 }
+
+@font-face {
+    font-family: "newConsolas";
+    src: url("bittypix/consola.ttf");
+  }

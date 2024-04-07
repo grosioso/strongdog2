@@ -1,0 +1,49 @@
+precision mediump float;
+
+uniform sampler2D uFowSampler;
+uniform vec3 uFowPos;
+
+uniform vec3 uAmbientColor;
+uniform vec3 uLocalLightColor;
+uniform mediump vec3 uLightColor;
+
+uniform mat4 uVPInvMatrix;
+
+varying vec3 vDiffuse;
+varying vec3 vFill;
+varying vec2 texCoord;
+varying vec3 vModelPos;
+
+
+void main(void){
+	//float shadow 
+	
+	vec4 samplePos;
+	float shadow = 0.;
+	float shadowInc = 0.;
+	vec2 fowCoord;
+	vec4 fowTex;
+	vec4 rayStart = uVPInvMatrix*vec4(gl_FragCoord.xy/vec2(1066.,600.)*2. - 1., -0.5 , 1.);
+	vec4 rayEnd = uVPInvMatrix*vec4(gl_FragCoord.xy/vec2(1066.,600.)*2. - 1., 0.75 , 1.);
+	float interp = 0.;
+	for(int i=0;i<25;++i){
+		samplePos = rayEnd*interp + rayStart*(1.-interp);
+		interp += 0.04;
+		samplePos/=samplePos.w;
+		samplePos.xy += samplePos.z;
+		//fowCoord = (gl_FragCoord.xy )/256. - vec2(0.5,0.5);
+		fowCoord = vec2(0.5, 0.5) + (samplePos.xy - uFowPos.xy) / uFowPos.z;
+		//fowCoord = samplePos.xy - vec2(0.5, 0.5) +(uFowPos.xy) / uFowPos.z;
+		fowTex = texture2D(uFowSampler,fowCoord);
+		
+		shadowInc = max(0., min(1.,(fowTex.g- 0.6)*15.));
+		shadowInc*=0.2;
+		shadowInc *= min(2.,  max(0., samplePos.z));
+		shadow += shadowInc/(shadow*0.3+1.);
+		
+	}
+	
+	vec3 color = uLightColor*0.1*(shadow-0.5);
+
+	gl_FragColor = vec4(color ,1.);
+}

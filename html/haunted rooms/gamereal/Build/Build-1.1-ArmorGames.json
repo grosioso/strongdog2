@@ -1,0 +1,16 @@
+{
+"companyName": "Quiet Bench Zen LLC",
+"productName": "Haunted Rooms",
+"productVersion": "1.1",
+"dataUrl": "Build-1.1-ArmorGames.data.unityweb",
+"wasmCodeUrl": "Build-1.1-ArmorGames.wasm.code.unityweb",
+"wasmFrameworkUrl": "Build-1.1-ArmorGames.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#000000",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.4.15f1"
+}

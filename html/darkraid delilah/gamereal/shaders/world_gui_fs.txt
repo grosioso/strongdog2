@@ -1,0 +1,10 @@
+precision mediump float;
+
+uniform vec3 uTint;
+uniform sampler2D uSampler;
+varying vec2 texCoord;
+
+void main(void){
+	
+	gl_FragColor = vec4(uTint * texture2D(uSampler, texCoord ).rgb , 0.5);
+}

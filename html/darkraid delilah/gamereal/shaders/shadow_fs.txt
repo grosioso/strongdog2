@@ -1,0 +1,8 @@
+precision mediump float;
+varying vec4 vPos;
+
+void main(void){
+	float depth = 0.5*vPos.z/vPos.w +0.5;
+	float frac = fract((depth)*256.);
+	gl_FragColor = vec4(  0.,0.,frac, depth-frac/256.);
+}

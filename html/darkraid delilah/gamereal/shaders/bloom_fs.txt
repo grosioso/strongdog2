@@ -1,0 +1,24 @@
+precision mediump float;
+
+uniform sampler2D uSampler;
+
+varying vec2 texCoord;
+
+void main(void){
+	//horizontal blur shader
+	vec4 tex = vec4(0.,0.,0.,1.);
+	float tresh = 0.3;
+	float rad = 0.003;
+	vec4 texFrag;
+	vec2 centerCoord = texCoord * 2.;
+
+	for(float i = 3.; i> -3.1; i-=1.){
+		float factor = 1./(abs(i)+1.) * 0.25;
+		texFrag = texture2D(uSampler, centerCoord + vec2(i*rad, 0.));
+		 
+		float avg = texFrag.r*0.2126+texFrag.g*0.7152+texFrag.b*0.0722; //relative luminance formula
+		
+		tex.rgb += texFrag.rgb * max(0.,avg-tresh) * factor;
+	}
+	gl_FragColor = tex;
+}

@@ -1,0 +1,21 @@
+attribute vec3 aVertexPosition;
+uniform mat4 uShadowMVPMatrix;
+uniform vec3 uModelPos;
+
+uniform vec2 uRotationSinCos;
+
+varying vec4 vPos;
+
+//varying float vDepth;
+
+void main(void) {
+	float scale = sqrt( dot(uRotationSinCos, uRotationSinCos));//BEST TRICK EVER?
+	vec3 vertPos = vec3( aVertexPosition.x * uRotationSinCos.y - aVertexPosition.y * uRotationSinCos.x, aVertexPosition.x * uRotationSinCos.x + aVertexPosition.y * uRotationSinCos.y , aVertexPosition.z*scale );
+	vPos = uShadowMVPMatrix*vec4(vertPos + uModelPos,1.);
+	
+	//float zBuf = position.z/position.w; //between -1 and 1
+	//vDepth = 0.5+zBuf*0.5; //between 0 and 1
+	//gl_Position = position;
+	vPos.z = max(-0.999, vPos.z);
+	gl_Position = vPos;
+}

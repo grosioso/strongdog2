@@ -1,0 +1,27 @@
+precision mediump float;
+
+attribute vec3 aVertexPosition;
+
+uniform mat4 uShadowMVPMatrix;
+
+uniform vec3 uModelPos;
+uniform vec2 uRotationSinCos;
+uniform vec4 uCliffDeform;
+
+
+
+varying vec4 vPos;
+
+void main(void) {
+	float scale = sqrt( dot(uRotationSinCos, uRotationSinCos));//BEST TRICK EVER?
+	vec3 vertpos = aVertexPosition;
+	vertpos = vec3( vertpos.x * uRotationSinCos.y - vertpos.y * uRotationSinCos.x, vertpos.x * uRotationSinCos.x + vertpos.y * uRotationSinCos.y , vertpos.z );
+	vertpos.xy /= scale ; vertpos.z *= scale;
+	vertpos = vertpos + vec3(0.5,0.5,0.);
+	vec4 interpFactors = vec4((1.-vertpos.x)*(1.-vertpos.y),(1.-vertpos.x)*(vertpos.y), (vertpos.x)*(1.-vertpos.y), (vertpos.x)*(vertpos.y));
+	float deformZ = dot(uCliffDeform, interpFactors);
+	
+	vec4 mPos =  vec4(uModelPos + vertpos + vec3(0., 0., deformZ),1.);
+	vPos =  uShadowMVPMatrix * mPos;
+	gl_Position = vPos;
+}

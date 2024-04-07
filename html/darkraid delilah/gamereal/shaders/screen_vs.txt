@@ -1,0 +1,10 @@
+attribute vec3 aVertexScreenPosition;
+attribute vec2 aVertexTexCoord; 
+
+varying vec2 texCoord;
+
+void main(void){
+	vec2 vertpos = (aVertexScreenPosition.xy ) ;
+	gl_Position =  vec4( vertpos,0., 1.);
+	texCoord = aVertexTexCoord;
+}

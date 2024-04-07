@@ -1,0 +1,16 @@
+{
+"companyName": "ElioLanda",
+"productName": "Parking Tight",
+"productVersion": "1.01",
+"dataUrl": "ParkingTight.data.unityweb",
+"wasmCodeUrl": "ParkingTight.wasm.code.unityweb",
+"wasmFrameworkUrl": "ParkingTight.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#5F66B6",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.4.24f1"
+}

@@ -1,0 +1,67 @@
+precision mediump float;
+
+uniform sampler2D uSampler;
+
+uniform sampler2D uFowSampler;
+uniform float uShadowPerturb;
+uniform vec3 uFowPos;
+
+uniform vec3 uFogColor;
+uniform vec4 uZFogColor;
+uniform vec4 uFogSize;
+
+uniform vec4 uScreenHoles;
+uniform vec2 uBoundZ;
+uniform float uAspectRatio;
+
+uniform vec3 uAmbientColor;
+uniform vec3 uLocalLightColor;
+uniform mediump vec3 uLightColor;
+uniform float uAlphaTreshold;
+
+uniform float uCutoffZ;
+
+varying vec3 vDiffuse;
+varying vec3 vFill;
+varying vec2 texCoord;
+varying vec3 vModelPos;
+
+uniform sampler2D uShadowSampler;
+varying vec3 vShadowPos;
+varying vec4 vScreenPos;
+const float shadowBias = 0.01;
+const float pcf = 0.0012;
+//const float minShadow = 0.3;
+
+void main(void){
+	vec4 tex = texture2D(uSampler,texCoord);
+	vec2 screenpos = (vScreenPos.xy/vScreenPos.w);
+	float xdist = (uScreenHoles.x-screenpos.x) * uAspectRatio;
+	float ydist = (uScreenHoles.y-screenpos.y);
+	float holeFactor = min(1.,(xdist*xdist + ydist*ydist)*4.);
+	xdist = (uScreenHoles.z-screenpos.x) * uAspectRatio;
+	ydist = (uScreenHoles.w-screenpos.y);
+	holeFactor *= min(1.,(xdist*xdist + ydist*ydist)*2.5);
+	
+	holeFactor = max(0.33*(uBoundZ[0]-vModelPos.z), holeFactor);
+	holeFactor = min(0.15*(uBoundZ[1]-vModelPos.z), holeFactor);
+	
+	holeFactor = min(1., holeFactor+ 0.25*fract((screenpos.x+screenpos.y)*100.) );
+	
+	tex.a *= holeFactor;
+	
+	if(tex.a < uAlphaTreshold || vModelPos.z > uCutoffZ){
+		discard;
+	}
+	
+	
+	
+	MACRO_fowTex
+	MACRO_SHADOW_DETAILED
+	shadow = shadow * fowTex.g; //cloud shadows
+	MACRO_HORIZONTAL_FOG
+	vec3 local = fowTex.b * uLocalLightColor;
+	vec3 color = tex.rgb*((vDiffuse)*shadow + (uAmbientColor + vFill)*MACRO_AO  + local);
+	MACRO_DISTANCE_FOG
+	MACRO_FragColor_OPAQUE
+}

@@ -1,0 +1,17 @@
+attribute vec3 aVertex2DPosition;
+attribute vec2 aVertexTexCoord; 
+
+uniform vec2 uModelPos;
+uniform vec2 uRotationSinCos;
+
+varying vec2 texCoord;
+
+void main(void) {
+	vec2 rotatedPos = vec2( 
+	aVertex2DPosition.x * uRotationSinCos.y - aVertex2DPosition.y * uRotationSinCos.x, 
+	aVertex2DPosition.x * uRotationSinCos.x + aVertex2DPosition.y * uRotationSinCos.y
+	);
+	
+	gl_Position =  vec4( rotatedPos + uModelPos ,0., 1.);
+	texCoord = aVertexTexCoord;
+}

@@ -1,0 +1,205 @@
+
+
+<head>
+    <title>Your Website Title</title>
+    <script>
+        window.addEventListener('load', function() {
+            // Create intro container
+            var introDiv = document.createElement('div');
+            introDiv.id = 'intro';
+
+            // Create and add STRONGDOG text
+            var strongDogDiv = document.createElement('div');
+            strongDogDiv.id = 'strongdog';
+            strongDogDiv.innerText = 'STRONGDOG';
+            strongDogDiv.style.opacity = '0'; // Start invisible
+            introDiv.appendChild(strongDogDiv);
+
+            // Create and add XP text
+            var xpDiv = document.createElement('div');
+            xpDiv.id = 'xp';
+            xpDiv.innerText = 'XP';
+            xpDiv.style.opacity = '0'; // Start invisible
+            introDiv.appendChild(xpDiv);
+
+            // Create and add image
+            var uploadedImage = document.createElement('img');
+            uploadedImage.id = 'uploadedImage';
+            uploadedImage.src = '../../../strongdog.webp'; // Path to your image
+            uploadedImage.style.display = 'none';
+            introDiv.appendChild(uploadedImage);
+
+            // Append intro to body
+            document.body.insertBefore(introDiv, document.body.firstChild);
+
+            // Add styles
+            var css = `
+                #intro {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(33, 33, 33, 1);
+                    z-index: 1000;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    transition: transform 0.5s ease-in-out;
+                }
+
+                #strongdog, #xp {
+                    font-size: 3em;
+                    font-weight: bold;
+                    opacity: 0;
+                    animation: fadeInSlam 1s ease forwards;
+                }
+
+                #strongdog {
+                    color: white;
+                }
+
+                #xp {
+                    color: orange;
+                    animation-delay: 0.5s; 
+                }
+
+                @keyframes fadeInSlam {
+                    0% { transform: scale(0); opacity: 0; }
+                    50% { transform: scale(1.2); opacity: 1; }
+                    100% { transform: scale(1); opacity: 1; }
+                }
+
+                @keyframes riseUp {
+                    0% { transform: translateY(0); }
+                    100% { transform: translateY(-100px); }
+                }
+
+                #uploadedImage {
+                    width: 100%;
+                    max-width: 600px;
+                    opacity: 0;
+                    transform: scale(0);
+                    animation: growAndSettle 1s ease forwards;
+                }
+
+                @keyframes growAndSettle {
+                    0% { transform: scale(0); opacity: 0; }
+                    50% { transform: scale(1.1); opacity: 1; }
+                    75% { transform: scale(0.9); }
+                    100% { transform: scale(1); }
+                }
+            `;
+            var styleSheet = document.createElement('style');
+            styleSheet.type = 'text/css';
+            styleSheet.innerText = css;
+            document.head.appendChild(styleSheet);
+
+            // Trigger image fade-in and text fade-out
+            setTimeout(() => {
+                uploadedImage.style.display = 'block';
+                uploadedImage.style.opacity = 1;
+                strongDogDiv.style.opacity = 0;
+                xpDiv.style.opacity = 0;
+            }, 1500);
+
+            // Slide up and remove intro
+            setTimeout(() => {
+                introDiv.style.transform = 'translateY(-100%)';
+                setTimeout(() => { introDiv.remove(); }, 500);
+            }, 3200);
+        });
+    </script>
+</head>
+
+
+
+<html lang="en">
+    <head>
+		<meta charset="utf-8">		
+
+    <script src="resource.js"></script>
+    <script src="game.js"></script>
+		<script src="screen.js"></script>
+    <script src="ui.js"></script>
+    <script src="debug.js"></script>
+    <script src="music.js"></script>
+    <script src="sfx.js"></script>
+    <script src="animationASCII.js"></script>
+    <script src="inputBuffer.js"></script>
+    <script src="powerPillTaken.js"></script>
+    <script src="deathMarkList.js"></script>
+
+    <script src="init.js"></script>
+    <script src="initBonus.js"></script>
+
+    <script src="world.js"></script>
+    <script src="scene.js"></script>
+    <script src="room.js"></script>
+
+    <script src="entities/entity.js"></script>
+    <script src="player.js"></script>
+    <script src="entities/segment.js"></script>
+    <script src="entities/powerPill.js"></script>
+    <script src="entities/damageSparkEntity.js"></script>
+    <script src="entities/bonusSpark.js"></script>
+    <script src="entities/doorEntity.js"></script>
+    <script src="entities/wanderingDataEntity.js"></script>
+    <script src="entities/wanderingDataSpawner.js"></script>
+    <script src="entities/invisibleWall.js"></script>
+    <script src="entities/wanderingDataReceiver.js"></script>
+    <script src="entities/deathMark.js"></script>
+    <script src="entities/fakeWall.js"></script>
+    <script src="entities/mask.js"></script>
+    <script src="entities/DeathCounter.js"></script>
+    <script src="entities/timeCounter.js"></script>
+    <script src="entities/teleporter.js"></script>
+    <script src="entities/swirl.js"></script>
+    <script src="entities/pipe.js"></script>
+    <script src="entities/oneWayWall.js"></script>
+    <script src="entities/bugWall.js"></script>
+    <script src="entities/genericBlock.js"></script>
+    <script src="entities/colorPad.js"></script>
+    <script src="entities/checkpoint.js"></script>
+    <script src="entities/pipeBonus.js"></script>
+    <script src="entities/number.js"></script>
+    <script src="entities/clock.js"></script>
+    <script src="entities/flagBlockEntity.js"></script>
+    <script src="entities/alarmClock.js"></script>
+    <script src="entities/line.js"></script>
+    <script src="entities/endindEntity.js"></script>
+    <script src="entities/endPad.js"></script>
+    <script src="entities/wave.js"></script>
+
+    <script src="process/process.js"></script>
+    <script src="process/gameOverProcess.js"></script>
+    <script src="process/loadRoomProcess.js"></script>
+    <script src="process/unloadRoomProcess.js"></script>
+    <script src="process/closeRoomProcess.js"></script>
+    <script src="process/openRoomProcess.js"></script>
+    <script src="process/startGameProcess.js"></script>
+    <script src="process/endGameProcess.js"></script>
+
+    <script src="loader.js"></script>
+    <script src="util.js"></script>
+    <script src="start.js"></script>
+    <script src="intro.js"></script>
+    <script src="loadingScreen.js"></script>
+    <script src="background.js"></script>
+    <script src="tileBG.js"></script>
+    <script src="cookieUtil.js"></script>
+    <script src="pauseMenu.js"></script>
+    <script src="splashScreen.js"></script>
+    
+		<LINK href="style.css" rel="stylesheet" type="text/css">
+      <title>stringsnek</title>
+    </head>
+    <body>
+      <div id="ag"></div>
+      <canvas id="textAbove"></canvas>
+      <canvas id="ui"></canvas>
+      <canvas id="text"></canvas>
+      <canvas id="bg"></canvas>
+    </body>
+</html>

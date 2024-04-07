@@ -1,0 +1,39 @@
+attribute vec3 aVertexPosition;
+attribute vec2 aVertexTexCoord;
+
+uniform mat4 uVPMatrix;
+uniform mat3 uTriangleCorners;
+
+uniform vec3 uRSin;
+uniform vec3 uRCos;
+uniform vec3 uModelPos;
+
+varying vec2 texCoord;
+
+void main(void) {
+	//BEST TRICK EVER pt2
+	vec3 unpackData = sqrt(uRSin*uRSin + uRCos*uRCos); //x==scale, y==animInterp+1, z==z_scale
+	vec3 rSin = uRSin/unpackData;
+	vec3 rCos = uRCos/unpackData;
+	
+	vec3 vertpos = aVertexPosition;
+	
+	if(vertpos.x+vertpos.y+vertpos.z > 0.5){//hack, needs correct model to force it into triangle shape
+		vertpos = vertpos.x*uTriangleCorners[0]+vertpos.y*uTriangleCorners[1]+vertpos.z*uTriangleCorners[2];
+	}
+	
+	
+	vertpos.z *= unpackData.z;
+
+	//Rotation order is X Y Z
+	vec3 row1 = vec3(rCos.y*rCos.z, -rCos.y*rSin.z,rSin.y);
+	vec3 row2 = vec3( rSin.x*rSin.y*rCos.z + rCos.x*rSin.z, -rSin.x*rSin.y*rSin.z + rCos.x*rCos.z, -rSin.x*rCos.y);
+	vec3 row3 = vec3(-rCos.x*rSin.y*rCos.z + rSin.x*rSin.z, rCos.x*rSin.y*rSin.z + rSin.x*rCos.z , rCos.x*rCos.y);
+	
+	vertpos = vec3( dot(row1, vertpos), dot(row2,vertpos), dot(row3,vertpos));
+	vertpos *= unpackData.x;
+	vec4 mPos =  vec4(uModelPos + vertpos,1.);
+	gl_Position = uVPMatrix * mPos;
+ 
+	texCoord = aVertexTexCoord;
+}

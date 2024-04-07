@@ -1,0 +1,31 @@
+attribute vec3 aVertexPosition;
+
+uniform mat4 uShadowMVPMatrix;
+uniform vec3 uRSin;
+uniform vec3 uRCos;
+
+uniform vec3 uModelPos;
+
+varying vec4 vPos;
+
+void main(void) {
+	//BEST TRICK EVER pt2
+	float scale = sqrt(uRSin.x*uRSin.x + uRCos.x*uRCos.x);
+	vec3 rSin = uRSin;
+	rSin.x/=scale;
+	vec3 rCos = uRCos;
+	rCos.x/=scale;
+	
+	vec3 vertpos = aVertexPosition.xyz;
+	
+	vertpos = vec3( 
+	(rCos.y*rCos.z)*vertpos.x + (-rCos.y*rSin.z)*vertpos.y + (rSin.y)*vertpos.z,
+	( rSin.x*rSin.y*rCos.z + rCos.x*rSin.z)*vertpos.x + (-rSin.x*rSin.y*rSin.z + rCos.x*rCos.z)*vertpos.y + (-rSin.x*rCos.y)*vertpos.z,
+	(-rCos.x*rSin.y*rCos.z + rSin.x*rSin.z)*vertpos.x + ( rCos.x*rSin.y*rSin.z + rSin.x*rCos.z)*vertpos.y + ( rCos.x*rCos.y)*vertpos.z);
+	
+	vertpos *= scale;
+	
+	vPos = uShadowMVPMatrix * vec4(vertpos + uModelPos, 1.);
+	vPos.z = max(-0.999, vPos.z);
+	gl_Position = vPos;
+}

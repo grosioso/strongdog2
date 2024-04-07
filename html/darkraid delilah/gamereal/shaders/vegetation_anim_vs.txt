@@ -1,0 +1,61 @@
+precision mediump float;
+
+attribute vec3 aVertexPosition;
+attribute vec3 aVertexNormal;
+attribute vec2 aVertexTexCoord;
+attribute vec3 aVertexPositionNext;
+attribute vec3 aVertexNormalNext;
+attribute vec3 aVertexColor;
+
+uniform mat4 uVPMatrix;
+uniform mat3 uNMatrix;
+
+uniform vec3 uLightPos;
+uniform vec3 uLightColor;
+uniform vec3 uFillPos;
+uniform vec3 uFillColor;
+
+uniform float uAnimInterp;
+uniform vec2 uRotationSinCos;
+uniform vec3 uModelPos;
+
+uniform vec3 uWindOffset;
+
+varying vec3 vDiffuse;
+varying vec3 vFill;
+varying vec2 texCoord;
+varying vec3 vModelPos;
+
+//uniform mat4 uShadowMVPMatrix;
+//varying vec3 vShadowPos;
+
+void main(void) {
+	float scale = sqrt( dot(uRotationSinCos, uRotationSinCos));//BEST TRICK EVER?
+	float detailEffect = (aVertexColor.g/255.);
+	float windEffect = (aVertexColor.r/255.);
+	
+	//this is just a hack value, the point is to be unique for every tree
+	//however, moving models should not use it
+	//in the future this could be a uniform float, but that would take up another uniform
+	float uniqueDetailOffset = uModelPos.x+uModelPos.y; 
+	
+	vec3 vertpos = (aVertexPosition*(1. - uAnimInterp) + aVertexPositionNext*uAnimInterp);
+	float detailWind = 0.1*sin(uWindOffset.b + aVertexColor.b/255. * 6.283     + uniqueDetailOffset )*detailEffect;
+	vec3 localPos = vec3( vertpos.x * uRotationSinCos.y - vertpos.y * uRotationSinCos.x, vertpos.x * uRotationSinCos.x + vertpos.y * uRotationSinCos.y , vertpos.z * scale );
+	vec3 mPos = uModelPos + localPos + detailWind*aVertexNormal + vec3(uWindOffset.r, uWindOffset.g, 0.)*windEffect;
+	
+	vec3 interpNorm = (aVertexNormal*(1. - uAnimInterp) + aVertexNormalNext*uAnimInterp);
+	vec3 vertNorm = vec3( interpNorm.x * uRotationSinCos.y - interpNorm.y * uRotationSinCos.x, interpNorm.x * uRotationSinCos.x + interpNorm.y * uRotationSinCos.y , interpNorm.z );
+	vec3 transformedNormal = normalize(uNMatrix * vertNorm);
+	
+	gl_Position = uVPMatrix * vec4(mPos , 1.0);
+	
+	vDiffuse = max(dot(transformedNormal, normalize(uLightPos)), 0.0) *uLightColor;
+	MACRO_VFILL
+	
+	texCoord = aVertexTexCoord;
+	vModelPos = mPos;
+	
+	//vec4 shadowClipPos = uShadowMVPMatrix * vec4(mPos,1.);
+	//vShadowPos =  vec3( shadowClipPos.xyz / shadowClipPos.w)*0.5+0.5;
+}

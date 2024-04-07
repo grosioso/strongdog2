@@ -1,0 +1,41 @@
+precision mediump float;
+
+uniform sampler2D uSampler;
+uniform sampler2D uBlendSampler;
+uniform vec2 uTerrainTexCoordMultiplier;
+
+uniform sampler2D uSampler4;
+
+uniform vec4 uFogSize;
+
+uniform sampler2D uFowSampler;
+uniform vec3 uFowPos;
+
+uniform vec3 uAmbientColor;
+uniform float uAlphaTreshold;
+
+varying vec3 vDiffuse;
+varying vec3 vFill;
+varying vec2 texCoord;
+varying vec3 vModelPos;
+
+
+void main(void){
+	vec4 tex = texture2D(uSampler,texCoord);
+	if(tex.a < uAlphaTreshold){
+		discard;
+	}
+	
+	vec4 blendTex = texture2D(uBlendSampler,vModelPos.xy*uTerrainTexCoordMultiplier/8.);
+	float transp = blendTex.a;
+	
+	MACRO_fowTex
+	
+	MACRO_MULT_HORIZONTAL_FOG
+	MACRO_MULT_DISTANCE_FOG
+	
+	vec3 color = tex.rgb*(1. + uAmbientColor);
+	
+	vec3 fogColor = vec3(1.,1.,1.);
+	gl_FragColor = vec4(mix( mix(color + transp, fogColor, horizontalFog ),  fogColor,distanceFog ), 1.);
+}

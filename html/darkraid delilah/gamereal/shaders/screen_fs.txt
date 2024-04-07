@@ -1,0 +1,23 @@
+precision mediump float;
+
+uniform sampler2D uSampler;
+uniform sampler2D uSampler1;
+uniform sampler2D uSampler2;
+
+varying vec2 texCoord;
+
+void main(void){
+	vec4 tex = clamp( texture2D(uSampler,texCoord) , 0.01, 0.999);
+		
+	float blueY	=  floor(tex.b*8.)/8.  ;
+	float blueX =  (7.-floor(fract(tex.b*8.)*8.))/8.;
+	
+	float redX = (1.- tex.r)/8. ;
+	float greenY = (tex.g)/8.;
+	tex = texture2D(uSampler2, vec2(  blueX +  redX , blueY + greenY   ));
+	
+	
+	gl_FragColor = tex;
+}
+
+

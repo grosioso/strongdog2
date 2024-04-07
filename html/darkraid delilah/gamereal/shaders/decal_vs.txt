@@ -1,0 +1,20 @@
+attribute vec3 aVertexPosition;
+attribute vec2 aVertexTexCoord;
+uniform mat4 uMVPMatrix;
+uniform vec3 uModelPos;
+
+varying vec3 vDiffuse;
+varying vec3 vFill;
+varying vec2 texCoord;
+varying vec3 vModelPos;
+
+void main(void) {
+	vec4 mPos = vec4(aVertexPosition+uModelPos, 1.0);
+	gl_Position =  uMVPMatrix*mPos;
+	
+	vDiffuse =  vec3(1.,1.,1.) ;
+	
+	texCoord = aVertexTexCoord;
+	vModelPos = mPos.xyz;
+	
+}

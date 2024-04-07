@@ -1,0 +1,41 @@
+precision mediump float;
+
+uniform sampler2D uSampler1;
+uniform sampler2D uSampler2;
+uniform sampler2D uSampler3;
+uniform sampler2D uSampler4;
+
+uniform sampler2D uBlendSampler;
+uniform vec3 uTerrainOcclusion;
+
+varying vec2 vBlendTexCoord;
+varying vec3 vModelPos;
+
+void main(void){
+	vec2 texCoord = vModelPos.xy / 8.;
+	vec4 blendTex = texture2D(uBlendSampler,vBlendTexCoord);
+
+	vec4 tex1 = texture2D(uSampler1,texCoord);
+	vec4 tex2 = texture2D(uSampler2,texCoord);
+	vec4 tex3 = texture2D(uSampler3,texCoord);
+	vec4 tex4 = texture2D(uSampler4,texCoord);
+	
+	
+	float blendFallof = 8. ;
+	float blendfac1 = clamp((tex2.a - 1.)*blendFallof + blendTex.r*(blendFallof+1.), 0., 1.);
+	float blendfac2 = clamp((tex3.a - 1.)*blendFallof + blendTex.g*(blendFallof+1.), 0., 1.);
+	blendFallof*= blendTex.a;
+	float blendfac3 = clamp((tex4.a - 1.)*blendFallof + blendTex.b*(blendFallof+1.), 0., 1.);
+	
+	float occlusion1 = clamp((blendTex.r - 0.1) * 0.3, 0. , 0.5);
+	vec4 occlusionColor1 = occlusion1 * vec4(1.,1.,1.,0.) * uTerrainOcclusion.r;
+	
+	float occlusion2 = clamp((blendTex.g - 0.1) * 0.3   - occlusion1, 0. , 0.5);
+	vec4 occlusionColor2 = occlusion2 * vec4(1.,1.,1.,0.) * uTerrainOcclusion.g;
+	
+	float occlusion3 = clamp((blendTex.b - 0.1) * 0.3   - (occlusion1+occlusion2), 0. , 0.5);
+	vec4 occlusionColor3 = occlusion3 * vec4(1.,1.,1.,0.) * uTerrainOcclusion.b;
+	
+	vec4 tex = mix( mix( mix(tex1 - occlusionColor1 ,tex2, blendfac1) - occlusionColor2 ,tex3, blendfac2)-occlusionColor3, tex4,blendfac3) ;
+	gl_FragColor = tex;
+}

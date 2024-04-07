@@ -1,0 +1,25 @@
+precision mediump float;
+
+attribute vec3 aVertexPosition;
+
+uniform mat4 uMVPMatrix;
+uniform mat4 uMMatrix;
+
+uniform vec3 uWorldPos;
+
+uniform vec2 uTerrainTexCoordMultiplier;
+
+uniform vec4 uTileSideBias;
+varying vec3 vModelPos;
+varying vec2 vBlendTexCoord;
+
+void main(void) {
+	vec3 worldVertPos = aVertexPosition+ uWorldPos;
+	worldVertPos.z = 0.;
+	vec4 mPos = uMMatrix* vec4(worldVertPos , 1.0);
+	gl_Position =  uMVPMatrix * vec4(worldVertPos, 1.0);
+	vModelPos = mPos.xyz;
+	//picit a szeleit a tileon beluli texturanak le kell vagni a szomszed interpolacioja miatt
+	vec2 texCoord = (aVertexPosition.xy - uTileSideBias.zw*(aVertexPosition.xy  - uTileSideBias.xy))/ 8. ;
+	vBlendTexCoord = texCoord*uTerrainTexCoordMultiplier;
+}

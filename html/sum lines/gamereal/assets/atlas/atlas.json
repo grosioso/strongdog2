@@ -1,0 +1,268 @@
+
+
+{
+    "frames": { 
+        "game_button_help1.png": {
+	    "name": "game_button_help1.png",
+		
+            "rect": [4, 68, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_help2.png": {
+	    "name": "game_button_help2.png",
+		
+            "rect": [134, 68, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_help3.png": {
+	    "name": "game_button_help3.png",
+		
+            "rect": [192, 632, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_home1.png": {
+	    "name": "game_button_home1.png",
+		
+            "rect": [267, 895, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_home2.png": {
+	    "name": "game_button_home2.png",
+		
+            "rect": [267, 765, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_home3.png": {
+	    "name": "game_button_home3.png",
+		
+            "rect": [192, 502, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_level_complete1.png": {
+	    "name": "game_button_level_complete1.png",
+		
+            "rect": [784, 653, 107, 107],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_level_complete2.png": {
+	    "name": "game_button_level_complete2.png",
+		
+            "rect": [896, 653, 107, 107],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_level_complete3.png": {
+	    "name": "game_button_level_complete3.png",
+		
+            "rect": [784, 541, 107, 107],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_level_ready1.png": {
+	    "name": "game_button_level_ready1.png",
+		
+            "rect": [896, 541, 107, 107],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_level_ready2.png": {
+	    "name": "game_button_level_ready2.png",
+		
+            "rect": [524, 523, 107, 107],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_level_ready3.png": {
+	    "name": "game_button_level_ready3.png",
+		
+            "rect": [636, 523, 107, 107],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_levels1.png": {
+	    "name": "game_button_levels1.png",
+		
+            "rect": [192, 372, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_levels2.png": {
+	    "name": "game_button_levels2.png",
+		
+            "rect": [192, 242, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_levels3.png": {
+	    "name": "game_button_levels3.png",
+		
+            "rect": [264, 112, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_levels_left1.png": {
+	    "name": "game_button_levels_left1.png",
+		
+            "rect": [322, 635, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_levels_left2.png": {
+	    "name": "game_button_levels_left2.png",
+		
+            "rect": [397, 895, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_levels_left3.png": {
+	    "name": "game_button_levels_left3.png",
+		
+            "rect": [397, 765, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_levels_right1.png": {
+	    "name": "game_button_levels_right1.png",
+		
+            "rect": [322, 505, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_levels_right2.png": {
+	    "name": "game_button_levels_right2.png",
+		
+            "rect": [322, 375, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_levels_right3.png": {
+	    "name": "game_button_levels_right3.png",
+		
+            "rect": [322, 245, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_play1.png": {
+	    "name": "game_button_play1.png",
+		
+            "rect": [4, 574, 183, 183],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_play2.png": {
+	    "name": "game_button_play2.png",
+		
+            "rect": [4, 386, 183, 183],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_play3.png": {
+	    "name": "game_button_play3.png",
+		
+            "rect": [4, 198, 183, 183],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_play_back.png": {
+	    "name": "game_button_play_back.png",
+		
+            "rect": [4, 762, 258, 258],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_reset1.png": {
+	    "name": "game_button_reset1.png",
+		
+            "rect": [394, 115, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_reset2.png": {
+	    "name": "game_button_reset2.png",
+		
+            "rect": [527, 895, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_reset3.png": {
+	    "name": "game_button_reset3.png",
+		
+            "rect": [657, 895, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_sound_off1.png": {
+	    "name": "game_button_sound_off1.png",
+		
+            "rect": [787, 895, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_sound_off2.png": {
+	    "name": "game_button_sound_off2.png",
+		
+            "rect": [527, 765, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_sound_off3.png": {
+	    "name": "game_button_sound_off3.png",
+		
+            "rect": [657, 765, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_sound_on1.png": {
+	    "name": "game_button_sound_on1.png",
+		
+            "rect": [787, 765, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_sound_on2.png": {
+	    "name": "game_button_sound_on2.png",
+		
+            "rect": [524, 635, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_button_sound_on3.png": {
+	    "name": "game_button_sound_on3.png",
+		
+            "rect": [654, 635, 125, 125],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_particle1.png": {
+	    "name": "game_particle1.png",
+		
+            "rect": [264, 40, 67, 67],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }, 
+        "game_particle_ring.png": {
+	    "name": "game_particle_ring.png",
+		
+            "rect": [748, 429, 107, 107],
+            "pivot": [0.5, 0.5],
+            "borders": [0, 0, 0, 0]
+        }
+    },
+    "meta": {
+        "exporter": "playcanvas",
+        "image": "atlas.png",
+        "size": {
+            "w": 1024,
+            "h": 1024
+        },
+        "version": "1.0"
+    }
+}
+

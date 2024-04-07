@@ -1,0 +1,54 @@
+attribute vec3 aVertexPosition;
+attribute vec3 aVertexNormal;
+attribute vec2 aVertexTexCoord;
+attribute vec3 aVertexPositionNext;
+attribute vec3 aVertexNormalNext;
+
+uniform mat4 uVPMatrix;
+uniform mat4 uVMatrix;
+uniform mat4 uMMatrix;
+uniform mat3 uNMatrix;
+
+uniform mediump vec3 uLightPos;
+uniform mediump vec3 uLightColor;
+uniform vec3 uFillPos;
+uniform mediump vec3 uFillColor;
+
+uniform float uAnimInterp;
+
+varying vec3 vDiffuse;
+varying vec3 vFill;
+varying vec2 texCoord;
+varying vec3 vModelPos;
+
+varying vec3 vEyeDir;
+varying vec3 vReflDir;
+varying vec2 vFresnel;
+
+void main(void) {
+	vec4 mPos =  uMMatrix * vec4(aVertexPosition*(1. - uAnimInterp) + aVertexPositionNext*uAnimInterp, 1.);
+	gl_Position = uVPMatrix * mPos;
+	
+	vec3 interpNorm = (aVertexNormal*(1. - uAnimInterp) + aVertexNormalNext*uAnimInterp);
+	vec3 vertNorm = (uMMatrix * vec4(interpNorm,1.)).xyz; 
+	
+	//we subtract the position from the norm, to cancel out the translation effect of the model matrix
+	vec3 transformedNormal = normalize(uNMatrix * (vertNorm  - vec3(uMMatrix[3][0], uMMatrix[3][1], uMMatrix[3][2])));
+	
+	vEyeDir = -normalize((uVMatrix * mPos).xyz);
+	vReflDir  = reflect(-(uLightPos), transformedNormal);
+
+	float fresnelPower =  (pow((1. - transformedNormal.z), 1.4)* 0.95 + 0.25);
+	float reflGradient = clamp(vertNorm.z * 3. +0.1, 0.,1.);
+	vFresnel = vec2(fresnelPower, reflGradient);
+
+	
+	vDiffuse = max(dot(transformedNormal, (uLightPos)), 0.0) *uLightColor;
+	MACRO_VFILL
+	
+	texCoord = aVertexTexCoord;
+	vModelPos = mPos.xyz;
+	
+	//vec4 shadowClipPos = uShadowMVPMatrix * mPos;
+	//vShadowPos =  vec3( shadowClipPos.xyz / shadowClipPos.w)*0.5+0.5;
+}

@@ -1,0 +1,35 @@
+precision mediump float;
+
+uniform sampler2D uSampler;
+
+
+uniform vec4 uFogSize;
+
+uniform sampler2D uFowSampler;
+uniform vec3 uFowPos;
+
+uniform vec3 uAmbientColor;
+uniform float uAlphaTreshold;
+uniform float uTransparency;
+
+varying vec3 vDiffuse;
+varying vec3 vFill;
+varying vec2 texCoord;
+varying vec3 vModelPos;
+
+
+void main(void){
+	vec4 tex = texture2D(uSampler,texCoord);
+	if(tex.a < uAlphaTreshold){
+		discard;
+	}
+	
+	//MACRO_fowTex
+	//MACRO_MULT_HORIZONTAL_FOG
+	//MACRO_MULT_DISTANCE_FOG
+	vec3 color = clamp( tex.rgb*(1. + uAmbientColor) + uTransparency, 0., 1.);
+	
+	//vec3 fogColor = vec3(1.,1.,1.);
+	//gl_FragColor = vec4(  mix( mix(color, fogColor, clamp(horizontalFog,0.,1.) ),  fogColor, clamp(distanceFog,0.,1.) ), 1.);
+	gl_FragColor = vec4(  color , 1.);
+}

@@ -1,0 +1,49 @@
+precision mediump float;
+
+
+uniform sampler2D uSampler;
+uniform sampler2D uTerrainSampler;
+uniform vec2 uTerrainTexOffset;
+
+uniform sampler2D uShadowSampler;
+uniform float uShadowPerturb;
+uniform sampler2D uFowSampler;
+
+uniform vec3 uAmbientColor;
+uniform vec3 uFogColor;
+uniform vec4 uZFogColor;
+uniform vec4 uFogSize;
+
+uniform vec3 uLocalLightColor;
+uniform vec3 uFowPos;
+uniform vec2 uTilePos;
+uniform float uCutoffZ;
+
+varying vec3 vDiffuse;
+varying vec3 vFill;
+varying vec3 vModelPos;
+varying vec3 vShadowPos;
+varying vec2 texCoord;
+
+const float pcf = 0.0012;
+const float texbias = 0.;
+void main(void){
+	if(vModelPos.z > uCutoffZ){
+		discard;
+	}
+	vec4 terrainTex = texture2D(uTerrainSampler, ( vModelPos.xy - uTilePos) * 0.125);
+	
+	vec4 uvTex = texture2D(uSampler, texCoord);
+	vec4 tex = mix(terrainTex,uvTex,uvTex.a);
+	MACRO_SHADOW_TERRAIN
+	MACRO_fowTex
+	shadow = shadow*fowTex.g;
+	
+	MACRO_LOCAL_LIGHT
+	MACRO_HORIZONTAL_FOG
+	
+	vec3 color = tex.rgb*(vDiffuse*shadow + (uAmbientColor+vFill)*MACRO_AO  + local);
+	
+	MACRO_DISTANCE_FOG
+	MACRO_FragColor_TERRAIN
+}

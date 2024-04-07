@@ -1,0 +1,20 @@
+attribute vec3 aVertexPosition;
+attribute vec3 aVertexPositionNext;
+
+uniform mat4 uShadowMVPMatrix;
+
+uniform vec2 uRotationSinCos;
+uniform vec3 uModelPos;
+
+uniform float uAnimInterp;
+
+varying vec4 vPos;
+
+void main(void) {
+	float scale = sqrt( dot(uRotationSinCos, uRotationSinCos));//BEST TRICK EVER?
+	vec3 vertpos = (aVertexPosition*(1. - uAnimInterp) + aVertexPositionNext*uAnimInterp) * vec3(1.,1.,1.);
+	vertpos = vec3( vertpos.x * uRotationSinCos.y - vertpos.y * uRotationSinCos.x, vertpos.x * uRotationSinCos.x + vertpos.y * uRotationSinCos.y , vertpos.z*scale );
+	vPos = uShadowMVPMatrix*vec4(vertpos + uModelPos,1.);
+	gl_Position = vPos;
+
+}

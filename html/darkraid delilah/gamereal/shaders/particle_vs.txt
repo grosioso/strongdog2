@@ -1,0 +1,69 @@
+attribute vec3 aVertexPosition;
+attribute vec3 aVertexNormal;
+attribute vec2 aVertexTexCoord;
+
+uniform mat4 uVPMatrix;
+uniform mat4 uPMatrix;
+
+
+uniform mediump vec3 uLightPos;
+uniform mediump vec3 uLightColor;
+uniform vec3 uFillPos;
+uniform mediump vec3 uFillColor;
+
+uniform vec4 uParticleParams; //age, growth, gravity, motion sampling Y
+uniform float uFloorZ;
+uniform float uTransparency;
+uniform vec3 uModelPos;
+
+uniform sampler2D uVertexSampler;
+uniform float uPixelMiddleOffset;
+
+varying vec3 vDiffuse;
+varying vec3 vFill;
+varying vec2 texCoord;
+varying vec3 vModelPos;
+varying float vModAge;
+varying float vTransparency;
+
+void main(void) {
+	float modAge;
+	float age = uParticleParams.x;
+	if(age > 1.){
+		modAge = mod(age + aVertexPosition.z, 1.);
+	}else{
+		modAge = max(0. , age + aVertexPosition.z - 1.); //used for first period only
+	}
+	
+	//when is the particle intersecting the floorZ plane?
+	//we may solve the z-position quadratic equation to find that moment
+	float qb = aVertexNormal.z*3.; //'b' factor of quadratic formula
+	float qa = max(0.001, uParticleParams.z*25.); //'a' factor of quadratic formula
+	float qc = max(0.001, uModelPos.z-uFloorZ); //'c' factor of quadratic formula
+	modAge = min(modAge, (qb + sqrt(qb*qb + 4.*qa*qc))/(2.*qa));
+	
+	vec3 worldPos = uModelPos + aVertexNormal*3.*modAge ;
+	float gravityPos = modAge*modAge*uParticleParams.z * 25. ;
+	worldPos.z -= gravityPos;
+	//worldPos.z = max(worldPos.z, uFloorZ);
+	
+	vec4 tex = texture2D(uVertexSampler,vec2(1.-aVertexPosition.z, uParticleParams.w + uPixelMiddleOffset));
+	
+	//worldPos += (tex.rgb - vec3(0.5,0.5,0.5)) * 16.; //For UInt8 texture
+	//worldPos += tex.rgb; //for FLOAT texture
+	MACRO_DECODE_DYNAMIC_PARTICLE_POS
+	
+	vTransparency = tex.a* tex.a*uTransparency * max(0., (1. - modAge*1.1));
+	
+	vec4 partPos =  uVPMatrix * vec4(worldPos, 1.0);
+	vec3 transformedNormal = 2. *  normalize( vec3( -aVertexPosition.x, -aVertexPosition.y, 0.));
+	
+	vDiffuse = vec3(1.,1.,1.);
+	vFill = uFillColor;
+	
+	vec4 vertPos = (0.15*(1.+modAge*uParticleParams.y)*vec4(aVertexPosition.x, aVertexPosition.y , 0., 0.));
+	gl_Position = uPMatrix*(vertPos)+ partPos;
+	texCoord = aVertexTexCoord;
+	vModelPos = vertPos.xyz + worldPos;
+	vModAge = modAge;
+}

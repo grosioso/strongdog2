@@ -1,0 +1,17 @@
+precision mediump float;
+
+uniform sampler2D uSampler;
+uniform vec3 uSkyColor;
+uniform vec4 uCloudColor;
+uniform vec2 uCloudPos;
+uniform vec2 uTexOffset;
+uniform float uTexScale;
+
+varying vec2 texCoord;
+varying vec3 vModelPos;
+
+void main(void){
+	float stretch = -uTexScale*0.5;
+ 
+	gl_FragColor = texture2D(uSampler,vec2(stretch,1.)*texCoord + vec2(uTexOffset.x * stretch ,uTexOffset.y));
+}

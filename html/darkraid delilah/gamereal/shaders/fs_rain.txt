@@ -1,0 +1,36 @@
+precision mediump float;
+
+uniform sampler2D uSampler;
+uniform sampler2D uBlendSampler;
+
+uniform sampler2D uFowSampler;
+uniform vec3 uFowPos;
+
+uniform vec3 uFogColor;
+uniform vec4 uZFogColor;
+uniform vec4 uFogSize;
+uniform vec3 uAmbientColor;
+
+uniform float uCutoffZ;
+uniform vec2 uTerrainTexCoordMultiplier;
+
+varying vec2 texCoord;
+varying vec3 vModelPos;
+
+void main(void){
+	vec4 tex = texture2D(uSampler,texCoord);
+	tex.rgb *= tex.a;
+	if(tex.r+tex.g+tex.b < 0.02 || vModelPos.z > uCutoffZ){
+		discard;
+	}
+	MACRO_fowTex
+	float shadow = fowTex.g;
+	MACRO_HORIZONTAL_FOG
+	vec4 blendMap = texture2D( uBlendSampler, vModelPos.xy *uTerrainTexCoordMultiplier/8.); 
+	
+	vec3 color = tex.rgb*uAmbientColor;
+	color *= clamp(10.-vModelPos.z,0.,5.)*0.5 * blendMap.b;
+	
+	MACRO_DISTANCE_FOG
+	MACRO_FragColor_OPAQUE
+}

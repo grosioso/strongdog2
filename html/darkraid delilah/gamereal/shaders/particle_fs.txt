@@ -1,0 +1,38 @@
+precision mediump float;
+uniform sampler2D uSampler;
+
+uniform sampler2D uFowSampler;
+uniform sampler2D uBlendSampler;
+uniform vec3 uFowPos;
+
+uniform float uTime;
+uniform float uAlphaTreshold;
+uniform vec3 uLocalLightColor;
+
+varying vec3 vDiffuse;
+varying vec3 vFill;
+varying float vTransparency;
+varying vec2 texCoord;
+varying vec3 vModelPos;
+varying float vModAge;
+
+void main(void){
+	vec4 tex = texture2D(uSampler,texCoord);
+	tex.a *= vTransparency;
+	if(tex.a < uAlphaTreshold){
+		discard;
+	}
+
+	MACRO_fowTex
+	MACRO_LOCAL_RGB
+	vec3 light = vFill.r/255. + fract(vFill.g) * texture2D(uBlendSampler, vec2(vFill.g/256., uTime)).rgb;
+	float totalLight = max(light.b, max(light.r, light.g))+0.001;
+	light /= totalLight;
+	
+	totalLight *= 0.66;
+	totalLight  = min(1., min( totalLight*2.+0.05, ( gl_FragCoord.w*0.5 + totalLight*1.35 - 0.3)));
+	light = local + totalLight *light ;
+
+	gl_FragColor = vec4(tex.rgb * light, tex.a);
+
+}

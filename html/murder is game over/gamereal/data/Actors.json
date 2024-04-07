@@ -1,0 +1,5 @@
+[
+null,
+{"id":1,"battlerName":"","characterIndex":0,"characterName":"PHC_Em-Services-Bonus","classId":5,"equips":[1],"faceIndex":0,"faceName":"DogPortrait144x144FINAL","traits":[{"code":41,"dataId":5,"value":1},{"code":44,"dataId":7,"value":1}],"initialLevel":1,"maxLevel":1,"name":"Cleo","nickname":"","note":"<battle command: skill_type 5 />\n","profile":"Cleo the clue sniffing dog. She can see clues on the\nmap which humans cannot."},
+{"id":2,"battlerName":"","characterIndex":0,"characterName":"PHC_Em-ServicesA2","classId":6,"equips":[0],"faceIndex":0,"faceName":"PHC_Paulie","traits":[{"code":41,"dataId":4,"value":1}],"initialLevel":1,"maxLevel":1,"name":"Guy","nickname":"","note":"<battle command: skill_type 4 />","profile":"The detective. He can talk to NPCs, which the dog\ncan't... because she's a dog."}
+]

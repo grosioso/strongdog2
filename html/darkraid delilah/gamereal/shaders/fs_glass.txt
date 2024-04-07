@@ -1,0 +1,100 @@
+precision mediump float;
+
+uniform sampler2D uSampler;
+
+uniform sampler2D uFowSampler;
+uniform vec3 uFowPos;
+
+uniform vec3 uFogColor;
+uniform vec4 uZFogColor;
+uniform vec4 uFogSize;
+
+uniform vec3 uAmbientColor;
+uniform vec3 uLocalLightColor;
+uniform vec3 uGroundColor;
+uniform vec3 uSkyColor;
+uniform vec4 uCloudColor;
+uniform mediump vec3 uLightColor;
+uniform mediump vec3 uLightPos;
+
+uniform float uCutoffZ;
+uniform vec3 uEyePos;
+uniform vec3 uTint;
+
+varying vec3 vDiffuse;
+varying vec3 vFill;
+varying vec2 texCoord;
+varying vec3 vModelPos;
+varying vec3 vNorm;
+varying vec2 vFresnel;
+
+uniform sampler2D uShadowSampler;
+varying vec3 vShadowPos;
+const float shadowBias = 0.005;
+const float pcf = 0.0012;
+
+uniform vec2 uTilePos;
+uniform sampler2D uTerrainSampler;
+uniform highp mat4 uShadowMVPMatrix; //used in fragment shader inside of refraction
+uniform float uGroundLevel;
+
+void main(void){
+	vec4 tex = texture2D(uSampler,texCoord);
+	if(tex.a < 0.5 || vModelPos.z > uCutoffZ){
+		discard;
+	}
+	
+	//float  reflectivity = (tex.a-0.5)*2.;//transformed from 0.5--1.0 to 0.0--1.0
+	float reflectivity = 1.;
+	vec3 norm = normalize(vNorm);
+	vec3 reflEyeDir = normalize(reflect(-(uEyePos-vModelPos), norm));
+	vec3 reflPos = vModelPos + reflEyeDir*5./sqrt(max(0.1,reflEyeDir.z));
+	vec2 reflFowCoord= vec2(0.5, 0.5) + (reflPos.xy - uFowPos.xy) * uFowPos.z;
+	vec4 reflFowTex = texture2D(uFowSampler, reflFowCoord);
+	float reflCloud= clamp(reflFowTex.g*2.-0.6, 0., 1.);
+	
+	MACRO_fowTex
+	MACRO_SHADOW_DETAILED
+	shadow = shadow * fowTex.g; //cloud shadows
+	
+	vec3 refracPerturb = (tex.rgb-vec3(.5,.5,.5))*0.25; //add a bit of bumpiness
+	
+	vec3 eyeDir = normalize(uEyePos-vModelPos);
+	vec3 reflDir = reflect(-(uLightPos) + refracPerturb, norm);
+	float specStrength = 5.*reflectivity*reflectivity;
+	float spec = specStrength*0.3 *  pow(max(dot( reflDir, eyeDir), 0.0), 15. );
+	
+	
+	vec3 refracEyeDir = refract(eyeDir, -norm + refracPerturb, 1.33);
+	vec3 refracPos = vModelPos - refracEyeDir/refracEyeDir.z*vModelPos.z;
+	refracPos.z -= uGroundLevel;
+	vec4 terrainTex = texture2D(uTerrainSampler, ( refracPos.xy - uTilePos) * 0.125);
+	vec2 refracFowCoord = vec2(0.5, 0.5) + (refracPos.xy - uFowPos.xy) * uFowPos.z;
+	vec4 refracFowTex = texture2D(uFowSampler, refracFowCoord );
+	float refracShadow = refracFowTex.g;
+	vec4 refracShadowClipPos = uShadowMVPMatrix * vec4(refracPos,1.);
+	vec3 refracShadowPos =  vec3( refracShadowClipPos.xyz / refracShadowClipPos.w)*0.5+0.5;
+	vec4 refracShadowfrag = texture2D( uShadowSampler , refracShadowPos.xy);
+	refracShadow *= 0.5+0.5*step(refracShadowPos.z, refracShadowfrag.a+ refracShadowfrag.b*0.00390625);
+	terrainTex.rgb = terrainTex.rgb * (uLightColor*refracShadow + uAmbientColor) * uTint; 
+	
+	MACRO_LOCAL_LIGHT
+	MACRO_LOCAL_REFLECTION
+	
+	MACRO_HORIZONTAL_FOG
+	
+	vec3 color = tex.rgb*((vDiffuse)*shadow + (uAmbientColor + vFill)*MACRO_AO  + local);
+	
+	vec3 refracColor = terrainTex.rgb;
+	float fresnelPower =  (pow(1.-dot(eyeDir, norm), 1.3)* 0.95 + 0.2);
+	float reflGradient = clamp(norm.z * 3. +0.1, 0.,1.);
+
+	vec3 reflColor = mix(uGroundColor*fowTex.g, mix( uCloudColor.rgb,uSkyColor,reflCloud*uCloudColor.a), reflGradient) + reflLocal;
+	reflColor = max(reflColor, 0.5*(refracColor+reflColor));
+	refracColor = mix(refracColor , reflColor, fresnelPower * reflectivity);
+	refracColor = refracColor + uLightColor*spec*shadow;
+	color = mix(color, refracColor, tex.a*2.-1.);
+	
+	MACRO_DISTANCE_FOG
+	MACRO_FragColor_OPAQUE
+}

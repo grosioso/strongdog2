@@ -1,0 +1,52 @@
+precision mediump float;
+
+uniform sampler2D uSampler;
+uniform sampler2D uBlendSampler;
+uniform sampler2D uFowSampler;
+uniform vec3 uFowPos;
+uniform mediump float uTime;
+
+uniform vec3 uFogColor;
+uniform vec4 uZFogColor;
+uniform vec4 uFogSize;
+
+uniform vec3 uAmbientColor;
+uniform vec3 uLocalLightColor;
+uniform mediump vec3 uLightColor;
+uniform float uAlphaTreshold;
+
+uniform float uCutoffZ;
+
+varying vec3 vDiffuse;
+varying vec3 vFill;
+varying vec2 texCoord;
+varying vec3 vModelPos;
+varying vec3 vVertColor;
+
+uniform sampler2D uShadowSampler;
+varying vec3 vShadowPos;
+const float shadowBias = 0.0;
+const float pcf = 0.0012;
+
+
+void main(void){
+	vec4 tex = texture2D(uSampler,texCoord );
+	if(tex.a < uAlphaTreshold){
+		discard;
+	}
+
+	MACRO_fowTex
+	MACRO_LOCAL_RGB
+	vec3 light = vFill.r/255. + fract(vFill.g) * texture2D(uBlendSampler, vec2(vFill.g/256., uTime)).rgb;
+	//vec3 light = vDiffuse * shadow + vFill/255. ;
+	//float totalLight = (light.r*0.2126+light.g*0.7152+light.b*0.0722) + 0.001;
+	float totalLight = max(light.b, max(light.r, light.g))+0.001;
+	light /= totalLight;
+	
+	totalLight *= 0.66;
+	totalLight  = min(1., min( totalLight*2.+0.05, ( gl_FragCoord.w*0.5 + totalLight*1.35 - 0.3)));
+	//totalLight = min(1., floor(totalLight*32. + 0.5)/32.);
+	light = local + totalLight *light ;
+	gl_FragColor = vec4(tex.rgb * light, tex.a);
+
+}

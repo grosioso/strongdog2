@@ -1,0 +1,15 @@
+precision mediump float;
+
+uniform sampler2D uSampler;
+uniform float uAlphaTreshold;
+varying vec4 vPos;
+varying vec2 texCoord;
+
+void main(void){
+	if( texture2D(uSampler,texCoord).a < uAlphaTreshold){
+		discard;
+	}
+	float depth = 0.5*vPos.z/vPos.w +0.5;
+	float frac = fract((depth)*256.);
+	gl_FragColor = vec4( 0.,0.,frac, depth-frac/256.);
+}

@@ -1,0 +1,27 @@
+precision mediump float;
+
+attribute vec3 aVertexPosition;
+uniform mat4 uMVPMatrix;
+uniform vec3 uModelPos;
+uniform sampler2D uBlendSampler;
+uniform vec2 uTerrainTexCoordMultiplier;
+
+varying vec2 bias;
+varying vec3 vColor;
+varying vec2 vPos;
+
+void main(void) {
+	
+	vec3 vertPos = uModelPos+aVertexPosition.xyz*0.5;
+	vec2 texCoord = (vertPos.xy/ 8.)*uTerrainTexCoordMultiplier;
+	vec4 tex = texture2D(uBlendSampler, texCoord );
+	float terrain_ao_z = tex.g*20. - 10.;
+	float doodad_ao_z = tex.r * 10.;
+	vertPos.z =  doodad_ao_z +terrain_ao_z;
+	
+	bias = vec2(0.,0.);
+	gl_Position = uMVPMatrix * vec4(vertPos, 1.0);
+	
+	vColor = vec3(clamp(doodad_ao_z-1., 0.,1.),clamp(doodad_ao_z, 0.,1.),0.);
+	vPos = aVertexPosition.xy;
+}

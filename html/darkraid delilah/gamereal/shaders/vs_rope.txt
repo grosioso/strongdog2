@@ -1,0 +1,81 @@
+attribute vec3 aVertexPosition;
+attribute vec3 aVertexNormal;
+attribute vec2 aVertexTexCoord;
+
+uniform mat4 uVPMatrix;
+uniform mat4 uVMatrix;
+uniform mat3 uNMatrix;
+
+uniform mediump vec3 uLightPos;
+uniform mediump vec3 uLightColor;
+uniform vec3 uFillPos;
+uniform mediump vec3 uFillColor;
+
+uniform vec2 uRotationSinCos;
+uniform vec3 uModelPos;
+
+uniform vec3 uCatenary;
+uniform vec4 uRopeParams;
+
+varying vec3 vDiffuse;
+varying vec3 vFill;
+varying vec2 texCoord;
+varying vec3 vModelPos;
+
+uniform mat4 uShadowMVPMatrix;
+varying vec3 vShadowPos;
+
+void main(void) {
+	float scale = sqrt( dot(uRotationSinCos, uRotationSinCos));//BEST TRICK EVER?
+	vec3 vertpos = aVertexPosition;
+
+	float a = uCatenary[0];
+	float b = uCatenary[1];
+	float c = uCatenary[2];
+	float rope_length = uRopeParams[0]; //total arclength
+	float rope_end_x = uRopeParams[1];
+	float L0 = uRopeParams[2]; //arclength zero offset
+	float texLength = uRopeParams[3];
+	
+	//scale up from 1 unit length
+	vertpos.x *= rope_end_x;
+	
+	float hypparam = exp((vertpos.x - b)/a);
+	float hypparam_x0 = exp((b)/a);
+	//arclength of catenary is: s == a*sinh((x-b)/a) + L0 where L0 == a*sinh(b/a) 
+	//but we need to invert it
+	//inverse is: arsinh(k)*a+b == ln(k+sqrt(k^2+1))*a + b where k == (s-L0)/a
+	float k = ((aVertexPosition.x*rope_length) - L0)/a;
+	float x_on_rope = log(k+sqrt(k*k+1.))*a + b;
+	vertpos.x = x_on_rope;
+	
+	//cosh can be written as (exp(2x)+1)/2exp(x)
+	hypparam = exp((vertpos.x - b)/a);
+	float ropeZ = a*( hypparam*hypparam  +1.)/(2.*hypparam) + c;
+	
+	float derivate = -( hypparam*hypparam - 1.)/(2.*hypparam);
+	vec3 vertNorm = aVertexNormal;
+	vec2 localNorm = normalize(vec2(-derivate,1.));
+
+	vertpos.x /= scale;
+	vertpos.z *= scale;
+	
+	vertpos = vec3(vertpos.x - vertpos.z*localNorm.x, vertpos.y, vertpos.z*localNorm.y);
+	vertNorm.x = aVertexNormal.x*localNorm.y - aVertexNormal.z*localNorm.x;
+	vertNorm.z = aVertexNormal.x*localNorm.x + aVertexNormal.z*localNorm.y;
+	
+	vertpos = vec3( vertpos.x * uRotationSinCos.y - vertpos.y * uRotationSinCos.x, vertpos.x * uRotationSinCos.x + vertpos.y * uRotationSinCos.y , vertpos.z + ropeZ);
+	vec4 mPos =  vec4(uModelPos + vertpos,1.);
+	gl_Position = uVPMatrix * mPos;
+	
+	vertNorm = vec3( vertNorm.x * uRotationSinCos.y - vertNorm.y * uRotationSinCos.x, vertNorm.x * uRotationSinCos.x + vertNorm.y * uRotationSinCos.y , vertNorm.z );
+	vec3 transformedNormal = normalize(uNMatrix * vertNorm);
+
+	vDiffuse = max(dot(transformedNormal, (uLightPos)), 0.0) *uLightColor;
+	MACRO_VFILL
+	
+	texCoord = aVertexTexCoord; texCoord.x *= texLength;
+	vModelPos = mPos.xyz;
+	vec4 shadowClipPos = uShadowMVPMatrix * mPos;
+	vShadowPos =  vec3( shadowClipPos.xyz / shadowClipPos.w)*0.5+0.5;
+}

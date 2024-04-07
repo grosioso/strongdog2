@@ -1,0 +1,53 @@
+precision mediump float;
+
+uniform sampler2D uTerrainSampler;
+uniform sampler2D uShadowSampler;
+uniform float uShadowPerturb;
+uniform sampler2D uFowSampler;
+
+uniform vec2 uTilePos;
+uniform vec3 uAmbientColor;
+uniform vec2 uTerrainTexOffset;
+
+uniform vec3 uFogColor;
+uniform vec4 uZFogColor;
+uniform vec4 uFogSize;
+
+uniform float uCutoffZ;
+uniform vec3 uLocalLightColor;
+uniform vec3 uFowPos;
+
+varying vec3 vDiffuse;
+varying vec3 vFill;
+varying vec3 vModelPos;
+varying vec3 vShadowPos;
+varying vec3 vNorm;
+
+const float pcf = 0.0008;
+const float texbias = 0.;
+
+void main(void){
+	if(vModelPos.z > uCutoffZ){
+		discard;
+	}
+
+	vec4 tex = texture2D(uTerrainSampler, (vModelPos.xy - uTilePos) * 0.125);
+	MACRO_SHADOW_TERRAIN
+	/*MACRO_fowTex
+	
+	shadow = shadow*fowTex.g; //cloud shadows
+	
+	MACRO_LOCAL_LIGHT
+	MACRO_HORIZONTAL_FOG
+	
+	vec3 color = tex.rgb*(vDiffuse*shadow +  (uAmbientColor + vFill)*MACRO_AO + local);
+	
+	MACRO_DISTANCE_FOG
+	MACRO_FragColor_TERRAIN*/
+	
+	float light = 0.5;
+	//float brightness = max(0., min(0.999, min(0.7,gl_FragCoord.w * 24.) + light/17.5  - 0.78));
+	float brightness = floor(32. * clamp( gl_FragCoord.w*0.25 -0.25 +  light*1.5  , 0., 1.))/32. ;
+	tex.rgb *= brightness * shadow;
+	gl_FragColor = tex;
+}

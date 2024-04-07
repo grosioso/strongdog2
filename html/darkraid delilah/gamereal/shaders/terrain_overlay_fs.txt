@@ -1,0 +1,64 @@
+precision mediump float;
+
+uniform vec3 uTint;
+uniform sampler2D uSampler1;
+uniform sampler2D uSampler2;
+uniform sampler2D uSampler3;
+uniform sampler2D uSampler4;
+uniform sampler2D uSampler5;
+uniform vec4 uCloudParams;
+uniform vec4 uCloudPos;
+uniform vec4 uFogZParams;
+uniform vec4 uFogZPos;
+uniform float uFogZConsistency;
+uniform vec3 uModelPos;
+
+uniform vec2 uTerrainTexCoordMultiplier;
+
+varying vec2 texCoord;
+
+const float cloudbias1 = 1.;
+const float cloudbias2 = 2.;
+const float fowBlur = 0.006;
+const float aoBlur = 0.05;
+const float gridSize = 64.;
+const float halfSize = 32.;
+const float SCALE = gridSize/64.;
+void main(void){
+
+	vec4 light = texture2D(uSampler5,texCoord);
+	
+	float aoBlurX = aoBlur * uTerrainTexCoordMultiplier.x;
+	float aoBlurY = aoBlur * uTerrainTexCoordMultiplier.y;
+	vec2 terrainCoord = (texCoord/8.*gridSize + ((uModelPos.xy - vec2(halfSize,halfSize))/ 8.))*uTerrainTexCoordMultiplier;
+	vec4 ao1 = texture2D(uSampler4,terrainCoord + vec2(0.0, aoBlurY));
+	vec4 ao2 = texture2D(uSampler4,terrainCoord + vec2(-aoBlurX, 0.0));
+	vec4 ao3 = texture2D(uSampler4,terrainCoord + vec2(0.0, -aoBlurY));
+	vec4 ao4 = texture2D(uSampler4,terrainCoord + vec2(aoBlurX, -0.0));
+	float ao_terrain = 0.125* (ao1.g + ao2.g + ao3.g + ao4.g - 4.*0.5)*2.;
+	float ao_doodad = 0.125* (ao1.r + ao2.r + ao3.r + ao4.r);
+	float ao_unit = max(light.r*0.075, light.g*0.04 );
+
+	float ao = 0.125*ao_terrain;
+	float cloudMask = (ao1.b+ao2.b+ao3.b+ao4.b) * 0.25;
+	float cloud = 1. - (1. - ((1.- uCloudParams.x)  + (texture2D(uSampler2,(texCoord + uCloudPos.xy)*SCALE, cloudbias1 ).r))) * (uCloudParams.y);
+	float cloud2 = 1. - (1. - ((1.- uCloudParams.x)  + (texture2D(uSampler2,(texCoord * uCloudParams.z + uCloudPos.zw)*SCALE, cloudbias2 ).r))) * (uCloudParams.y*uCloudParams.w);
+	cloud = cloud*cloud2*cloudMask;
+	//MASK cloud = mix(cloud,1.,cloud2);
+	
+	float fog = 1. - (1. - ((1.- uFogZParams.x)  + (texture2D(uSampler3,(texCoord + uFogZPos.xy)*SCALE ).r))) * (uFogZParams.y);
+	float fog2 = 1. - (1. - ((1.- uFogZParams.x)  + (texture2D(uSampler3,(texCoord * uFogZParams.z + uFogZPos.zw)*SCALE).r))) * (uFogZParams.y*uFogZParams.w);
+	fog = fog*fog2/uFogZConsistency;
+	
+	
+	vec2 perturbCoord = (texCoord/8.*gridSize + ((uModelPos.xy+ SCALE * uCloudPos.xy*10. - vec2(halfSize,halfSize))/ 8.))*uTerrainTexCoordMultiplier;
+	
+	vec2 fowPerturb = (texture2D(uSampler2,(perturbCoord *4.)).rg - 0.5)*0.04;
+	float fow = texture2D(uSampler1,texCoord + fowPerturb*0.2 +vec2(0.0, fowBlur)).r;
+	float fow2 = texture2D(uSampler1,texCoord + fowPerturb+vec2(-fowBlur, 0.0)).r;
+	float fow3 = texture2D(uSampler1,texCoord + fowPerturb*0.4+vec2(0.0, -fowBlur)).r;
+	float fow4 = texture2D(uSampler1,texCoord + fowPerturb*0.5+vec2(fowBlur, -0.0)).r;
+	fow = (1. - 0.25*(fow+fow2+fow3+fow4));
+	
+	gl_FragColor = vec4( 0.5+ao_terrain + max(ao_doodad+ao_unit*0.3, ao_unit ) , cloud , (fow+light.b)*0.5 , fog+light.a);
+}

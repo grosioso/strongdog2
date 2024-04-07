@@ -1,0 +1,16 @@
+attribute vec3 aVertexScreenPosition;
+
+uniform mat4 uVPMatrix;
+uniform vec3 uModelPos;
+uniform float uScale;
+
+varying vec2 vPos;
+
+void main(void) {
+	vec4 screenpos = vec4(aVertexScreenPosition*vec3(3. *uScale ,1. ,1.),1.) + uVPMatrix * vec4(uModelPos,1.);
+	//screenpos.z -= 30.; //polygon offset was not working, this is a workaround
+	gl_Position = screenpos;
+	vPos.x = 0.5 + aVertexScreenPosition.x;
+	vPos.y = (aVertexScreenPosition.y);
+}
+	

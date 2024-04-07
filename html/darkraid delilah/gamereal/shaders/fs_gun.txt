@@ -1,0 +1,28 @@
+precision mediump float;
+
+uniform vec3 uTint;
+uniform sampler2D uSampler;
+uniform float uTransparency;
+uniform float uAlphaTreshold;
+varying vec2 texCoord;
+
+uniform sampler2D uBlendSampler;
+uniform mediump float uTime;
+uniform vec3 uFillColor;
+
+void main(void){
+	vec4 tex = texture2D(uSampler,texCoord);
+	if(tex.a < uAlphaTreshold){
+		discard;
+	}
+	
+	vec3 light = uFillColor.r/255. + fract(uFillColor.g) * texture2D(uBlendSampler, vec2(uFillColor.g/256., uTime)).rgb;
+	//float totalLight = (light.r*0.2126+light.g*0.7152+light.b*0.0722) + 0.001;
+	float totalLight = max(light.b, max(light.r, light.g))+0.001;
+	totalLight += 0.6; //extra light because it's up close
+	light = min(vec3(1.,1.,1.) , totalLight * light) ;
+	
+	tex.a *= uTransparency;
+	tex.rgb*=uTint*light;
+	gl_FragColor = tex;
+}
