@@ -736,14 +736,11 @@ function formatTimestamp(timestamp) {
 }
 
 function censorWord(str) {
-    var forbiddenWords = ["nigger","nigga","fuck","shit","ass","bitch","fucker","beiner","cunt","kkk","nigg@","n1gger"]; // Replace 'nword' with the actual word you want to filter
-    // Regular expression to remove spaces, dots, and commas
-    var sanitizeRegex = /[\s.,/]+/g;
-
+    var forbiddenWords = ["nigger", "nigga", "fuck", "shit", "ass", "bitch", "fucker", "beiner", "cunt", "kkk", "nigg@", "n1gger"]; // Replace with actual words you want to filter
+    
     forbiddenWords.forEach(word => {
-        var sanitizedWord = word.replace(sanitizeRegex, ''); // Remove spaces, dots, commas from the forbidden word
-        var regex = new RegExp(sanitizedWord.split('').join('\\s*\\.*,*'), 'gi');
-        str = str.replace(regex, "*".repeat(sanitizedWord.length));
+        var regex = new RegExp("\\b" + word.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1") + "\\b", "gi");
+        str = str.replace(regex, "*".repeat(word.length));
     });
 
     return str;
