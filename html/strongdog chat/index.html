@@ -311,7 +311,7 @@ body {
             <ul id="messages"></ul>
             <div id="input-container">
                 <input id="message-input" type="text" placeholder="Type here...">
-                <button id="send-message-button">Send Message</button>
+                <button id="send-message-button" contenteditable="true">Send Message</button>
             </div>
         </div>
     </div>
@@ -683,7 +683,6 @@ function listenForMessages(chatName) {
 function displayMessage(messageData) {
     const messagesContainer = document.getElementById("messages");
     const shouldScroll = isScrolledToBottom(messagesContainer);
-
     const msgElement = document.createElement("li");
     const user = firebase.auth().currentUser;
 
@@ -691,13 +690,9 @@ function displayMessage(messageData) {
     let badge = "";
     if (messageData.sender === "josh") {
         badge = "<span class='owner-badge'>Owner</span> ";
-    }
-
-    if (messageData.sender === "trexdonuts (austin)") {
+    } else if (messageData.sender === "trexdonuts (austin)") {
         badge = "<span class='trex-badge'>da real trex</span> ";
-    }
-
-    if (messageData.sender === "Emmett") {
+    } else if (messageData.sender === "Emmett") {
         badge = "<span class='sigma-badge'>V.I.P.</span> ";
     }
 
@@ -712,7 +707,9 @@ function displayMessage(messageData) {
         msgElement.className = 'received';
     }
 
-    msgElement.innerHTML = `<div>${senderDisplayName}: ${censorWord(messageData.text)}</div><div class='message-time' style='color:rgb(73, 73, 73); margin-top: 8px;'>${messageTime}</div>`;
+    let formattedText = parseMessage(censorWord(messageData.text));
+    msgElement.innerHTML = `<div>${senderDisplayName}: ${formattedText}</div><div class='message-time' style='color:rgb(73, 73, 73); margin-top: 8px;'>${messageTime}</div>`;
+
     messagesContainer.appendChild(msgElement); // Append the message
 
     // Auto-scroll to bottom if the user was already there
@@ -720,6 +717,11 @@ function displayMessage(messageData) {
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 }
+
+function isScrolledToBottom(element) {
+    return element.scrollHeight - element.clientHeight <= element.scrollTop + 1;
+}
+
 function formatTimestamp(timestamp) {
     var date = new Date(timestamp);
     var year = date.getFullYear();
@@ -737,17 +739,12 @@ function formatTimestamp(timestamp) {
 
 function censorWord(str) {
     var forbiddenWords = ["nigger", "nigga", "fuck", "shit", "ass", "bitch", "fucker", "beiner", "cunt", "kkk", "nigg@", "n1gger"]; // Replace with actual words you want to filter
-    
     forbiddenWords.forEach(word => {
         var regex = new RegExp("\\b" + word.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1") + "\\b", "gi");
         str = str.replace(regex, "*".repeat(word.length));
     });
-
     return str;
 }
-
-
-
 
 function isScrolledToBottom(el) {
     return el.scrollHeight - el.clientHeight <= el.scrollTop + 1;
@@ -781,13 +778,15 @@ function checkForNewMessages(chatName, chatItem) {
 }
 
 document.getElementById('send-message-button').addEventListener('click', function() {
+    var messageText = getQuillText();
     const currentTime = Date.now();
     const messageInput = document.getElementById('message-input');
-    const messageText = messageInput.value;
-    const currentChat = document.getElementById("chat-header").textContent;
+    var messageInputDiv = document.getElementById('message-input');
+    var messageText = messageInputDiv.textContent; // Get only the text content
+    var currentChat = document.getElementById("chat-header").textContent;
     if (messageText && currentChat) {
         sendMessage(currentChat, messageText);
-        messageInput.value = '';
+        messageInputDiv.innerHTML = ''; // Clear the input area
     }
 });
 
@@ -1086,6 +1085,81 @@ function leaveChat(chatName) {
 }
 
 document.getElementById('message-input').addEventListener('keypress', handleKeyPress);
+
+function formatTextWithCodes(text) {
+
+    const colorAndStyleMappings = {
+        '§0': '<span style="color: #000000;">',
+        '§1': '<span style="color: #0000AA;">',
+        '§2': '<span style="color: #00AA00;">',
+        '§3': '<span style="color: #00AAAA;">',
+        '§4': '<span style="color: #AA0000;">',
+        '§5': '<span style="color: #AA00AA;">',
+        '§6': '<span style="color: #FFAA00;">',
+        '§7': '<span style="color: #AAAAAA;">',
+        '§8': '<span style="color: #555555;">',
+        '§9': '<span style="color: #5555FF;">',
+        '§a': '<span style="color: #55FF55;">',
+        '§b': '<span style="color: #55FFFF;">',
+        '§c': '<span style="color: #FF5555;">',
+        '§d': '<span style="color: #FF55FF;">',
+        '§e': '<span style="color: #FFFF55;">',
+        '§f': '<span style="color: #FFFFFF;">',
+        '§l': '<span style="font-weight: bold;">',
+        '§m': '<span style="text-decoration: line-through;">',
+        '§n': '<span style="text-decoration: underline;">',
+        '§o': '<span style="font-style: italic;">',
+        '§r': '</span>' // Reset
+    };
+
+    // Split text at every §r and process each part separately
+    const parts = text.split('§r');
+    for (let i = 0; i < parts.length; i++) {
+        // Replace the color and style codes with HTML spans in each part
+        Object.keys(colorAndStyleMappings).forEach(code => {
+            parts[i] = parts[i].replace(new RegExp(code, 'g'), colorAndStyleMappings[code]);
+        });
+
+        // Close any open HTML spans in each part
+        let openSpans = (parts[i].match(/<span/g) || []).length;
+        let closeSpans = (parts[i].match(/<\/span>/g) || []).length;
+        parts[i] += '</span>'.repeat(openSpans - closeSpans);
+    }
+
+    // Join the parts back together, adding the closing span tags for reset
+    let formattedText = parts.join('</span>');
+
+    console.log("Formatted text:", formattedText);
+    return formattedText;
+}
+
+function parseMessage(message) {
+    console.log("Parsing message:", message);
+    
+    // You can call the formatTextWithCodes function here if needed
+    let parsedMessage = formatTextWithCodes(message);
+    
+    console.log("Parsed message:", parsedMessage);
+    return parsedMessage;
+}
+
+document.getElementById('message-input').addEventListener('input', function() {
+    var rawText = this.textContent;
+    // Temporarily disable event listener to avoid recursion
+    this.removeEventListener('input', arguments.callee);
+    // Update the formatted content
+    this.innerHTML = formatTextWithCodes(rawText);
+    // Re-enable the event listener
+    this.addEventListener('input', arguments.callee);
+});
+
+var quill = new Quill('#editor-container', {
+  theme: 'snow' // Specify theme
+});
+
+function getQuillText() {
+  return quill.root.innerHTML;
+}
 
     </script>
 
