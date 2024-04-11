@@ -647,12 +647,19 @@ function addChatToList(chatName) {
 
 
 function displayChat(chatName) {
+    // Update the chat header and display the chat container
     document.getElementById("chat-header").textContent = chatName;
     document.getElementById("chat-container").style.display = "block";
     document.getElementById("messages").innerHTML = ''; // Clear existing messages
+
+    // Update the last read timestamp for the newly opened chat
+    updateLastReadTimestamp(chatName);
+
+    // Start listening for new messages in the opened chat
     listenForMessages(chatName);
-    updateLastReadTimestamp(chatName); // Update last read timestamp when chat is opened
-    removeNewMessageIndicator(chatName); // Remove the red dot when chat is opened
+
+    // Remove new message indicator if present
+    removeNewMessageIndicator(chatName);
 }
 
 function removeNewMessageIndicator(chatName) {
@@ -758,24 +765,39 @@ function updateLastReadTimestamp(chatName) {
     }
 }
 
-function checkForNewMessages(chatName, chatItem) {
-    const user = firebase.auth().currentUser;
-    if (user) {
-        const lastReadRef = firebase.database().ref('lastRead/' + user.uid + '/' + chatName);
-        lastReadRef.once('value', lastReadSnapshot => {
-            const lastReadTimestamp = lastReadSnapshot.val() || 0;
-            const messagesRef = firebase.database().ref('messages/' + chatName);
-            messagesRef.orderByChild('timestamp').startAt(lastReadTimestamp).once('value', messagesSnapshot => {
-                if (messagesSnapshot.exists() && messagesSnapshot.numChildren() > 1) {
-                    // Add a red dot to indicate new messages
-                    const redDot = document.createElement("span");
-                    redDot.className = "new-message-indicator";
-                    chatItem.querySelector('.chat-name').appendChild(redDot);
-                }
+function checkForNewMessages() {
+    setInterval(function() {
+        const user = firebase.auth().currentUser;
+        if (user) {
+            const userChatsRef = firebase.database().ref('userChats/' + user.uid);
+            userChatsRef.once('value', snapshot => {
+                snapshot.forEach(childSnapshot => {
+                    const chatName = childSnapshot.key;
+                    const lastReadRef = firebase.database().ref('lastRead/' + user.uid + '/' + chatName);
+                    lastReadRef.once('value', lastReadSnapshot => {
+                        const lastReadTimestamp = lastReadSnapshot.val() || 0;
+                        const messagesRef = firebase.database().ref('messages/' + chatName);
+                        messagesRef.orderByChild('timestamp').startAt(lastReadTimestamp).once('value', messagesSnapshot => {
+                            if (messagesSnapshot.exists() && messagesSnapshot.numChildren() > 1) {
+                                addNewMessageIndicator(chatName);
+                            }
+                        });
+                    });
+                });
             });
-        });
+        }
+    }, 1000); // Interval set to 1000 milliseconds (1 second)
+}
+
+function addNewMessageIndicator(chatName) {
+    const chatListItem = document.querySelector(`[data-chat-name='${chatName}'] .chat-name`);
+    if (chatListItem && !chatListItem.querySelector('.new-message-indicator')) {
+        const redDot = document.createElement("span");
+        redDot.className = "new-message-indicator";
+        chatListItem.appendChild(redDot);
     }
 }
+
 
 document.getElementById('send-message-button').addEventListener('click', function() {
     var messageText = getQuillText();
