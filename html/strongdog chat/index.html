@@ -230,6 +230,15 @@ body {
     font-size: 12px;
 }
 
+.dev-badge {
+    background-color: rgb(9, 255, 0);
+    color: rgb(0, 0, 0);
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-right: 5px;
+    font-size: 12px;
+}
+
 .sigma-badge {
     background-color: rgb(255, 2, 175);
     color: rgb(0, 0, 0);
@@ -701,7 +710,10 @@ function displayMessage(messageData) {
         badge = "<span class='trex-badge'>da real trex</span> ";
     } else if (messageData.sender === "Emmett") {
         badge = "<span class='sigma-badge'>V.I.P.</span> ";
+    } else if (messageData.sender === "jamesm") {
+        badge = "<span class='dev-badge'>dev</span> ";
     }
+    
 
     let senderDisplayName = badge + censorWord(messageData.sender);
     let messageTime = formatTimestamp(messageData.timestamp);
