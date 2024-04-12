@@ -124,6 +124,15 @@ body {
     background-color: #7b7b7b; /* Same as chat-container for seamless look */
     border-top: none; /* Remove if not needed */
 }
+#messages li .message-time {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+
+#messages li:hover .message-time {
+    max-height: 20px; /* Adjust height based on content */
+}
 
 #message-input {
     flex-grow: 1;
