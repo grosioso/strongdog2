@@ -1,0 +1,254 @@
+
+
+<head>
+    <title>Your Website Title</title>
+    <script>
+        window.addEventListener('load', function() {
+            // Create intro container
+            var introDiv = document.createElement('div');
+            introDiv.id = 'intro';
+
+            // Create and add STRONGDOG text
+            var strongDogDiv = document.createElement('div');
+            strongDogDiv.id = 'strongdog';
+            strongDogDiv.innerText = 'STRONGDOG';
+            strongDogDiv.style.opacity = '0'; // Start invisible
+            introDiv.appendChild(strongDogDiv);
+
+            // Create and add XP text
+            var xpDiv = document.createElement('div');
+            xpDiv.id = 'xp';
+            xpDiv.innerText = 'XP';
+            xpDiv.style.opacity = '0'; // Start invisible
+            introDiv.appendChild(xpDiv);
+
+            // Create and add image
+            var uploadedImage = document.createElement('img');
+            uploadedImage.id = 'uploadedImage';
+            uploadedImage.src = '../../../strongdog.webp'; // Path to your image
+            uploadedImage.style.display = 'none';
+            introDiv.appendChild(uploadedImage);
+
+            // Append intro to body
+            document.body.insertBefore(introDiv, document.body.firstChild);
+
+            // Add styles
+            var css = `
+                #intro {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(33, 33, 33, 1);
+                    z-index: 1000;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    transition: transform 0.5s ease-in-out;
+                }
+
+                #strongdog, #xp {
+                    font-size: 3em;
+                    font-weight: bold;
+                    opacity: 0;
+                    animation: fadeInSlam 1s ease forwards;
+                }
+
+                #strongdog {
+                    color: white;
+                }
+
+                #xp {
+                    color: orange;
+                    animation-delay: 0.5s; 
+                }
+
+                @keyframes fadeInSlam {
+                    0% { transform: scale(0); opacity: 0; }
+                    50% { transform: scale(1.2); opacity: 1; }
+                    100% { transform: scale(1); opacity: 1; }
+                }
+
+                @keyframes riseUp {
+                    0% { transform: translateY(0); }
+                    100% { transform: translateY(-100px); }
+                }
+
+                #uploadedImage {
+                    width: 100%;
+                    max-width: 600px;
+                    opacity: 0;
+                    transform: scale(0);
+                    animation: growAndSettle 1s ease forwards;
+                }
+
+                @keyframes growAndSettle {
+                    0% { transform: scale(0); opacity: 0; }
+                    50% { transform: scale(1.1); opacity: 1; }
+                    75% { transform: scale(0.9); }
+                    100% { transform: scale(1); }
+                }
+            `;
+            var styleSheet = document.createElement('style');
+            styleSheet.type = 'text/css';
+            styleSheet.innerText = css;
+            document.head.appendChild(styleSheet);
+
+            // Trigger image fade-in and text fade-out
+            setTimeout(() => {
+                uploadedImage.style.display = 'block';
+                uploadedImage.style.opacity = 1;
+                strongDogDiv.style.opacity = 0;
+                xpDiv.style.opacity = 0;
+            }, 1500);
+
+            // Slide up and remove intro
+            setTimeout(() => {
+                introDiv.style.transform = 'translateY(-100%)';
+                setTimeout(() => { introDiv.remove(); }, 500);
+            }, 3200);
+        });
+    </script>
+</head>
+
+
+
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, minimum-scale=1, maximum-scale=1">
+    <title>PLANET D4RK</title>
+
+    <!-- Load custom style sheet -->
+    <link rel="stylesheet" type="text/css" href="theme/love.css">
+  </head>
+  <body>
+    <center>
+      <div onclick="applicationLoad(this)">
+        <!-- Add a separate canvas on top of this one to prevent the game from loading before we're ready until the user clicks -->
+        <div id="clickCanvas" style="background-color: black; width:960px; height:540px; display:flex; cursor:pointer;">
+          <img id="playButton" width=128 height=64 style="margin:auto;"
+          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAABACAYAAADS1n9/AAAAAXNSR0IArs4c6QAAAMZJREFUeJzt1lEOgyAMANCy7P5XZj/bshCUos7E+N6ftEVIpBgBAAAAAAAAAAAAAAAAAFxJ6Q3WWmtERCmlG2/zvpO989vxUbx9z7/rs47a39nx0fp/PXoTcR/PLUVthzjqi/48L41n69v4rGwHzMZHnSS7v2x9dv0ROsDtbeoAWUsn/2wzJ6KXN1u/t66tnzWzfh3g5lY7QPZve/YOG9W3+XtP4KzM33Mmb+muzu7vqM6xNo8OAAAAAAAAAAAAAAAAAABwIS/RKbQqjxEzJgAAAABJRU5ErkJggg==" onload="console.log('div loaded')"/>
+        </div>
+        <canvas id="loadingCanvas" oncontextmenu="event.preventDefault()" width="960" height="540" style="visibility: hidden; display:block"></canvas>
+        <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+      </div>
+    </center>
+
+    <script type='text/javascript'>
+      function goFullScreen(){
+            var canvas = document.getElementById("canvas");
+            if(canvas.requestFullScreen)
+                canvas.requestFullScreen();
+            else if(canvas.webkitRequestFullScreen)
+                canvas.webkitRequestFullScreen();
+            else if(canvas.mozRequestFullScreen)
+                canvas.mozRequestFullScreen();
+      }
+      function FullScreenHook(){
+        var canvas = document.getElementById("canvas");
+        canvas.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        canvas.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+      }
+      var loadingContext = document.getElementById('loadingCanvas').getContext('2d');
+      function drawLoadingText(text) {
+        var canvas = loadingContext.canvas;
+
+        loadingContext.fillStyle = "rgb(0, 0, 0)";
+        loadingContext.fillRect(0, 0, canvas.scrollWidth, canvas.scrollHeight);
+
+        loadingContext.font = '2em arial';
+        loadingContext.textAlign = 'center'
+        loadingContext.fillStyle = "rgb( 255, 255, 255 )";
+        loadingContext.fillText(text, canvas.scrollWidth / 2, canvas.scrollHeight / 2);
+
+        loadingContext.fillText("Powered By Emscripten.", canvas.scrollWidth / 2, canvas.scrollHeight / 4);
+        loadingContext.fillText("Powered By LÖVE.", canvas.scrollWidth / 2, canvas.scrollHeight / 4 * 3);
+      }
+
+      window.onload = function () { window.focus(); };
+      window.onclick = function () { window.focus(); };
+
+      window.addEventListener("keydown", function(e) {
+        // space and arrow keys
+        if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+          e.preventDefault();
+        }
+      }, false);
+
+      var Module = {
+        arguments: ["./game.love"],
+        INITIAL_MEMORY: 70000000,
+        printErr: console.error.bind(console),
+        canvas: (function() {
+          var canvas = document.getElementById('canvas');
+
+          // As a default initial behavior, pop up an alert when webgl context is lost. To make your
+          // application robust, you may want to override this behavior before shipping!
+          // See http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15.2
+          canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
+
+          return canvas;
+        })(),
+        setStatus: function(text) {
+          if (text) {
+            drawLoadingText(text);
+          } else if (Module.remainingDependencies === 0) {
+            document.getElementById('loadingCanvas').style.display = 'none';
+            document.getElementById('canvas').style.display = 'block';
+            document.getElementById('canvas').style.visibility = 'visible';
+          }
+        },
+        updateLoadingBar: function(current,max){
+          loadingContext.fillStyle = "white"
+          loadingContext.fillRect(280, 300, 400*current/max, 16);
+        },
+        totalDependencies: 0,
+        remainingDependencies: 0,
+        monitorRunDependencies: function(left) {
+          this.remainingDependencies = left;
+          this.totalDependencies = Math.max(this.totalDependencies, left);
+          Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+        }
+      };
+      Module.setStatus('Downloading...');
+      window.onerror = function(event) {
+        // TODO: do not warn on ok events like simulating an infinite loop or exitStatus
+        Module.setStatus('Exception thrown, see JavaScript console');
+        Module.setStatus = function(text) {
+          if (text) Module.printErr('[post-exception status] ' + text);
+        };
+      };
+      var applicationLoadCalled = false;
+      var loveHasLoaded = false;
+      var applicationLoad = function(e) {
+        if (!applicationLoadCalled && loveHasLoaded) {
+          let loadingCanvas = document.getElementById("loadingCanvas");
+          if (loadingCanvas) {
+            loadingCanvas.style.visibility = "";
+          }
+          let clickCanvas = document.getElementById("clickCanvas");
+          if (clickCanvas) {
+            clickCanvas.style.display = "none";
+          }
+          applicationLoadCalled = true;
+          Love(Module);
+        }
+      }
+      var loveLoaded = function() {
+        // Prevent our on-click from starting the module until love.js has itself loaded.
+        loveHasLoaded = true;
+        console.log('love loaded');
+        let img = document.getElementById("playButton");
+        img.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAANxJREFUeJzt2rESgyAQRVHI5P9/mVRrER0HlcdbxnuqVAuDtzBqKQAAAADeqKoGt9a2n2dr1irbQpePdfUElAX8X/nTtV0lUIBqcEcBh3uYXQIFqAZfKCBYSqAA1eAbBYSpJVCAavCDAsKUEihANXhAAUFaAgWoBg8sIEhKeH0BKx1AK/tnC4+tdAASKx7A0BJWPIChOAD3Bty+7g3cMPTehQLcG7hActdKAe4NdODfoFLmAngiNEPGAngqPFOmAngz5JChAN4OOzkL4AuRDJQFxCXlKzEAAAAAyOYHcw4ldVhVobkAAAAASUVORK5CYII=";
+        img.width = 64;
+      }
+    </script>
+    <script type="text/javascript" src="game.js"></script>
+    <script type="text/javascript" src="love.js" onload="loveLoaded()"></script>
+  </body>
+</html>

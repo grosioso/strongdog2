@@ -1,0 +1,16 @@
+{
+"companyName": "DefaultCompany",
+"productName": "Snail Trail",
+"productVersion": "0.1",
+"dataUrl": "Snail Trail Build.data.unityweb",
+"wasmCodeUrl": "Snail Trail Build.wasm.code.unityweb",
+"wasmFrameworkUrl": "Snail Trail Build.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Light",
+"backgroundColor": "#99FFE6",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.4.28f1"
+}
