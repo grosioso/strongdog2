@@ -1,342 +1,349 @@
 <!DOCTYPE html>
 <html lang="en">
-<style>
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    background-color: #555555;
-    color: #444;
-}
+  <style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        background-color: #555555;
+        color: #444;
+    }
 
-#chat-app {
-    display: flex;
-    height: 89vh;
-}
+    #chat-app {
+        display: flex;
+        height: 89vh;
+    }
 
-#chat-list {
-    width: 300px;
-    background-color: #666666;
-    padding: 20px;
-    overflow-y: auto;
-}
+    #chat-list {
+        width: 300px;
+        background-color: #666666;
+        padding: 20px;
+        overflow-y: auto;
+    }
 
-#new-chat-button {
-    width: 100%;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    cursor: pointer;
-    font-size: 16px;
-}
+    #new-chat-button {
+        width: 100%;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        cursor: pointer;
+        font-size: 16px;
+    }
 
-#new-chat-button:hover {
-    background-color: #45a049;
-}
+    #new-chat-button:hover {
+        background-color: #45a049;
+    }
 
-#chat-list ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
+    #chat-list ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
 
-#chat-list li {
-    cursor: pointer;
-    padding: 10px;
-    margin-bottom: -1px;
-    background-color: #7b7b7b;
-}
+    #chat-list li {
+        cursor: pointer;
+        padding: 10px;
+        margin-bottom: -1px;
+        background-color: #7b7b7b;
+    }
 
-#chat-list li:hover {
-    background-color: #636262;
-}
+    #chat-list li:hover {
+        background-color: #636262;
+    }
 
-#chat-container {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: #7b7b7b;
-    padding: 20px;
-    position: relative; /* Added for positioning children */
-}
+    #chat-container {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: #7b7b7b;
+        padding: 20px;
+        position: relative; /* Added for positioning children */
+    }
 
-#chat-header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 10px;
-    background-color: #7b7b7b; /* Adjust as needed */
-    font-size: 20px;
-    margin-bottom: 20px;
-}
+    #chat-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 10px;
+        background-color: #7b7b7b; /* Adjust as needed */
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
 
-#messages {
-    position: absolute;
-    top: 50px; /* Height of chat header */
-    bottom: 60px; /* Height of input container */
-    left: 0;
-    right: 0;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column; /* Changed to standard column layout */
-    list-style-type: none;
-    padding: 0;
-    overflow-y: auto;
-    flex-grow: 1;
-}
-#messages::-webkit-scrollbar {
-    display: none; /* For Webkit browsers like Chrome/Safari */
-}
+    #messages {
+        position: absolute;
+        top: 50px; /* Height of chat header */
+        bottom: 60px; /* Height of input container */
+        left: 0;
+        right: 0;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column; /* Changed to standard column layout */
+        list-style-type: none;
+        padding: 0;
+        overflow-y: auto;
+        flex-grow: 1;
+    }
+    #messages::-webkit-scrollbar {
+        display: none; /* For Webkit browsers like Chrome/Safari */
+    }
 
-#messages li {
-    padding: 10px 15px;
-    margin-bottom: 10px;
-    border-radius: 18px;
-    max-width: 60%;
-    word-wrap: break-word;
-    line-height: 1.5;
-}
+    #messages li {
+        padding: 10px 15px;
+        margin-bottom: 10px;
+        border-radius: 18px;
+        max-width: 60%;
+        word-wrap: break-word;
+        line-height: 1.5;
+    }
 
-.sent {
-    background-color: #007bff;
-    color: white;
-    align-self: flex-end;
-}
+    .sent {
+        background-color: #007bff;
+        color: white;
+        align-self: flex-end;
+    }
 
-.received {
-    background-color: #e0e0e0;
-    align-self: flex-start;
-}
+    .received {
+        background-color: #e0e0e0;
+        align-self: flex-start;
+    }
 
-#input-container {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    margin-top: 20px;
-    padding-top: 20px;
-    padding: 10px;
-    background-color: #7b7b7b; /* Same as chat-container for seamless look */
-    border-top: none; /* Remove if not needed */
-}
-#messages li .message-time {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-in-out;
-}
+    #input-container {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        margin-top: 20px;
+        padding-top: 20px;
+        padding: 10px;
+        background-color: #7b7b7b; /* Same as chat-container for seamless look */
+        border-top: none; /* Remove if not needed */
+    }
+    #messages li .message-time {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+    }
 
-#messages li:hover .message-time {
-    max-height: 20px; /* Adjust height based on content */
-}
+    #messages li:hover .message-time {
+        max-height: 20px; /* Adjust height based on content */
+    }
 
-#message-input {
-    flex-grow: 1;
-    padding: 10px;
-    border: 2px solid #ddd;
-    border-radius: 4px;
-    margin-right: 10px;
-}
+    #message-input {
+        flex-grow: 1;
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 4px;
+        margin-right: 10px;
+    }
 
-#send-message-button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
+    #send-message-button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
 
-#send-message-button:hover {
-    background-color: #45a049;
-}
+    #send-message-button:hover {
+        background-color: #45a049;
+    }
 
-#sign-out-button {
-    padding: 10px 20px;
-    background-color: #ff4444;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
+    #sign-out-button {
+        padding: 10px 20px;
+        background-color: #ff4444;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
 
-#sign-out-button:hover {
-    background-color: #cc0000;
-}
+    #sign-out-button:hover {
+        background-color: #cc0000;
+    }
 
-.auth-button {
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 5px;
-        }
+    .auth-button {
+                padding: 10px 15px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+                margin: 5px;
+            }
 
-        .auth-button:hover {
-            background-color: #0056b3;
-        }
+            .auth-button:hover {
+                background-color: #0056b3;
+            }
 
-        .remove-chat-button {
-    padding: 6px 8px !important;
-    font-size: 10px !important;
-    background-color: #ff4444 !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 4px !important;
-    cursor: pointer !important;
-    margin-left: 5px !important;
-    line-height: normal !important;
-    float: right !important;
-}
+            .remove-chat-button {
+        padding: 6px 8px !important;
+        font-size: 10px !important;
+        background-color: #ff4444 !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 4px !important;
+        cursor: pointer !important;
+        margin-left: 5px !important;
+        line-height: normal !important;
+        float: right !important;
+    }
 
-.remove-chat-button:hover {
-    background-color: #cc0000 !important;
-}
+    .remove-chat-button:hover {
+        background-color: #cc0000 !important;
+    }
 
-.chat-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center; /* This ensures vertical centering of children */
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    background-color: #f8f8f8;
-}
+    .chat-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; /* This ensures vertical centering of children */
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        background-color: #f8f8f8;
+    }
 
-.chat-item:hover {
-    background-color: #eee;
-}
+    .chat-item:hover {
+        background-color: #eee;
+    }
 
-.chat-name {
-    flex-grow: 1; /* Allow chat name to take up remaining space */
-    margin-right: 10px; /* Add some space between chat name and remove button */
-}
-#login-status{
-    color: #2a2a2a;
-}
-.owner-badge {
-    background-color: rgb(255, 200, 0);
-    color: rgb(0, 0, 0);
-    border-radius: 4px;
-    padding: 2px 6px;
-    margin-right: 5px;
-    font-size: 12px;
-}
+    .chat-name {
+        flex-grow: 1; /* Allow chat name to take up remaining space */
+        margin-right: 10px; /* Add some space between chat name and remove button */
+    }
+    #login-status{
+        color: #2a2a2a;
+    }
+    .owner-badge {
+        background-color: rgb(255, 200, 0);
+        color: rgb(0, 0, 0);
+        border-radius: 4px;
+        padding: 2px 6px;
+        margin-right: 5px;
+        font-size: 12px;
+    }
 
-.trex-badge {
-    background-color: rgb(9, 255, 0);
-    color: rgb(0, 0, 0);
-    border-radius: 4px;
-    padding: 2px 6px;
-    margin-right: 5px;
-    font-size: 12px;
-}
+    .trex-badge {
+        background-color: rgb(9, 255, 0);
+        color: rgb(0, 0, 0);
+        border-radius: 4px;
+        padding: 2px 6px;
+        margin-right: 5px;
+        font-size: 12px;
+    }
 
-.dev-badge {
-    background-color: rgb(9, 255, 0);
-    color: rgb(0, 0, 0);
-    border-radius: 4px;
-    padding: 2px 6px;
-    margin-right: 5px;
-    font-size: 12px;
-}
+    .dev-badge {
+        background-color: rgb(9, 255, 0);
+        color: rgb(0, 0, 0);
+        border-radius: 4px;
+        padding: 2px 6px;
+        margin-right: 5px;
+        font-size: 12px;
+    }
 
-.sigma-badge {
-    background-color: rgb(255, 2, 175);
-    color: rgb(0, 0, 0);
-    border-radius: 4px;
-    padding: 2px 6px;
-    margin-right: 5px;
-    font-size: 12px;
-}
+    .sigma-badge {
+        background-color: rgb(255, 2, 175);
+        color: rgb(0, 0, 0);
+        border-radius: 4px;
+        padding: 2px 6px;
+        margin-right: 5px;
+        font-size: 12px;
+    }
 
-.new-message-indicator {
-    height: 10px;
-    width: 10px;
-    background-color: red;
-    border-radius: 50%;
-    display: inline-block;
-    margin-left: 5px;
-}
+    .new-message-indicator {
+        height: 10px;
+        width: 10px;
+        background-color: red;
+        border-radius: 50%;
+        display: inline-block;
+        margin-left: 5px;
+    }
 
-.timestamp {
-    font-size: 0.8em; /* Smaller font size */
-    color: rgb(73, 73, 73); /* Light grey color */
-    margin-top: 8px; /* Double spacing from the message */
-    display: block; /* Ensures it appears on a new line */
-}
-#rickrollVideoContainer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 1000; /* Ensure it's above everything */
-}
+    .timestamp {
+        font-size: 0.8em; /* Smaller font size */
+        color: rgb(73, 73, 73); /* Light grey color */
+        margin-top: 8px; /* Double spacing from the message */
+        display: block; /* Ensures it appears on a new line */
+    }
+    #rickrollVideoContainer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 1000; /* Ensure it's above everything */
+    }
 
-#rickrollVideo {
-    width: 100%; /* Adjust if needed */
-    max-width: 640px;
-    height: 100%;
-}
+    #rickrollVideo {
+        width: 100%; /* Adjust if needed */
+        max-width: 640px;
+        height: 100%;
+    }
 
-#settings-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
+    #settings-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
 
-#settings-button:hover {
-    background-color: #0056b3;
-}
-
-</style>
-<head>
-    <meta charset="UTF-8">
+    #settings-button:hover {
+        background-color: #0056b3;
+    }
+  </style>
+  <head>
+    <meta charset="UTF-8" />
     <title>Strongdog Chat</title>
-</head>
-<body>
-    <button id="settings-button" onclick="window.location.href='settings.html'">Settings</button>
+  </head>
+  <body>
+    <button id="settings-button" onclick="window.location.href='settings.html'">
+      Settings
+    </button>
     <div id="login-status">Not logged in</div>
     <button id="sign-out-button" style="display: none;">Sign Out</button>
-    <button class="auth-button" onclick="window.location.href='signup.html'">Sign Up</button>
-    <button class="auth-button" onclick="window.location.href='login.html'">Login</button>
+    <button class="auth-button" onclick="window.location.href='signup.html'">
+      Sign Up
+    </button>
+    <button class="auth-button" onclick="window.location.href='login.html'">
+      Login
+    </button>
     <div id="chat-app">
-        <div id="chat-list">
-            <button id="new-chat-button">New Chat</button>
-            <ul id="chats"></ul>
+      <div id="chat-list">
+        <button id="new-chat-button">New Chat</button>
+        <ul id="chats"></ul>
+      </div>
+      <div id="chat-container" style="display:none;">
+        <div id="chat-header">Select a chat</div>
+        <ul id="messages"></ul>
+        <div id="input-container">
+          <input id="message-input" type="text" placeholder="Type here..." />
+          <button id="send-message-button" contenteditable="true">
+            Send Message
+          </button>
         </div>
-        <div id="chat-container" style="display:none;">
-            <div id="chat-header">Select a chat</div>
-            <ul id="messages"></ul>
-            <div id="input-container">
-                <input id="message-input" type="text" placeholder="Type here...">
-                <button id="send-message-button" contenteditable="true">Send Message</button>
-            </div>
-        </div>
+      </div>
     </div>
     <div id="rickrollVideoContainer" style="display: none;">
-        <video id="rickrollVideo" width="320" height="240" controls>
-            <source src="trolls/rickroll.mp4" type="video/mp4">
-        </video>
+      <video id="rickrollVideo" width="320" height="240" controls>
+        <source src="trolls/rickroll.mp4" type="video/mp4" />
+      </video>
     </div>
     <audio id="specialSound" src="trolls/egg1.mp3"></audio>
     <audio id="monkey" src="trolls/monkey.mp3"></audio>
@@ -344,592 +351,704 @@ body {
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
-    
 
     <!-- Your web app's Firebase configuration -->
     <script>
-  var firebaseConfig = {
-    apiKey: "AIzaSyCqk5PE-8ziN2JzAciTNSB19ynVrLnjMKw",
-    authDomain: "chat-aa0b2.firebaseapp.com",
-    databaseURL: "https://chat-aa0b2-default-rtdb.firebaseio.com",
-    projectId: "chat-aa0b2",
-    storageBucket: "chat-aa0b2.appspot.com",
-    messagingSenderId: "487874472529",
-    appId: "1:487874472529:web:88d0e46dd863a2d7232670",
-    measurementId: "G-D88TDDVPGJ"
-  };
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-var lastMessageTime = 0;
+      var firebaseConfig = {
+        apiKey: "AIzaSyCqk5PE-8ziN2JzAciTNSB19ynVrLnjMKw",
+        authDomain: "chat-aa0b2.firebaseapp.com",
+        databaseURL: "https://chat-aa0b2-default-rtdb.firebaseio.com",
+        projectId: "chat-aa0b2",
+        storageBucket: "chat-aa0b2.appspot.com",
+        messagingSenderId: "487874472529",
+        appId: "1:487874472529:web:88d0e46dd863a2d7232670",
+        measurementId: "G-D88TDDVPGJ",
+      };
 
-// Authentication State Change
-firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-        // Fetch user's IP address and check for IP ban
-        fetch('https://api.ipify.org?format=json')
-            .then(results => results.json())
-            .then(data => {
-                const userIpAddress = data.ip; // Get the raw IP address
-                const timestamp = Date.now(); // Get the current timestamp
-                // Create an object to hold user's information
-                const userInfo = {
-                    displayName: user.displayName,
-                    ip: userIpAddress,
-                    timestamp: timestamp
-                };
-                // Store the user information in Firebase under their UID
-                firebase.database().ref('userIps/' + user.uid).set(userInfo);
-                // Continue with your existing logic
-                const formattedIpAddress = userIpAddress.replace(/\./g, '-'); // Replace periods with hyphens for IP ban checks
-                listenForIpBan(formattedIpAddress);  // Listen for real-time IP ban updates
-                listenForUserBan(user.displayName); // Listen for real-time user ban updates
-                checkForIpBan(formattedIpAddress, user);
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      var lastMessageTime = 0;
+
+      // Authentication State Change
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          // Fetch user's IP address and check for IP ban
+          fetch("https://api.ipify.org?format=json")
+            .then((results) => results.json())
+            .then((data) => {
+              const userIpAddress = data.ip; // Get the raw IP address
+              const timestamp = Date.now(); // Get the current timestamp
+              // Create an object to hold user's information
+              const userInfo = {
+                displayName: user.displayName,
+                ip: userIpAddress,
+                timestamp: timestamp,
+              };
+              // Store the user information in Firebase under their UID
+              firebase
+                .database()
+                .ref("userIps/" + user.uid)
+                .set(userInfo);
+              // Continue with your existing logic
+              const formattedIpAddress = userIpAddress.replace(/\./g, "-"); // Replace periods with hyphens for IP ban checks
+              listenForIpBan(formattedIpAddress); // Listen for real-time IP ban updates
+              listenForUserBan(user.displayName); // Listen for real-time user ban updates
+              checkForIpBan(formattedIpAddress, user);
             })
-            .catch(error => console.error('Error fetching IP:', error));
-    } else {
-        document.getElementById("login-status").textContent = "Not logged in";
-        document.getElementById("sign-out-button").style.display = "none";
-        document.getElementById("chats").innerHTML = ""; // Clear chat list
-        document.getElementById("chat-container").style.display = "none";
-    }
-});
-
-
-function listenForIpBan(ipAddress) {
-    firebase.database().ref('ipBans/' + ipAddress).on('value', snapshot => {
-        if (snapshot.exists()) {
-            console.log('IP Ban detected. Signing out...');
-            signOutUser();
+            .catch((error) => console.error("Error fetching IP:", error));
+        } else {
+          document.getElementById("login-status").textContent = "Not logged in";
+          document.getElementById("sign-out-button").style.display = "none";
+          document.getElementById("chats").innerHTML = ""; // Clear chat list
+          document.getElementById("chat-container").style.display = "none";
         }
-    });
-}
+      });
 
-function listenForUserBan(displayName) {
-    firebase.database().ref('bans/' + displayName).on('value', snapshot => {
-        if (snapshot.exists()) {
-            console.log('User Ban detected. Signing out...');
-            signOutUser();
-        }
-    });
-}
+      function listenForIpBan(ipAddress) {
+        firebase
+          .database()
+          .ref("ipBans/" + ipAddress)
+          .on("value", (snapshot) => {
+            if (snapshot.exists()) {
+              console.log("IP Ban detected. Signing out...");
+              signOutUser();
+            }
+          });
+      }
 
-function signOutUser() {
-    firebase.auth().signOut().then(() => {
-        window.location.href = 'login.html';
-    });
-}
+      function listenForUserBan(displayName) {
+        firebase
+          .database()
+          .ref("bans/" + displayName)
+          .on("value", (snapshot) => {
+            if (snapshot.exists()) {
+              console.log("User Ban detected. Signing out...");
+              signOutUser();
+            }
+          });
+      }
 
-function checkForIpBan(ipAddress, user) {
-    const ipBansRef = firebase.database().ref('ipBans/' + ipAddress);
-    ipBansRef.once('value', snapshot => {
-        if (snapshot.exists()) {
+      function signOutUser() {
+        firebase
+          .auth()
+          .signOut()
+          .then(() => {
+            window.location.href = "login.html";
+          });
+      }
+
+      function checkForIpBan(ipAddress, user) {
+        const ipBansRef = firebase.database().ref("ipBans/" + ipAddress);
+        ipBansRef.once("value", (snapshot) => {
+          if (snapshot.exists()) {
             const banInfo = snapshot.val();
             if (!banInfo.permanent && banInfo.end && Date.now() > banInfo.end) {
-                // IP Ban expired, remove it
-                ipBansRef.remove().then(() => {
-                    console.log('Expired IP ban removed.');
-                    listenForBan(user); // Check for user ban
-                });
+              // IP Ban expired, remove it
+              ipBansRef.remove().then(() => {
+                console.log("Expired IP ban removed.");
+                listenForBan(user); // Check for user ban
+              });
             } else {
-                // IP still banned
-                alertBanInfo(banInfo, "IP");
-                signOutUser();
+              // IP still banned
+              alertBanInfo(banInfo, "IP");
+              signOutUser();
             }
-        } else {
+          } else {
             // No IP ban, check for user ban
             listenForBan(user);
+          }
+        });
+      }
+
+      function listenForBan(user) {
+        if (!user.displayName) {
+          console.log("DisplayName is missing.");
+          return;
         }
-    });
-}
 
-function listenForBan(user) {
-    if (!user.displayName) {
-        console.log("DisplayName is missing.");
-        return;
-    }
-
-    const userBanRef = firebase.database().ref('bans/' + user.displayName);
-    userBanRef.once('value', snapshot => {
-        if (snapshot.exists()) {
+        const userBanRef = firebase.database().ref("bans/" + user.displayName);
+        userBanRef.once("value", (snapshot) => {
+          if (snapshot.exists()) {
             const banInfo = snapshot.val();
             if (!banInfo.permanent && banInfo.end && Date.now() > banInfo.end) {
-                // User ban expired, remove it
-                userBanRef.remove().then(() => {
-                    console.log('Expired user ban removed.');
-                    proceedWithLogin(user);
-                });
+              // User ban expired, remove it
+              userBanRef.remove().then(() => {
+                console.log("Expired user ban removed.");
+                proceedWithLogin(user);
+              });
             } else {
-                // User still banned
-                alertBanInfo(banInfo, "User");
-                signOutUser();
+              // User still banned
+              alertBanInfo(banInfo, "User");
+              signOutUser();
             }
-        } else {
+          } else {
             // No user ban, proceed with login
             proceedWithLogin(user);
-        }
-    });
-}
+          }
+        });
+      }
 
-function alertBanInfo(banInfo, type) {
-    let banTypeMessage = type + " has been banned. ";
-    let banDurationMessage = banInfo.permanent ? "Permanently" : "Until " + formatTimestamp(banInfo.end);
-    alert(banTypeMessage + "Reason: " + banInfo.reason + ". Duration: " + banDurationMessage);
-}
+      function alertBanInfo(banInfo, type) {
+        let banTypeMessage = type + " has been banned. ";
+        let banDurationMessage = banInfo.permanent
+          ? "Permanently"
+          : "Until " + formatTimestamp(banInfo.end);
+        alert(
+          banTypeMessage +
+            "Reason: " +
+            banInfo.reason +
+            ". Duration: " +
+            banDurationMessage
+        );
+      }
 
-function signOutUser() {
-    firebase.auth().signOut().then(() => {
-        window.location.href = 'login.html';
-    });
-}
+      function signOutUser() {
+        firebase
+          .auth()
+          .signOut()
+          .then(() => {
+            window.location.href = "login.html";
+          });
+      }
 
-function proceedWithLogin(user) {
-    document.getElementById("login-status").textContent = "Logged in as: " + user.email;
-    document.getElementById("sign-out-button").style.display = "block";
-    loadChatList(); // Load chats or perform other actions necessary upon successful login
-}
+      function proceedWithLogin(user) {
+        document.getElementById("login-status").textContent =
+          "Logged in as: " + user.email;
+        document.getElementById("sign-out-button").style.display = "block";
+        loadChatList(); // Load chats or perform other actions necessary upon successful login
+      }
 
-function formatBanDuration(milliseconds) {
-    const totalSeconds = Math.floor(milliseconds / 1000);
-    const days = Math.floor(totalSeconds / 86400);
-    const hours = Math.floor((totalSeconds % 86400) / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
+      function formatBanDuration(milliseconds) {
+        const totalSeconds = Math.floor(milliseconds / 1000);
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
 
-    let durationMessage = '';
-    if (days > 0) durationMessage += days + " days ";
-    if (hours > 0) durationMessage += hours + " hours ";
-    if (minutes > 0) durationMessage += minutes + " minutes";
+        let durationMessage = "";
+        if (days > 0) durationMessage += days + " days ";
+        if (hours > 0) durationMessage += hours + " hours ";
+        if (minutes > 0) durationMessage += minutes + " minutes";
 
-    return durationMessage.trim();
-}
+        return durationMessage.trim();
+      }
 
-function removeExpiredBans() {
-    const bansRef = firebase.database().ref('bans');
-    bansRef.once('value', snapshot => {
-        if (snapshot.exists()) {
-            snapshot.forEach(childSnapshot => {
-                const banInfo = childSnapshot.val();
-                if (!banInfo.permanent && banInfo.end && Date.now() > banInfo.end) {
-                    // Ban has expired
-                    bansRef.child(childSnapshot.key).remove();
-                }
+      function removeExpiredBans() {
+        const bansRef = firebase.database().ref("bans");
+        bansRef.once("value", (snapshot) => {
+          if (snapshot.exists()) {
+            snapshot.forEach((childSnapshot) => {
+              const banInfo = childSnapshot.val();
+              if (
+                !banInfo.permanent &&
+                banInfo.end &&
+                Date.now() > banInfo.end
+              ) {
+                // Ban has expired
+                bansRef.child(childSnapshot.key).remove();
+              }
             });
-        }
-    });
-}
+          }
+        });
+      }
 
-document.getElementById('sign-out-button').addEventListener('click', function() {
-    firebase.auth().signOut();
-});
+      document
+        .getElementById("sign-out-button")
+        .addEventListener("click", function () {
+          firebase.auth().signOut();
+        });
 
-document.getElementById('new-chat-button').addEventListener('click', function() {
-    if (firebase.auth().currentUser) {
-        var chatName = prompt("Enter chat name:");
-        if (chatName) {
-            joinChat(chatName);
-        }
-    } else {
-        alert("Please sign in to create a new chat.");
-    }
-});
+      document
+        .getElementById("new-chat-button")
+        .addEventListener("click", function () {
+          if (firebase.auth().currentUser) {
+            var chatName = prompt("Enter chat name:");
+            if (chatName) {
+              joinChat(chatName);
+            }
+          } else {
+            alert("Please sign in to create a new chat.");
+          }
+        });
 
-const forbiddenWords = ["nigger","nigga","fuck","shit","ass","bitch","fucker","beiner","cunt","kkk","nigg@","n1gger"]; // Add your forbidden words here
+      const forbiddenWords = [
+        "nigger",
+        "nigga",
+        "fuck",
+        "shit",
+        "ass",
+        "bitch",
+        "fucker",
+        "beiner",
+        "cunt",
+        "kkk",
+        "nigg@",
+        "n1gger",
+      ]; // Add your forbidden words here
 
-function joinChat(chatName) {
-    // Check if the chat name contains any forbidden words
-    for (let word of forbiddenWords) {
-        if (chatName.toLowerCase().includes(word.toLowerCase())) {
-            alert("The chat name contains forbidden words. Please choose a different name.");
+      function joinChat(chatName) {
+        // Check if the chat name contains any forbidden words
+        for (let word of forbiddenWords) {
+          if (chatName.toLowerCase().includes(word.toLowerCase())) {
+            alert(
+              "The chat name contains forbidden words. Please choose a different name."
+            );
             return; // Exit the function
+          }
         }
-    }
 
-    // Continue with the rest of the function
-    const chatRef = firebase.database().ref('chats/' + chatName);
-    const messagesRef = firebase.database().ref('messages/' + chatName);
-    const user = firebase.auth().currentUser;
+        // Continue with the rest of the function
+        const chatRef = firebase.database().ref("chats/" + chatName);
+        const messagesRef = firebase.database().ref("messages/" + chatName);
+        const user = firebase.auth().currentUser;
 
-    chatRef.once('value', snapshot => {
-        if (snapshot.exists()) {
-            joinExistingChat(chatRef, messagesRef, user, chatName, snapshot.val());
-        } else {
+        chatRef.once("value", (snapshot) => {
+          if (snapshot.exists()) {
+            joinExistingChat(
+              chatRef,
+              messagesRef,
+              user,
+              chatName,
+              snapshot.val()
+            );
+          } else {
             createNewChat(chatRef, messagesRef, user, chatName);
-        }
-    });
-}
+          }
+        });
+      }
 
-function createNewChat(chatRef, messagesRef, user, chatName) {
-    let hasPassword = prompt("Set a password for this chat? (y/n)") === 'y';
-    let password = hasPassword ? prompt("Enter the chat password:") : null;
+      function createNewChat(chatRef, messagesRef, user, chatName) {
+        let hasPassword = prompt("Set a password for this chat? (y/n)") === "y";
+        let password = hasPassword ? prompt("Enter the chat password:") : null;
 
-    messagesRef.push({
-        text: "Creating new chat...",
-        sender: "System",
-        timestamp: firebase.database.ServerValue.TIMESTAMP,
-        isSystemMessage: true
-    });
+        messagesRef.push({
+          text: "Creating new chat...",
+          sender: "System",
+          timestamp: firebase.database.ServerValue.TIMESTAMP,
+          isSystemMessage: true,
+        });
 
-    chatRef.set({
-        createdOn: new Date().toISOString(),
-        participants: { [user.uid]: true },
-        password: password
-    }).then(() => {
-        addUserChat(user.uid, chatName);
-        displayChat(chatName);
-    });
-}
+        chatRef
+          .set({
+            createdOn: new Date().toISOString(),
+            participants: { [user.uid]: true },
+            password: password,
+          })
+          .then(() => {
+            addUserChat(user.uid, chatName);
+            displayChat(chatName);
+          });
+      }
 
-function joinExistingChat(chatRef, messagesRef, user, chatName, chatData) {
-    if (chatData.password) {
-        let enteredPassword = prompt("Enter the chat password:");
-        if (enteredPassword !== chatData.password) {
+      function joinExistingChat(
+        chatRef,
+        messagesRef,
+        user,
+        chatName,
+        chatData
+      ) {
+        if (chatData.password) {
+          let enteredPassword = prompt("Enter the chat password:");
+          if (enteredPassword !== chatData.password) {
             alert("Incorrect password.");
             return; // Exit without joining the chat
+          }
         }
-    }
 
-    messagesRef.push({
-        text: (user.displayName || user.email) + " joined the chat!",
-        sender: "System",
-        timestamp: firebase.database.ServerValue.TIMESTAMP,
-        isSystemMessage: true
-    });
-
-    chatRef.child('participants/' + user.uid).set(true).then(() => {
-        addUserChat(user.uid, chatName);
-        displayChat(chatName);
-    });
-}
-
-function addUserChat(userId, chatName) {
-    const userChatsRef = firebase.database().ref('userChats/' + userId + '/' + chatName);
-    userChatsRef.set(true);
-}
-
-
-
-function loadChatList() {
-    const user = firebase.auth().currentUser;
-    if (user) {
-        const userChatsRef = firebase.database().ref('userChats/' + user.uid);
-        userChatsRef.on('child_added', snapshot => {
-            const chatName = snapshot.key;
-            // Check if the user is still a participant of this chat
-            const chatRef = firebase.database().ref('chats/' + chatName + '/participants/' + user.uid);
-            chatRef.once('value', participantSnapshot => {
-                if (participantSnapshot.exists()) {
-                    // User is still a participant, add the chat to the list
-                    addChatToList(chatName);
-                } else {
-                    // User is no longer a participant, remove the chat from the list
-                    removeChatFromUI(chatName);
-                    // Also remove the chat from the user's chat list in the database
-                    userChatsRef.child(chatName).remove();
-                }
-            });
+        messagesRef.push({
+          text: (user.displayName || user.email) + " joined the chat!",
+          sender: "System",
+          timestamp: firebase.database.ServerValue.TIMESTAMP,
+          isSystemMessage: true,
         });
-    }
-}
 
+        chatRef
+          .child("participants/" + user.uid)
+          .set(true)
+          .then(() => {
+            addUserChat(user.uid, chatName);
+            displayChat(chatName);
+          });
+      }
 
-function addChatToList(chatName) {
-    const chatList = document.getElementById("chats");
-    const chatItem = document.createElement("li");
-    chatItem.className = 'chat-item';
-    chatItem.setAttribute('data-chat-name', chatName);
-    checkForNewMessages(chatName, chatItem);
-    // Clickable chat name
-    const chatNameSpan = document.createElement("span");
-    chatNameSpan.textContent = chatName;
-    chatNameSpan.className = "chat-name";
+      function addUserChat(userId, chatName) {
+        const userChatsRef = firebase
+          .database()
+          .ref("userChats/" + userId + "/" + chatName);
+        userChatsRef.set(true);
+      }
 
-    // Remove button
-    const removeButton = document.createElement("button");
-    removeButton.textContent = "Remove";
-    removeButton.className = "remove-chat-button";
-    removeButton.onclick = (e) => {
-        e.stopPropagation(); // Prevents the entire list item click
-        removeChat(chatName);
-    };
-
-    chatItem.appendChild(chatNameSpan);
-    chatItem.appendChild(removeButton);
-    
-    // Add click event to the entire list item
-    chatItem.onclick = () => displayChat(chatName);
-
-    chatList.appendChild(chatItem);
-}
-
-
-
-
-
-function displayChat(chatName) {
-    // Update the chat header and display the chat container
-    document.getElementById("chat-header").textContent = chatName;
-    document.getElementById("chat-container").style.display = "block";
-    document.getElementById("messages").innerHTML = ''; // Clear existing messages
-
-    // Update the last read timestamp for the newly opened chat
-    updateLastReadTimestamp(chatName);
-
-    // Start listening for new messages in the opened chat
-    listenForMessages(chatName);
-
-    // Remove new message indicator if present
-    removeNewMessageIndicator(chatName);
-}
-
-function removeNewMessageIndicator(chatName) {
-    const chatListItems = document.getElementById("chats").querySelectorAll('.chat-item');
-    chatListItems.forEach(item => {
-        if (item.getAttribute('data-chat-name') === chatName) {
-            const redDot = item.querySelector('.new-message-indicator');
-            if (redDot) {
-                redDot.remove();
-            }
-        }
-    });
-}
-
-var currentChatRef;
-
-function listenForMessages(chatName) {
-    if (currentChatRef) {
-        currentChatRef.off(); // Stop listening to the previous chat
-    }
-    currentChatRef = firebase.database().ref('messages/' + chatName);
-    currentChatRef.on('child_added', function(snapshot) {
-        var childData = snapshot.val();
-        displayMessage(childData);
-    });
-}
-
-function displayMessage(messageData) {
-    const messagesContainer = document.getElementById("messages");
-    const shouldScroll = isScrolledToBottom(messagesContainer);
-    const msgElement = document.createElement("li");
-    const user = firebase.auth().currentUser;
-
-    // Add the owner badge if the conditions are met
-    let badge = "";
-    if (messageData.sender === "josh") {
-        badge = "<span class='owner-badge'>Owner</span> ";
-    } else if (messageData.sender === "trexdonuts (austin)") {
-        badge = "<span class='trex-badge'>da real trex</span> ";
-    } else if (messageData.sender === "Emmett") {
-        badge = "<span class='sigma-badge'>V.I.P.</span> ";
-    } else if (messageData.sender === "jamesm") {
-        badge = "<span class='dev-badge'>dev</span> ";
-    }
-    
-
-    let senderDisplayName = badge + censorWord(messageData.sender);
-    let messageTime = formatTimestamp(messageData.timestamp);
-
-    if (messageData.sender === (user.displayName || user.email)) {
-        msgElement.className = 'sent';
-    } else if (messageData.isSystemMessage) {
-        msgElement.className = 'system-message';
-    } else {
-        msgElement.className = 'received';
-    }
-
-    let formattedText = parseMessage(censorWord(messageData.text));
-    msgElement.innerHTML = `<div>${senderDisplayName}: ${formattedText}</div><div class='message-time' style='color:rgb(73, 73, 73); margin-top: 8px;'>${messageTime}</div>`;
-
-    messagesContainer.appendChild(msgElement); // Append the message
-
-    // Auto-scroll to bottom if the user was already there
-    if (shouldScroll) {
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }
-}
-
-function isScrolledToBottom(element) {
-    return element.scrollHeight - element.clientHeight <= element.scrollTop + 1;
-}
-
-function formatTimestamp(timestamp) {
-    var date = new Date(timestamp);
-    var year = date.getFullYear();
-    var month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months start at 0
-    var day = date.getDate().toString().padStart(2, '0');
-    var hours = date.getHours();
-    var minutes = date.getMinutes().toString().padStart(2, '0');
-    var ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    
-    // Format: YYYY-MM-DD HH:MM AM/PM
-    return `${year}-${month}-${day} ${hours}:${minutes} ${ampm}`;
-}
-
-function censorWord(str) {
-    var forbiddenWords = ["nigger", "nigga", "fuck", "shit", "ass", "bitch", "fucker", "beiner", "cunt", "kkk", "nigg@", "n1gger"]; // Replace with actual words you want to filter
-    forbiddenWords.forEach(word => {
-        var regex = new RegExp("\\b" + word.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1") + "\\b", "gi");
-        str = str.replace(regex, "*".repeat(word.length));
-    });
-    return str;
-}
-
-function isScrolledToBottom(el) {
-    return el.scrollHeight - el.clientHeight <= el.scrollTop + 1;
-}
-
-function updateLastReadTimestamp(chatName) {
-    const user = firebase.auth().currentUser;
-    if (user) {
-        const lastReadRef = firebase.database().ref('lastRead/' + user.uid + '/' + chatName);
-        lastReadRef.set(firebase.database.ServerValue.TIMESTAMP);
-    }
-}
-
-function checkForNewMessages() {
-    setInterval(function() {
+      function loadChatList() {
         const user = firebase.auth().currentUser;
         if (user) {
-            const userChatsRef = firebase.database().ref('userChats/' + user.uid);
-            userChatsRef.once('value', snapshot => {
-                snapshot.forEach(childSnapshot => {
-                    const chatName = childSnapshot.key;
-                    const lastReadRef = firebase.database().ref('lastRead/' + user.uid + '/' + chatName);
-                    lastReadRef.once('value', lastReadSnapshot => {
-                        const lastReadTimestamp = lastReadSnapshot.val() || 0;
-                        const messagesRef = firebase.database().ref('messages/' + chatName);
-                        messagesRef.orderByChild('timestamp').startAt(lastReadTimestamp).once('value', messagesSnapshot => {
-                            if (messagesSnapshot.exists() && messagesSnapshot.numChildren() > 1) {
-                                addNewMessageIndicator(chatName);
-                            }
-                        });
+          const userChatsRef = firebase.database().ref("userChats/" + user.uid);
+          userChatsRef.on("child_added", (snapshot) => {
+            const chatName = snapshot.key;
+            // Check if the user is still a participant of this chat
+            const chatRef = firebase
+              .database()
+              .ref("chats/" + chatName + "/participants/" + user.uid);
+            chatRef.once("value", (participantSnapshot) => {
+              if (participantSnapshot.exists()) {
+                // User is still a participant, add the chat to the list
+                addChatToList(chatName);
+              } else {
+                // User is no longer a participant, remove the chat from the list
+                removeChatFromUI(chatName);
+                // Also remove the chat from the user's chat list in the database
+                userChatsRef.child(chatName).remove();
+              }
+            });
+          });
+        }
+      }
+
+      function addChatToList(chatName) {
+        const chatList = document.getElementById("chats");
+        const chatItem = document.createElement("li");
+        chatItem.className = "chat-item";
+        chatItem.setAttribute("data-chat-name", chatName);
+        checkForNewMessages(chatName, chatItem);
+        // Clickable chat name
+        const chatNameSpan = document.createElement("span");
+        chatNameSpan.textContent = chatName;
+        chatNameSpan.className = "chat-name";
+
+        // Remove button
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "Remove";
+        removeButton.className = "remove-chat-button";
+        removeButton.onclick = (e) => {
+          e.stopPropagation(); // Prevents the entire list item click
+          removeChat(chatName);
+        };
+
+        chatItem.appendChild(chatNameSpan);
+        chatItem.appendChild(removeButton);
+
+        // Add click event to the entire list item
+        chatItem.onclick = () => displayChat(chatName);
+
+        chatList.appendChild(chatItem);
+      }
+
+      function displayChat(chatName) {
+        // Update the chat header and display the chat container
+        document.getElementById("chat-header").textContent = chatName;
+        document.getElementById("chat-container").style.display = "block";
+        document.getElementById("messages").innerHTML = ""; // Clear existing messages
+
+        // Update the last read timestamp for the newly opened chat
+        updateLastReadTimestamp(chatName);
+
+        // Start listening for new messages in the opened chat
+        listenForMessages(chatName);
+
+        // Remove new message indicator if present
+        removeNewMessageIndicator(chatName);
+      }
+
+      function removeNewMessageIndicator(chatName) {
+        const chatListItems = document
+          .getElementById("chats")
+          .querySelectorAll(".chat-item");
+        chatListItems.forEach((item) => {
+          if (item.getAttribute("data-chat-name") === chatName) {
+            const redDot = item.querySelector(".new-message-indicator");
+            if (redDot) {
+              redDot.remove();
+            }
+          }
+        });
+      }
+
+      var currentChatRef;
+
+      function listenForMessages(chatName) {
+        if (currentChatRef) {
+          currentChatRef.off(); // Stop listening to the previous chat
+        }
+        currentChatRef = firebase.database().ref("messages/" + chatName);
+        currentChatRef.on("child_added", function (snapshot) {
+          var childData = snapshot.val();
+          displayMessage(childData);
+        });
+      }
+
+      function displayMessage(messageData) {
+        const messagesContainer = document.getElementById("messages");
+        const shouldScroll = isScrolledToBottom(messagesContainer);
+        const msgElement = document.createElement("li");
+        const user = firebase.auth().currentUser;
+
+        // Add the owner badge if the conditions are met
+        let badge = "";
+        if (messageData.sender === "josh") {
+          badge = "<span class='owner-badge'>Owner</span> ";
+        } else if (messageData.sender === "trexdonuts (austin)") {
+          badge = "<span class='trex-badge'>da real trex</span> ";
+        } else if (messageData.sender === "Emmett") {
+          badge = "<span class='sigma-badge'>V.I.P.</span> ";
+        } else if (messageData.sender === "jamesm") {
+          badge = "<span class='dev-badge'>dev</span> ";
+        }
+
+        let senderDisplayName = badge + censorWord(messageData.sender);
+        let messageTime = formatTimestamp(messageData.timestamp);
+
+        if (messageData.sender === (user.displayName || user.email)) {
+          msgElement.className = "sent";
+        } else if (messageData.isSystemMessage) {
+          msgElement.className = "system-message";
+        } else {
+          msgElement.className = "received";
+        }
+
+        let formattedText = parseMessage(censorWord(messageData.text));
+        msgElement.innerHTML = `<div>${senderDisplayName}: ${formattedText}</div><div class='message-time' style='color:rgb(73, 73, 73); margin-top: 8px;'>${messageTime}</div>`;
+
+        messagesContainer.appendChild(msgElement); // Append the message
+
+        // Auto-scroll to bottom if the user was already there
+        if (shouldScroll) {
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+      }
+
+      function isScrolledToBottom(element) {
+        return (
+          element.scrollHeight - element.clientHeight <= element.scrollTop + 1
+        );
+      }
+
+      function formatTimestamp(timestamp) {
+        var date = new Date(timestamp);
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months start at 0
+        var day = date.getDate().toString().padStart(2, "0");
+        var hours = date.getHours();
+        var minutes = date.getMinutes().toString().padStart(2, "0");
+        var ampm = hours >= 12 ? "PM" : "AM";
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+
+        // Format: YYYY-MM-DD HH:MM AM/PM
+        return `${year}-${month}-${day} ${hours}:${minutes} ${ampm}`;
+      }
+
+      function censorWord(str) {
+        var forbiddenWords = [
+          "nigger",
+          "nigga",
+          "fuck",
+          "shit",
+          "ass",
+          "bitch",
+          "fucker",
+          "beiner",
+          "cunt",
+          "kkk",
+          "nigg@",
+          "n1gger",
+        ]; // Replace with actual words you want to filter
+        forbiddenWords.forEach((word) => {
+          var regex = new RegExp(
+            "\\b" + word.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1") + "\\b",
+            "gi"
+          );
+          str = str.replace(regex, "*".repeat(word.length));
+        });
+        return str;
+      }
+
+      function isScrolledToBottom(el) {
+        return el.scrollHeight - el.clientHeight <= el.scrollTop + 1;
+      }
+
+      function updateLastReadTimestamp(chatName) {
+        const user = firebase.auth().currentUser;
+        if (user) {
+          const lastReadRef = firebase
+            .database()
+            .ref("lastRead/" + user.uid + "/" + chatName);
+          lastReadRef.set(firebase.database.ServerValue.TIMESTAMP);
+        }
+      }
+
+      function checkForNewMessages() {
+        setInterval(function () {
+          const user = firebase.auth().currentUser;
+          if (user) {
+            const userChatsRef = firebase
+              .database()
+              .ref("userChats/" + user.uid);
+            userChatsRef.once("value", (snapshot) => {
+              snapshot.forEach((childSnapshot) => {
+                const chatName = childSnapshot.key;
+                const lastReadRef = firebase
+                  .database()
+                  .ref("lastRead/" + user.uid + "/" + chatName);
+                lastReadRef.once("value", (lastReadSnapshot) => {
+                  const lastReadTimestamp = lastReadSnapshot.val() || 0;
+                  const messagesRef = firebase
+                    .database()
+                    .ref("messages/" + chatName);
+                  messagesRef
+                    .orderByChild("timestamp")
+                    .startAt(lastReadTimestamp)
+                    .once("value", (messagesSnapshot) => {
+                      if (
+                        messagesSnapshot.exists() &&
+                        messagesSnapshot.numChildren() > 1
+                      ) {
+                        addNewMessageIndicator(chatName);
+                      }
                     });
                 });
+              });
             });
+          }
+        }, 1000); // Interval set to 1000 milliseconds (1 second)
+      }
+
+      function addNewMessageIndicator(chatName) {
+        const chatListItem = document.querySelector(
+          `[data-chat-name='${chatName}'] .chat-name`
+        );
+        if (
+          chatListItem &&
+          !chatListItem.querySelector(".new-message-indicator")
+        ) {
+          const redDot = document.createElement("span");
+          redDot.className = "new-message-indicator";
+          chatListItem.appendChild(redDot);
         }
-    }, 1000); // Interval set to 1000 milliseconds (1 second)
-}
+      }
 
-function addNewMessageIndicator(chatName) {
-    const chatListItem = document.querySelector(`[data-chat-name='${chatName}'] .chat-name`);
-    if (chatListItem && !chatListItem.querySelector('.new-message-indicator')) {
-        const redDot = document.createElement("span");
-        redDot.className = "new-message-indicator";
-        chatListItem.appendChild(redDot);
-    }
-}
+      document
+        .getElementById("send-message-button")
+        .addEventListener("click", function () {
+          var messageText = getQuillText();
+          const currentTime = Date.now();
+          const messageInput = document.getElementById("message-input");
+          var messageInputDiv = document.getElementById("message-input");
+          var messageText = messageInputDiv.textContent; // Get only the text content
+          var currentChat = document.getElementById("chat-header").textContent;
+          if (messageText && currentChat) {
+            sendMessage(currentChat, messageText);
+            messageInputDiv.innerHTML = ""; // Clear the input area
+          }
+        });
 
-
-document.getElementById('send-message-button').addEventListener('click', function() {
-    var messageText = getQuillText();
-    const currentTime = Date.now();
-    const messageInput = document.getElementById('message-input');
-    var messageInputDiv = document.getElementById('message-input');
-    var messageText = messageInputDiv.textContent; // Get only the text content
-    var currentChat = document.getElementById("chat-header").textContent;
-    if (messageText && currentChat) {
-        sendMessage(currentChat, messageText);
-        messageInputDiv.innerHTML = ''; // Clear the input area
-    }
-});
-
-const MAX_CHARACTERS = 1000;
-function sendMessage(chatName, messageText) {
-    if (messageText.length > MAX_CHARACTERS) {
-        alert("Message exceeds the character limit of " + MAX_CHARACTERS + " characters.");
-        return; // Stop the function here
-    }
-    const user = firebase.auth().currentUser;
-    if (user) {
-        if (chatName.toLowerCase() === "bill") {
+      const MAX_CHARACTERS = 1000;
+      function sendMessage(chatName, messageText) {
+        if (messageText.length > MAX_CHARACTERS) {
+          alert(
+            "Message exceeds the character limit of " +
+              MAX_CHARACTERS +
+              " characters."
+          );
+          return; // Stop the function here
+        }
+        const user = firebase.auth().currentUser;
+        if (user) {
+          if (chatName.toLowerCase() === "bill") {
             messageText = "bill";
-        }
+          }
 
-        if (messageText === "heil hitler") {
+          if (messageText === "heil hitler") {
             // Play the sound
             document.getElementById("specialSound").play();
 
             // Do not send the message, return early
             return;
-        }
+          }
 
-        if (messageText === "monkey") {
+          if (messageText === "monkey") {
             // Play the sound
             document.getElementById("monkey").play();
-        }
+          }
 
-        const messageData = {
+          const messageData = {
             text: messageText,
             sender: user.displayName || user.email,
-            timestamp: firebase.database.ServerValue.TIMESTAMP
-        };
+            timestamp: firebase.database.ServerValue.TIMESTAMP,
+          };
 
-        if (messageText.toLowerCase() === "stop it") {
-            var videoContainer = document.getElementById('rickrollVideoContainer');
-            var video = document.getElementById('rickrollVideo');
-            var audio = document.getElementById('specialSound');
+          if (messageText.toLowerCase() === "stop it") {
+            var videoContainer = document.getElementById(
+              "rickrollVideoContainer"
+            );
+            var video = document.getElementById("rickrollVideo");
+            var audio = document.getElementById("specialSound");
 
             if (videoContainer && video) {
-                videoContainer.style.display = 'block';
-                video.play();
-                enterFullscreen(video);
+              videoContainer.style.display = "block";
+              video.play();
+              enterFullscreen(video);
 
-                // Handle video container click event
-                videoContainer.onclick = function() {
-                    video.currentTime = 0;
-                    videoContainer.style.display = 'none';
-                    exitFullscreen();
-
-                };
+              // Handle video container click event
+              videoContainer.onclick = function () {
+                video.currentTime = 0;
+                videoContainer.style.display = "none";
+                exitFullscreen();
+              };
             }
-        }
-        // Check if IP is banned
-        fetch('https://api.ipify.org?format=json')
-            .then(results => results.json())
-            .then(data => {
-                const userIpAddress = data.ip.replace(/\./g, '-'); // Replace periods with hyphens
-                firebase.database().ref('ipBans/' + userIpAddress).once('value', ipSnapshot => {
-                    if (ipSnapshot.exists()) {
-                        alert("Your IP is banned from sending messages.");
-                    } else {
-                        // IP not banned, check for user ban
-                        firebase.database().ref('bans/' + user.displayName).once('value', userSnapshot => {
-                            if (userSnapshot.exists()) {
-                                const banInfo = userSnapshot.val();
-                                if (banInfo.permanent || (banInfo.end && Date.now() < banInfo.end)) {
-                                    alert("You are banned from sending messages.");
-                                } else {
-                                    // User not banned, proceed to send message
-                                    sendChatMessage(chatName, messageText, user);
-                                }
-                            } else {
-                                // No user ban found, proceed to send message
-                                sendChatMessage(chatName, messageText, user);
-                            }
-                        });
-                    }
+          }
+          // Check if IP is banned
+          fetch("https://api.ipify.org?format=json")
+            .then((results) => results.json())
+            .then((data) => {
+              const userIpAddress = data.ip.replace(/\./g, "-"); // Replace periods with hyphens
+              firebase
+                .database()
+                .ref("ipBans/" + userIpAddress)
+                .once("value", (ipSnapshot) => {
+                  if (ipSnapshot.exists()) {
+                    alert("Your IP is banned from sending messages.");
+                  } else {
+                    // IP not banned, check for user ban
+                    firebase
+                      .database()
+                      .ref("bans/" + user.displayName)
+                      .once("value", (userSnapshot) => {
+                        if (userSnapshot.exists()) {
+                          const banInfo = userSnapshot.val();
+                          if (
+                            banInfo.permanent ||
+                            (banInfo.end && Date.now() < banInfo.end)
+                          ) {
+                            alert("You are banned from sending messages.");
+                          } else {
+                            // User not banned, proceed to send message
+                            sendChatMessage(chatName, messageText, user);
+                          }
+                        } else {
+                          // No user ban found, proceed to send message
+                          sendChatMessage(chatName, messageText, user);
+                        }
+                      });
+                  }
                 });
             })
-            .catch(error => console.error('Error fetching IP:', error));
+            .catch((error) => console.error("Error fetching IP:", error));
 
-            if (messageText.toLowerCase() === "easter egg") {
-                showEasterEgg();
-            }
-            if (messageText.toLowerCase() === "caseoh") {
+          if (messageText.toLowerCase() === "easter egg") {
+            showEasterEgg();
+          }
+          if (messageText.toLowerCase() === "caseoh") {
             crashPage();
+          }
         }
-        }
-        setTimeout(function() {
-        canSendMessage = true;
-    }, 2000);
-}
+        setTimeout(function () {
+          canSendMessage = true;
+        }, 2000);
+      }
 
-
-function showEasterEgg() {
-        const img = document.createElement('img');
-        img.src = 'trolls/easter egg.jpg'; // Make sure the path is correct
-        img.style.position = 'fixed';
-        img.style.width = '100px'; // Set the size of the image
+      function showEasterEgg() {
+        const img = document.createElement("img");
+        img.src = "trolls/easter egg.jpg"; // Make sure the path is correct
+        img.style.position = "fixed";
+        img.style.width = "100px"; // Set the size of the image
         document.body.appendChild(img);
 
         let dx = 5; // Speed of movement in the x direction
@@ -938,266 +1057,298 @@ function showEasterEgg() {
         let y = 0;
 
         function animate() {
-            x += dx;
-            y += dy;
+          x += dx;
+          y += dy;
 
-            // Bounce off edges
-            if (x <= 0 || x + img.offsetWidth >= window.innerWidth) {
-                dx = -dx;
-            }
-            if (y <= 0 || y + img.offsetHeight >= window.innerHeight) {
-                dy = -dy;
-            }
+          // Bounce off edges
+          if (x <= 0 || x + img.offsetWidth >= window.innerWidth) {
+            dx = -dx;
+          }
+          if (y <= 0 || y + img.offsetHeight >= window.innerHeight) {
+            dy = -dy;
+          }
 
-            img.style.left = x + 'px';
-            img.style.top = y + 'px';
+          img.style.left = x + "px";
+          img.style.top = y + "px";
 
-            requestAnimationFrame(animate);
+          requestAnimationFrame(animate);
         }
 
         animate();
-    }
+      }
 
-    function crashPage() {
-    alert('This image is too big to show on the screen.');
+      function crashPage() {
+        alert("This image is too big to show on the screen.");
 
-    // Creating an infinite loop to hang/crash the page
-    while(true) {
-        // This loop will run indefinitely, causing the browser tab to hang or crash
-    }
-}
-// Function to enter fullscreen mode for the video
-function enterFullscreen(element) {
-    if (element.requestFullscreen) {
-        element.requestFullscreen();
-    } else if (element.webkitRequestFullscreen) { // Safari
-        element.webkitRequestFullscreen();
-    }
-}
-
-// Function to exit fullscreen
-function exitFullscreen() {
-    if (document.exitFullscreen) {
-        document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) { // Safari
-        document.webkitExitFullscreen();
-    }
-}
-
-function sendChatMessage(chatName, messageText, user) {
-    const censoredText = censorWord(messageText);
-    const messageData = {
-        text: censoredText,
-        sender: user.displayName || user.email, // Use displayName if available
-        timestamp: firebase.database.ServerValue.TIMESTAMP
-    };
-    firebase.database().ref('messages/' + chatName).push(messageData);
-}
-
-function handleKeyPress(event) {
-    if (event.key === 'Enter') {
-        event.preventDefault(); // Prevents form submission
-        const messageInput = document.getElementById('message-input');
-        const messageText = messageInput.value;
-        const currentChat = document.getElementById("chat-header").textContent;
-        if (messageText && currentChat) {
-            sendMessage(currentChat, messageText);
-            messageInput.value = '';
+        // Creating an infinite loop to hang/crash the page
+        while (true) {
+          // This loop will run indefinitely, causing the browser tab to hang or crash
         }
-    }
-}
+      }
+      // Function to enter fullscreen mode for the video
+      function enterFullscreen(element) {
+        if (element.requestFullscreen) {
+          element.requestFullscreen();
+        } else if (element.webkitRequestFullscreen) {
+          // Safari
+          element.webkitRequestFullscreen();
+        }
+      }
 
-function removeChat(chatName) {
-    const chatRef = firebase.database().ref('chats/' + chatName);
-    const user = firebase.auth().currentUser;
+      // Function to exit fullscreen
+      function exitFullscreen() {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          // Safari
+          document.webkitExitFullscreen();
+        }
+      }
 
-    if (!user) {
-        console.log("User not signed in");
-        return;
-    }
+      function sendChatMessage(chatName, messageText, user) {
+        const censoredText = censorWord(messageText);
+        const messageData = {
+          text: censoredText,
+          sender: user.displayName || user.email, // Use displayName if available
+          timestamp: firebase.database.ServerValue.TIMESTAMP,
+        };
+        firebase
+          .database()
+          .ref("messages/" + chatName)
+          .push(messageData);
+      }
 
-    chatRef.once('value', snapshot => {
-        const chatData = snapshot.val();
-        if (chatData && chatData.participants && chatData.participants[user.uid]) {
-            const isOnlyParticipant = Object.keys(chatData.participants).length === 1;
-            const leaveMessage = {
+      function handleKeyPress(event) {
+        if (event.key === "Enter") {
+          event.preventDefault(); // Prevents form submission
+          const messageInput = document.getElementById("message-input");
+          const messageText = messageInput.value;
+          const currentChat =
+            document.getElementById("chat-header").textContent;
+          if (messageText && currentChat) {
+            sendMessage(currentChat, messageText);
+            messageInput.value = "";
+          }
+        }
+      }
+
+      function removeChat(chatName) {
+        const chatRef = firebase.database().ref("chats/" + chatName);
+        const user = firebase.auth().currentUser;
+
+        if (!user) {
+          console.log("User not signed in");
+          return;
+        }
+
+        chatRef.once(
+          "value",
+          (snapshot) => {
+            const chatData = snapshot.val();
+            if (
+              chatData &&
+              chatData.participants &&
+              chatData.participants[user.uid]
+            ) {
+              const isOnlyParticipant =
+                Object.keys(chatData.participants).length === 1;
+              const leaveMessage = {
                 text: (user.displayName || user.email) + " left the chat!",
                 sender: "System",
                 timestamp: firebase.database.ServerValue.TIMESTAMP,
-                isSystemMessage: true
-            };
+                isSystemMessage: true,
+              };
 
-            if (isOnlyParticipant) {
+              if (isOnlyParticipant) {
                 // Remove chat and messages
                 chatRef.remove();
-                firebase.database().ref('messages/' + chatName).remove();
-            } else {
+                firebase
+                  .database()
+                  .ref("messages/" + chatName)
+                  .remove();
+              } else {
                 // Remove user from chat participants
-                chatRef.child('participants/' + user.uid).remove();
-                firebase.database().ref('messages/' + chatName).push(leaveMessage);
-            }
+                chatRef.child("participants/" + user.uid).remove();
+                firebase
+                  .database()
+                  .ref("messages/" + chatName)
+                  .push(leaveMessage);
+              }
 
-            // Remove chat from user's chat list
-            const userChatRef = firebase.database().ref('userChats/' + user.uid + '/' + chatName);
-            userChatRef.remove().then(() => {
+              // Remove chat from user's chat list
+              const userChatRef = firebase
+                .database()
+                .ref("userChats/" + user.uid + "/" + chatName);
+              userChatRef.remove().then(() => {
                 removeChatFromUI(chatName);
 
                 if (currentChat === chatName) {
-                    closeChatDisplay();
+                  closeChatDisplay();
                 }
                 alert("Chat '" + chatName + "' has been removed.");
-            });
+              });
+            } else {
+              alert(
+                "You are not a participant of this chat or chat does not exist."
+              );
+            }
+          },
+          (error) => {
+            console.error("Error reading chat data: ", error);
+          }
+        );
+      }
 
-        } else {
-            alert("You are not a participant of this chat or chat does not exist.");
-        }
-    }, error => {
-        console.error('Error reading chat data: ', error);
-    });
-}
-
-
-function removeChatFromUI(chatName) {
-    const chatList = document.getElementById("chats");
-    const chatItems = chatList.querySelectorAll('.chat-item');
-    chatItems.forEach(chatItem => {
-        if (chatItem.getAttribute('data-chat-name') === chatName) {
+      function removeChatFromUI(chatName) {
+        const chatList = document.getElementById("chats");
+        const chatItems = chatList.querySelectorAll(".chat-item");
+        chatItems.forEach((chatItem) => {
+          if (chatItem.getAttribute("data-chat-name") === chatName) {
             chatList.removeChild(chatItem);
-        }
-    });
-}
+          }
+        });
+      }
 
-function closeChatDisplay() {
-    document.getElementById("chat-container").style.display = "none";
-    document.getElementById("chat-header").textContent = "Select a chat";
-    document.getElementById("messages").innerHTML = '';
-}
+      function closeChatDisplay() {
+        document.getElementById("chat-container").style.display = "none";
+        document.getElementById("chat-header").textContent = "Select a chat";
+        document.getElementById("messages").innerHTML = "";
+      }
 
+      function closeChatDisplay() {
+        document.getElementById("chat-container").style.display = "none";
+        document.getElementById("chat-header").textContent = "Select a chat";
+        document.getElementById("messages").innerHTML = "";
+      }
 
-function closeChatDisplay() {
-    document.getElementById("chat-container").style.display = "none";
-    document.getElementById("chat-header").textContent = "Select a chat";
-    document.getElementById("messages").innerHTML = '';
-}
+      function removeChatFromUI(chatName) {
+        const chatList = document.getElementById("chats");
+        const chatItems = chatList.querySelectorAll(".chat-item");
 
-function removeChatFromUI(chatName) {
-    const chatList = document.getElementById("chats");
-    const chatItems = chatList.querySelectorAll('.chat-item');
-
-    chatItems.forEach(chatItem => {
-        if (chatItem.getAttribute('data-chat-name') === chatName) {
+        chatItems.forEach((chatItem) => {
+          if (chatItem.getAttribute("data-chat-name") === chatName) {
             chatList.removeChild(chatItem);
-        }
-    });
-}
+          }
+        });
+      }
 
-function deleteOldMessages() {
-    const messagesRef = firebase.database().ref('messages');
-    const oneMonthAgo = Date.now() - (30 * 24 * 60 * 60 * 1000); // 30 days in milliseconds
+      function deleteOldMessages() {
+        const messagesRef = firebase.database().ref("messages");
+        const oneMonthAgo = Date.now() - 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
 
-    messagesRef.once('value', snapshot => {
-        snapshot.forEach(chatSnapshot => {
-            chatSnapshot.forEach(messageSnapshot => {
-                if (messageSnapshot.val().timestamp < oneMonthAgo) {
-                    messageSnapshot.ref.remove();
-                }
+        messagesRef.once("value", (snapshot) => {
+          snapshot.forEach((chatSnapshot) => {
+            chatSnapshot.forEach((messageSnapshot) => {
+              if (messageSnapshot.val().timestamp < oneMonthAgo) {
+                messageSnapshot.ref.remove();
+              }
             });
+          });
         });
-    });
-}
+      }
 
-// Ensure Firebase is initialized before calling this function
-firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-        // Existing authentication state change logic...
-        deleteOldMessages(); // Call this function here
-    }
-});
+      // Ensure Firebase is initialized before calling this function
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          // Existing authentication state change logic...
+          deleteOldMessages(); // Call this function here
+        }
+      });
 
+      function leaveChat(chatName) {
+        const chatRef = firebase
+          .database()
+          .ref(
+            "chats/" +
+              chatName +
+              "/participants/" +
+              firebase.auth().currentUser.uid
+          );
+        chatRef.remove();
+      }
 
-function leaveChat(chatName) {
-    const chatRef = firebase.database().ref('chats/' + chatName + '/participants/' + firebase.auth().currentUser.uid);
-    chatRef.remove();
-}
+      document
+        .getElementById("message-input")
+        .addEventListener("keypress", handleKeyPress);
 
-document.getElementById('message-input').addEventListener('keypress', handleKeyPress);
+      function formatTextWithCodes(text) {
+        const colorAndStyleMappings = {
+          "§0": '<span style="color: #000000;">',
+          "§1": '<span style="color: #0000AA;">',
+          "§2": '<span style="color: #00AA00;">',
+          "§3": '<span style="color: #00AAAA;">',
+          "§4": '<span style="color: #AA0000;">',
+          "§5": '<span style="color: #AA00AA;">',
+          "§6": '<span style="color: #FFAA00;">',
+          "§7": '<span style="color: #AAAAAA;">',
+          "§8": '<span style="color: #555555;">',
+          "§9": '<span style="color: #5555FF;">',
+          "§a": '<span style="color: #55FF55;">',
+          "§b": '<span style="color: #55FFFF;">',
+          "§c": '<span style="color: #FF5555;">',
+          "§d": '<span style="color: #FF55FF;">',
+          "§e": '<span style="color: #FFFF55;">',
+          "§f": '<span style="color: #FFFFFF;">',
+          "§l": '<span style="font-weight: bold;">',
+          "§m": '<span style="text-decoration: line-through;">',
+          "§n": '<span style="text-decoration: underline;">',
+          "§o": '<span style="font-style: italic;">',
+          "§r": "</span>", // Reset
+        };
 
-function formatTextWithCodes(text) {
+        // Split text at every §r and process each part separately
+        const parts = text.split("§r");
+        for (let i = 0; i < parts.length; i++) {
+          // Replace the color and style codes with HTML spans in each part
+          Object.keys(colorAndStyleMappings).forEach((code) => {
+            parts[i] = parts[i].replace(
+              new RegExp(code, "g"),
+              colorAndStyleMappings[code]
+            );
+          });
 
-    const colorAndStyleMappings = {
-        '§0': '<span style="color: #000000;">',
-        '§1': '<span style="color: #0000AA;">',
-        '§2': '<span style="color: #00AA00;">',
-        '§3': '<span style="color: #00AAAA;">',
-        '§4': '<span style="color: #AA0000;">',
-        '§5': '<span style="color: #AA00AA;">',
-        '§6': '<span style="color: #FFAA00;">',
-        '§7': '<span style="color: #AAAAAA;">',
-        '§8': '<span style="color: #555555;">',
-        '§9': '<span style="color: #5555FF;">',
-        '§a': '<span style="color: #55FF55;">',
-        '§b': '<span style="color: #55FFFF;">',
-        '§c': '<span style="color: #FF5555;">',
-        '§d': '<span style="color: #FF55FF;">',
-        '§e': '<span style="color: #FFFF55;">',
-        '§f': '<span style="color: #FFFFFF;">',
-        '§l': '<span style="font-weight: bold;">',
-        '§m': '<span style="text-decoration: line-through;">',
-        '§n': '<span style="text-decoration: underline;">',
-        '§o': '<span style="font-style: italic;">',
-        '§r': '</span>' // Reset
-    };
+          // Close any open HTML spans in each part
+          let openSpans = (parts[i].match(/<span/g) || []).length;
+          let closeSpans = (parts[i].match(/<\/span>/g) || []).length;
+          parts[i] += "</span>".repeat(openSpans - closeSpans);
+        }
 
-    // Split text at every §r and process each part separately
-    const parts = text.split('§r');
-    for (let i = 0; i < parts.length; i++) {
-        // Replace the color and style codes with HTML spans in each part
-        Object.keys(colorAndStyleMappings).forEach(code => {
-            parts[i] = parts[i].replace(new RegExp(code, 'g'), colorAndStyleMappings[code]);
+        // Join the parts back together, adding the closing span tags for reset
+        let formattedText = parts.join("</span>");
+
+        console.log("Formatted text:", formattedText);
+        return formattedText;
+      }
+
+      function parseMessage(message) {
+        console.log("Parsing message:", message);
+
+        // You can call the formatTextWithCodes function here if needed
+        let parsedMessage = formatTextWithCodes(message);
+
+        console.log("Parsed message:", parsedMessage);
+        return parsedMessage;
+      }
+
+      document
+        .getElementById("message-input")
+        .addEventListener("input", function () {
+          var rawText = this.textContent;
+          // Temporarily disable event listener to avoid recursion
+          this.removeEventListener("input", arguments.callee);
+          // Update the formatted content
+          this.innerHTML = formatTextWithCodes(rawText);
+          // Re-enable the event listener
+          this.addEventListener("input", arguments.callee);
         });
 
-        // Close any open HTML spans in each part
-        let openSpans = (parts[i].match(/<span/g) || []).length;
-        let closeSpans = (parts[i].match(/<\/span>/g) || []).length;
-        parts[i] += '</span>'.repeat(openSpans - closeSpans);
-    }
+      var quill = new Quill("#editor-container", {
+        theme: "snow", // Specify theme
+      });
 
-    // Join the parts back together, adding the closing span tags for reset
-    let formattedText = parts.join('</span>');
-
-    console.log("Formatted text:", formattedText);
-    return formattedText;
-}
-
-function parseMessage(message) {
-    console.log("Parsing message:", message);
-    
-    // You can call the formatTextWithCodes function here if needed
-    let parsedMessage = formatTextWithCodes(message);
-    
-    console.log("Parsed message:", parsedMessage);
-    return parsedMessage;
-}
-
-document.getElementById('message-input').addEventListener('input', function() {
-    var rawText = this.textContent;
-    // Temporarily disable event listener to avoid recursion
-    this.removeEventListener('input', arguments.callee);
-    // Update the formatted content
-    this.innerHTML = formatTextWithCodes(rawText);
-    // Re-enable the event listener
-    this.addEventListener('input', arguments.callee);
-});
-
-var quill = new Quill('#editor-container', {
-  theme: 'snow' // Specify theme
-});
-
-function getQuillText() {
-  return quill.root.innerHTML;
-}
-
+      function getQuillText() {
+        return quill.root.innerHTML;
+      }
     </script>
-
-</body>
+  </body>
 </html>
