@@ -1,312 +1,442 @@
 <!DOCTYPE html>
 <html lang="en">
   <style>
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        margin: 0;
-        background-color: #555555;
-        color: #444;
-    }
+body {
+    font-family: 'Manrope', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    margin: 0;
+    background-color: #555555;
+    color: #444;
+}
 
-    #chat-app {
-        display: flex;
-        height: 89vh;
-    }
+#chat-app {
+    display: flex;
+    /* START ----------------------------------------- */
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    right: 0;
+    /* END ------------------------------------------- */
+}
 
-    #chat-list {
-        width: 300px;
-        background-color: #666666;
-        padding: 20px;
-        overflow-y: auto;
-    }
+#chat-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #7b7b7b;
+    padding: 20px;
+    position: relative; /* Added for positioning children */
+}
 
-    #new-chat-button {
-        width: 100%;
-        padding: 10px 20px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        margin-bottom: 20px;
-        cursor: pointer;
-        font-size: 16px;
-    }
+#chat-header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    padding: 10px;
+    text-align: center;
+    margin-top: 0;
+    background-color: #7b7b7b; /* Adjust as needed */
+    font-size: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 30px black;
+    z-index: 2;
+}
 
-    #new-chat-button:hover {
-        background-color: #45a049;
-    }
+#messages {
+    position: absolute;
+    top: 27px; /* Height of chat header */
+    bottom: 60px; /* Height of input container */
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column; /* Changed to standard column layout */
+    list-style-type: none;
+    padding: 0;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+#messages::-webkit-scrollbar {
+    display: none; /* For Webkit browsers like Chrome/Safari */
+}
 
-    #chat-list ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-    }
+#messages li {
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 18px;
+    max-width: 60%;
+    word-wrap: break-word;
+    line-height: 1.5;
+}
 
-    #chat-list li {
-        cursor: pointer;
-        padding: 10px;
-        margin-bottom: -1px;
-        background-color: #7b7b7b;
-    }
+.sent {
+    background-color: #007bff;
+    color: white;
+    align-self: flex-end;
+    /* START ----------------------------------------- */
+    margin-right: 5px;
+    /* END ------------------------------------------- */
+}
 
-    #chat-list li:hover {
-        background-color: #636262;
-    }
+.received {
+    background-color: #e0e0e0;
+    align-self: flex-start;
+    /* START ----------------------------------------- */
+    margin-left: 5px;
+    /* END ------------------------------------------- */
+}
 
-    #chat-container {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        background-color: #7b7b7b;
-        padding: 20px;
-        position: relative; /* Added for positioning children */
-    }
+#input-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    margin-top: 20px;
+    padding-top: 20px;
+    padding: 10px;
+    background-color: #7b7b7b; /* Same as chat-container for seamless look */
+    border-top: none; /* Remove if not needed */
+}
+#messages li .message-time {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
 
-    #chat-header {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        padding: 10px;
-        background-color: #7b7b7b; /* Adjust as needed */
-        font-size: 20px;
-        margin-bottom: 20px;
-    }
+#messages li:hover .message-time {
+    max-height: 20px; /* Adjust height based on content */
+}
 
-    #messages {
-        position: absolute;
-        top: 50px; /* Height of chat header */
-        bottom: 60px; /* Height of input container */
-        left: 0;
-        right: 0;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column; /* Changed to standard column layout */
-        list-style-type: none;
-        padding: 0;
-        overflow-y: auto;
-        flex-grow: 1;
-    }
-    #messages::-webkit-scrollbar {
-        display: none; /* For Webkit browsers like Chrome/Safari */
-    }
+#messages li:nth-child(1) {
+    margin-top: 10px;
+}
 
-    #messages li {
-        padding: 10px 15px;
-        margin-bottom: 10px;
-        border-radius: 18px;
-        max-width: 60%;
-        word-wrap: break-word;
-        line-height: 1.5;
-    }
+#message-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
 
-    .sent {
-        background-color: #007bff;
-        color: white;
-        align-self: flex-end;
-    }
+#send-message-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    /* START ----------------------------------------- */
+    border-radius: 6px;
+    transition-duration: 0.3s;
+    /* END ------------------------------------------- */
+    cursor: pointer;
+}
 
-    .received {
-        background-color: #e0e0e0;
-        align-self: flex-start;
-    }
+#send-message-button:hover {
+    background-color: #45a049;
+}
 
-    #input-container {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        display: flex;
-        margin-top: 20px;
-        padding-top: 20px;
-        padding: 10px;
-        background-color: #7b7b7b; /* Same as chat-container for seamless look */
-        border-top: none; /* Remove if not needed */
-    }
-    #messages li .message-time {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease-in-out;
-    }
+.remove-chat-button {
+    padding: 6px 8px !important;
+    font-size: 10px !important;
+    background-color: #ff4444 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    margin-left: 5px !important;
+    line-height: normal !important;
+    float: right !important;
+    transition-duration: 0.3s !important;
+    display: none;
+    animation: 0.5s buttonSlide both;
+    overflow: hidden;
+}
 
-    #messages li:hover .message-time {
-        max-height: 20px; /* Adjust height based on content */
-    }
+.remove-chat-button:hover {
+    background-color: #cc0000 !important;
+}
 
-    #message-input {
-        flex-grow: 1;
-        padding: 10px;
-        border: 2px solid #ddd;
-        border-radius: 4px;
-        margin-right: 10px;
-    }
+.remove-chat-button:focus {
+    outline: none;
+}
 
-    #send-message-button {
-        padding: 10px 20px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
+.chat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* This ensures vertical centering of children */
+    padding: 10px;
+    background-color: #f8f8f8;
+}
 
-    #send-message-button:hover {
-        background-color: #45a049;
-    }
+#chats li:nth-child(2n) {
+    background-color: rgb(130, 130, 130);
+}
 
-    #sign-out-button {
-        padding: 10px 20px;
-        background-color: #ff4444;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-    }
+.chat-item:hover {
+    background-color: #eee;
+}
 
-    #sign-out-button:hover {
-        background-color: #cc0000;
-    }
+.chat-name {
+    flex-grow: 1; /* Allow chat name to take up remaining space */
+    margin-right: 10px; /* Add some space between chat name and remove button */
+}
+.owner-badge {
+    background-color: rgb(255, 200, 0);
+    color: rgb(0, 0, 0);
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-right: 5px;
+    font-size: 12px;
+}
 
-    .auth-button {
-                padding: 10px 15px;
-                background-color: #007bff;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                font-size: 16px;
-                margin: 5px;
-            }
+.trex-badge {
+    background-color: rgb(9, 255, 0);
+    color: rgb(0, 0, 0);
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-right: 5px;
+    font-size: 12px;
+}
 
-            .auth-button:hover {
-                background-color: #0056b3;
-            }
+.dev-badge {
+    background-color: rgb(73, 227, 100);
+    color: rgb(0, 0, 0);
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-right: 5px;
+    font-size: 12px;
+}
 
-            .remove-chat-button {
-        padding: 6px 8px !important;
-        font-size: 10px !important;
-        background-color: #ff4444 !important;
-        color: white !important;
-        border: none !important;
-        border-radius: 4px !important;
-        cursor: pointer !important;
-        margin-left: 5px !important;
-        line-height: normal !important;
-        float: right !important;
-    }
+.sigma-badge {
+    background-color: rgb(255, 2, 175);
+    color: rgb(0, 0, 0);
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-right: 5px;
+    font-size: 12px;
+}
 
-    .remove-chat-button:hover {
-        background-color: #cc0000 !important;
-    }
+.new-message-indicator {
+    height: 10px;
+    width: 10px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 7px;
+}
 
-    .chat-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center; /* This ensures vertical centering of children */
-        padding: 10px;
-        border-bottom: 1px solid #ddd;
-        background-color: #f8f8f8;
-    }
+.timestamp {
+    font-size: 0.8em; /* Smaller font size */
+    color: rgb(73, 73, 73); /* Light grey color */
+    margin-top: 8px; /* Double spacing from the message */
+    display: block;
+}
+#rickrollVideoContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000; /* Ensure it's above everything */
+}
 
-    .chat-item:hover {
-        background-color: #eee;
-    }
+#rickrollVideo {
+    width: 100%; /* Adjust if needed */
+    max-width: 640px;
+    height: 100%;
+}
+/* START ---------------------------------------------------------------------------------------- */
+#chat-list {
+    background-color: gray;
+    box-sizing: border-box;
+    overflow-y: auto;
+    margin: 11px;
+    margin-top: 0;
+    border-radius: 5px;
+    min-height: calc(100% - 154px);
+    max-height: calc(100% - 154px);
+    position: relative;
+}
 
-    .chat-name {
-        flex-grow: 1; /* Allow chat name to take up remaining space */
-        margin-right: 10px; /* Add some space between chat name and remove button */
-    }
-    #login-status{
-        color: #2a2a2a;
-    }
-    .owner-badge {
-        background-color: rgb(255, 200, 0);
-        color: rgb(0, 0, 0);
-        border-radius: 4px;
-        padding: 2px 6px;
-        margin-right: 5px;
-        font-size: 12px;
-    }
+#chat-list::-webkit-scrollbar {
+    display: none;
+}
 
-    .trex-badge {
-        background-color: rgb(9, 255, 0);
-        color: rgb(0, 0, 0);
-        border-radius: 4px;
-        padding: 2px 6px;
-        margin-right: 5px;
-        font-size: 12px;
-    }
+#new-chat-button {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px 4px 0 0;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 0 10px black;
+    transition-duration: 0.3s;
+    position: sticky;
+    top: 0; /* Keep the new chat button at the top of the scroll container */
+}
 
-    .dev-badge {
-        background-color: rgb(9, 255, 0);
-        color: rgb(0, 0, 0);
-        border-radius: 4px;
-        padding: 2px 6px;
-        margin-right: 5px;
-        font-size: 12px;
-    }
+#new-chat-button:focus {
+    outline: none;
+}
 
-    .sigma-badge {
-        background-color: rgb(255, 2, 175);
-        color: rgb(0, 0, 0);
-        border-radius: 4px;
-        padding: 2px 6px;
-        margin-right: 5px;
-        font-size: 12px;
-    }
+#new-chat-button:active {
+    transform: scale(1); /* Remove the shrink on click */
+    background-color: rgb(32, 74, 34);
+}
 
-    .new-message-indicator {
-        height: 10px;
-        width: 10px;
-        background-color: red;
-        border-radius: 50%;
-        display: inline-block;
-        margin-left: 5px;
-    }
+#new-chat-button:hover {
+    background-color: #45a049;
+}
 
-    .timestamp {
-        font-size: 0.8em; /* Smaller font size */
-        color: rgb(73, 73, 73); /* Light grey color */
-        margin-top: 8px; /* Double spacing from the message */
-        display: block; /* Ensures it appears on a new line */
-    }
-    #rickrollVideoContainer {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: rgba(0, 0, 0, 0.8);
-        z-index: 1000; /* Ensure it's above everything */
-    }
+#chat-list ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
 
-    #rickrollVideo {
-        width: 100%; /* Adjust if needed */
-        max-width: 640px;
-        height: 100%;
-    }
+#chat-list li {
+    cursor: pointer;
+    padding: 10px;
+    margin-bottom: -1px;
+    background-color: #7b7b7b;
+    transition-duration: 0.3s;
+    height: 20px;
+}
 
-    #settings-button {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        padding: 10px 15px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-    }
+#chat-list li:hover {
+    background-color: #636262;
+}
 
-    #settings-button:hover {
-        background-color: #0056b3;
-    }
+#chat-list li:hover .remove-chat-button {
+    display: inline-block;
+}
+
+#login-status{
+    color: white;
+    text-align: center;
+    background-color: rgb(70, 70, 70);
+    padding: 10px;
+    margin: 11px;
+    border-radius: 5px;
+    overflow: auto;
+    max-height: 20px;
+    margin-bottom: 0;
+}
+
+#sign-out-button {
+    background-color: rgb(255, 50, 50);
+}
+
+#sign-out-button:hover {
+    background-color: #cc0000;
+}
+
+.auth-button {
+    background-color: rgb(80, 80, 255);
+}
+
+.auth-button:hover {
+    background-color: rgb(60, 60, 255);
+}
+
+#settings-button {
+    background-color: rgb(80, 80, 255);
+}
+
+#settings-button:hover {
+    background-color: #0056b3;
+    background-color: rgb(60, 60, 255);
+}
+
+.button-grid > button {
+    color: white;
+    padding: 7px;
+    border-radius: 5px;
+    border: none;
+    transition-duration: 0.3s;
+}
+
+.button-grid {
+    display: grid;
+    grid-template: repeat(2, 1fr) / repeat(2, 1fr);
+    gap: 7px;
+    padding: 11px;
+}
+
+.side-bar {
+    z-index: 3;
+    position: absolute;
+    background-color: rgba(43, 43, 43);
+    left: -320px;
+    width: 330px;
+    height: 100vh;
+    top: 0;
+    animation-fill-mode: forwards;
+}
+
+.side-bar--tab {
+    z-index: 1;
+    background-color: rgba(43, 43, 43);
+    color: white;
+    position: absolute;
+    right: -24px;
+    top: 5px;
+    font-family: "Manrope";
+    font-weight: 600;
+    font-size: 30px;
+    border-radius: 10px;
+    padding: 0px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.arrow {
+    font-family: "Manrope";
+    font-weight: 600;
+    font-size: 1.875rem;
+    margin: 0;
+    margin-bottom: 3px;
+    transition-duration: 2s;
+    color: gray;
+}
+
+@keyframes slideRight {
+    from {left: -320px;}
+    to {left: 0px;}
+}
+
+
+@keyframes slideLeft {
+    from {left: 0px;}
+    to {left: -320px;}
+}
+
+@keyframes squish {
+    from { width: calc(100% - 10px); }
+    to { width: calc(100% - 330px); }
+}
+
+@keyframes unsquish {
+    from { width: calc(100% - 330px); }
+    to { width: calc(100% - 10px); }
+}
+
+@keyframes buttonSlide {
+    from { width: 10px; opacity: 0; }
+    to { width: 60px; opacity: 1; }
+}
+/* END ------------------------------------------------------------------------------------------ */
   </style>
   <head>
     <meta charset="UTF-8" />
