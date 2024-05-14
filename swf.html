@@ -232,5 +232,18 @@
     // JavaScript code here
 });
 </script>
+<script>
+    window.onload = function() {
+        var titleElement = document.getElementById('gameTitle');
+        var title = titleElement.textContent;
+        
+        fetch('https://script.google.com/macros/s/AKfycbz7G06loiwBVfgkojqX8jTTJzGSRLbHaU2PfJX24wGxt3ym80FsVEPEbC8CV5gluguz/exec?title=' + encodeURIComponent(title), {
+            method: 'GET'
+        })
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.error('Error:', error));
+    };
+</script>
 </body>
 </html>
