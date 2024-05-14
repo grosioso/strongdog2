@@ -3,6 +3,73 @@
      crossorigin="anonymous"></script>
 <html lang="en">
 <head>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function fetchTopGames() {
+                const targetUrl = 'https://script.google.com/macros/s/AKfycbz7G06loiwBVfgkojqX8jTTJzGSRLbHaU2PfJX24wGxt3ym80FsVEPEbC8CV5gluguz/exec?action=getTop10';
+        
+                fetch(targetUrl, {
+                    method: 'GET'
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data && data.content) {
+                        const parsedData = JSON.parse(data.content);
+                        console.log('Parsed data:', parsedData);
+                        displayTopGames(parsedData);
+                    } else {
+                        console.error('Invalid data format', data);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        
+            function displayTopGames(games) {
+                const topGameList = document.getElementById('topGameList');
+                const allGameList = document.getElementById('allGameList');
+                if (!topGameList || !allGameList) {
+                    console.error('Required elements not found.');
+                    return;
+                }
+                topGameList.innerHTML = '';
+        
+                games.slice(1).forEach(game => { // Skip the first entry as it is the header
+                    const gameName = game[0].toLowerCase();
+                    const matchingCard = findMatchingCard(gameName, allGameList);
+                    if (matchingCard) {
+                        topGameList.appendChild(matchingCard.cloneNode(true));
+                    }
+                });
+            }
+        
+            function findMatchingCard(gameName, allGameList) {
+                const cards = allGameList.getElementsByClassName('card');
+                for (let card of cards) {
+                    const href = card.getAttribute('href');
+                    const extractedGameName = extractGameNameFromHref(href).toLowerCase();
+                    if (extractedGameName === gameName) {
+                        return card;
+                    }
+                }
+                return null;
+            }
+        
+            function extractGameNameFromHref(href) {
+                const parts = href.split('/');
+                return parts.length > 2 ? parts[2].toLowerCase() : '';
+            }
+        
+            // Immediately invoked function to run fetchTopGames as soon as possible
+            (function() {
+                fetchTopGames();
+            })();
+        });
+                </script>
 <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
@@ -812,69 +879,5 @@ h2 {
 }); 
 
 </script>
-<script>
-	document.addEventListener('DOMContentLoaded', function() {
-		function fetchTopGames() {
-			const targetUrl = 'https://script.google.com/macros/s/AKfycbz7G06loiwBVfgkojqX8jTTJzGSRLbHaU2PfJX24wGxt3ym80FsVEPEbC8CV5gluguz/exec?action=getTop10';
-	
-			fetch(targetUrl, {
-				method: 'GET'
-			})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error('Network response was not ok ' + response.statusText);
-				}
-				return response.json();
-			})
-			.then(data => {
-				if (data && data.content) {
-					const parsedData = JSON.parse(data.content);
-					console.log('Parsed data:', parsedData);
-					displayTopGames(parsedData);
-				} else {
-					console.error('Invalid data format', data);
-				}
-			})
-			.catch(error => console.error('Error:', error));
-		}
-	
-		function displayTopGames(games) {
-			const topGameList = document.getElementById('topGameList');
-			const allGameList = document.getElementById('allGameList');
-			if (!topGameList || !allGameList) {
-				console.error('Required elements not found.');
-				return;
-			}
-			topGameList.innerHTML = '';
-	
-			games.slice(1).forEach(game => { // Skip the first entry as it is the header
-				const gameName = game[0].toLowerCase();
-				const matchingCard = findMatchingCard(gameName, allGameList);
-				if (matchingCard) {
-					topGameList.appendChild(matchingCard.cloneNode(true));
-				}
-			});
-		}
-	
-		function findMatchingCard(gameName, allGameList) {
-			const cards = allGameList.getElementsByClassName('card');
-			for (let card of cards) {
-				const href = card.getAttribute('href');
-				const extractedGameName = extractGameNameFromHref(href).toLowerCase();
-				if (extractedGameName === gameName) {
-					return card;
-				}
-			}
-			return null;
-		}
-	
-		function extractGameNameFromHref(href) {
-			const parts = href.split('/');
-			return parts.length > 2 ? parts[2].toLowerCase() : '';
-		}
-	
-		fetchTopGames();
-	});
-	</script>
 </html>
  
