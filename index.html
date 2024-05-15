@@ -3,92 +3,92 @@
      crossorigin="anonymous"></script>
 <html lang="en">
 <head>
-
-                	<script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            const topGameList = document.getElementById('topGameList');
-                            const loadingIcon = document.createElement('div');
-                            loadingIcon.id = 'loadingIcon';
-                            loadingIcon.innerHTML = `
-                                <div class="spinner">
-                                    <div class="bounce1"></div>
-                                    <div class="bounce2"></div>
-                                    <div class="bounce3"></div>
-                                </div>
-                            `;
-                            topGameList.appendChild(loadingIcon);
-                        
-                            function fetchTopGames() {
-                                const targetUrl = 'https://script.google.com/macros/s/AKfycbz7G06loiwBVfgkojqX8jTTJzGSRLbHaU2PfJX24wGxt3ym80FsVEPEbC8CV5gluguz/exec?action=getTop10';
-                        
-                                fetch(targetUrl, {
-                                    method: 'GET'
-                                })
-                                .then(response => {
-                                    if (!response.ok) {
-                                        throw new Error('Network response was not ok ' + response.statusText);
-                                    }
-                                    return response.json();
-                                })
-                                .then(data => {
-                                    if (data && data.content) {
-                                        const parsedData = JSON.parse(data.content);
-                                        console.log('Parsed data:', parsedData);
-                                        displayTopGames(parsedData);
-                                    } else {
-                                        console.error('Invalid data format', data);
-                                    }
-                                })
-                                .catch(error => console.error('Error:', error))
-                                .finally(() => {
-                                    loadingIcon.style.display = 'none';
-                                });
-                            }
-                        
-                            function displayTopGames(games) {
-                                if (!topGameList) {
-                                    console.error('Required element not found.');
-                                    return;
-                                }
-                                topGameList.innerHTML = '';
-                        
-                                games.slice(1).forEach(game => { // Skip the first entry as it is the header
-                                    const gameName = game[0].toLowerCase();
-                                    const matchingCard = findMatchingCard(gameName);
-                                    if (matchingCard) {
-                                        topGameList.appendChild(matchingCard.cloneNode(true));
-                                    }
-                                });
-                            }
-                        
-                            function findMatchingCard(gameName) {
-                                const cards = document.querySelectorAll('#allGameList .card');
-                                for (let card of cards) {
-                                    const href = card.getAttribute('href');
-                                    const extractedGameName = extractGameNameFromHref(href).toLowerCase();
-                                    if (extractedGameName === gameName) {
-                                        return card;
-                                    }
-                                }
-                                return null;
-                            }
-                        
-                            function extractGameNameFromHref(href) {
-                                const parts = href.split('/');
-                                return parts.length > 2 ? parts[2].toLowerCase() : '';
-                            }
-                        
-                            // Immediately invoked function to run fetchTopGames as soon as possible
-                            (function() {
-                                fetchTopGames();
-                            })();
-                        });
-                                </script>
-<link rel="icon" type="image/x-icon" href="/img/favicon.ico">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-<title>StrongDog XP</title>
-<style>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			const topGameList = document.getElementById('topGameList');
+			const loadingContainerEl = document.createElement('div');
+			loadingContainerEl.className = 'loading-container';
+			loadingContainerEl.innerHTML = `
+				<div class="bars">
+					<div class="bar bar-1"></div>
+					<div class="bar bar-2"></div>
+					<div class="bar bar-3"></div>
+					<div class="bar bar-4"></div>
+					<div class="bar bar-5"></div>
+				</div>
+			`;
+			
+			// Append loadingContainerEl to topGameList
+			topGameList.appendChild(loadingContainerEl);
+		
+			function fetchTopGames() {
+				const targetUrl = 'https://script.google.com/macros/s/AKfycbz7G06loiwBVfgkojqX8jTTJzGSRLbHaU2PfJX24wGxt3ym80FsVEPEbC8CV5gluguz/exec?action=getTop10';
+		
+				fetch(targetUrl, {
+					method: 'GET'
+				})
+				.then(response => {
+					if (!response.ok) {
+						throw new Error('Network response was not ok ' + response.statusText);
+					}
+					return response.json();
+				})
+				.then(data => {
+					if (data && data.content) {
+						const parsedData = JSON.parse(data.content);
+						console.log('Parsed data:', parsedData);
+						displayTopGames(parsedData);
+					} else {
+						console.error('Invalid data format', data);
+					}
+				})
+				.catch(error => console.error('Error:', error))
+				.finally(() => {
+					loadingContainerEl.style.display = 'none';
+				});
+			}
+		
+			function displayTopGames(games) {
+				if (!topGameList) {
+					console.error('Required element not found.');
+					return;
+				}
+				topGameList.innerHTML = '';
+		
+				games.slice(1).forEach(game => { // Skip the first entry as it is the header
+					const gameName = game[0].toLowerCase();
+					const matchingCard = findMatchingCard(gameName);
+					if (matchingCard) {
+						topGameList.appendChild(matchingCard.cloneNode(true));
+					}
+				});
+			}
+		
+			function findMatchingCard(gameName) {
+				const cards = document.querySelectorAll('#allGameList .card');
+				for (let card of cards) {
+					const href = card.getAttribute('href');
+					const extractedGameName = extractGameNameFromHref(href).toLowerCase();
+					if (extractedGameName === gameName) {
+						return card;
+					}
+				}
+				return null;
+			}
+		
+			function extractGameNameFromHref(href) {
+				const parts = href.split('/');
+				return parts.length > 2 ? parts[2].toLowerCase() : '';
+			}
+		
+			// Immediately invoked function to run fetchTopGames as soon as possible
+			(function() {
+				loadingContainerEl.style.display = 'flex'; // Show spinner
+				fetchTopGames();
+			})();
+		});
+		</script>	
+        <style>
     body { 
         font-family: Arial, sans-serif;
         margin: 0;
@@ -359,50 +359,55 @@ h2 {
     box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.05);
     margin-bottom: 30px;
 }
-#topGameList {
-    position: relative;
+.loading-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .bars {
+            display: flex;
+            align-items: center;
+        }
+        .bar {
+            background-color: rgba(255, 255, 255, 0.3);
+            width: 20px;
+            height: 40px;
+            margin-right: 5px;
+            border-radius: 10px;
+            animation: load ease infinite 5s;
+        }
+        .bar-2, .bar-4 {
+            height: 50px;
+        }
+        .bar-2 {
+            animation-delay: 0.1s;
+        }
+        .bar-3 {
+            height: 60px;
+            animation-delay: 0.2s;
+        }
+        .bar-4 {
+            animation-delay: 0.3s;
+        }
+        .bar-5 {
+            animation-delay: 0.4s;
+        }
+        @keyframes load {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(720deg) rotateX(180deg);
+            }
+        }
+		#topGameList {
+    position: relative; /* Make sure topGameList is relatively positioned */
 }
-
-.spinner {
-    width: 70px;
-    text-align: center;
-}
-
-.spinner > div {
-    width: 18px;
-    height: 18px;
-    background-color: #969498; /* Change to the color of the strip */
-    border-radius: 100%;
-    display: inline-block;
-    -webkit-animation: bouncedelay 1.4s infinite ease-in-out both;
-    animation: bouncedelay 1.4s infinite ease-in-out both;
-}
-
-.spinner .bounce1 {
-    -webkit-animation-delay: -0.32s;
-    animation-delay: -0.32s;
-}
-
-.spinner .bounce2 {
-    -webkit-animation-delay: -0.16s;
-    animation-delay: -0.16s;
-}
-
-@-webkit-keyframes bouncedelay {
-    0%, 80%, 100% { -webkit-transform: scale(0) }
-    40% { -webkit-transform: scale(1.0) }
-}
-
-@keyframes bouncedelay {
-    0%, 80%, 100% { 
-        transform: scale(0);
-        -webkit-transform: scale(0);
-    } 40% { 
-        transform: scale(1.0);
-        -webkit-transform: scale(1.0);
-    }
-}
-
 </style>
 </head>
 <body>
