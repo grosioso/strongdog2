@@ -105,12 +105,12 @@
     }
 
 	.categories {
-    display: flex;
-    gap: 20px; /* Spacing between categories */
-}
+		display: flex;
+		gap: 20px; /* Spacing between categories */
+	}
 
 .categories a:hover {
-    background-color: #565656; /* Light grey background on hover */
+    background-color: #565656; /* Light gray background on hover */
     transform: scale(1.05); /* Slight increase in size */
 }
 
@@ -256,43 +256,56 @@
 }
 
 .news-container {
-    padding: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #444; /* Slightly darker background */
-    color: white;
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 8px 10px rgba(0,0,0,0.3); /* Subtle shadow */
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #444444; /* Light grey background */
+    border-radius: 8px;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
+
 .news {
-    display: grid;
-    grid-template: repeat(4, 1fr) / 2fr 3fr;
-    gap: 4px;
+    color: #ffffff; /* Dark text for readability */
 }
 
-.news > div {
-    border: 1px solid white;
-    border-radius: 5px;
-    padding: 7px 15px;
-    background-color: rgba(255, 255, 255, 0.07); /* Slightly lighter */
+.credits-title {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #ffffff; /* Darker title color */
+    border-bottom: 2px solid #ddd; /* Subtle bottom border */
+    padding-bottom: 5px;
 }
 
-
-.credits--right {
-    transition: all 0.3s ease;
+.credits-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
 }
 
-.credits--a {
-    color: #b482ff;
+.credits-role {
+    font-weight: bold;
+    color: #ffffff; /* Slightly lighter for role text */
 }
 
-.credits--title {
-    grid-column: 1 / -1;
-    text-align: center;
+.credits-names {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center; /* Center-aligns items vertically */
+}
+
+.credits-link {
+    color: #0073e6; /* Blue link color */
+    text-decoration: none;
+    font-weight: bold; /* Bold links for emphasis */
+}
+
+.credits-link:hover {
+    text-decoration: underline;
+}
+
+.credits-names span {
+    color: #c4c4c4; /* Slightly lighter for plain text */
 }
 
 /* Styling for the All  label */
@@ -309,25 +322,30 @@ h2 {
     left: 0;
     width: 100%;
     background-color: rgba(95,95,95,0.8);
-    color: white;
-    text-align: center;
-    padding: 5px;
+    color: black;
+    padding: 5px 0;
     transition: transform 0.3s ease, opacity 0.3s ease;
     transform: translateY(100%); /* Start off-screen */
     opacity: 0;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    text-shadow: 0 0 2px white;
+    font-weight: 550;
+    border-radius: 10px;
 }
 
 .card:hover figcaption {
     height: 30px; /* Show text on hover */
-    background-color: rgb(95, 95, 95); /* Non-transparent background on hover */
+    background-color: rgba(95, 95, 95, 0.8); /* Non-transparent background on hover */
 	transform: translateY(0); /* Slide up to visible */
     opacity: 1;
 }
 
+
 .pagination {
     text-align: center;
     margin: 20px 0;
-    background-color: #2e2e2e; /* Dark grey background, same as body */
 }
 
 .pagination a {
@@ -335,32 +353,38 @@ h2 {
     padding: 8px 16px;
     text-decoration: none;
     transition: background-color .3s;
-    border: 1px solid #444; /* Slightly lighter border for visibility */
+    border: 1px solid #444;
     margin: 0 4px;
+    border-radius: 4px;
+    background-color: #333;
 }
- 
+
 .pagination a.active {
-    background-color: #444; /* Slightly darker for the active link */
-    border: 1px solid #666;
+    background-color: #555;
+    border-color: #777;
 }
 
 .pagination a:hover:not(.active) {
-    background-color: #444; /* On hover */
+    background-color: #444;
 }
 
 .updates-paragraph-text {
     color: white;
-    text-align: center;
     background-color: #a83632;
     padding: 15px 10px;
-    margin-left: 200px;
-    margin-right: 200px;
     border-radius: 10px;
     box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.05);
     margin-bottom: 30px;
 }
+.updates-text-container {
+	margin-left: 30%;
+    margin-right: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .loading-container {
-            position: absolute;
+		position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -841,29 +865,38 @@ h2 {
 	<figcaption style="color:black">Resent client (mc)</figcaption>
 </a>
 </div>
+<h2 style="text-align: center;"><strong>StrongDogXP LLC</strong></h2>
+
 <div class="news-container">
     <div class="news">
-        <div class="credits--title">Executives</div>
-        
-        <div>CEO</div>
-        <div class="credits--right">
-            <a href="https://github.com/jman1593"
-               target="_blank"
-               class="credits--a">Joshua Pettit</a>
+        <div class="credits-item">
+            <div class="credits-role">CEO</div>
+            <div class="credits-names">
+                <a href="https://github.com/jman1593" target="_blank" class="credits-link">Joshua Pettit</a>
+            </div>
         </div>
-        
-        <div>Developers</div>
-        <div class="credits--right">
-            <a href="https://github.com/jman1593" 
-               target="_blank" 
-               class="credits--a">Joshua Pettit</a>   |   
-            <a href="https://github.com/JamesMeadows4"
-               target="_blank"
-               class="credits--a">James Meadows</a>
+        <div class="credits-item">
+            <div class="credits-role">Developers</div>
+            <div class="credits-names">
+                <a href="https://github.com/jman1593" target="_blank" class="credits-link">Joshua Pettit</a>
+                <span>|</span>
+                <a href="https://github.com/JamesMeadows4" target="_blank" class="credits-link">James Meadows</a>
+            </div>
         </div>
-        
-        <div>Canvas designer</div>
-        <div class="credits--right">Noah Ross</div>
+        <div class="credits-item">
+            <div class="credits-role">Game Downloaders</div>
+            <div class="credits-names">
+                <a href="https://github.com/jman1593" target="_blank" class="credits-link">Joshua Pettit</a>
+                <span>|</span>
+                <span>Maxwell Stevenson</span>
+            </div>
+        </div>
+        <div class="credits-item">
+            <div class="credits-role">Canvas Designer</div>
+            <div class="credits-names">
+                <span>Noah Ross</span>
+            </div>
+        </div>
     </div>
 </div>
 <script>
