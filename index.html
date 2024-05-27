@@ -307,6 +307,19 @@
 .credits-names span {
     color: #c4c4c4; /* Slightly lighter for plain text */
 }
+/* Additional CSS for better spacing and style */
+.credits-item:last-child .credits-names {
+    gap: 16px;
+}
+
+.credits-item:last-child .credits-link {
+    color: #00b3b3; /* Different link color for Other Links */
+}
+
+.credits-item:last-child .credits-link:hover {
+    text-decoration: underline;
+    color: #00cccc; /* Hover color for Other Links */
+}
 
 /* Styling for the All  label */
 h2 {
@@ -866,7 +879,6 @@ h2 {
 </a>
 </div>
 <h2 style="text-align: center;"><strong>StrongDogXP LLC</strong></h2>
-
 <div class="news-container">
     <div class="news">
         <div class="credits-item">
@@ -888,13 +900,25 @@ h2 {
             <div class="credits-names">
                 <a href="https://github.com/jman1593" target="_blank" class="credits-link">Joshua Pettit</a>
                 <span>|</span>
-                <a href="https://maxwellstevenson.com" target="_blank" class="credits-link">Maxwell stevenson</a>
+                <a href="https://maxwellstevenson.com" target="_blank" class="credits-link">Maxwell Stevenson</a>
             </div>
         </div>
         <div class="credits-item">
             <div class="credits-role">Canvas Designer</div>
             <div class="credits-names">
                 <span>Noah Ross</span>
+            </div>
+        </div>
+        <div class="credits-item">
+            <div class="credits-role">Other Links</div>
+            <div class="credits-names">
+                <a href="https://jman1593.github.io" target="_blank" class="credits-link">jman1593.github.io</a>
+                <span>|</span>
+                <a href="https://strongdog.netlify.app" target="_blank" class="credits-link">strongdog.netlify.app</a>
+                <span>|</span>
+                <a href="https://strongdog-1.vercel.app" target="_blank" class="credits-link">strongdog-1.vercel.app</a>
+				<span>|</span>
+                <a href="https://strongdogmath.com" target="_blank" class="credits-link">strongdogmath.com</a>
             </div>
         </div>
     </div>
