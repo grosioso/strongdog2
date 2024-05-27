@@ -938,5 +938,24 @@ h2 {
 }); 
 
 </script>
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		const page1Link = document.getElementById('page1-link');
+		const page2Link = document.getElementById('page2-link');
+
+		const hostname = window.location.hostname;
+
+		if (hostname.includes('github.io')) {
+			page1Link.href = "/#";
+			page2Link.href = "/strongdog2/index.html";
+		} else if (hostname.includes('vercel.app')) {
+			page1Link.href = "https://strongdog-1.vercel.app";
+			page2Link.href = "https://strongdog2.vercel.app";
+		} else if (hostname.includes('netlify.app')) {
+			page1Link.href = "https://strongdog.netlify.app";
+			page2Link.href = "https://strongdog2.netlify.app";
+		}
+	});
+</script>
 </html>
  
