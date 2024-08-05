@@ -1,0 +1,954 @@
+
+
+<head>
+    <title>Your Website Title</title>
+    <script>
+        window.addEventListener('load', function() {
+            // Create intro container
+            var introDiv = document.createElement('div');
+            introDiv.id = 'intro';
+
+            // Create and add STRONGDOG text
+            var strongDogDiv = document.createElement('div');
+            strongDogDiv.id = 'strongdog';
+            strongDogDiv.innerText = 'STRONGDOG';
+            strongDogDiv.style.opacity = '0'; // Start invisible
+            introDiv.appendChild(strongDogDiv);
+
+            // Create and add XP text
+            var xpDiv = document.createElement('div');
+            xpDiv.id = 'xp';
+            xpDiv.innerText = 'XP';
+            xpDiv.style.opacity = '0'; // Start invisible
+            introDiv.appendChild(xpDiv);
+
+            // Create and add image
+            var uploadedImage = document.createElement('img');
+            uploadedImage.id = 'uploadedImage';
+            uploadedImage.src = '../../../strongdog.webp'; // Path to your image
+            uploadedImage.style.display = 'none';
+            introDiv.appendChild(uploadedImage);
+
+            // Append intro to body
+            document.body.insertBefore(introDiv, document.body.firstChild);
+
+            // Add styles
+            var css = `
+                #intro {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(33, 33, 33, 1);
+                    z-index: 1000;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    transition: transform 0.5s ease-in-out;
+                }
+
+                #strongdog, #xp {
+                    font-size: 3em;
+                    font-weight: bold;
+                    opacity: 0;
+                    animation: fadeInSlam 1s ease forwards;
+                }
+
+                #strongdog {
+                    color: white;
+                }
+
+                #xp {
+                    color: orange;
+                    animation-delay: 0.5s; 
+                }
+
+                @keyframes fadeInSlam {
+                    0% { transform: scale(0); opacity: 0; }
+                    50% { transform: scale(1.2); opacity: 1; }
+                    100% { transform: scale(1); opacity: 1; }
+                }
+
+                @keyframes riseUp {
+                    0% { transform: translateY(0); }
+                    100% { transform: translateY(-100px); }
+                }
+
+                #uploadedImage {
+                    width: 100%;
+                    max-width: 600px;
+                    opacity: 0;
+                    transform: scale(0);
+                    animation: growAndSettle 1s ease forwards;
+                }
+
+                @keyframes growAndSettle {
+                    0% { transform: scale(0); opacity: 0; }
+                    50% { transform: scale(1.1); opacity: 1; }
+                    75% { transform: scale(0.9); }
+                    100% { transform: scale(1); }
+                }
+            `;
+            var styleSheet = document.createElement('style');
+            styleSheet.type = 'text/css';
+            styleSheet.innerText = css;
+            document.head.appendChild(styleSheet);
+
+            // Trigger image fade-in and text fade-out
+            setTimeout(() => {
+                uploadedImage.style.display = 'block';
+                uploadedImage.style.opacity = 1;
+                strongDogDiv.style.opacity = 0;
+                xpDiv.style.opacity = 0;
+            }, 1500);
+
+            // Slide up and remove intro
+            setTimeout(() => {
+                introDiv.style.transform = 'translateY(-100%)';
+                setTimeout(() => { introDiv.remove(); }, 500);
+            }, 3200);
+        });
+    </script>
+</head>
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Evolutionary Psychology</title>
+<style>
+.unselectable{
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+}
+.body{
+  cursor: none;
+
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  border: 0px;
+  overflow: hidden;
+  background-color: #000;
+
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+}
+.mouseImg{
+  pointer-events: none;
+  position: absolute;
+  transform: scale(1.2);
+  filter: blur(0.4px);
+  opacity: 0.9;
+}
+.L{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 400px;
+    height: 100%;
+}
+.resourcesDiv{
+  position: absolute;
+  top: 62px;
+  left: 60px;
+  color: #fff;
+  transform: skewY(-3deg);
+  text-shadow: 1px 1px #000000;
+}
+.resourcesDiv2{
+  position: absolute;
+  top: 10px;
+  left: 21px;
+  color: #fff;
+}
+
+.stoneDivParent{
+  position: relative;
+  left: 5px;
+}
+.stoneTitle{
+  font-family: monospace;
+  font-weight: 600;
+  font-size: 11px;
+}
+.stoneNumberDiv{
+  padding-left: 3px;
+  font-family: monospace;
+  font-size: 13px;
+}
+
+.foodDivParent{
+  position: relative;
+  margin: 6px 0px;
+}
+.foodTitle{
+  font-family: monospace;
+  font-weight: 600;
+  font-size: 11px;
+}
+.foodNumberDivParent{
+  width: 100px;
+  position: absolute;
+  top: -3px;
+  left: 47px;
+  border: 2px dashed #ffffff94;
+  padding: 2px;
+}
+.foodNumberDiv{
+  height: 10px;
+  background-color: #ffffff;
+  box-shadow: 1px 1px 0px 0px #797979;
+}
+.foodRealNumberDiv{
+  position: absolute;
+  top: 1px;
+  left: 2px;
+  width: 100px;
+  text-align: center;
+  text-shadow: 1px 1px 0px #fff;
+  font-family: monospace;
+  font-size: 10px;
+  color: #000;
+}
+.gemsDivParent{
+  font-family: monospace;
+  font-weight: 600;
+  font-size: 11px;
+  position: relative;
+  left: -9px;
+  margin: 6px 0px;
+  text-align: right;
+  width: 50px;
+  height: 13px;
+}
+.gemsDiv{
+  position: relative;
+  top: -13px;
+  left: 57px;
+  width: 100px;
+  text-align: left;
+}
+.berryDivParent{
+  font-family: monospace;
+  font-weight: 600;
+  font-size: 11px;
+  position: relative;
+  left: -6px;
+  height: 12px;
+  margin: 6px 0px;
+}
+.berryDiv{
+  position: relative;
+  top: -14px;
+  left: 51px;
+}
+
+
+.tempGif{
+  position: absolute;
+  z-index: -2;
+  transform: rotate(90deg);
+  left: 126px;
+  top: -69px;
+  display: none;
+}
+
+.videoClassParent{
+  position: absolute;
+  top: 270px;
+  left: 297px;
+  display: none;
+  pointer-events: none;
+
+  transition: scale();
+  filter:blur();
+  opacity: 0px;
+  display: none;
+}
+.videoClass{
+  left: 91px;
+  top: 143px;
+}
+.videoClassBorder{
+  width: 645px;
+  height: 366px;
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  box-shadow: inset 0px 0px 20px 15px #000;
+  display: none;
+}
+.toptoptop{
+  position:absolute;
+  top:0px;
+  left:0px;
+}
+.mensajesDiv{
+  position: absolute;
+  background-color: #d3a160;
+  width: 200px;
+  padding: 20px;
+  text-align: center;
+  border: 3px solid #895840;
+  border-radius: 5px;
+  display: none;
+  box-shadow: rgb(97, 50, 10) -4px -3px 0px;
+}
+.mensajesDiv2{
+  position: absolute;
+  box-shadow: rgb(97, 50, 10) -4px -3px 1px;
+  background-color: #6f401d;
+}
+.mensajeText{
+  font-size: 15px;
+  font-family: monospace;
+  margin-bottom: 17px;
+}
+.mensajeButt{
+  padding: 10px 30px;
+  background-color: #eac581;
+  border-color: #7d440f;
+  margin: 1px;
+  font-family: fantasy;
+  font-weight: 600;
+  font-size: 18px;
+  color: #2a1e1e;
+  cursor: none;
+}
+.mensajeButt:hover {
+    background-color: #bc5f42;
+    color: #000000;
+    border-color: #b73131;
+}
+.wolfDiv{
+  position: absolute;
+  top: 57px;
+  left: 342px;
+  color: #e83232;
+  font-family: sans-serif;
+  text-shadow: 1px 1px 0px #4a4a4a;
+}
+.tetrisStoneDiv{
+  display: none;
+  position: absolute;
+  top: 45px;
+  left: 356px;
+  padding-left: 3px;
+  font-family: monospace;
+  font-size: 30px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 1px 1px 3px #000;
+  filter: blur(0.6px);
+  transform: skewY(0.5deg);
+  z-index: 1;
+}
+.tetrisStoneDiv2A{
+  color:#fff;
+}
+.tetrisStoneDiv2B{
+  color:red;
+}
+.greenAttac{
+  color:#009400;
+}
+.redAttac{
+  color:#f10000;
+}
+
+.corazonDiv{
+  display: none;
+  margin: 13px;
+}
+.corazonImgParent{
+  display: inline-block;
+}
+.corazonImg{
+  float:left;
+}
+.corazonBarra{
+  position: absolute;
+  background-color: red;
+  height: 12px;
+  width: 130px;
+  z-index: -1;
+}
+.corazonPMDiv{
+  float: left;
+  font-size: 14px;
+  font-weight: 900;
+  font-family: fantasy;
+  position: relative;
+  top: -2px;
+  left: 4px;
+  color: #00ff21;
+  text-shadow: 1px 1px 0px #000;
+}
+
+
+
+.tutorialDiv{
+  position: absolute;
+  top: 362px;
+  left: 245px;
+  transform: scale(.9);
+}
+.keys{
+  border: 1px solid #000;
+  width: 25px;
+  height: 25px;
+  background-color: #fff;
+  font-size: 25px;
+  border-radius: 5px;
+  padding: 6px;
+  font-family: sans-serif;
+}
+.tutorialDiv1{
+  position: absolute;
+  top: 0px;
+  left: 41px;
+}
+.tutorialDiv2{
+  position: absolute;
+  top: 41px;
+  left: 0px;
+}
+.tutorialDiv3{
+  position: absolute;
+  top: 41px;
+  left: 41px;
+}
+.tutorialDiv4{
+  position: absolute;
+  top: 41px;
+  left: 82px;
+}
+.tutorialDivMouse{
+  border: 1px solid #000;
+  width: 43px;
+  height: 65px;
+  background-color: #fff;
+  font-size: 25px;
+  border-radius: 5px;
+  padding: 6px;
+  font-family: sans-serif;
+  position: absolute;
+  top: -4px;
+  left: 245px;
+}
+.tutorialDivMouseButt{
+  border: 1px solid #000;
+  width: 13px;
+  height: 23px;
+  background-color: #6f6f6f;
+  font-size: 25px;
+  border-radius: 5px;
+  padding: 6px;
+  font-family: sans-serif;
+  position: absolute;
+  top: -4px;
+  left: 245px;
+}
+.tutorialDivText1{
+  text-align: center;
+  width: 200px;
+  font-size: 25px;
+  border-radius: 5px;
+  padding: 6px;
+  font-family: sans-serif;
+  position: absolute;
+  top: 90px;
+  left: -47px;
+  color: #fff;
+  text-shadow: 1px 1px #000;
+}
+.tutorialDivText2{
+  text-align: center;
+  width: 130px;
+  font-size: 25px;
+  border-radius: 5px;
+  padding: 6px;
+  font-family: initial;
+  position: absolute;
+  top: 79px;
+  left: 202px;
+  color: #ffffff;
+  text-shadow: 1px 1px #000;
+}
+.tutorialDivText3{
+  width: 202px;
+  font-size: 25px;
+  border-radius: 5px;
+  padding: 6px;
+  font-family: initial;
+  position: absolute;
+  top: 156px;
+  left: 65px;
+  color: #ffffff;
+  text-shadow: 1px 1px #000;
+}
+
+
+.tutorialDivCave{
+  position: absolute;
+  top: 193px;
+  left: 156px;
+  transform: scale(.9);
+  display: none;
+}
+.tutorialDivCaveText{
+  text-align: center;
+  width: 200px;
+  font-size: 25px;
+  border-radius: 5px;
+  padding: 6px;
+  font-family: initial;
+  position: absolute;
+  top: 78px;
+  left: 165px;
+  color: #ffffff;
+  text-shadow: 1px 1px #000;
+}
+
+
+.dayCircleDiv{
+  position: absolute;
+  top: 55px;
+  left: 676px;
+  height: 25px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  border-bottom: 1px solid #000;
+  transform: skewY(3deg);
+}
+.dayCircleArrow{
+  position: absolute;
+  top: 11px;
+  left: 21px;
+  color: white;
+}
+.dayNDiv{
+  position: absolute;
+  top: 83px;
+  left: 674px;
+  color: #fff;
+  text-shadow: 1px 1px #000;
+  font-family: sans-serif;
+  font-size: 14px;
+  transform: skewY(3deg);
+  width: 53px;
+}
+
+.winDiv{
+  display: none;
+  position: absolute;
+  top: 440px;
+  left: 202px;
+  color: #fff;
+  transform: scale(.9);
+}
+.winDiv1{
+  font-size: 46px;
+  font-family: initial;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px #000;
+}
+.winDiv2{
+  position: relative;
+  top: 8px;
+  color: #fffae7;
+  text-shadow: 1px 1px #000;
+  font-size: 12px;
+  font-weight: 900;
+  font-family: initial;
+}
+.optionsDiv{
+  position: absolute;
+  top: 100px;
+  left: 221px;
+  background-color: #d3a160;
+  width: 310px;
+  padding: 34px 25px;
+  text-align: center;
+  border: 3px solid #895840;
+  border-radius: 5px;
+   display: none;
+  box-shadow: rgb(97, 50, 10) -4px -3px 0px;
+}
+.optionsX{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 5px;
+  color: #ffffff6b;
+  font-size: 14px;
+}
+.twitter-follow-button:hover{
+  color:#ffffff;
+}
+.gearImg{
+  position: absolute;
+  top: 528px;
+  left: 708px;
+  width: 20px;
+  transform: skewY(-4deg);
+  opacity: 0.5;
+}
+.gearImg:hover{
+  opacity: 1;
+}
+.loadingDiv{
+  position: absolute;
+  z-index: 10000;
+  width: 800px;
+  height: 600px;
+  text-align: center;
+  background-color: black;
+  color: #fff;
+  padding: 217px 0px;
+}
+.followMeSmall{
+  font-size: 11px;
+  position: absolute;
+  top: 586px;
+  left: 619px;
+  z-index: 10000;
+  text-align: center;
+  color: #000000;
+  text-decoration: none;
+  transform: skewX(33deg);
+  text-shadow: 1px 1px #ffffff26;
+  display: none;
+}
+.followMeSmall:hover{
+  color: #ffffff;
+}
+
+.followMeMain{
+  filter: blur(0.5px);
+  transform: scale(.9);
+  font-size: 13px;
+  font-family: monospace;
+  position: absolute;
+  top: 537px;
+  left: 50px;
+  text-align: center;
+  width: 690px;
+  color: #000000;
+  text-decoration: none;
+  text-shadow: 1px 1px 1px #ffffff;
+}
+.followMeMain:hover{
+  color: #5d0000;
+}
+.followMeLink{
+  cursor: none;
+  color: #5800ff;
+}
+.followMeLink:hover{
+ color: #6f23ff;
+}
+
+.monopoliDiv{
+  display: none;
+  position: absolute;
+  top: 303px;
+  left: 538px;
+  color: #fff;
+  font-size: 17px;
+  font-family: monospace;
+  transform: scale(.85);
+  filter: blur(0.1px);
+  text-shadow: 1px 1px 5px #000;
+}
+.monopoliSubDiv{
+  padding-bottom: 5px;
+}
+.monopoliLevelText{
+
+}
+.monopoli_house{
+  width: 23px;
+  position: relative;
+  top: 3px;
+}
+.monopoliLevelNumberText{
+  position: relative;
+  left: -26px;
+  text-shadow: none;
+}
+.monopoliDefText{
+  margin-left: -9px;
+}
+.monopoliDefText{
+
+}
+.monopoliDef{
+
+}
+
+#armorVideoDiv{
+  position: fixed;
+  z-index: 99999;
+  width: 800px;
+  height: 600px;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+#armorPlayMoreGames{
+  position: fixed;
+  top: 582px;
+  left: 100px;
+  font-size: 14px;
+  transform: skewX(-42deg);
+  z-index: 1;
+  color: #ffffff8f;
+  text-shadow: 3px 1px 0px black;
+}
+#armorLikeUs{
+  position: fixed;
+  top: 582px;
+  left: 624px;
+  font-size: 14px;
+  transform: skewX(42deg);
+  z-index: 1;
+  color: #ffffff8f;
+  text-shadow: 3px 1px 0px black;
+}
+</style>
+</head>
+<body class="unselectable body" style="margin: 0px;">
+
+  <div id="armorVideoDiv">
+    <video id="armorVideo">
+      <source src="http://files.armorgames.com/intro/648x432_v1.m4v" type="video/mp4">
+      <source src="http://files.armorgames.com/intro/648x432_v1.webm" type="video/webm">
+      <source src="http://files.armorgames.com/intro/648x432_v1.ogv" type="video/ogg">
+    </video>
+  </div>
+
+  <a id="armorPlayMoreGames" target="_blank" href="https://armor.ag/MoreGames">Play More Games</a>
+  <a id="armorLikeUs" target="_blank" href="https://www.facebook.com/ArmorGames">Like Us!</a>
+
+
+  <div id="loadingDiv" class="loadingDiv">Loading...</div>
+
+  <canvas width="800" height="600" id="backCanvas" class="toptoptop" style="cursor:none;"></canvas>
+  <div id="resourcesDiv" class="resourcesDiv">
+    <div class="stoneDivParent">
+      <a id="stoneTitle" class="stoneTitle">STONE:</a>
+      <a class="stoneNumberDiv" id="stoneNumberDiv">0</a>
+    </div>
+    <div class="foodDivParent">
+      <a id="foodTitle" class="foodTitle">ENERGY:</a>
+      <div class="foodNumberDivParent">
+        <div class="foodNumberDiv" id="foodNumberDiv"></div>
+        <div id="foodRealNumberDiv" class="foodRealNumberDiv">123</div>
+      </div>
+
+    </div>
+
+    <div id="berryDivParent" class="berryDivParent">
+      <a id="berryTitle">BERRIES:</a>
+      <div id="berryDiv" class="berryDiv"></div>
+    </div>
+    <div id="gemsDivParent" class="gemsDivParent">
+      <a id="gemsTitle">GEMS:</a>
+      <div id="gemsDiv" class="gemsDiv"></div>
+    </div>
+
+
+  </div>
+  <div id="tetrisStoneDiv" align="center" class="tetrisStoneDiv">
+    <a id="stoneTetrisTitle">STONE</a>
+    <a id="tetrisStoneNumberDiv"></a>
+  </div>
+  <div id="monopoliDiv" class="monopoliDiv">
+    <div class="monopoliSubDiv">
+      <a class="monopoliLevelText">Level </a>
+      <img src="img/monopoli_house.gif" class="monopoli_house"></img>
+      <a class="monopoliLevelNumberText">1</a>
+      <a class="monopoliDefText">defense:</a>
+      <a id="monopoliDef1" class="monopoliDef">10</a>
+    </div>
+    <div class="monopoliSubDiv">
+      <a class="monopoliLevelText">Level </a>
+      <img src="img/monopoli_house.gif" class="monopoli_house"></img>
+      <a class="monopoliLevelNumberText">2</a>
+      <a class="monopoliDefText">defense:</a>
+      <a id="monopoliDef2" class="monopoliDef">600</a>
+    </div>
+    <div class="monopoliSubDiv">
+      <a class="monopoliLevelText">Level </a>
+      <img src="img/monopoli_house.gif" class="monopoli_house"></img>
+      <a class="monopoliLevelNumberText">3</a>
+      <a class="monopoliDefText">defense:</a>
+      <a id="monopoliDef3" class="monopoliDef">900</a>
+    </div>
+  </div>
+
+
+  <div id="wolfDiv" class="wolfDiv">1 wolfs remaining</div>
+
+  <div id="playerParentDiv" class="videoClassParent">
+    <div id="player" class="videoClass"></div>
+    <div id="videoClassBorder" class="videoClassBorder"></div>
+  </div>
+  <div id="mensajesDiv" class="mensajesDiv">
+    <div id="mensajeText" class="mensajeText"></div>
+
+    <div id="corazonDiv" class="corazonDiv" >
+      <div class="corazonImgParent">
+        <div id="corazonBarra" class="corazonBarra"></div>
+        <img src="img/corazon.gif" class="corazonImg"></img>
+        <img src="img/corazon.gif" class="corazonImg"></img>
+        <img src="img/corazon.gif" class="corazonImg"></img>
+        <img src="img/corazon.gif" class="corazonImg"></img>
+        <img src="img/corazon.gif" class="corazonImg"></img>
+        <img src="img/corazon.gif" class="corazonImg"></img>
+        <img src="img/corazon.gif" class="corazonImg"></img>
+        <img src="img/corazon.gif" class="corazonImg"></img>
+        <img src="img/corazon.gif" class="corazonImg"></img>
+        <img src="img/corazon.gif" class="corazonImg"></img>
+        <div id="corazonPMDiv" class="corazonPMDiv">+</div>
+      </div>
+    </div>
+
+    <div>
+      <button id="mensajeButt1" class="mensajeButt"></button>
+      <button id="mensajeButt2" class="mensajeButt"></button>
+    </div>
+  </div>
+
+  <div id="tutorialDiv" class="tutorialDiv">
+    <div align="center" class="keys tutorialDiv1">W</div>
+    <div align="center" class="keys tutorialDiv1">W</div>
+    <div align="center" class="keys tutorialDiv2">A</div>
+    <div align="center" class="keys tutorialDiv3">S</div>
+    <div align="center" class="keys tutorialDiv4">D</div>
+    <div class="tutorialDivMouse"></div>
+    <div class="tutorialDivMouseButt"></div>
+    <div id="tutorialDivText1" class="tutorialDivText1">Move arround</div>
+    <div id="tutorialDivText2" class="tutorialDivText2">Click on things</div>
+    <div id="tutorialDivText3" class="tutorialDivText3">Survive 42 days.</div>
+  </div>
+  <div id="dayNDiv" class="dayNDiv" align="center"></div>
+
+  <div id="winDiv" class="winDiv" align="center">
+    <div id="winDiv1" class="winDiv1" align="center">The Kingdom is Safe</div>
+    <div id="winDiv2" class="winDiv2" align="center">YOU WON</div>
+  </div>
+
+  <div id="tutorialDivCave" class="tutorialDivCave">
+    <div class="tutorialDivMouse"></div>
+    <div class="tutorialDivMouseButt"></div>
+    <div id="tutorialDivCaveText" class="tutorialDivCaveText">Click to shoot</div>
+  </div>
+
+
+
+  <div id="optionsDiv" class="optionsDiv">
+    <div id="optionsX" class="optionsX">❌</div>
+    <div>
+      <img src="img/twitterAnim.gif"></img>
+      <a id="followMeA">Follow me on twitter to get notifications of my next awesome game.</a>
+    </div>
+    <a class="twitter-follow-button"
+      href="https://twitter.com/AlexandriaGame"
+      data-size="large"
+      target="_blank"
+      style="cursor:none"
+       >
+      Follow @AlexandriaGame
+    </a>
+
+    <br><br><br>
+    <a id="optionsA">Options</a>
+    <br>
+    <table style="width:100%">
+      <tr>
+        <td id="volumeA">Effects volume:</td>
+        <td><input id="volumeInput" type="range" min="-25" max="10" value="0" class="slider" style="cursor:none"></td>
+      </tr>
+      <tr>
+        <td id="blindA">Color blind:</td>
+        <td><input id="colorInput" type="range" min="0" max="360" value="0" class="slider" style="cursor:none"></td>
+      </tr>
+      <tr>
+        <td id="languageA">Language:</td>
+        <td>
+          <select id="idiomaInput" style="cursor:none">
+            <option value="ENG" style="cursor:none">English</option>
+            <option value="ES" style="cursor:none">Español</option>
+          </select>
+        </td>
+      </tr>
+      <!-- <tr>
+        <td id="showVideosA">Show videos:</td>
+        <td><input id="videoInput" type="checkbox"checked  style="cursor:none"></td>
+      </tr> -->
+    </table>
+
+
+    <br><br><br>
+
+    <div id="thanksA"></div>
+  </div>
+  <img id="gearImg" src="img/gear.gif" class="gearImg"></img>
+
+  <a id="followMeSmall" class="followMeSmall" href="https://twitter.com/AlexandriaGame" target="_blank">
+    follow me on twitter
+  </a>
+
+  <a id="followMeMain" class="followMeMain" href="https://twitter.com/AlexandriaGame" target="_blank">
+    <span  class="followMeLink">
+      @AlexandriaGame
+    </span>
+    <span  id="followMeMainText">
+      Follow me on twitter to get notifications of my next awesome game.
+    </span>
+  </a>
+
+  <img id="mouseImg" src="img/hand.gif" class="mouseImg"></img>
+  <canvas width="800" height="600" id="myCanvas" class="toptoptop" style="pointer-events: none;"></canvas>
+
+  <div class="dayCircleDiv">
+    <img id="dayCircleImg" src="img/dayCircle.gif" class="dayCircleImg"></img>
+    <div class="dayCircleArrow">⬆</div>
+  </div>
+
+
+
+  <script src='tone.min.js'></script>
+
+  <script>
+    var userLang = navigator.language || navigator.userLanguage;
+    if(userLang=="es-ES" || userLang=="es"){
+      document.write('\x3Cscript src="textScript_ES.js">\x3C/script>');
+    }else{
+      document.write('\x3Cscript src="textScript_ENG.js">\x3C/script>');
+    }
+    document.write('\x3Cscript src="java.js">\x3C/script>');
+  </script>
+
+
+
+
+
+  <script>
+    document.getElementById("loadingDiv").style.display="none";
+  </script>
+</body>

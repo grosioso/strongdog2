@@ -1,0 +1,16 @@
+{
+"companyName": "DefaultCompany",
+"productName": "Icy North",
+"productVersion": "0.1",
+"dataUrl": "IcyNorthArmor3.data.unityweb",
+"wasmCodeUrl": "IcyNorthArmor3.wasm.code.unityweb",
+"wasmFrameworkUrl": "IcyNorthArmor3.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Light",
+"backgroundColor": "#FFFFFF",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.2.9f1"
+}

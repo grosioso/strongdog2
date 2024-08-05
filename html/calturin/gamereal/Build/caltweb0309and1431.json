@@ -1,0 +1,16 @@
+{
+"companyName": "Lasse Zacho Malver",
+"productName": "Calturin",
+"productVersion": "0.1",
+"dataUrl": "caltweb0309and1431.data.unityweb",
+"wasmCodeUrl": "caltweb0309and1431.wasm.code.unityweb",
+"wasmFrameworkUrl": "caltweb0309and1431.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.4.13f1"
+}

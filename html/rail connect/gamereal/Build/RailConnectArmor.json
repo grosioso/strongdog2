@@ -1,0 +1,16 @@
+{
+"companyName": "EEG",
+"productName": "Rail Connect",
+"productVersion": "1",
+"dataUrl": "RailConnectArmor.data.unityweb",
+"wasmCodeUrl": "RailConnectArmor.wasm.code.unityweb",
+"wasmFrameworkUrl": "RailConnectArmor.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Light",
+"backgroundColor": "#FFFFFF",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.2.9f1"
+}

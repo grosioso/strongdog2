@@ -1,0 +1,16 @@
+{
+"companyName": "Kilkerko",
+"productName": "Space Cowboy",
+"productVersion": "0.1",
+"dataUrl": "11_3_21.data.unityweb",
+"wasmCodeUrl": "11_3_21.wasm.code.unityweb",
+"wasmFrameworkUrl": "11_3_21.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#0E0E0E",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.2.3f1"
+}

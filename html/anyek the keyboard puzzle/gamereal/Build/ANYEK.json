@@ -1,0 +1,16 @@
+{
+"companyName": "Garage Studio",
+"productName": "ANYEK",
+"productVersion": "01.09",
+"dataUrl": "ANYEK.data.unityweb",
+"wasmCodeUrl": "ANYEK.wasm.code.unityweb",
+"wasmFrameworkUrl": "ANYEK.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.4.9f1"
+}
