@@ -1,0 +1,16 @@
+{
+"companyName": "TWO PIGS STUDIO",
+"productName": "Ordeals of December",
+"productVersion": "0.1.4",
+"dataUrl": "Ordeals of December 0.1.4 (960 x 443).data.unityweb",
+"wasmCodeUrl": "Ordeals of December 0.1.4 (960 x 443).wasm.code.unityweb",
+"wasmFrameworkUrl": "Ordeals of December 0.1.4 (960 x 443).wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#141414",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.4.16f1"
+}
