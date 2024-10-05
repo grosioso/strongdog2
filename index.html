@@ -26,91 +26,90 @@
 		})();
 		</script>
 		
-	<script>
-		document.addEventListener('DOMContentLoaded', function() {
-			const topGameList = document.getElementById('topGameList');
-			const loadingContainerEl = document.createElement('div');
-			loadingContainerEl.className = 'loading-container';
-			loadingContainerEl.innerHTML = `
-				<div class="bars">
-					<div class="bar bar-1"></div>
-					<div class="bar bar-2"></div>
-					<div class="bar bar-3"></div>
-					<div class="bar bar-4"></div>
-					<div class="bar bar-5"></div>
-				</div>
-			`;
-			
-			// Append loadingContainerEl to topGameList
-			topGameList.appendChild(loadingContainerEl);
-		
-			function fetchTopGames() {
-				const targetUrl = 'https://script.google.com/macros/s/AKfycbx1xYwL2QqkOQHyeCWIVSMVLP_XXts5zpb0M-vbvlRl1MpRYYcv4NI-i8OaGc0YP0wpsg/exec?action=getTop10';
-		
-				fetch(targetUrl, {
-					method: 'GET'
-				})
-				.then(response => {
-					if (!response.ok) {
-						throw new Error('Network response was not ok ' + response.statusText);
-					}
-					return response.json();
-				})
-				.then(data => {
-					if (data && data.content) {
-						const parsedData = JSON.parse(data.content);
-						console.log('Parsed data:', parsedData);
-						displayTopGames(parsedData);
-					} else {
-						console.error('Invalid data format', data);
-					}
-				})
-				.catch(error => console.error('Error:', error))
-				.finally(() => {
-					loadingContainerEl.style.display = 'none';
-				});
-			}
-		
-			function displayTopGames(games) {
-				if (!topGameList) {
-					console.error('Required element not found.');
-					return;
-				}
-				topGameList.innerHTML = '';
-		
-				games.slice(1).forEach(game => { // Skip the first entry as it is the header
-					const gameName = game[0].toLowerCase();
-					const matchingCard = findMatchingCard(gameName);
-					if (matchingCard) {
-						topGameList.appendChild(matchingCard.cloneNode(true));
-					}
-				});
-			}
-		
-			function findMatchingCard(gameName) {
-				const cards = document.querySelectorAll('#allGameList .card');
-				for (let card of cards) {
-					const href = card.getAttribute('href');
-					const extractedGameName = extractGameNameFromHref(href).toLowerCase();
-					if (extractedGameName === gameName) {
-						return card;
-					}
-				}
-				return null;
-			}
-		
-			function extractGameNameFromHref(href) {
-				const parts = href.split('/');
-				return parts.length > 2 ? parts[2].toLowerCase() : '';
-			}
-		
-			// Immediately invoked function to run fetchTopGames as soon as possible
-			(function() {
-				loadingContainerEl.style.display = 'flex'; // Show spinner
-				fetchTopGames();
-			})();
-		});
-		</script>		
+        <script src="appscript.js"></script> <!-- Include your appscript.js here -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const topGameList = document.getElementById('topGameList');
+                const loadingContainerEl = document.createElement('div');
+                loadingContainerEl.className = 'loading-container';
+                loadingContainerEl.innerHTML = `
+                    <div class="bars">
+                        <div class="bar bar-1"></div>
+                        <div class="bar bar-2"></div>
+                        <div class="bar bar-3"></div>
+                        <div class="bar bar-4"></div>
+                        <div class="bar bar-5"></div>
+                    </div>
+                `;
+    
+                // Append loadingContainerEl to topGameList
+                topGameList.appendChild(loadingContainerEl);
+            
+                function fetchTopGames() {
+                    fetch(targetUrl, { // Use the targetUrl from appscript.js
+                        method: 'GET'
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok ' + response.statusText);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data && data.content) {
+                            const parsedData = JSON.parse(data.content);
+                            console.log('Parsed data:', parsedData);
+                            displayTopGames(parsedData);
+                        } else {
+                            console.error('Invalid data format', data);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error))
+                    .finally(() => {
+                        loadingContainerEl.style.display = 'none';
+                    });
+                }
+            
+                function displayTopGames(games) {
+                    if (!topGameList) {
+                        console.error('Required element not found.');
+                        return;
+                    }
+                    topGameList.innerHTML = '';
+            
+                    games.slice(1).forEach(game => { // Skip the first entry as it is the header
+                        const gameName = game[0].toLowerCase();
+                        const matchingCard = findMatchingCard(gameName);
+                        if (matchingCard) {
+                            topGameList.appendChild(matchingCard.cloneNode(true));
+                        }
+                    });
+                }
+            
+                function findMatchingCard(gameName) {
+                    const cards = document.querySelectorAll('#allGameList .card');
+                    for (let card of cards) {
+                        const href = card.getAttribute('href');
+                        const extractedGameName = extractGameNameFromHref(href).toLowerCase();
+                        if (extractedGameName === gameName) {
+                            return card;
+                        }
+                    }
+                    return null;
+                }
+            
+                function extractGameNameFromHref(href) {
+                    const parts = href.split('/');
+                    return parts.length > 2 ? parts[2].toLowerCase() : '';
+                }
+            
+                // Immediately invoked function to run fetchTopGames as soon as possible
+                (function() {
+                    loadingContainerEl.style.display = 'flex'; // Show spinner
+                    fetchTopGames();
+                })();
+            });
+        </script>	
 <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
 <meta charset="UTF-8"> 
 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
