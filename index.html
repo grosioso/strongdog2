@@ -1076,15 +1076,11 @@ h2 {
             <div class="credits-role">Game Downloaders</div>
             <div class="credits-names">
                 <a href="https://github.com/jman1593" target="_blank" class="credits-link">Joshua Pettit</a>
-                <span>|</span>
-                <a href="https://maxwellstevenson.com" target="_blank" class="credits-link">Maxwell Stevenson</a>
             </div>
         </div>
         <div class="credits-item">
             <div class="credits-role">Other Links</div>
             <div class="credits-names">
-				<a href="https://strongdog.onrender.com" target="_blank" class="credits-link">strongdog.onrender.com</a>
-                <span>|</span>
 				<a href="https://strongdog.stormkit.dev" target="_blank" class="credits-link">strongdog.stormkit.dev</a>
                 <span>|</span>
                 <a href="https://jman1593.github.io" target="_blank" class="credits-link">jman1593.github.io</a>
@@ -1180,8 +1176,8 @@ h2 {
 		const hostname = window.location.hostname;
 
 		if (hostname.includes('github.io')) {
-			page1Link.href = "/#";
-			page2Link.href = "/strongdog2/index.html";
+			page1Link.href = "https://jman1593.github.io";
+			page2Link.href = "https://jman1593.github.io/strongdog2/index.html";
 		} else if (hostname.includes('vercel.app')) {
 			page1Link.href = "https://strongdog-1.vercel.app";
 			page2Link.href = "https://strongdog2.vercel.app";
@@ -1191,9 +1187,6 @@ h2 {
 		} else if (hostname.includes('onrender.com')) {
 			page1Link.href = "https://strongdog.onrender.com";
 			page2Link.href = "https://strongdog2.onrender.com";
-		} else if (hostname.includes('stormkit.dev')) {
-			page1Link.href = "https://strongdog.stormkit.dev";
-			page2Link.href = "https://strongdog2.stormkit.dev";
 		}
 	});
 </script>
