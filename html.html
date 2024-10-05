@@ -174,7 +174,7 @@
                 gameTitle.textContent = title;
             }
 
-            embedGame('./gamereal/index.html', 'foldername');
+            embedGame('./game/index.html', 'foldername');
 
             fullscreenButton.addEventListener('click', function() {
                 if (gameContainer.requestFullscreen) {
@@ -237,7 +237,7 @@
         var titleElement = document.getElementById('gameTitle');
         var title = titleElement.textContent;
         
-        fetch('https://script.google.com/macros/s/AKfycbz7G06loiwBVfgkojqX8jTTJzGSRLbHaU2PfJX24wGxt3ym80FsVEPEbC8CV5gluguz/exec?title=' + encodeURIComponent(title), {
+        fetch('https://script.google.com/macros/s/AKfycbx1xYwL2QqkOQHyeCWIVSMVLP_XXts5zpb0M-vbvlRl1MpRYYcv4NI-i8OaGc0YP0wpsg/exec?title=' + encodeURIComponent(title), {
             method: 'GET'
         })
         .then(response => response.text())
@@ -245,5 +245,5 @@
         .catch(error => console.error('Error:', error));
     };
 </script>
-    </body>
+</body>
 </html>
