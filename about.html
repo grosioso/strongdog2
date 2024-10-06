@@ -365,6 +365,7 @@
             <a href="#" onclick="showSection('about')">About</a>
             <a href="#" onclick="showSection('patches')">Updates</a>
             <a href="#" onclick="showSection('report-bug')">Report a Bug</a>
+            <a href="#" onclick="showSection('request-game')">Request a Game</a>
         </div>
     </nav>
 
@@ -401,6 +402,20 @@
             <label for="description">Bug Description:</label><br>
             <textarea id="description" name="description" rows="4" required></textarea><br>
             <button type="submit">Submit Bug Report</button>
+        </form>
+    </div>
+
+    <div class="content" id="request-game" style="display:none;">
+        <h1>Request a Game</h1>
+        <p>If you'd like to see a particular game added to our site, please let us know! Fill out the form below to request a game.</p>
+        <form id="gameRequestForm">
+            <label for="game-name">Your Name:</label><br>
+            <input type="text" id="game-name" name="name" required><br>
+            <label for="game-email">Your Email:</label><br>
+            <input type="email" id="game-email" name="email" required><br>
+            <label for="game-description">Game Link And Description:</label><br>
+            <textarea id="game-description" name="description" rows="4" required></textarea><br>
+            <button type="submit">Submit Game Request</button>
         </form>
     </div>
 
@@ -515,6 +530,39 @@
                 formEl.style.display = 'block';
                 alert('Bug report submitted. Thank you!');
                 document.getElementById('bugReportForm').reset(); // Reset the form after submission
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+        const gameFormEl = document.querySelector("#request-game");
+        document.getElementById('gameRequestForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            
+            loadingAnimationEl.style.display = 'flex';
+            gameFormEl.style.display = 'none';
+            
+            var name = document.getElementById('game-name').value.trim();
+            var email = document.getElementById('game-email').value.trim();
+            var description = document.getElementById('game-description').value.trim();
+
+            if (!name || !email || !description) {
+                alert('Please fill in all fields.');
+                loadingAnimationEl.style.display = 'none';
+                gameFormEl.style.display = 'block';
+                return;
+            }
+
+            fetch('https://script.google.com/macros/s/AKfycbw-x5nWKZtTRl2BprexAgs7hhbsNIWgT5cMwfwHpoZPwx0j_vTBn-8ONPuLyUJSGYf5gg/exec', {
+                method: 'POST',
+                contentType: 'application/json',
+                body: JSON.stringify({name: name, email: email, description: description})
+            })
+            .then(response => response.json())
+            .then(data => {
+                loadingAnimationEl.style.display = 'none';
+                gameFormEl.style.display = 'block';
+                alert('Game request submitted. Thank you!');
+                document.getElementById('gameRequestForm').reset(); // Reset the form after submission
             })
             .catch(error => console.error('Error:', error));
         });
