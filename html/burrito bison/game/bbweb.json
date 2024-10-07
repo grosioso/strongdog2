@@ -1,0 +1,13 @@
+{
+"companyName": "Juicy Beast Studio",
+"productName": "Burrito Bison",
+"dataUrl": "https://cdn.glitch.me/57c5291a-5015-466b-9485-abc4a0bd5b7d/bbweb.data.unityweb",
+"asmCodeUrl": "https://cdn.glitch.me/57c5291a-5015-466b-9485-abc4a0bd5b7d/bbweb.asm.code.unityweb",
+"asmMemoryUrl": "https://cdn.glitch.me/57c5291a-5015-466b-9485-abc4a0bd5b7d/bbweb.asm.memory.unityweb",
+"asmFrameworkUrl": "https://cdn.glitch.me/57c5291a-5015-466b-9485-abc4a0bd5b7d/bbweb.asm.framework.unityweb",
+"TOTAL_MEMORY": 536870912,
+"graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#000000"
+}

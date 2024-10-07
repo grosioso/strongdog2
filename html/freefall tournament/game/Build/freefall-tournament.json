@@ -1,0 +1,23 @@
+{
+    "companyName": "Y8 IDnet",
+    "productName": "Freefall Tournament",
+    "dataUrl": "freefall-tournament.data.unityweb",
+    "wasmCodeUrl": "freefall-tournament.wasm.code.unityweb",
+    "wasmFrameworkUrl": "freefall-tournament.wasm.framework.unityweb",
+    "asmCodeUrl": "freefall-tournament.asm.code.unityweb",
+    "asmMemoryUrl": "freefall-tournament.asm.memory.unityweb",
+    "asmFrameworkUrl": "freefall-tournament.asm.framework.unityweb",
+    "TOTAL_MEMORY": 268435456,
+    "graphicsAPI": [
+        "WebGL 2.0",
+        "WebGL 1.0"
+    ],
+    "webglContextAttributes": {
+        "preserveDrawingBuffer": false
+    },
+    "splashScreenStyle": "Dark",
+    "backgroundColor": "#231F20",
+    "cacheControl": {
+        "dataUrl": "must-revalidate"
+    }
+}

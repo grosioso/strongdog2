@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <script type='text/javascript'>
+        document.onmousedown = function () { window.focus(); };
+    </script>
+    <script type="text/javascript">
+        var authentication_token = "";
+        var id_token = "";
+        var anonymous_user = "1";
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase-database.js"></script>
+    <script type='text/javascript' src="https://cdn.applixir.com/applixir.sdk3.0m.js"></script>
+    <script>
+        var performing_login_anonymously = false;
+        var auth_user;
+
+        // Initialize Firebase
+        var firebase_config = {
+            apiKey: "AIzaSyC5gf82OYh-lzAaOg36NBXqdA21HmKTQzA",
+            authDomain: "bumpyball-82592.firebaseapp.com",
+            databaseURL: "https://bumpyball-82592.firebaseio.com",
+            projectId: "bumpyball-82592",
+            storageBucket: "bumpyball-82592.appspot.com",
+            messagingSenderId: "363066196011"
+        };
+        firebase.initializeApp(firebase_config);
+    </script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.css" />
+    <script type="text/javascript">
+        var anonymousUser;
+
+        // FirebaseUI config.
+        var uiConfig = {
+            // signInSuccessUrl: '<url-to-redirect-to-on-success>',
+            callbacks: {
+                signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+                    var currentUser = authResult.user;
+                    // Do something.
+                    // Return type determines whether we continue the redirect automatically
+                    // or whether we leave that to developer to handle.
+                    authentication_token = currentUser.uid;
+
+                    //currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+                    // Send token to your backend via HTTPS
+                    // ...
+                    id_token = "";//idToken;
+
+                    anonymous_user = (currentUser.isAnonymous ? "1" : "0");
+                    if (currentUser.isAnonymous) {
+                        anonymousUser = currentUser;
+                    } else {
+                        anonymousUser = null;
+                    }
+
+                    auth_user = currentUser;
+
+                    // If the game is already initialized, we need to send our account info again
+                    if (game_initialized == true && gameInstance != null) {
+                        gameInstance.SendMessage('NetworkLayer', 'SetAccountAnnonymousExternal', anonymous_user);
+                        gameInstance.SendMessage('NetworkLayer', 'SetAccountExternal', authentication_token + "|" + id_token);
+                    }
+
+                    //}).catch(function(error) {
+                    //  // Handle error
+                    //});
+
+
+                    return false;
+                },
+                signInFailure: function (error) {
+                    // For merge conflicts, the error.code will be
+                    // 'firebaseui/anonymous-upgrade-merge-conflict'.
+                    if (error.code != 'firebaseui/anonymous-upgrade-merge-conflict') {
+                        return Promise.resolve();
+                    }
+                    // The credential the user tried to sign in with.
+                    var cred = error.credential;
+                    // If using Firebase Realtime Database. The anonymous user data has to be
+                    // copied to the non-anonymous user.
+                    var app = firebase.app();
+                    // Save anonymous user data first.
+                    return app.database().ref('users/' + firebase.auth().currentUser.uid)
+                        .once('value')
+                        .then(function (snapshot) {
+                            data = snapshot.val();
+                            // This will trigger onAuthStateChanged listener which
+                            // could trigger a redirect to another page.
+                            // Ensure the upgrade flow is not interrupted by that callback
+                            // and that this is given enough time to complete before
+                            // redirection.
+                            return firebase.auth().signInAndRetrieveDataWithCredential(cred);
+                        })
+                        .then(function (user) {
+                            // Original Anonymous Auth instance now has the new user.
+                            return app.database().ref('users/' + user.uid).set(data);
+                        })
+                        .then(function () {
+                            // Delete anonymnous user.
+                            if (anonymousUser != null) {
+                                return anonymousUser.delete();
+                            } else {
+                                return true;
+                            }
+                        }).then(function () {
+                            // Clear data in case a new user signs in, and the state change
+                            // triggers.
+                            data = null;
+                            // FirebaseUI will reset and the UI cleared when this promise
+                            // resolves.
+                            // signInSuccess will not run. Successful sign-in logic has to be
+                            // run explicitly.
+                            //window.location.assign('<url-to-redirect-to-on-success>');
+                            showNameWindow();
+                        });
+                }
+            },
+            signInFlow: 'popup',
+            // Query parameter name for mode.
+            queryParameterForWidgetMode: 'mode',
+            // Query parameter name for sign in success url.
+            queryParameterForSignInSuccessUrl: 'signInSuccessUrl',
+            autoUpgradeAnonymousUsers: true,
+            credentialHelper: firebaseui.auth.CredentialHelper.NONE,
+            signInOptions: [
+                // Leave the lines as is for the providers you want to offer your users.
+                firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            ],
+            //firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+            // Terms of service url.
+            // tosUrl: '<your-tos-url>'
+        };
+
+        // Initialize the FirebaseUI Widget using Firebase.
+        var ui = new firebaseui.auth.AuthUI(firebase.auth());
+        // The start method will wait until the DOM is loaded.
+        ui.start('#firebaseui-auth-container', uiConfig);
+
+        function loadGame() {
+            document.getElementById("auth").style.display = 'none';
+            if (gameInstance == null) {
+                document.getElementById("loadingcontainer").style.display = '';
+
+                var script = document.createElement("script");
+                script.src = loaderUrl;
+                script.onload = () => {
+                    createUnityInstance(canvas, unity_config, (progress) => {
+
+                        document.getElementById("progressBar").style.width = (200.0 * progress) + "px";
+
+                        //progressBarFull.style.width = 100 * progress + "%";
+                    }).then((unityInstance) => {
+                        gameInstance = unityInstance;
+                        document.getElementById("gameContainer").style.display = '';
+                        //loadingBar.style.display = "none";
+                        //fullscreenButton.onclick = () => {
+                        //	unityInstance.SetFullscreen(1);
+                        // };
+                    }).catch((message) => {
+                        alert(message);
+                    });
+                };
+                document.body.appendChild(script);
+
+            } else {
+                // Just continue because we are already logged in.
+                showNameWindow();
+            }
+        }
+
+        // switch to loginn anon?
+        firebase.auth().onAuthStateChanged(function (firebaseUser) {
+            if (firebaseUser != null) {
+                authentication_token = firebaseUser.uid;
+                //firebaseUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+                // Send token to your backend via HTTPS
+                // ...
+                token_id = "";//idToken;			
+                anonymous_user = (firebaseUser.isAnonymous ? "1" : "0");
+                auth_user = firebaseUser;
+
+                if (auth_user != null && auth_user.isAnonymous) {
+                    anonymousUser = auth_user;
+                } else {
+                    anonymousUser = null;
+                }
+
+
+                document.getElementById("username").value = "";
+                player_name = "";
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("GET", "https://nifty-condition-169823.appspot.com/GetPlayerRecord?Game=BumpyBall&Uid=" + authentication_token, true);
+                xhttp.setRequestHeader("Content-type", "text/plain");
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState === 4 && xhttp.status === 200) {
+                        var response = JSON.parse(xhttp.responseText);
+                        if (response != null && response.last_name != "") {
+                            SetPlayerName(response.last_name);
+                        }
+                    }
+                };
+                xhttp.send();
+
+                loadGame();
+
+                //}).catch(function(error) {
+                // // Handle error
+                //});
+
+            }
+        });
+
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-102569974-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments) };
+        gtag('js', new Date());
+        gtag('config', 'UA-102569974-2', { 'anonymize_ip': true });
+    </script>
+    <script>
+        var gameInstance = null;
+        var player_name = "";
+        function setName() {
+            player_name = document.getElementById("username").value;
+            if (player_name == null || typeof (player_name) != "string") {
+                player_name = "";
+            }
+
+            gameInstance.SendMessage('NetworkLayer', 'SetAccountAnnonymousExternal', anonymous_user);
+            gameInstance.SendMessage('NetworkLayer', 'SetAccountExternal', authentication_token + "|" + id_token);
+            gameInstance.SendMessage('GameCanvas', 'SetPlayerNameExternal', player_name);
+            document.getElementById("mainwebcontent").style.display = 'none';
+            document.getElementById("footer").style.display = 'none';
+            //document.getElementById('TextInputReceiver').focus()
+            FocusCanvasExternal("1");
+        }
+
+        function loginAnonymously() {
+            if (authentication_token == "" || authentication_token == null) {
+                performing_login_anonymously = true;
+                firebase.auth().signInAnonymously();
+            } else {
+                // Just continue because we are already logged in.
+                showNameWindow();
+            }
+        }
+
+        function showNameWindow() {
+            document.getElementById("login").style.display = '';
+            document.getElementById("auth").style.display = 'none';
+            document.getElementById("mainwebcontent").style.display = '';
+            document.getElementById("username").focus();
+        }
+
+        function SetPlayerName(external_player_name) {
+            if (external_player_name == null || typeof (external_player_name) != "string") {
+                external_player_name = "";
+            }
+            player_name = external_player_name;
+            document.getElementById("username").value = external_player_name;
+        }
+
+        function UnityProgress(gameObject, progress) {
+            if (!gameObject.Module)
+                return;
+            if (progress == "complete") {
+                document.getElementById("gameContainer").style.display = '';
+                return;
+            }
+            document.getElementById("progressBar").style.width = (200.0 * progress) + "px";
+        }
+
+        // Called when trying to change name or login
+        function OnClickChangeName() {
+            showNameWindow();
+        }
+
+        function OnClickLogin() {
+            if (auth_user == null || auth_user.isAnonymous) {
+                console.log("OnClickLogin");
+
+                if (auth_user != null && auth_user.isAnonymous) {
+                    anonymousUser = auth_user;
+                }
+
+                ui.disableAutoSignIn();
+                ui.start('#firebaseui-auth-container', uiConfig);
+
+                document.getElementById("login").style.display = 'none';
+                document.getElementById("auth").style.display = '';
+                document.getElementById("mainwebcontent").style.display = '';
+            }
+            else {
+                console.log("OnClickLogin - but already logged in");
+                OnClickLogout();
+            }
+        }
+
+        // Called when trying to logout
+        function OnClickLogout() {
+            console.log("OnClickLogout");
+            firebase.auth().signOut();
+            authentication_token = "";
+            id_token = "";
+            document.getElementById("username").value = "";
+            player_name = "";
+            loginAnonymously();
+        }
+
+        // Called when the game is fully initialized
+        function GameInitializedExternal(client_version) {
+            game_initialized = true;
+
+            document.getElementById("gameContainer").style.display = '';
+            document.getElementById("loadingcontainer").style.display = 'none';
+            document.getElementById("car").style.display = 'none';
+            document.getElementById("ball").style.display = 'none';
+
+            if (server_status != "ONLINE") {
+                document.getElementById("alertMessage").innerHTML = "Server is down for maintenance";
+                document.getElementById("alert").style.display = '';
+            } else if (client_version && minimum_build_version >= 0 && minimum_build_version > client_version) {
+                document.getElementById("alertMessage").innerHTML = "Client out of date. Please 'hard' refresh";
+                document.getElementById("alert").style.display = '';
+            } else if (custom_message && custom_message != "") {
+                document.getElementById("alertMessage").innerHTML = custom_message;
+                document.getElementById("alert").style.display = '';
+            } else {
+                showNameWindow();
+            }
+
+            gameInstance.SendMessage('NetworkLayer', 'SetAccountAnnonymousExternal', anonymous_user);
+            gameInstance.SendMessage('NetworkLayer', 'SetAccountExternal', authentication_token + "|" + id_token);
+        }
+
+    </script>
+    <script>
+        // Input handler 
+        var game_initialized = false;
+        document.addEventListener('click', function (e) {
+            if (e.target.id == "gameContainer" || e.target.id == "unity-canvas" || e.target.id == "#unity-canvas") {
+                // Clicked on canvas
+                FocusCanvasExternal("1");
+            } else {
+                // Clicked outside of canvas
+                FocusCanvasExternal("0");
+            }
+        });
+        function FocusCanvasExternal(focus) {
+            if (game_initialized) {
+                gameInstance.SendMessage("GameCanvas", "FocusCanvasExternal", focus);
+            }
+        }
+        function enterNameSkip(event) {
+            if (event.keyCode == 13) {
+                setName();
+                return false;
+            }
+            return true;
+        };
+    </script>
+    <script>
+        window.onload = function () {
+        }
+    </script>
+    <title>BumpyBall.io</title>
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <link rel="stylesheet" href="TemplateData/bumpyball_style.css?version=0.91">
+    <meta name="Description"
+        content="BumpyBall.io is a fast-paced multiplayer car soccer game! Join the league and score as many goals as you can with your rocket powered football cars!">
+    <meta property="og:url" content="http://www.BumpyBall.io" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="BumpyBall.io" />
+    <meta property="og:description"
+        content="BumpyBall.io is a fast-paced multiplayer car soccer game! Join the league and score as many goals as you can with your rocket powered football cars!" />
+    <meta property="og:image" content="http://www.BumpyBall.io/External/facebook_share.jpg" />
+</head>
+
+<body class="template" id="template">
+
+    <div id="mainwebcontent" style="height: 100%;width: 100%; z-index:98; position:relative">
+        <div id="spacer" style="height: 25%;"></div>
+        <img id="ball" src="TemplateData/ball.png"
+            style="position: absolute;left: 50%;margin-left: -320px;margin-top: 170px;">
+        <img id="car" src="TemplateData/car.png"
+            style="position: absolute;left: 50%;margin-left: 150px;margin-top: 115px;">
+        <div id="auth" class="transparentcontainer">
+            <div id="logo">BumpyBall.io</div>
+            <div class="container">
+                <div id="login-data" style="padding: 5px; margin: auto; margin-top: 15px; width: 80%;">
+                    <div id="firebaseui-auth-container"></div>
+                    <button id="anon_button" class="button" onclick="loginAnonymously()">PLAY ANONYMOUSLY</button>
+                </div>
+            </div>
+        </div>
+        <div id="login" class="transparentcontainer" style="display: none;" onkeypress="enterNameSkip(event)">
+            <div id="logo">BumpyBall.io</div>
+            <div id="login-data" style="padding: 5px; margin: auto; width: 80%;">
+                <input type="text" id="username" name="username" placeholder="Enter Name...">
+                <div id="firebaseui-auth-container"></div>
+                <button class="button" onclick="setName()">PLAY</button>
+            </div>
+            <a href='https://discord.gg/UPyTvjz'><img alt='Join The Discord Community'
+                    src='TemplateData/discord_logo_white.png' style="width:200px;margin-top: 25px;" /></a>
+        </div>
+        <div id="loadingcontainer" style="display: none;">
+            <div id="logo">BumpyBall.io</div>
+            <div id="loadingBox">
+                <div id="bgBar"></div>
+                <div id="progressBar"></div>
+                <p id="loadingInfo">Loading... <img src="TemplateData/loading.gif" /></p>
+            </div>
+        </div>
+        <div id="alert" style="display: none;">
+            <div id="spacer" style="height: 25%;"></div>
+            <div id="logo">BumpyBall.io</div>
+            <div id="alertBox">
+                <p id="alertMessage">ALERT</p>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <a href="https://www.reddit.com/r/bumpyball" target="_blank"
+            style="float: right;margin-right:3px;margin-top:2px;">
+            <img src="TemplateData/reddit.png" title="Provide Feedback On Reddit" height="20" width="20">
+        </a>
+    </div>
+    <div id="gameContainer" style="width: 100%;height: 100%;position: absolute; left: 0px; top: 0px; display: none;"
+        class="unity-desktop">
+        <canvas id="unity-canvas"></canvas>
+        <div id="applixir_vanishing_div" hidden>
+            <iframe id="applixir_parent" allowed="autoplay"></iframe>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    // Server status verification
+    var minimum_build_version = -1;
+    var server_status = "ONLINE";
+    var custom_message = "";
+    //var request = new XMLHttpRequest();
+    //request.open('GET', 'https://www.usemapsettings.com/status/bumpyball', true);
+    //request.onload = function() {
+    //  if (request.status >= 200 && request.status < 400) {
+    //		// Success!
+    //		var data = JSON.parse(request.responseText);
+    //		if( data ) {
+    //			minimum_build_version = data["Version"];
+    //			server_status = data["Status"];
+    //			custom_message = data["Message"];
+    //		}
+    // } 
+    //};
+    //request.onerror = function() {};
+    //request.send();
+
+
+    var buildUrl = "Build";
+    var loaderUrl = buildUrl + "/55b027cfe78bae9b0fbebad0d7c12abd.js";
+    var unity_config = {
+        dataUrl: buildUrl + "/3b4a94004c22bd07d4c7be83a7970e9b.data",
+        frameworkUrl: buildUrl + "/1ab248fb26a4f8649c5c8fa5cd4e6a2c.js",
+        codeUrl: buildUrl + "/248992640edf086e75a362c16c75e962.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "Use Map Settings",
+        productName: "BumpyBall.io",
+        productVersion: "1.8",
+    };
+    var container = document.getElementById("unity-container");
+    var canvas = document.getElementById("unity-canvas");
+    //var loadingBar = document.getElementById("unity-loading-bar");
+    //var progressBarFull = document.getElementById("unity-progress-bar-full");
+    //var fullscreenButton = document.getElementById("unity-fullscreen-button");
+
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        container.className = "unity-mobile";
+        unity_config.devicePixelRatio = 1;
+    } else {
+        canvas.style.width = "100%";
+        canvas.style.height = "100%";
+    }
+
+</script>
+
+</html>
