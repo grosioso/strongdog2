@@ -16,6 +16,7 @@
                 --frosted-glass-color: rgba(255, 255, 255, 0.05);
                 --frosted-glass-border-color: rgba(255, 255, 255, 0.2);
                 --text-color: rgba(255, 255, 255, 0.9);
+                --link-color: #9178ff;
                 --user-select-bg: ;
                 --user-select-text-color: ;
             }
@@ -30,6 +31,10 @@
                 background-attachment: fixed;
                 color: var(--text-color);
                 transition: 0.5s background;
+            }
+
+            a {
+                color: var(--link-color);
             }
 
             .background-blobs {
@@ -444,7 +449,8 @@
                     "--body-background-gradient": "linear-gradient(30deg, #b3e5fc, #ffcc80)",
                     "--blob-1-gradient": "linear-gradient(0deg, #ffcc80, #ffab40)",
                     "--blob-2-gradient": "linear-gradient(0deg, #b3e5fc, #4fc3f7)",
-                    "--blob-3-gradient": "linear-gradient(0deg, #c8e6c9, #81c784)"
+                    "--blob-3-gradient": "linear-gradient(0deg, #c8e6c9, #81c784)",
+                    "--link-color": "#7152ff"
                 }
             },
             {
@@ -454,7 +460,8 @@
                     "--body-background-gradient": "linear-gradient(30deg, #010101, #000000)",
                     "--blob-1-gradient": "linear-gradient(72deg, #ff2079, #0400eb)",
                     "--blob-2-gradient": "linear-gradient(0deg, #440bd4, #e92efb)",
-                    "--blob-3-gradient": "linear-gradient(220deg, #ff2079, #0400eb)"
+                    "--blob-3-gradient": "linear-gradient(220deg, #ff2079, #0400eb)",
+                    "--link-color": "#9178ff"
                 }
             }
         ];
