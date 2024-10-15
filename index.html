@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1609993827735056" 
-     crossorigin="anonymous"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1609993827735056" crossorigin="anonymous"></script>
 <html lang="en">
 <head>
 	<script>
@@ -592,6 +591,8 @@ h2 {
         <div class="credits-item">
             <div class="credits-role">Other Links</div>
             <div class="credits-names">
+                <a href="https://mathcord.netlify.app" target="_blank" class="credits-link">mathcord.netlify.app</a>
+                <span>|</span>
 				<a href="https://strongdog.onrender.com" target="_blank" class="credits-link">strongdog.onrender.com</a>
                 <span>|</span>
                 <a href="https://jman1593.github.io" target="_blank" class="credits-link">jman1593.github.io</a>
@@ -744,7 +745,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		// Block Lanschool button event listener
 		blockLanschoolButton.addEventListener('click', function(e) {
 			e.preventDefault();
-			var url = "https://strongdog-1.vercel.app";
+			var url = "https://strongdog.netlify.app";
 			var newTab = window.open();
 			newTab.document.write(`
 				<html>
@@ -771,9 +772,18 @@ document.addEventListener('DOMContentLoaded', function() {
 		} else if (hostname.includes('vercel.app')) {
 			page1Link.href = "https://strongdog-1.vercel.app";
 			page2Link.href = "https://strongdog2.vercel.app";
-		} else if (hostname.includes('netlify.app')) {
+		} else if (hostname.includes('strongdog.netlify.app')) {
 			page1Link.href = "https://strongdog.netlify.app";
 			page2Link.href = "https://strongdog2.netlify.app";
+        } else if (hostname.includes('strongdog2.netlify.app')) {
+			page1Link.href = "https://strongdog.netlify.app";
+			page2Link.href = "https://strongdog2.netlify.app";
+        } else if (hostname.includes('mathcord.netlify.app')) {
+			page1Link.href = "https://mathcord.netlify.app";
+			page2Link.href = "https://mathcord2.netlify.app";
+        } else if (hostname.includes('mathcord2.netlify.app')) {
+			page1Link.href = "https://mathcord.netlify.app";
+			page2Link.href = "https://mathcord2.netlify.app";
 		} else if (hostname.includes('onrender.com')) {
 			page1Link.href = "https://strongdog.onrender.com";
 			page2Link.href = "https://strongdog2.onrender.com";
