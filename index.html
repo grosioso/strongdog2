@@ -124,8 +124,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>StrongDog XP</title>
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=Nosifer&display=swap");
       body {
-        font-family: Arial, sans-serif;
+        font-family: "Nosifer", Arial, sans-serif; /* Apply Nosifer as the primary font */
         margin: 0;
         padding: 0;
         background-color: #2e2e2e; /* Dark grey background */
@@ -195,20 +196,20 @@
       .card {
         background-color: #fff;
         border-radius: 10px;
-        margin: 5px; /* Reduced margin */
+        margin: 5px;
         width: 120px;
         height: 120px;
         position: relative;
         overflow: hidden;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        position: relative;
-        overflow: hidden;
-        position: relative;
+        outline: 2px solid orange; /* Adds an orange outline to the card */
       }
+
       .card:hover {
         transform: scale(1.05);
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.29);
+        outline: 3px solid orange; /* Increases the outline thickness on hover */
       }
       .card img {
         width: 100%;
@@ -220,6 +221,7 @@
         transform: scale(1.02); /* subtle zoom on the image */
       }
       .card figcaption {
+        font-size: 0.7em; /* Shrinks the text size in the card */
         position: absolute;
         bottom: -30px; /* start hidden */
         left: 0;
@@ -537,9 +539,34 @@
         text-decoration: underline;
         cursor: pointer;
       }
+      #rightCobweb {
+        position: absolute;
+        width: 210px; /* Small size for the cobwebs */
+        pointer-events: none; /* Allow clicking through the image */
+        z-index: 2000; /* Ensure it stays on top visually */
+      }
+      #leftCobweb {
+        position: absolute;
+        width: 270px; /* Small size for the cobwebs */
+        pointer-events: none; /* Allow clicking through the image */
+        z-index: 2000; /* Ensure it stays on top visually */
+      }
+
+      #leftCobweb {
+        top: 0;
+        left: 0;
+      }
+
+      #rightCobweb {
+        top: 0;
+        right: 0;
+        transform: scaleX(-1); /* Mirror the image horizontally */
+      }
     </style>
   </head>
   <body>
+    <img src="halloween/web1.png" id="leftCobweb" alt="Cobweb" />
+    <img src="halloween/web1.png" id="rightCobweb" alt="Mirrored Cobweb" />
     <div
       id="secretLink"
       style="
@@ -911,4 +938,80 @@
       });
     });
   </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const cardContainer = document.getElementById("allGameList");
+    const cobwebImageSrc = 'halloween/web1.png'; // Ensure this path is correct
+
+    function addCobwebsToCards() {
+      const allCards = cardContainer.querySelectorAll('.card');
+      if (allCards.length === 0) {
+        console.log("No cards found. Ensure the cards are present.");
+        return;
+      }
+
+      console.log(`Found ${allCards.length} cards.`);
+
+      let cardsSinceLastCobweb = 0;
+      let nextCobwebInterval = getRandomInterval(7, 14);
+
+      allCards.forEach((card, index) => {
+        cardsSinceLastCobweb++;
+
+        if (cardsSinceLastCobweb >= nextCobwebInterval) {
+          console.log(`Adding cobweb to card ${index + 1}`);
+          addCobwebToCard(card, cobwebImageSrc);
+          cardsSinceLastCobweb = 0;
+          nextCobwebInterval = getRandomInterval(7, 14);
+        }
+      });
+    }
+
+    function getRandomInterval(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function addCobwebToCard(card, cobwebImageSrc) {
+      const cobwebDiv = document.createElement('div');
+      cobwebDiv.innerHTML = `<img src="${cobwebImageSrc}" alt="Cobweb" style="width: 100%; height: auto;" />`;
+
+      cobwebDiv.style.position = 'absolute';
+      cobwebDiv.style.top = '0';
+      cobwebDiv.style.left = '0';
+      cobwebDiv.style.width = '100%';
+      cobwebDiv.style.height = '100%';
+      cobwebDiv.style.pointerEvents = 'none';
+      cobwebDiv.style.zIndex = '10000';
+
+      card.style.position = 'relative';
+
+      card.appendChild(cobwebDiv);
+      console.log("Cobweb added to card");
+    }
+
+    const observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        if (mutation.addedNodes.length) {
+          const addedCards = Array.from(mutation.addedNodes).filter(node => node.classList && node.classList.contains('card'));
+          if (addedCards.length > 0) {
+            addCobwebsToCards();
+            observer.disconnect();
+          }
+        }
+      });
+    });
+
+    observer.observe(cardContainer, { childList: true });
+
+    setTimeout(function() {
+      addCobwebsToCards();
+      observer.disconnect();
+    }, 5000);
+
+  });
+</script>
+
+  <footer style="text-align: center; color: orange; padding: 20px">
+    <p>🎃 Happy Halloween from StrongDogXP 🎃</p>
+  </footer>
 </html>
