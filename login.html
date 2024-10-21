@@ -246,6 +246,7 @@
       const disallowedWords = [
         "nigger",
         "nigga",
+        "niga",
         "fuck",
         "shit",
         "ass",
@@ -256,6 +257,12 @@
         "kkk",
         "nigg@",
         "n1gger",
+        "fuc",
+        "fuk",
+        "n!gger",
+        "n!gga",
+        "n!ga",
+        "n!ger"
       ];
 
       // Function to check for disallowed words
@@ -272,9 +279,7 @@
         // Remove special characters
         normalizedUsername = normalizedUsername.replace(/[^a-zA-Z]/g, "");
 
-        return disallowedWords.some((word) =>
-          normalizedUsername.includes(word)
-        );
+        return disallowedWords.some(word => normalizedUsername.includes(word));
       }
 
       // Function to check username availability
@@ -303,7 +308,7 @@
         const errorMessage = document.getElementById("error-message");
         const togglePasswordBtns = document.querySelectorAll(".show-password");
 
-        loginForm.addEventListener("submit", (e) => {
+        loginForm.addEventListener("submit", e => {
           e.preventDefault();
           const email = document.getElementById("email").value;
           const password = document.getElementById("password").value;
@@ -339,19 +344,18 @@
 
               if (isNewUser) {
                 // Hide login form and show username prompt
-                document.querySelector(".form-container").style.display =
-                  "none";
+                document.querySelector(".form-container").style.display = "none";
                 usernamePrompt.style.display = "block";
               } else {
                 window.location.href = "index.html";
               }
             })
-            .catch((error) => {
+            .catch(error => {
               errorMessage.textContent = `Error: ${error.message}`;
             });
         });
 
-        usernameForm.addEventListener("submit", async (e) => {
+        usernameForm.addEventListener("submit", async e => {
           e.preventDefault();
           const usernameInput = document.getElementById("username");
           const usernameError = document.getElementById("username-error");
@@ -417,16 +421,12 @@
         });
 
         // Toggle password visibility
-        togglePasswordBtns.forEach((btn) => {
+        togglePasswordBtns.forEach(btn => {
           btn.addEventListener("click", () => {
             const input = btn.previousElementSibling;
-            if (input.type === "password") {
-              input.type = "text";
-              btn.innerHTML = "❌";
-            } else {
-              input.type = "password";
-              btn.innerHTML = "&#128065;";
-            }
+            const isPasswordType = input.type === "password";
+            input.type = isPasswordType ? "text" : "password";
+            btn.innerHTML = isPasswordType ? "❌" : "&#128065;";
           });
         });
       });
