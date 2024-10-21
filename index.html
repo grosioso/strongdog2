@@ -897,15 +897,18 @@
         const menuIcon = document.getElementById("menuIcon");
         const slideMenu = document.createElement("div");
         slideMenu.className = "slide-menu";
-
+        
+        // Define gameCards globally so that all functions can access it
+        let gameCards = []; // Array to hold all loaded game cards
+    
         // Clone the categories
         const originalCategories = document.querySelector(".categories");
         const categories = originalCategories.cloneNode(true);
-
+    
         // Append the categories to the slideMenu
         slideMenu.appendChild(categories);
         document.body.appendChild(slideMenu);
-
+    
         // Add click event to toggle the sliding menu
         menuIcon.addEventListener("click", function (event) {
           event.stopPropagation(); // Prevent click event from bubbling up
@@ -915,52 +918,52 @@
             slideMenu.style.transform = "translateX(0%)"; // Show menu by sliding in
           }
         });
-
+    
         // Close the menu when clicking outside of it
         window.addEventListener("click", function (event) {
           if (event.target !== menuIcon && !slideMenu.contains(event.target)) {
             slideMenu.style.transform = "translateX(-100%)"; // Hide menu
           }
         });
-
+    
         // Check authentication state
         auth.onAuthStateChanged(async (user) => {
           let userDetailsContainer;
-
+    
           if (user) {
             // User is signed in, fetch their profile picture and username
-
+    
             // Clone the user-details-container
             const originalUserDetailsContainer = document.querySelector(
               ".user-details-container"
             );
             userDetailsContainer = originalUserDetailsContainer.cloneNode(true);
-
+    
             // Get elements inside userDetailsContainer
             const profilePictureElement =
               userDetailsContainer.querySelector(".profile-picture");
             const usernameElement =
               userDetailsContainer.querySelector(".username-text");
-
+    
             // Set profile picture
             if (user.photoURL) {
               profilePictureElement.src = user.photoURL;
             } else {
               profilePictureElement.src = "img/default-avatar.png"; // Fallback to default image
             }
-
+    
             // Set username
             const userId = user.uid;
             const userDocRef = db.collection("usernames").doc(userId);
             const userDoc = await userDocRef.get();
-
+    
             if (userDoc.exists) {
               const userData = userDoc.data();
               usernameElement.textContent = userData.username || "Username";
             } else {
               usernameElement.textContent = user.displayName || "Username";
             }
-
+    
             // Make profile picture clickable and direct to settings page
             profilePictureElement.parentElement.addEventListener(
               "click",
@@ -968,10 +971,10 @@
                 window.location.href = "settings.html";
               }
             );
-
+    
             // Insert the userDetailsContainer at the top of the slideMenu
             slideMenu.insertBefore(userDetailsContainer, categories);
-
+    
             // Create the "Log Out" button as a menu item
             const logoutLink = document.createElement("a");
             logoutLink.href = "#";
@@ -979,7 +982,7 @@
             logoutLink.textContent = "Log Out";
             logoutLink.style.backgroundColor = "#dc3545"; // Red color for the button
             logoutLink.style.color = "white";
-
+    
             // Add click event to the "Log Out" link
             logoutLink.addEventListener("click", function (e) {
               e.preventDefault();
@@ -994,7 +997,7 @@
                   console.error("Error signing out:", error);
                 });
             });
-
+    
             // Insert the "Log Out" link above the "Favorites" link
             const favoritesLink = categories.querySelector(
               'a[href="favs.html"]'
@@ -1002,23 +1005,23 @@
             categories.insertBefore(logoutLink, favoritesLink);
           } else {
             // User is not signed in, display "Not logged in" and a "Log In" button
-
+    
             // Create a new userDetailsContainer
             userDetailsContainer = document.createElement("div");
             userDetailsContainer.className = "user-details-container";
-
+    
             // Create a container for the text
             const notLoggedInContainer = document.createElement("div");
             notLoggedInContainer.className = "username-container";
-
+    
             // Create the "Not logged in" text
             const notLoggedInText = document.createElement("p");
             notLoggedInText.className = "username-text";
             notLoggedInText.textContent = "Not logged in";
-
+    
             // Append the text to the container
             notLoggedInContainer.appendChild(notLoggedInText);
-
+    
             // Create the "Log In" button
             const loginButton = document.createElement("button");
             loginButton.textContent = "Log In";
@@ -1030,26 +1033,26 @@
             loginButton.style.borderRadius = "5px";
             loginButton.style.cursor = "pointer";
             loginButton.style.marginTop = "5px";
-
+    
             // Add click event to the "Log In" button
             loginButton.addEventListener("click", function () {
               window.location.href = "login.html";
             });
-
+    
             // Center the content
             userDetailsContainer.style.display = "flex";
             userDetailsContainer.style.flexDirection = "column";
             userDetailsContainer.style.alignItems = "center";
             userDetailsContainer.style.paddingBlock = "40px"; // Ensure consistent padding
-
+    
             // Append the text and button to the userDetailsContainer
             userDetailsContainer.appendChild(notLoggedInContainer);
             userDetailsContainer.appendChild(loginButton);
-
+    
             // Insert the userDetailsContainer at the top of the slideMenu
             slideMenu.insertBefore(userDetailsContainer, categories);
           }
-
+    
           // Add event listeners to the relevant buttons in the sliding menu
           categories
             .querySelector("#randomGame")
@@ -1057,58 +1060,83 @@
               e.preventDefault();
               handleRandomGameClick();
             });
-
+    
           categories
             .querySelector("#blockLanschool")
             .addEventListener("click", function (e) {
               e.preventDefault();
               handleBlockLanschoolClick();
             });
-
-          // Define functions to handle button clicks
+    
           function handleRandomGameClick() {
-            // Implement your random game functionality here
-            console.log("Random Game button clicked");
+            if (gameCards.length > 0) {
+              const randomIndex = Math.floor(Math.random() * gameCards.length);
+              const randomCardHref =
+                gameCards[randomIndex].getAttribute("href");
+              window.location.href = randomCardHref;
+            } else {
+              console.error("No game cards found to select a random game.");
+            }
           }
-
+    
           function handleBlockLanschoolClick() {
-            // Implement your block Lanschool functionality here
-            console.log("Block Lanschool button clicked");
+            var url = "https://strongdog.netlify.app";
+            var newTab = window.open();
+            newTab.document.write(`
+              <html>
+                <body style="margin: 0; height: 100vh;">
+                  <iframe src="${url}" style="border: none; width: 100%; height: 100%;"></iframe>
+                </body>
+              </html>
+            `);
+            newTab.document.close();
           }
-
-          // Load card data and store gameCards for Random Game functionality
-          let gameCards = [];
+    
           async function loadCardData() {
             try {
               const response = await fetch("cards_data.html");
               const text = await response.text();
-
+    
               // Create a temporary DOM element to parse the fetched HTML
               const tempDiv = document.createElement("div");
               tempDiv.innerHTML = text;
-
+    
               // Assuming each card has a class of 'card' in cards_data.html
               const cards = tempDiv.querySelectorAll(".card");
               cards.forEach((card) => {
                 gameCards.push(card);
               });
-
+    
               // Enable random game functionality after cards are loaded
-              const randomGameButton = categories.querySelector("#randomGame");
-              randomGameButton.addEventListener("click", function (e) {
-                e.preventDefault();
-                handleRandomGameClick();
-              });
+              enableRandomGameFeature();
             } catch (error) {
               console.error("Error loading card data:", error);
             }
           }
-
+    
+          function enableRandomGameFeature() {
+            const randomGameButton = document.getElementById("randomGame");
+            if (gameCards.length > 0) {
+              randomGameButton.addEventListener("click", function (e) {
+                e.preventDefault();
+                const randomIndex = Math.floor(
+                  Math.random() * gameCards.length
+                );
+                const randomCardHref =
+                  gameCards[randomIndex].getAttribute("href");
+                window.location.href = randomCardHref;
+              });
+            } else {
+              console.error("No game cards found to select a random game.");
+            }
+          }
+    
           // Call the loadCardData function to populate gameCards
           loadCardData();
         });
       });
     </script>
+    
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const discordLink = document.getElementById("discordLink");
@@ -1136,8 +1164,9 @@
         const searchResults = document.getElementById("searchResults");
         let gameCards = []; // Array to hold game data
 
-        // Load card data from cards_data.html
         async function loadCardData() {
+          let gameCards = []; // Define gameCards inside the function
+
           try {
             const response = await fetch("cards_data.html");
             const text = await response.text();
@@ -1149,19 +1178,14 @@
             // Assuming each card has a class of 'card' in cards_data.html
             const cards = tempDiv.querySelectorAll(".card");
             cards.forEach((card) => {
-              const gameTitle = card.querySelector("figcaption").textContent;
-              const gameImage = card.querySelector("img").src;
-              const gameHref = card.getAttribute("href");
-
-              // Store the game info in the gameCards array
-              gameCards.push({
-                title: gameTitle,
-                image: gameImage,
-                href: gameHref,
-              });
+              gameCards.push(card);
             });
+
+            // Return the populated gameCards array
+            return gameCards;
           } catch (error) {
             console.error("Error loading card data:", error);
+            return [];
           }
         }
 
@@ -1249,7 +1273,6 @@
         }
       }
 
-      // Function to enable the Random Game button after cards are loaded
       function enableRandomGameFeature() {
         if (gameCards.length > 0) {
           randomGameButton.addEventListener("click", function (e) {
@@ -1266,23 +1289,23 @@
       // Load the card data after DOM is ready
       loadCardData();
 
-      // Block Lanschool button event listener
       blockLanschoolButton.addEventListener("click", function (e) {
         e.preventDefault();
         var url = "https://strongdog.netlify.app";
         var newTab = window.open();
         newTab.document.write(`
-				<html>
-					<body style="margin: 0; height: 100vh;">
-						<iframe src="${url}" style="border: none; width: 100%; height: 100%;"></iframe>
-					</body>
-				</html>
-			`);
+        <html>
+          <body style="margin: 0; height: 100vh;">
+            <iframe src="${url}" style="border: none; width: 100%; height: 100%;"></iframe>
+          </body>
+        </html>
+      `);
         newTab.document.close();
       });
+
+      loadCardData();
     });
   </script>
-
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const page1Link = document.getElementById("page1-link");
