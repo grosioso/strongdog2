@@ -1,354 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
   <style>
-      body {
-        font-family: 'Manrope', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-weight: 500;
-        margin: 0;
-        background-color: #555555;
-        color: #444;
-      }
+    body {
+      font-family: "Manrope", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: 500;
+      margin: 0;
+      background-color: #555555;
+      color: #444;
+    }
 
-      #chat-app {
-        display: flex;
-        height: 100vh;
-        width: 100%;
-        position: absolute;
-        right: 0;
-      }
+    #chat-app {
+      display: flex;
+      height: 100vh;
+      width: 100%;
+      position: absolute;
+      right: 0;
+    }
 
-      #chat-list {
-        background-color: gray;
-        overflow-y: auto;
-        margin: 11px;
-        border-radius: 5px;
-        flex-basis: 20%;
-        max-width: 300px;
-        min-width: 200px;
-        display: flex;
-        flex-direction: column;
-        box-sizing: border-box;
-        position: relative;
-      }
+    #chat-list {
+      background-color: gray;
+      overflow-y: auto;
+      margin: 11px;
+      border-radius: 5px;
+      flex-basis: 20%;
+      max-width: 300px;
+      min-width: 200px;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      position: relative;
+    }
 
-      #new-chat-button {
-        width: 100%;
-        padding: 10px 20px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 4px 4px 0 0;
-        cursor: pointer;
-        font-size: 16px;
-        box-shadow: 0 0 10px black;
-        transition-duration: 0.3s;
-        position: sticky;
-        top: 0;
-        margin-bottom: 10px;
-      }
+    #new-chat-button {
+      width: 100%;
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 4px 4px 0 0;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 0 10px black;
+      transition-duration: 0.3s;
+      position: sticky;
+      top: 0;
+      margin-bottom: 10px;
+    }
 
-      #new-chat-button:hover {
-        background-color: #45a049;
-      }
+    #new-chat-button:hover {
+      background-color: #45a049;
+    }
 
-      #chats {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-      }
+    #chats {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
 
-      #chats li {
-        cursor: pointer;
-        padding: 10px;
-        margin-bottom: 5px;
-        background-color: #7b7b7b;
-        border-radius: 4px;
-        transition: background-color 0.3s;
-        height: 20px;
-      }
+    #chats li {
+      cursor: pointer;
+      padding: 10px;
+      margin-bottom: 5px;
+      background-color: #7b7b7b;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+      height: 20px;
+    }
 
-      #chats li:hover {
-        background-color: #636262;
-      }
+    #chats li:hover {
+      background-color: #636262;
+    }
 
-      #chats li:hover .remove-chat-button {
-        display: inline-block;
-      }
+    #chats li:hover .remove-chat-button {
+      display: inline-block;
+    }
 
-      #chat-container {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        background-color: #7b7b7b;
-        padding: 20px;
-        border-radius: 5px;
-        margin: 10px;
-        position: relative;
-      }
+    #chat-container {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background-color: #7b7b7b;
+      padding: 20px;
+      border-radius: 5px;
+      margin: 10px;
+      position: relative;
+    }
 
-      #chat-header {
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: 0;
-        padding: 10px;
-        text-align: center;
-        margin-top: 0;
-        background-color: #6b6b6b;
-        font-size: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 0 30px black;
-        z-index: 2;
-      }
+    #chat-header {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      padding: 10px;
+      text-align: center;
+      margin-top: 0;
+      background-color: #6b6b6b;
+      font-size: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 30px black;
+      z-index: 2;
+    }
 
-      #messages {
-        position: absolute;
-        top: 27px;
-        bottom: 60px;
-        left: 0;
-        right: 0;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-        list-style-type: none;
-        padding: 0;
-        flex-grow: 1;
-      }
+    #messages {
+      position: absolute;
+      top: 27px;
+      bottom: 60px;
+      left: 0;
+      right: 0;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      list-style-type: none;
+      padding: 0;
+      flex-grow: 1;
+    }
 
-      #messages::-webkit-scrollbar {
-        display: none;
-      }
+    #messages::-webkit-scrollbar {
+      display: none;
+    }
 
-      #messages li {
-        padding: 10px 15px;
-        margin-bottom: 10px;
-        border-radius: 18px;
-        max-width: 60%;
-        word-wrap: break-word;
-        line-height: 1.5;
-      }
+    #messages li {
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      border-radius: 18px;
+      max-width: 60%;
+      word-wrap: break-word;
+      line-height: 1.5;
+    }
 
-      .sent {
-        background-color: #007bff;
-        color: white;
-        align-self: flex-end;
-        margin-right: 5px;
-      }
+    .sent {
+      background-color: #007bff;
+      color: white;
+      align-self: flex-end;
+      margin-right: 5px;
+    }
 
-      .received {
-        background-color: #e0e0e0;
-        align-self: flex-start;
-        margin-left: 5px;
-      }
+    .received {
+      background-color: #e0e0e0;
+      align-self: flex-start;
+      margin-left: 5px;
+    }
 
-      #input-container {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        display: flex;
-        margin-top: 20px;
-        padding-top: 20px;
-        padding: 10px;
-        background-color: #7b7b7b;
-        border-top: none;
-      }
+    #input-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      margin-top: 20px;
+      padding-top: 20px;
+      padding: 10px;
+      background-color: #7b7b7b;
+      border-top: none;
+    }
 
-      #message-input {
-        flex-grow: 1;
-        padding: 10px;
-        border: 2px solid #ddd;
-        border-radius: 4px;
-        margin-right: 10px;
-      }
+    #message-input {
+      flex-grow: 1;
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
 
-      #send-message-button {
-        padding: 10px 20px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        transition-duration: 0.3s;
-        cursor: pointer;
-      }
+    #send-message-button {
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      transition-duration: 0.3s;
+      cursor: pointer;
+    }
 
-      #send-message-button:hover {
-        background-color: #45a049;
-      }
+    #send-message-button:hover {
+      background-color: #45a049;
+    }
 
-      .remove-chat-button {
-        padding: 6px 8px !important;
-        font-size: 10px !important;
-        background-color: #ff4444 !important;
-        color: white !important;
-        border: none !important;
-        border-radius: 4px !important;
-        cursor: pointer !important;
-        margin-left: 5px !important;
-        line-height: normal !important;
-        float: right !important;
-        transition-duration: 0.3s !important;
-        display: none;
-        animation: 0.5s buttonSlide both;
-        overflow: hidden;
-      }
+    .remove-chat-button {
+      padding: 6px 8px !important;
+      font-size: 10px !important;
+      background-color: #ff4444 !important;
+      color: white !important;
+      border: none !important;
+      border-radius: 4px !important;
+      cursor: pointer !important;
+      margin-left: 5px !important;
+      line-height: normal !important;
+      float: right !important;
+      transition-duration: 0.3s !important;
+      display: none;
+      animation: 0.5s buttonSlide both;
+      overflow: hidden;
+    }
 
-      .remove-chat-button:hover {
-        background-color: #cc0000 !important;
-      }
+    .remove-chat-button:hover {
+      background-color: #cc0000 !important;
+    }
 
-      .chat-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px;
-        background-color: #f8f8f8;
-      }
+    .chat-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background-color: #f8f8f8;
+    }
 
-      #login-status {
-        color: white;
-        text-align: center;
-        background-color: rgb(70, 70, 70);
-        padding: 10px;
-        margin: 11px;
-        border-radius: 5px;
-        overflow: auto;
-        max-height: 20px;
-        margin-bottom: 0;
-      }
+    #login-status {
+      color: white;
+      text-align: center;
+      background-color: rgb(70, 70, 70);
+      padding: 10px;
+      margin: 11px;
+      border-radius: 5px;
+      overflow: auto;
+      max-height: 20px;
+      margin-bottom: 0;
+    }
 
-      #sign-out-button {
-        background-color: #ff4444;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        padding: 10px;
-        cursor: pointer;
-        transition-duration: 0.3s;
-        margin: 10px;
-      }
+    #sign-out-button {
+      background-color: #ff4444;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 10px;
+      cursor: pointer;
+      transition-duration: 0.3s;
+      margin: 10px;
+    }
 
-      #sign-out-button:hover {
-        background-color: #cc0000;
-      }
+    #sign-out-button:hover {
+      background-color: #cc0000;
+    }
 
-      .auth-button {
-        background-color: rgb(80, 80, 255);
-        color: white;
-        border: none;
-        border-radius: 4px;
-        padding: 10px;
-        cursor: pointer;
-        transition-duration: 0.3s;
-        margin: 10px;
-      }
+    .auth-button {
+      background-color: rgb(80, 80, 255);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 10px;
+      cursor: pointer;
+      transition-duration: 0.3s;
+      margin: 10px;
+    }
 
-      .auth-button:hover {
-        background-color: rgb(60, 60, 255);
-      }
+    .auth-button:hover {
+      background-color: rgb(60, 60, 255);
+    }
 
-      #settings-button {
-        background-color: rgb(80, 80, 255);
-        color: white;
-        border: none;
-        border-radius: 4px;
-        padding: 10px;
-        cursor: pointer;
-        transition-duration: 0.3s;
-        margin: 10px;
-      }
+    #settings-button {
+      background-color: rgb(80, 80, 255);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 10px;
+      cursor: pointer;
+      transition-duration: 0.3s;
+      margin: 10px;
+    }
 
-      #settings-button:hover {
-        background-color: rgb(60, 60, 255);
-      }
+    #settings-button:hover {
+      background-color: rgb(60, 60, 255);
+    }
 
-      .owner-badge, .trex-badge, .dev-badge, .sigma-badge {
-        border-radius: 4px;
-        padding: 2px 6px;
-        margin-right: 5px;
-        font-size: 12px;
-      }
+    .owner-badge,
+    .trex-badge,
+    .dev-badge,
+    .sigma-badge {
+      border-radius: 4px;
+      padding: 2px 6px;
+      margin-right: 5px;
+      font-size: 12px;
+    }
 
-      .owner-badge {
-        background-color: rgb(255, 200, 0);
-        color: rgb(0, 0, 0);
-      }
+    .owner-badge {
+      background-color: rgb(255, 200, 0);
+      color: rgb(0, 0, 0);
+    }
 
-      .trex-badge {
-        background-color: rgb(9, 255, 0);
-        color: rgb(0, 0, 0);
-      }
+    .trex-badge {
+      background-color: rgb(9, 255, 0);
+      color: rgb(0, 0, 0);
+    }
 
-      .dev-badge {
-        background-color: rgb(73, 227, 100);
-        color: rgb(0, 0, 0);
-      }
+    .dev-badge {
+      background-color: rgb(73, 227, 100);
+      color: rgb(0, 0, 0);
+    }
 
-      .sigma-badge {
-        background-color: rgb(255, 2, 175);
-        color: rgb(0, 0, 0);
-      }
+    .sigma-badge {
+      background-color: rgb(255, 2, 175);
+      color: rgb(0, 0, 0);
+    }
 
-      #rickrollVideoContainer {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: rgba(0, 0, 0, 0.8);
-        z-index: 1000;
-      }
+    #rickrollVideoContainer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+    }
 
-      #rickrollVideo {
-        width: 100%;
-        max-width: 640px;
-        height: 100%;
-      }
+    #rickrollVideo {
+      width: 100%;
+      max-width: 640px;
+      height: 100%;
+    }
 
-      .new-message-indicator {
-        height: 10px;
+    .new-message-indicator {
+      height: 10px;
+      width: 10px;
+      background-color: red;
+      border-radius: 50%;
+      display: inline-block;
+      margin-left: 7px;
+    }
+
+    .timestamp {
+      font-size: 0.8em;
+      color: rgb(73, 73, 73);
+      margin-top: 8px;
+      display: block;
+    }
+
+    @keyframes slideRight {
+      from {
+        left: -320px;
+      }
+      to {
+        left: 0px;
+      }
+    }
+
+    @keyframes slideLeft {
+      from {
+        left: 0px;
+      }
+      to {
+        left: -320px;
+      }
+    }
+
+    @keyframes squish {
+      from {
+        width: calc(100% - 10px);
+      }
+      to {
+        width: calc(100% - 330px);
+      }
+    }
+
+    @keyframes unsquish {
+      from {
+        width: calc(100% - 330px);
+      }
+      to {
+        width: calc(100% - 10px);
+      }
+    }
+
+    @keyframes buttonSlide {
+      from {
         width: 10px;
-        background-color: red;
-        border-radius: 50%;
-        display: inline-block;
-        margin-left: 7px;
+        opacity: 0;
       }
-
-      .timestamp {
-        font-size: 0.8em;
-        color: rgb(73, 73, 73);
-        margin-top: 8px;
-        display: block;
+      to {
+        width: 60px;
+        opacity: 1;
       }
-
-      @keyframes slideRight {
-        from { left: -320px; }
-        to { left: 0px; }
-      }
-
-      @keyframes slideLeft {
-        from { left: 0px; }
-        to { left: -320px; }
-      }
-
-      @keyframes squish {
-        from { width: calc(100% - 10px); }
-        to { width: calc(100% - 330px); }
-      }
-
-      @keyframes unsquish {
-        from { width: calc(100% - 330px); }
-        to { width: calc(100% - 10px); }
-      }
-
-      @keyframes buttonSlide {
-        from { width: 10px; opacity: 0; }
-        to { width: 60px; opacity: 1; }
-      }
+    }
   </style>
   <head>
     <meta charset="UTF-8" />
@@ -359,7 +384,7 @@
       Settings
     </button>
     <div id="login-status">Not logged in</div>
-    <button id="sign-out-button" style="display: none;">Sign Out</button>
+    <button id="sign-out-button" style="display: none">Sign Out</button>
     <button class="auth-button" onclick="window.location.href='signup.html'">
       Sign Up
     </button>
@@ -371,7 +396,7 @@
         <button id="new-chat-button">New Chat</button>
         <ul id="chats"></ul>
       </div>
-      <div id="chat-container" style="display:none;">
+      <div id="chat-container" style="display: none">
         <div id="chat-header">Select a chat</div>
         <ul id="messages"></ul>
         <div id="input-container">
@@ -382,7 +407,7 @@
         </div>
       </div>
     </div>
-    <div id="rickrollVideoContainer" style="display: none;">
+    <div id="rickrollVideoContainer" style="display: none">
       <video id="rickrollVideo" width="320" height="240" controls>
         <source src="trolls/rickroll.mp4" type="video/mp4" />
       </video>
@@ -396,15 +421,15 @@
 
     <!-- Your web app's Firebase configuration -->
     <script>
-      var firebaseConfig = {
-        apiKey: "AIzaSyCqk5PE-8ziN2JzAciTNSB19ynVrLnjMKw",
-        authDomain: "chat-aa0b2.firebaseapp.com",
-        databaseURL: "https://chat-aa0b2-default-rtdb.firebaseio.com",
-        projectId: "chat-aa0b2",
-        storageBucket: "chat-aa0b2.appspot.com",
-        messagingSenderId: "487874472529",
-        appId: "1:487874472529:web:88d0e46dd863a2d7232670",
-        measurementId: "G-D88TDDVPGJ",
+      const firebaseConfig = {
+        apiKey: "AIzaSyBh-VnGiP4qZD0r14gfn9dr77GwtslpTqU",
+        authDomain: "strongdog-auth.firebaseapp.com",
+        databaseURL: "https://strongdog-auth-default-rtdb.firebaseio.com",
+        projectId: "strongdog-auth",
+        storageBucket: "strongdog-auth.appspot.com",
+        messagingSenderId: "936276282572",
+        appId: "1:936276282572:web:a802b7f609381ff9428669",
+        measurementId: "G-0YLTCV2MMS",
       };
 
       // Initialize Firebase
@@ -821,8 +846,6 @@
         const shouldScroll = isScrolledToBottom(messagesContainer);
         const msgElement = document.createElement("li");
         const user = firebase.auth().currentUser;
-
-        // Add the owner badge if the conditions are met
         let badge = "";
         if (messageData.sender === "josh") {
           badge = "<span class='owner-badge'>Owner</span> ";
@@ -837,7 +860,7 @@
         let senderDisplayName = badge + censorWord(messageData.sender);
         let messageTime = formatTimestamp(messageData.timestamp);
 
-        if (messageData.sender === (user.displayName || user.email)) {
+        if (messageData.senderUID === user.uid) {
           msgElement.className = "sent";
         } else if (messageData.isSystemMessage) {
           msgElement.className = "system-message";
@@ -1152,6 +1175,7 @@
         const messageData = {
           text: censoredText,
           sender: user.displayName || user.email, // Use displayName if available
+          senderUID: user.uid, // Add the sender's UID
           timestamp: firebase.database.ServerValue.TIMESTAMP,
         };
         firebase
@@ -1390,6 +1414,20 @@
 
       function getQuillText() {
         return quill.root.innerHTML;
+      }
+      function updateUsernameInMessages(newUsername, userUID) {
+        const messagesRef = firebase.database().ref("messages");
+
+        messagesRef.once("value", (snapshot) => {
+          snapshot.forEach((chatSnapshot) => {
+            chatSnapshot.forEach((messageSnapshot) => {
+              const message = messageSnapshot.val();
+              if (message.senderUID === userUID) {
+                messageSnapshot.ref.update({ sender: newUsername });
+              }
+            });
+          });
+        });
       }
     </script>
   </body>

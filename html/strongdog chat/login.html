@@ -1,114 +1,472 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Strongdog Chat - Login</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Strongdog</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #282828, #4e4e4e);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            color: #fff;
-        }
+      /* Body styling */
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #222, #333, #555, #888);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        position: relative;
+        overflow: hidden;
+      }
 
-        #login-form {
-            width: 300px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.18);
-        }
+      /* Moving blurred blobs */
+      .blob {
+        position: absolute;
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.15),
+          transparent
+        );
+        border-radius: 50%;
+        filter: blur(150px);
+        animation: moveBlobs 30s infinite alternate ease-in-out;
+        z-index: -1;
+      }
 
-        #login-form h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+      .blob:nth-child(1) {
+        top: 10%;
+        left: 20%;
+      }
 
-        #login-form input {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 10px;
-            border: none;
-            outline: none;
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #333;
-        }
+      .blob:nth-child(2) {
+        bottom: 20%;
+        right: 15%;
+        width: 450px;
+        height: 450px;
+      }
 
-        #login-form button {
-            width: 100%;
-            padding: 10px;
-            background-color: #494949;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+      .blob:nth-child(3) {
+        top: 60%;
+        left: 50%;
+        width: 300px;
+        height: 300px;
+      }
 
-        #login-form button:hover {
-            background-color: #555555;
+      @keyframes moveBlobs {
+        0% {
+          transform: translate(0, 0);
         }
+        100% {
+          transform: translate(80px, -60px);
+        }
+      }
 
-        #error-message {
-            text-align: center;
-            font-size: 14px;
-            margin-top: 10px;
-        }
+      /* Form container */
+      .form-container {
+        background-color: #3c3c3c;
+        padding: 30px;
+        border-radius: 15px;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+        z-index: 2;
+      }
+
+      .form-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #fff;
+        font-size: 24px;
+      }
+
+      .form-container input {
+        width: calc(100% - 40px);
+        padding: 12px;
+        margin: 10px 0;
+        background-color: #525252;
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        font-size: 16px;
+        display: inline-block;
+        vertical-align: middle;
+        position: relative;
+      }
+
+      .password-container {
+        position: relative;
+      }
+
+      .password-container input {
+        width: calc(100% - 40px);
+        margin: 10px 0;
+        padding-right: 30px;
+      }
+
+      .show-password {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #fff;
+        font-size: 20px;
+      }
+
+      .form-container button {
+        width: 100%;
+        padding: 12px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .form-container button:hover {
+        background-color: #0056b3;
+      }
+
+      /* Google sign-in button styled in red */
+      .google-btn {
+        margin-top: 15px;
+        background-color: #db4437 !important; /* Google Red */
+        padding: 12px;
+        border: none;
+        color: white;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .google-btn:hover {
+        background-color: #c23321 !important;
+      }
+
+      .form-container .error {
+        color: #ff4d4d;
+        font-size: 14px;
+      }
+
+      .form-container a {
+        color: #007bff;
+        text-align: center;
+        display: block;
+        margin-top: 15px;
+      }
+
+      .form-container a:hover {
+        text-decoration: underline;
+      }
+      .username-prompt {
+        display: none; /* Hidden by default */
+        background-color: #3c3c3c;
+        padding: 30px;
+        border-radius: 15px;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+        z-index: 2;
+        text-align: center;
+      }
+
+      .username-prompt input {
+        width: calc(100% - 40px);
+        padding: 12px;
+        margin: 10px 0;
+        background-color: #525252;
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        font-size: 16px;
+      }
+
+      .username-prompt button {
+        width: 100%;
+        padding: 12px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .username-prompt button:hover {
+        background-color: #218838;
+      }
+
+      .username-prompt .error {
+        color: #ff4d4d;
+        font-size: 14px;
+      }
     </style>
-</head>
-<body>
-    <div id="login-form">
-        <h2>Login</h2>
-        <input type="email" id="email" placeholder="Email" autofocus>
-        <input type="password" id="password" placeholder="Password">
-        <button id="login-button">Login</button>
-        <p id="error-message"></p>
-    </div>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+      import {
+        getAuth,
+        signInWithEmailAndPassword,
+        GoogleAuthProvider,
+        signInWithPopup,
+        updateProfile,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+      import {
+        getFirestore,
+        doc,
+        setDoc,
+        getDoc,
+        collection,
+        query,
+        where,
+        getDocs,
+      } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBh-VnGiP4qZD0r14gfn9dr77GwtslpTqU",
+        authDomain: "strongdog-auth.firebaseapp.com",
+        projectId: "strongdog-auth",
+        storageBucket: "strongdog-auth.appspot.com",
+        messagingSenderId: "936276282572",
+        appId: "1:936276282572:web:a802b7f609381ff9428669",
+        measurementId: "G-0YLTCV2MMS",
+      };
 
-    <script>
-        var firebaseConfig = {
-            apiKey: "AIzaSyCqk5PE-8ziN2JzAciTNSB19ynVrLnjMKw",
-            authDomain: "chat-aa0b2.firebaseapp.com",
-            databaseURL: "https://chat-aa0b2-default-rtdb.firebaseio.com",
-            projectId: "chat-aa0b2",
-            storageBucket: "chat-aa0b2.appspot.com",
-            messagingSenderId: "487874472529",
-            appId: "1:487874472529:web:88d0e46dd863a2d7232670",
-            measurementId: "G-D88TDDVPGJ"
-        };
-        firebase.initializeApp(firebaseConfig);
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const provider = new GoogleAuthProvider();
+      const db = getFirestore(app);
 
-        document.getElementById('login-button').addEventListener('click', login);
+      // List of disallowed words
+      const disallowedWords = [
+        "nigger",
+        "nigga",
+        "fuck",
+        "shit",
+        "ass",
+        "bitch",
+        "fucker",
+        "beiner",
+        "cunt",
+        "kkk",
+        "nigg@",
+        "n1gger",
+      ];
 
-        function login() {
-            var email = document.getElementById('email').value;
-            var password = document.getElementById('password').value;
+      // Function to check for disallowed words
+      function containsDisallowedWords(username) {
+        let normalizedUsername = username.toLowerCase();
 
-            firebase.auth().signInWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                document.cookie = "userEmail=" + userCredential.user.email + "; path=/";
-                window.location.href = 'index.html';
+        // Replace leet speak numbers with letters
+        normalizedUsername = normalizedUsername.replace(/1/g, "i");
+        normalizedUsername = normalizedUsername.replace(/3/g, "e");
+        normalizedUsername = normalizedUsername.replace(/4/g, "a");
+        normalizedUsername = normalizedUsername.replace(/5/g, "s");
+        normalizedUsername = normalizedUsername.replace(/0/g, "o");
+
+        // Remove special characters
+        normalizedUsername = normalizedUsername.replace(/[^a-zA-Z]/g, "");
+
+        return disallowedWords.some((word) =>
+          normalizedUsername.includes(word)
+        );
+      }
+
+      // Function to check username availability
+      async function checkUsernameAvailability(username) {
+        try {
+          const usernamesRef = collection(db, "usernames");
+          const q = query(usernamesRef, where("username", "==", username));
+          const querySnapshot = await getDocs(q);
+
+          // If the username exists, it's taken
+          if (!querySnapshot.empty) {
+            return false;
+          }
+          return true;
+        } catch (error) {
+          console.error("Error checking username availability:", error);
+          throw error;
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const loginForm = document.getElementById("login-form");
+        const googleSignInBtn = document.getElementById("google-signin");
+        const usernamePrompt = document.getElementById("username-prompt");
+        const usernameForm = document.getElementById("username-form");
+        const errorMessage = document.getElementById("error-message");
+        const togglePasswordBtns = document.querySelectorAll(".show-password");
+
+        loginForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+
+          signInWithEmailAndPassword(auth, email, password)
+            .then(() => {
+              window.location.href = "index.html";
             })
             .catch((error) => {
-                document.getElementById('error-message').textContent = error.message;
+              errorMessage.textContent = `Error: ${error.message}`;
             });
-        }
-
-        document.getElementById('login-form').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                login(); 
-            }
         });
+
+        googleSignInBtn.addEventListener("click", () => {
+          signInWithPopup(auth, provider)
+            .then(async (result) => {
+              const user = result.user;
+              let isNewUser = false;
+
+              // Check if additionalUserInfo is available
+              if (
+                result.additionalUserInfo &&
+                typeof result.additionalUserInfo.isNewUser !== "undefined"
+              ) {
+                isNewUser = result.additionalUserInfo.isNewUser;
+              } else {
+                // Fallback: Check in Firestore if the user has set a username
+                const usernameDoc = await getDoc(
+                  doc(db, "usernames", user.uid)
+                );
+                isNewUser = !usernameDoc.exists();
+              }
+
+              if (isNewUser) {
+                // Hide login form and show username prompt
+                document.querySelector(".form-container").style.display =
+                  "none";
+                usernamePrompt.style.display = "block";
+              } else {
+                window.location.href = "index.html";
+              }
+            })
+            .catch((error) => {
+              errorMessage.textContent = `Error: ${error.message}`;
+            });
+        });
+
+        usernameForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const usernameInput = document.getElementById("username");
+          const usernameError = document.getElementById("username-error");
+          const username = usernameInput.value.trim();
+
+          // Reset error message
+          usernameError.textContent = "";
+
+          // Check if username exceeds 16 characters
+          if (username.length > 16) {
+            usernameError.textContent =
+              "Username cannot be longer than 16 characters.";
+            return;
+          }
+
+          // Username validation for disallowed words
+          if (containsDisallowedWords(username)) {
+            usernameError.textContent =
+              "Username contains inappropriate language. Please choose another.";
+            return;
+          }
+
+          try {
+            // Check if username is available
+            const isAvailable = await checkUsernameAvailability(username);
+            if (!isAvailable) {
+              usernameError.textContent =
+                "Username is already taken. Please choose another.";
+              return;
+            }
+
+            const user = auth.currentUser;
+
+            // Update user profile with the username
+            await updateProfile(user, {
+              displayName: username,
+            });
+
+            // Save the username to Firestore
+            await setDoc(doc(db, "usernames", user.uid), {
+              username: username,
+            });
+
+            // Redirect to main page
+            window.location.href = "index.html";
+          } catch (error) {
+            console.error("Error during username setup:", error);
+            usernameError.textContent = `Error: ${error.message}`;
+          }
+        });
+
+        // Listen to auth state changes to handle user without username
+        onAuthStateChanged(auth, async (user) => {
+          if (user) {
+            // Check if user has a username in Firestore
+            const usernameDoc = await getDoc(doc(db, "usernames", user.uid));
+            if (!usernameDoc.exists()) {
+              // User does not have a username, prompt for one
+              document.querySelector(".form-container").style.display = "none";
+              usernamePrompt.style.display = "block";
+            }
+          }
+        });
+
+        // Toggle password visibility
+        togglePasswordBtns.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const input = btn.previousElementSibling;
+            if (input.type === "password") {
+              input.type = "text";
+              btn.innerHTML = "❌";
+            } else {
+              input.type = "password";
+              btn.innerHTML = "&#128065;";
+            }
+          });
+        });
+      });
     </script>
-</body>
+  </head>
+  <body>
+    <!-- Blurred blobs background -->
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+
+    <!-- Login Form -->
+    <div class="form-container">
+      <h2>Login</h2>
+      <form id="login-form">
+        <input type="email" id="email" placeholder="Email" required />
+        <div class="password-container">
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+          <span class="show-password">&#128065;</span>
+        </div>
+        <p class="error" id="error-message"></p>
+        <button type="submit">Login</button>
+      </form>
+      <button id="google-signin" class="google-btn">Sign in with Google</button>
+      <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+    </div>
+
+    <!-- Username Prompt -->
+    <div id="username-prompt" class="username-prompt">
+      <h2>Set Your Username</h2>
+      <form id="username-form">
+        <input type="text" id="username" placeholder="Username" required />
+        <p class="error" id="username-error"></p>
+        <button type="submit">Continue</button>
+      </form>
+    </div>
+  </body>
 </html>

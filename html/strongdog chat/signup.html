@@ -1,151 +1,374 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Strongdog Chat - Sign Up</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up | Strongdog</title>
     <style>
-    body {
-        font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #282828, #4e4e4e);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            color: #fff;
-    }
+      /* Body styling */
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #222, #333, #555, #888);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        position: relative;
+        overflow: hidden;
+      }
 
-    #signup-form {
+      /* Moving blurred blobs */
+      .blob {
+        position: absolute;
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.15),
+          transparent
+        );
+        border-radius: 50%;
+        filter: blur(150px);
+        animation: moveBlobs 30s infinite alternate ease-in-out;
+        z-index: -1;
+      }
+
+      /* Blobs positioned on different areas */
+      .blob:nth-child(1) {
+        top: 10%;
+        left: 20%;
+      }
+
+      .blob:nth-child(2) {
+        bottom: 20%;
+        right: 15%;
+        width: 450px;
+        height: 450px;
+      }
+
+      .blob:nth-child(3) {
+        top: 60%;
+        left: 50%;
         width: 300px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.18);
-    }
+        height: 300px;
+      }
 
-        #signup-form h2 {
-            text-align: center;
-            margin-bottom: 20px;
+      /* Blobs animation */
+      @keyframes moveBlobs {
+        0% {
+          transform: translate(0, 0);
         }
-
-        #signup-form input {
-            width: calc(100% - 20px); /* Adjust width accounting for padding */
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            border: none;
-            outline: none;
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #333;
+        100% {
+          transform: translate(80px, -60px);
         }
+      }
 
-        #signup-form button {
-            width: 100%;
-            padding: 10px;
-            background-color: #494949;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-    }
+      /* Form container */
+      .form-container {
+        background-color: #3c3c3c;
+        padding: 30px;
+        border-radius: 15px;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+        z-index: 2;
+      }
 
-    #signup-form button:hover {
-        background-color: #555555;
-    }
+      /* Form header */
+      .form-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #fff;
+        font-size: 24px;
+      }
 
-        #error-message {
-            text-align: center;
-            font-size: 14px;
-            margin-top: 10px;
-        }
+      /* Input styling */
+      .form-container input {
+        width: calc(100% - 40px);
+        padding: 12px;
+        margin: 10px 0;
+        background-color: #525252;
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        font-size: 16px;
+        display: inline-block;
+        vertical-align: middle;
+        position: relative;
+      }
+
+      /* Password container with eye icon */
+      .password-container {
+        position: relative;
+      }
+
+      .password-container input {
+        width: calc(100% - 40px);
+        margin: 10px 0;
+        padding-right: 30px;
+      }
+
+      /* Eye icon */
+      .show-password {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #fff;
+        font-size: 20px;
+      }
+
+      /* Button styling */
+      .form-container button {
+        width: 100%;
+        padding: 12px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .form-container button:hover {
+        background-color: #218838;
+      }
+
+      /* Error message */
+      .form-container .error {
+        color: #ff4d4d;
+        font-size: 14px;
+      }
+
+      /* Links */
+      .form-container a {
+        color: #28a745;
+        text-align: center;
+        display: block;
+        margin-top: 15px;
+      }
+
+      .form-container a:hover {
+        text-decoration: underline;
+      }
     </style>
-</head>
-<body>
-    <div id="signup-form">
-        <h2>Sign Up</h2>
-        <input type="text" id="name" placeholder="Name" autofocus>
-        <input type="email" id="email" placeholder="Email">
-        <input type="password" id="password" placeholder="Password">
-        <button id="sign-up-button">Sign Up</button>
-        <p id="error-message"></p>
-    </div>
+    <script type="module">
+      // Import Firebase modules
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+      import {
+        getAuth,
+        createUserWithEmailAndPassword,
+        updateProfile,
+      } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+      import {
+        getFirestore,
+        doc,
+        setDoc,
+        collection,
+        query,
+        where,
+        getDocs,
+      } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
-    <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyCqk5PE-8ziN2JzAciTNSB19ynVrLnjMKw",
-            authDomain: "chat-aa0b2.firebaseapp.com",
-            databaseURL: "https://chat-aa0b2-default-rtdb.firebaseio.com",
-            projectId: "chat-aa0b2",
-            storageBucket: "chat-aa0b2.appspot.com",
-            messagingSenderId: "487874472529",
-            appId: "1:487874472529:web:88d0e46dd863a2d7232670",
-            measurementId: "G-D88TDDVPGJ"
-        };
+      // Firebase configuration for strongdog-auth project
+      const firebaseConfig = {
+        apiKey: "AIzaSyBh-VnGiP4qZD0r14gfn9dr77GwtslpTqU",
+        authDomain: "strongdog-auth.firebaseapp.com",
+        projectId: "strongdog-auth",
+        storageBucket: "strongdog-auth.appspot.com",
+        messagingSenderId: "936276282572",
+        appId: "1:936276282572:web:a802b7f609381ff9428669",
+        measurementId: "G-0YLTCV2MMS",
+      };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
 
-const forbiddenWords = ["nigger", "nigga", "fuck", "shit", "ass", "bitch", "fucker", "beiner", "cunt", "kkk", "nigg@", "penis", "cum"];
+      // List of disallowed words
+      const disallowedWords = [
+        "nigger",
+        "nigga",
+        "fuck",
+        "shit",
+        "ass",
+        "bitch",
+        "fucker",
+        "beiner",
+        "cunt",
+        "kkk",
+        "nigg@",
+        "n1gger",
+      ];
 
-const signupButton = document.getElementById('sign-up-button');
-signupButton.addEventListener('click', signUp);
+      // Function to check for disallowed words
+      function containsDisallowedWords(username) {
+        let normalizedUsername = username.toLowerCase();
 
-function signUp() {
-    var name = document.getElementById('name').value.trim().toLowerCase();
-    var email = document.getElementById('email').value;
-    var password = document.getElementById('password').value;
+        // Replace leet speak numbers with letters
+        normalizedUsername = normalizedUsername.replace(/1/g, "i");
+        normalizedUsername = normalizedUsername.replace(/3/g, "e");
+        normalizedUsername = normalizedUsername.replace(/4/g, "a");
+        normalizedUsername = normalizedUsername.replace(/5/g, "s");
+        normalizedUsername = normalizedUsername.replace(/0/g, "o");
 
-    // Check if the display name is forbidden
-    if (forbiddenWords.includes(name)) {
-        document.getElementById('error-message').textContent = 'This display name is not allowed. Please choose another.';
-        return; // Exit the function
-    }
+        // Remove special characters
+        normalizedUsername = normalizedUsername.replace(/[^a-zA-Z]/g, "");
 
+        return disallowedWords.some((word) =>
+          normalizedUsername.includes(word)
+        );
+      }
 
-    // Check if the display name already exists
-    const displayNameRef = firebase.database().ref('displayNames/' + name);
-    displayNameRef.once('value', snapshot => {
-        if (snapshot.exists()) {
-            document.getElementById('error-message').textContent = 'Display Name already taken. Please choose another.';
-        } else {
-            createUser(email, password, name);
+      // Function to check username availability
+      async function checkUsernameAvailability(username) {
+        try {
+          const usernamesRef = collection(db, "usernames");
+          const q = query(usernamesRef, where("username", "==", username));
+          const querySnapshot = await getDocs(q);
+
+          // If the username exists, it's taken
+          if (!querySnapshot.empty) {
+            return false;
+          }
+          return true;
+        } catch (error) {
+          console.error("Error checking username availability:", error);
+          throw error;
         }
-    });
-}
+      }
 
-function createUser(email, password, name) {
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-        // Save the display name in a separate node
-        const displayNameRef = firebase.database().ref('displayNames/' + name);
-        displayNameRef.set(userCredential.user.uid);
+      document.addEventListener("DOMContentLoaded", function () {
+        const signupForm = document.getElementById("signup-form");
+        const togglePasswordBtns = document.querySelectorAll(".show-password");
 
-        return userCredential.user.updateProfile({
-            displayName: name
+        signupForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const name = document.getElementById("name").value.trim();
+          const email = document.getElementById("email").value.trim();
+          const password = document.getElementById("password").value;
+          const confirmPassword =
+            document.getElementById("confirm-password").value;
+
+          // Reset error message
+          document.getElementById("error-message").textContent = "";
+
+          // Check if the username exceeds 16 characters
+          if (name.length > 16) {
+            document.getElementById("error-message").textContent =
+              "Username cannot be longer than 16 characters.";
+            return;
+          }
+
+          // Password validation
+          if (password !== confirmPassword) {
+            document.getElementById("error-message").textContent =
+              "Passwords do not match!";
+            return;
+          }
+
+          // Username validation for disallowed words
+          if (containsDisallowedWords(name)) {
+            document.getElementById("error-message").textContent =
+              "Username contains inappropriate language. Please choose another.";
+            return;
+          }
+
+          try {
+            // Check if username is available
+            const isAvailable = await checkUsernameAvailability(name);
+            if (!isAvailable) {
+              document.getElementById("error-message").textContent =
+                "Username is already taken. Please choose another.";
+              return;
+            }
+
+            // Create user with email and password
+            const userCredential = await createUserWithEmailAndPassword(
+              auth,
+              email,
+              password
+            );
+
+            // Update user profile with the name
+            await updateProfile(userCredential.user, {
+              displayName: name,
+            });
+
+            // Save the username to Firestore
+            await setDoc(doc(db, "usernames", userCredential.user.uid), {
+              username: name,
+            });
+
+            // Redirect to settings page after successful sign-up
+            window.location.href = "settings.html";
+          } catch (error) {
+            // Handle signup errors
+            console.error("Error during signup:", error);
+            document.getElementById(
+              "error-message"
+            ).textContent = `Error: ${error.message}`;
+          }
         });
-    })
-    .then(() => {
-        window.location.href = 'index.html'; // Redirect after successful signup
-    })
-    .catch((error) => {
-        document.getElementById('error-message').textContent = error.message;
-    });
-}
 
-document.getElementById('signup-form').addEventListener('keypress', function(event) {
-    if (event.key === 'Enter') {
-        event.preventDefault();
-        signUp();
-    }
-});
-</script>
-</body>
+        // Toggle password visibility for both password fields
+        togglePasswordBtns.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const input = btn.previousElementSibling;
+            if (input.type === "password") {
+              input.type = "text";
+              btn.innerHTML = "❌"; // X icon for hiding
+            } else {
+              input.type = "password";
+              btn.innerHTML = "&#128065;"; // Eye icon for showing
+            }
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <!-- Blurred blobs background -->
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+
+    <div class="form-container">
+      <h2>Sign Up</h2>
+      <form id="signup-form">
+        <input type="text" id="name" placeholder="Name" required />
+        <input type="email" id="email" placeholder="Email" required />
+        <div class="password-container">
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+          <span class="show-password" id="toggle-password">&#128065;</span>
+          <!-- Eye icon -->
+        </div>
+        <div class="password-container">
+          <input
+            type="password"
+            id="confirm-password"
+            placeholder="Confirm Password"
+            required
+          />
+          <span class="show-password" id="toggle-confirm-password"
+            >&#128065;</span
+          >
+          <!-- Eye icon -->
+        </div>
+        <p class="error" id="error-message"></p>
+        <button type="submit">Sign Up</button>
+      </form>
+      <p>Already have an account? <a href="login.html">Log in</a></p>
+    </div>
+  </body>
 </html>
