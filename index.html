@@ -1159,79 +1159,90 @@
       });
     </script>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const searchInput = document.querySelector(".search-bar");
-        const searchResults = document.getElementById("searchResults");
-        let gameCards = []; // Array to hold game data
+document.addEventListener("DOMContentLoaded", function () {
+  // Ensure the DOM is fully loaded and elements exist
+  const searchInput = document.querySelector(".search-bar");
+  const searchResults = document.getElementById("searchResults");
 
-        async function loadCardData() {
-          let gameCards = []; // Define gameCards inside the function
+  // Check if the elements are found
+  if (!searchInput || !searchResults) {
+    console.error("Search input or results container not found in the DOM.");
+    return; // Exit the function if elements are missing
+  }
 
-          try {
-            const response = await fetch("cards_data.html");
-            const text = await response.text();
+  let gameCards = []; // Array to hold game data
 
-            // Create a temporary DOM element to parse the fetched HTML
-            const tempDiv = document.createElement("div");
-            tempDiv.innerHTML = text;
+  // Function to load card data from external file
+  async function loadCardData() {
+    try {
+      const response = await fetch("cards_data.html");
+      const text = await response.text();
 
-            // Assuming each card has a class of 'card' in cards_data.html
-            const cards = tempDiv.querySelectorAll(".card");
-            cards.forEach((card) => {
-              gameCards.push(card);
-            });
+      // Create a temporary DOM element to parse the fetched HTML
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = text;
 
-            // Return the populated gameCards array
-            return gameCards;
-          } catch (error) {
-            console.error("Error loading card data:", error);
-            return [];
-          }
-        }
-
-        // Show results when the search bar is focused
-        searchInput.addEventListener("focus", function () {
-          searchResults.style.display = "block";
-          updateSearchResults(); // Call to display initial results (if any)
-        });
-
-        // Update the search results based on the input
-        searchInput.addEventListener("input", updateSearchResults);
-
-        // Hide results when clicking outside the search bar and results
-        document.addEventListener("click", function (event) {
-          if (
-            !searchInput.contains(event.target) &&
-            !searchResults.contains(event.target)
-          ) {
-            searchResults.style.display = "none";
-          }
-        });
-
-        // Function to update the search results
-        function updateSearchResults() {
-          const searchText = searchInput.value.toLowerCase();
-          const filteredCards = gameCards
-            .filter(
-              (card) => card.title.toLowerCase().includes(searchText) // Filter based on title
-            )
-            .slice(0, 7); // Top 7 results
-
-          searchResults.innerHTML = ""; // Clear previous results
-          filteredCards.forEach((card) => {
-            const resultLink = document.createElement("a");
-            resultLink.href = card.href;
-            resultLink.innerHTML = `<img src="${card.image}" alt="${card.title}"><span>${card.title}</span>`;
-            searchResults.appendChild(resultLink);
-          });
-
-          // Show or hide the results container based on whether there are results
-          searchResults.style.display = filteredCards.length ? "block" : "none";
-        }
-
-        // Load card data when the page loads
-        loadCardData();
+      // Assuming each card has a class of 'card' in cards_data.html
+      const cards = tempDiv.querySelectorAll(".card");
+      cards.forEach((card) => {
+        gameCards.push(card); // Add each card to the array
       });
+
+      return gameCards; // Return the populated gameCards array
+    } catch (error) {
+      console.error("Error loading card data:", error);
+      return [];
+    }
+  }
+
+  // Show results when the search bar is focused
+  searchInput.addEventListener("focus", function () {
+    searchResults.style.display = "block";
+    updateSearchResults(); // Call to display initial results (if any)
+  });
+
+  // Update the search results based on the input
+  searchInput.addEventListener("input", updateSearchResults);
+
+  // Hide results when clicking outside the search bar and results
+  document.addEventListener("click", function (event) {
+    if (
+      !searchInput.contains(event.target) &&
+      !searchResults.contains(event.target)
+    ) {
+      searchResults.style.display = "none";
+    }
+  });
+
+  // Function to update the search results
+  function updateSearchResults() {
+    const searchText = searchInput.value.toLowerCase();
+    const filteredCards = gameCards
+      .filter(
+        (card) => card.querySelector("figcaption").textContent.toLowerCase().includes(searchText) // Filter based on figcaption text
+      )
+      .slice(0, 7); // Top 7 results
+
+    searchResults.innerHTML = ""; // Clear previous results
+    filteredCards.forEach((card) => {
+      const cardImg = card.querySelector("img").src;
+      const cardTitle = card.querySelector("figcaption").textContent;
+      const cardHref = card.getAttribute("href");
+
+      const resultLink = document.createElement("a");
+      resultLink.href = cardHref;
+      resultLink.innerHTML = `<img src="${cardImg}" alt="${cardTitle}"><span>${cardTitle}</span>`;
+      searchResults.appendChild(resultLink);
+    });
+
+    // Show or hide the results container based on whether there are results
+    searchResults.style.display = filteredCards.length ? "block" : "none";
+  }
+
+  // Load card data when the page loads
+  loadCardData();
+});
+
     </script>
   </body>
   <script>
@@ -1386,7 +1397,6 @@
           cardsSinceLastCobweb++;
 
           if (cardsSinceLastCobweb >= nextCobwebInterval) {
-            console.log(`Adding cobweb to card ${index + 1}`);
             addCobwebToCard(card, cobwebImageSrc);
             cardsSinceLastCobweb = 0;
             nextCobwebInterval = getRandomInterval(7, 14);
@@ -1413,7 +1423,6 @@
         card.style.position = "relative";
 
         card.appendChild(cobwebDiv);
-        console.log("Cobweb added to card");
       }
 
       const observer = new MutationObserver(function (mutations) {
