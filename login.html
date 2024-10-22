@@ -75,6 +75,9 @@
           /* Body resets */
           margin: 0;
           padding: 0;
+
+          /* Don't allow the user to select any text */
+          user-select: none;
           
           background-color: var(--clr-bg-main);
           color: var(--clr-text);
@@ -101,6 +104,8 @@
       }
       input {  
           box-shadow: var(--sm-inward-shadow);
+          /* Only allow users to select stuff in the input boxes */
+          user-select: all;
       }
       .input-container {
           display: flex;
@@ -438,10 +443,21 @@
   <script>
     // Change the colors of the Google text inside the sign in with Google button
     const googleSignInBtnEl = document.getElementById("google-signin"),
-        word = "Google".split(""),
-        googleColors = ["#4889f4", "#eb493b", "#fbbe0d", "#4889f4", "#3aab58", "#eb493b"];
+          loginButtonEl = document.getElementById("loginBtn"),
+          changeUsernameBtnEl = document.getElementById("changeUsernameBtn"),
+          usernameForm = document.getElementById("username-form"),
+          word = "Google".split(""),
+          googleColors = ["#4889f4", "#eb493b", "#fbbe0d", "#4889f4", "#3aab58", "#eb493b"];
     googleSignInBtnEl.innerHTML = "Sign in with " + word.map((char, i) => (
         `<span style="color: ${googleColors[i]}">${char}</span>`
     )).join("");
+    document.addEventListener("keydown", e => {
+        const isEditingUsername = usernameForm.style.display === "block";
+        if (e.key === "Enter") {
+            isEditingUsername
+                ? changeUsernameBtnEl.click();
+                : loginButtonEl.click();
+        }
+    });
 </script>
 </html>
