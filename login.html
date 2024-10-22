@@ -262,7 +262,7 @@
         const errorMessage = document.getElementById("error-message");
         const togglePasswordBtns = document.querySelectorAll(".show-password");
         const loadingAnimationContainer = document.querySelector(".loading-animation-container");
-        const loadingAnimation = document.querySelector(".loading-nimation");
+        const loadingAnimation = document.querySelector(".loading-animation");
 
         loginForm.addEventListener("submit", e => {
           e.preventDefault();
@@ -282,10 +282,18 @@
         });
 
         function toggleLoadingAnimation() {
-          const isHidden = loadingAnimationContainer.style.display === "none";
-          loadingAnimationContainer.style.display = isHidden ? "grid" : "none";
-          loadingAnimation.style.animation = !isHidden ? "flip 2s ease-in-out infinite" : "none";
-        }
+  const loadingAnimationContainer = document.querySelector(".loading-animation-container");
+  const loadingAnimation = document.querySelector(".loading-animation"); // Corrected selector
+
+  if (loadingAnimationContainer && loadingAnimation) {
+    const isHidden = loadingAnimationContainer.style.display === "none";
+    
+    loadingAnimationContainer.style.display = isHidden ? "grid" : "none";
+    loadingAnimation.style.animation = isHidden ? "flip 2s ease-in-out infinite" : "none";
+  } else {
+    console.error("Loading animation elements not found");
+  }
+}
 
 
         googleSignInBtn.addEventListener("click", () => {
@@ -309,7 +317,7 @@
               }
 
               if (isNewUser) {
-                // Hide login form and show username prompt
+                toggleLoadingAnimation();
                 document.querySelector(".form-container").style.display = "none";
                 usernamePrompt.style.display = "block";
               } else {
