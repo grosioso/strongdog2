@@ -1,211 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+  <head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login | Strongdog</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
     <style>
-      /* Body styling */
+      /* Variables */
+      :root {
+          --clr-bg-main: #292d32;
+          --clr-bg-loading-animation-overlay: rgba(0, 0, 0, 0.8);
+          --clr-text: #dfdfdf;
+          --clr-err: #fa4b4b;
+          
+          --ff: "Quicksand", Ariel, sans-serif;
+          
+          --shadow-dark-clr: #1e2124;
+          --shadow-light-clr: #33373d;
+          
+          --lg-outwards-shadow: 
+              18px 18px 20px var(--shadow-dark-clr),
+              -18px -18px 20px var(--shadow-light-clr);
+          
+          --sm-outward-shadow: 
+              4px 4px 7px var(--shadow-dark-clr),
+              -4px -4px 7px var(--shadow-light-clr);
+          
+          --sm-inward-shadow: 
+              inset 4px 4px 10px var(--shadow-dark-clr),
+              inset -4px -4px 10px var(--shadow-light-clr);
+          
+          --border-radius-lg: 40px;
+          --border-radius-sm: 10px;
+          
+          --link-color: #5875e8;
+      }
+      /* If a user has their settings to be light theme */
+      @media (prefers-color-scheme: light) {
+          :root { 
+              --clr-bg-main: #e9edf0;
+              --clr-text: #444;
+              --shadow-dark-clr: #bababa;
+              --shadow-light-clr: #fdfdfd;
+          }
+          body, button, input { font-weight: bold; }
+          .loading-text { color: var(--clr-bg-main); }
+      }
+
+      /* Resets */
+      *, *::after, *::before {
+          box-sizing: border-box;
+          text-align: center;
+      }
+      input, button {
+          font-family: inherit;
+          border: none;
+          background: inherit;
+          color: inherit;
+          width: 100%;
+          border-radius: 100vw;
+          padding: 0.8em;
+      }
+      input:focus, button:focus {
+          outline: none;
+      }
+      button:active {
+          transform: none;
+      }
+      a {
+          text-decoration: none;
+          color: var(--link-color);
+      }
       body {
-        font-family: "Arial", sans-serif;
-        background: linear-gradient(135deg, #222, #333, #555, #888);
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        position: relative;
-        overflow: hidden;
-      }
+          /* Body resets */
+          margin: 0;
+          padding: 0;
 
-      /* Moving blurred blobs */
-      .blob {
-        position: absolute;
-        width: 350px;
-        height: 350px;
-        background: radial-gradient(
-          circle,
-          rgba(255, 255, 255, 0.15),
-          transparent
-        );
-        border-radius: 50%;
-        filter: blur(150px);
-        animation: moveBlobs 30s infinite alternate ease-in-out;
-        z-index: -1;
+          /* Don't allow the user to select any text */
+          user-select: none;
+          
+          background-color: var(--clr-bg-main);
+          color: var(--clr-text);
+          font-family: var(--ff);
+          font-size: clamp(14px, 2vw, 18px);
+          
+          height: 100vh;
+          display: grid;
+          place-items: center; /* Center all items */
+          
+          perspective: 1000px; /* For 3D elements */ 
       }
-
-      .blob:nth-child(1) {
-        top: 10%;
-        left: 20%;
+      h1 {
+          font-size: clamp(2rem, 5vw, 3.5rem);
       }
-
-      .blob:nth-child(2) {
-        bottom: 20%;
-        right: 15%;
-        width: 450px;
-        height: 450px;
+      /* For both containers... */
+      .username-prompt, .form-container {
+          width: clamp(400px, 50%, 700px);
+          
+          padding: 2em;
+          
+          border-radius: var(--border-radius-lg);
+          box-shadow: var(--lg-outwards-shadow);
       }
-
-      .blob:nth-child(3) {
-        top: 60%;
-        left: 50%;
-        width: 300px;
-        height: 300px;
+      input {  
+          box-shadow: var(--sm-inward-shadow);
+          /* Only allow users to select stuff in the input boxes */
+          user-select: all;
       }
-
-      @keyframes moveBlobs {
-        0% {
-          transform: translate(0, 0);
-        }
-        100% {
-          transform: translate(80px, -60px);
-        }
+      .input-container {
+          display: flex;
+          flex-direction: column;
+          gap: 1em;
       }
-
-      /* Form container */
-      .form-container {
-        background-color: #3c3c3c;
-        padding: 30px;
-        border-radius: 15px;
-        width: 100%;
-        max-width: 400px;
-        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
-        z-index: 2;
+      button {
+          box-shadow: var(--sm-outward-shadow);
+          cursor: pointer;
       }
-
-      .form-container h2 {
-        text-align: center;
-        margin-bottom: 20px;
-        color: #fff;
-        font-size: 24px;
-      }
-
-      .form-container input {
-        width: calc(100% - 40px);
-        padding: 12px;
-        margin: 10px 0;
-        background-color: #525252;
-        border: none;
-        border-radius: 8px;
-        color: #fff;
-        font-size: 16px;
-        display: inline-block;
-        vertical-align: middle;
-        position: relative;
-      }
-
-      .password-container {
-        position: relative;
-      }
-
-      .password-container input {
-        width: calc(100% - 40px);
-        margin: 10px 0;
-        padding-right: 30px;
-      }
-
-      .show-password {
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        cursor: pointer;
-        color: #fff;
-        font-size: 20px;
-      }
-
-      .form-container button {
-        width: 100%;
-        padding: 12px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 16px;
-      }
-
-      .form-container button:hover {
-        background-color: #0056b3;
-      }
-
-      /* Google sign-in button styled in red */
-      .google-btn {
-        margin-top: 15px;
-        background-color: #db4437 !important; /* Google Red */
-        padding: 12px;
-        border: none;
-        color: white;
-        font-size: 16px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: bold;
-        text-align: center;
-      }
-
-      .google-btn:hover {
-        background-color: #c23321 !important;
-      }
-
-      .form-container .error {
-        color: #ff4d4d;
-        font-size: 14px;
-      }
-
-      .form-container a {
-        color: #007bff;
-        text-align: center;
-        display: block;
-        margin-top: 15px;
-      }
-
-      .form-container a:hover {
-        text-decoration: underline;
+      .sign-in-btns {
+          margin-block: 2em;
+          display: flex;
+          flex-direction: column;
+          gap: 1em;
       }
       .username-prompt {
-        display: none; /* Hidden by default */
-        background-color: #3c3c3c;
-        padding: 30px;
-        border-radius: 15px;
-        width: 100%;
-        max-width: 400px;
-        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
-        z-index: 2;
-        text-align: center;
+          display: none; /* Hidden by default */
+      }
+      .error {
+        color: var(--clr-err);
       }
 
-      .username-prompt input {
-        width: calc(100% - 40px);
-        padding: 12px;
-        margin: 10px 0;
-        background-color: #525252;
-        border: none;
-        border-radius: 8px;
-        color: #fff;
-        font-size: 16px;
+      /* Loading animation */
+      .loading-animation-container {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          background: var(--clr-bg-loading-animation-overlay);
+          display: grid;
+          place-items: center;
+          display: none; /* Loading animation defaults to not visible */
       }
-
-      .username-prompt button {
-        width: 100%;
-        padding: 12px;
-        background-color: #28a745;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 16px;
+      .loading-animation {
+          transform-style: preserve-3d;
+          width: 100px;
+          aspect-ratio: 1;
+          border-radius: var(--border-radius-sm);
+          background: var(--clr-bg-main);
+          /* animation: flip 2s ease-in-out infinite; - USE THIS ANIMATION*/
+          animation: none; /* No animation until the JavaScript says so */
       }
-
-      .username-prompt button:hover {
-        background-color: #218838;
+      @keyframes flip {
+          0% {
+              transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg);
+          }
+          50% {
+              transform: rotateY(90deg) rotateX(180deg) rotateZ(90deg);
+          }
+          100% {
+              transform: rotateY(180deg) rotateX(360deg) rotateZ(180deg);
+          }
       }
-
-      .username-prompt .error {
-        color: #ff4d4d;
-        font-size: 14px;
-      }
-    </style>
+  </style>
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
       import {
@@ -246,6 +200,7 @@
       const disallowedWords = [
         "nigger",
         "nigga",
+        "niga",
         "fuck",
         "shit",
         "ass",
@@ -256,6 +211,12 @@
         "kkk",
         "nigg@",
         "n1gger",
+        "fuc",
+        "fuk",
+        "n!gger",
+        "n!gga",
+        "n!ga",
+        "n!ger"
       ];
 
       // Function to check for disallowed words
@@ -272,9 +233,7 @@
         // Remove special characters
         normalizedUsername = normalizedUsername.replace(/[^a-zA-Z]/g, "");
 
-        return disallowedWords.some((word) =>
-          normalizedUsername.includes(word)
-        );
+        return disallowedWords.some(word => normalizedUsername.includes(word));
       }
 
       // Function to check username availability
@@ -302,9 +261,13 @@
         const usernameForm = document.getElementById("username-form");
         const errorMessage = document.getElementById("error-message");
         const togglePasswordBtns = document.querySelectorAll(".show-password");
+        const loadingAnimationContainer = document.querySelector(".loading-animation-container");
+        const loadingAnimation = document.querySelector(".loading-animation");
 
-        loginForm.addEventListener("submit", (e) => {
+        loginForm.addEventListener("submit", e => {
           e.preventDefault();
+          // Have the loading animation appear
+          toggleLoadingAnimation();
           const email = document.getElementById("email").value;
           const password = document.getElementById("password").value;
 
@@ -312,10 +275,26 @@
             .then(() => {
               window.location.href = "index.html";
             })
-            .catch((error) => {
+            .catch(error => {
+              toggleLoadingAnimation();
               errorMessage.textContent = `Error: ${error.message}`;
             });
         });
+
+        function toggleLoadingAnimation() {
+  const loadingAnimationContainer = document.querySelector(".loading-animation-container");
+  const loadingAnimation = document.querySelector(".loading-animation"); // Corrected selector
+
+  if (loadingAnimationContainer && loadingAnimation) {
+    const isHidden = loadingAnimationContainer.style.display === "none";
+    
+    loadingAnimationContainer.style.display = isHidden ? "grid" : "none";
+    loadingAnimation.style.animation = isHidden ? "flip 2s ease-in-out infinite" : "none";
+  } else {
+    console.error("Loading animation elements not found");
+  }
+}
+
 
         googleSignInBtn.addEventListener("click", () => {
           signInWithPopup(auth, provider)
@@ -338,21 +317,21 @@
               }
 
               if (isNewUser) {
-                // Hide login form and show username prompt
-                document.querySelector(".form-container").style.display =
-                  "none";
+                toggleLoadingAnimation();
+                document.querySelector(".form-container").style.display = "none";
                 usernamePrompt.style.display = "block";
               } else {
                 window.location.href = "index.html";
               }
             })
-            .catch((error) => {
+            .catch(error => {
               errorMessage.textContent = `Error: ${error.message}`;
             });
         });
 
-        usernameForm.addEventListener("submit", async (e) => {
+        usernameForm.addEventListener("submit", async e => {
           e.preventDefault();
+          toggleLoadingAnimation();
           const usernameInput = document.getElementById("username");
           const usernameError = document.getElementById("username-error");
           const username = usernameInput.value.trim();
@@ -362,6 +341,7 @@
 
           // Check if username exceeds 16 characters
           if (username.length > 16) {
+            toggleLoadingAnimation();
             usernameError.textContent =
               "Username cannot be longer than 16 characters.";
             return;
@@ -369,6 +349,7 @@
 
           // Username validation for disallowed words
           if (containsDisallowedWords(username)) {
+            toggleLoadingAnimation();
             usernameError.textContent =
               "Username contains inappropriate language. Please choose another.";
             return;
@@ -378,6 +359,7 @@
             // Check if username is available
             const isAvailable = await checkUsernameAvailability(username);
             if (!isAvailable) {
+              toggleLoadingAnimation();
               usernameError.textContent =
                 "Username is already taken. Please choose another.";
               return;
@@ -398,6 +380,7 @@
             // Redirect to main page
             window.location.href = "index.html";
           } catch (error) {
+            toggleLoadingAnimation();
             console.error("Error during username setup:", error);
             usernameError.textContent = `Error: ${error.message}`;
           }
@@ -415,58 +398,74 @@
             }
           }
         });
-
-        // Toggle password visibility
-        togglePasswordBtns.forEach((btn) => {
-          btn.addEventListener("click", () => {
-            const input = btn.previousElementSibling;
-            if (input.type === "password") {
-              input.type = "text";
-              btn.innerHTML = "❌";
-            } else {
-              input.type = "password";
-              btn.innerHTML = "&#128065;";
-            }
-          });
-        });
       });
     </script>
   </head>
   <body>
-    <!-- Blurred blobs background -->
-    <div class="blob"></div>
-    <div class="blob"></div>
-    <div class="blob"></div>
-
     <!-- Login Form -->
     <div class="form-container">
-      <h2>Login</h2>
+  
+      <h1 class="title">Login</h1>
+      
       <form id="login-form">
-        <input type="email" id="email" placeholder="Email" required />
-        <div class="password-container">
-          <input
-            type="password"
-            id="password"
-            placeholder="Password"
-            required
-          />
-          <span class="show-password">&#128065;</span>
+          
+        <div class="input-container">
+            <input type="email" id="email" placeholder="Email" required />
+            <input type="password" id="password" placeholder="Password" required>
+            <!-- <span class="show-password">&#128065;</span> - I will be fixing this and updating functionality - James -->
         </div>
+        
         <p class="error" id="error-message"></p>
-        <button type="submit">Login</button>
+        
+        <div class="sign-in-btns">
+            <button type="submit">Login</button>
+            <button id="google-signin" class="google-btn">
+                <!-- <img src="/img/google.jpeg"> -->
+                Sign in with Google
+            </button>
+        </div>
       </form>
-      <button id="google-signin" class="google-btn">Sign in with Google</button>
-      <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+      
+      <p class="bottom-text">Don't have a StronDogXP account? <a href="signup.html">Sign up</a></p>
+      
     </div>
 
     <!-- Username Prompt -->
     <div id="username-prompt" class="username-prompt">
-      <h2>Set Your Username</h2>
+      <h1>Set Your Username</h1>
       <form id="username-form">
         <input type="text" id="username" placeholder="Username" required />
         <p class="error" id="username-error"></p>
         <button type="submit">Continue</button>
       </form>
     </div>
+    
+    <!-- Loading animation with layover -->
+    <div class="loading-animation-container">
+        <div>
+            <div class="loading-animation"></div>
+            <h2 class="loading-text">Loading...</h2>
+        </div>
+    </div>
   </body>
+  <script>
+    // Change the colors of the Google text inside the sign in with Google button
+    const googleSignInBtnEl = document.getElementById("google-signin"),
+          loginButtonEl = document.getElementById("loginBtn"),
+          changeUsernameBtnEl = document.getElementById("changeUsernameBtn"),
+          usernameForm = document.getElementById("username-form"),
+          word = "Google".split(""),
+          googleColors = ["#4889f4", "#eb493b", "#fbbe0d", "#4889f4", "#3aab58", "#eb493b"];
+    googleSignInBtnEl.innerHTML = "Sign in with " + word.map((char, i) => (
+        `<span style="color: ${googleColors[i]}">${char}</span>`
+    )).join("");
+    document.addEventListener("keydown", e => {
+        const isEditingUsername = usernameForm.style.display === "block";
+        if (e.key === "Enter") {
+            isEditingUsername
+                ? changeUsernameBtnEl.click()
+                : loginButtonEl.click();
+        }
+    });
+</script>
 </html>
