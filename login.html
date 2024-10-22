@@ -11,6 +11,7 @@
           --clr-bg-main: #292d32;
           --clr-bg-loading-animation-overlay: rgba(0, 0, 0, 0.8);
           --clr-text: #dfdfdf;
+          --clr-err: #fa4b4b;
           
           --ff: "Quicksand", Ariel, sans-serif;
           
@@ -118,6 +119,9 @@
       }
       .username-prompt {
           display: none; /* Hidden by default */
+      }
+      .error {
+        color: var(--clr-err);
       }
 
       /* Loading animation */
@@ -252,9 +256,13 @@
         const usernameForm = document.getElementById("username-form");
         const errorMessage = document.getElementById("error-message");
         const togglePasswordBtns = document.querySelectorAll(".show-password");
+        const loadingAnimationContainer = document.querySelector(".loading-animation-container");
+        const loadingAnimation = document.querySelector(".loading-nimation");
 
         loginForm.addEventListener("submit", e => {
           e.preventDefault();
+          // Have the loading animation appear
+          toggleLoadingAnimation();
           const email = document.getElementById("email").value;
           const password = document.getElementById("password").value;
 
@@ -262,10 +270,18 @@
             .then(() => {
               window.location.href = "index.html";
             })
-            .catch((error) => {
+            .catch(error => {
+              toggleLoadingAnimation();
               errorMessage.textContent = `Error: ${error.message}`;
             });
         });
+
+        function toggleLoadingAnimation() {
+          const isHidden = loadingAnimationContainer.style.display === "none";
+          loadingAnimationContainer.style.display = isHidden ? "grid" : "none";
+          loadingAnimation.style.animation = isHidden ? "flip 2s ease-in-out infinite" : "none";
+        }
+
 
         googleSignInBtn.addEventListener("click", () => {
           signInWithPopup(auth, provider)
@@ -302,6 +318,7 @@
 
         usernameForm.addEventListener("submit", async e => {
           e.preventDefault();
+          toggleLoadingAnimation();
           const usernameInput = document.getElementById("username");
           const usernameError = document.getElementById("username-error");
           const username = usernameInput.value.trim();
@@ -311,6 +328,7 @@
 
           // Check if username exceeds 16 characters
           if (username.length > 16) {
+            toggleLoadingAnimation();
             usernameError.textContent =
               "Username cannot be longer than 16 characters.";
             return;
@@ -318,6 +336,7 @@
 
           // Username validation for disallowed words
           if (containsDisallowedWords(username)) {
+            toggleLoadingAnimation();
             usernameError.textContent =
               "Username contains inappropriate language. Please choose another.";
             return;
@@ -327,6 +346,7 @@
             // Check if username is available
             const isAvailable = await checkUsernameAvailability(username);
             if (!isAvailable) {
+              toggleLoadingAnimation();
               usernameError.textContent =
                 "Username is already taken. Please choose another.";
               return;
@@ -347,6 +367,7 @@
             // Redirect to main page
             window.location.href = "index.html";
           } catch (error) {
+            toggleLoadingAnimation();
             console.error("Error during username setup:", error);
             usernameError.textContent = `Error: ${error.message}`;
           }
@@ -370,7 +391,7 @@
   <body>
     <!-- Login Form -->
     <div class="form-container">
-        
+  
       <h1 class="title">Login</h1>
       
       <form id="login-form">
@@ -378,7 +399,7 @@
         <div class="input-container">
             <input type="email" id="email" placeholder="Email" required />
             <input type="password" id="password" placeholder="Password" required>
-            <!-- <span class="show-password">&#128065;</span> -->
+            <!-- <span class="show-password">&#128065;</span> - I will be fixing this and updating functionality - James -->
         </div>
         
         <p class="error" id="error-message"></p>
