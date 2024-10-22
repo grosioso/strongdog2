@@ -279,7 +279,7 @@
         function toggleLoadingAnimation() {
           const isHidden = loadingAnimationContainer.style.display === "none";
           loadingAnimationContainer.style.display = isHidden ? "grid" : "none";
-          loadingAnimation.style.animation = isHidden ? "flip 2s ease-in-out infinite" : "none";
+          loadingAnimation.style.animation = !isHidden ? "flip 2s ease-in-out infinite" : "none";
         }
 
 
