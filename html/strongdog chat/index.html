@@ -374,6 +374,15 @@
         opacity: 1;
       }
     }
+    /* General Badge Styling */
+    .dynamic-badge {
+      padding: 2px 6px;
+      margin-right: 5px;
+      font-size: 12px;
+      border-radius: 4px;
+      display: inline-block;
+      color: black;
+    }
   </style>
   <head>
     <meta charset="UTF-8" />
@@ -417,7 +426,10 @@
 
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
     <!-- Your web app's Firebase configuration -->
     <script>
@@ -434,6 +446,7 @@
 
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
+      const firestore = firebase.firestore();
       var lastMessageTime = 0;
 
       // Authentication State Change
@@ -840,44 +853,92 @@
           displayMessage(childData);
         });
       }
-
       function displayMessage(messageData) {
-        const messagesContainer = document.getElementById("messages");
-        const shouldScroll = isScrolledToBottom(messagesContainer);
-        const msgElement = document.createElement("li");
-        const user = firebase.auth().currentUser;
-        let badge = "";
-        if (messageData.sender === "josh") {
-          badge = "<span class='owner-badge'>Owner</span> ";
-        } else if (messageData.sender === "trexdonuts (austin)") {
-          badge = "<span class='trex-badge'>da real trex</span> ";
-        } else if (messageData.sender === "Emmett") {
-          badge = "<span class='sigma-badge'>V.I.P.</span> ";
-        } else if (messageData.sender === "jamesm") {
-          badge = "<span class='dev-badge'>dev</span> ";
-        }
+    console.log("Displaying message:", messageData); // Debug log
+    const messagesContainer = document.getElementById("messages");
+    const shouldScroll = isScrolledToBottom(messagesContainer);
+    const msgElement = document.createElement("li");
+    const user = firebase.auth().currentUser;
 
-        let senderDisplayName = badge + censorWord(messageData.sender);
-        let messageTime = formatTimestamp(messageData.timestamp);
+    msgElement.setAttribute("data-sender-uid", messageData.senderUID);
 
-        if (messageData.senderUID === user.uid) {
-          msgElement.className = "sent";
-        } else if (messageData.isSystemMessage) {
-          msgElement.className = "system-message";
+    let badge = "";
+    if (messageData.sender === "josh") {
+      badge = "<span class='owner-badge'>Owner</span> ";
+    } else if (messageData.sender === "trexdonuts (austin)") {
+      badge = "<span class='trex-badge'>da real trex</span> ";
+    } else if (messageData.sender === "Emmett") {
+      badge = "<span class='sigma-badge'>V.I.P.</span> ";
+    } else if (messageData.sender === "jamesm") {
+      badge = "<span class='dev-badge'>dev</span> ";
+    }
+
+    let senderDisplayName = `<span class="sender-name">${badge}${censorWord(messageData.sender)}</span>`;
+    let messageTime = formatTimestamp(messageData.timestamp);
+
+    if (messageData.senderUID === user.uid) {
+      msgElement.className = "sent";
+    } else if (messageData.isSystemMessage) {
+      msgElement.className = "system-message";
+    } else {
+      msgElement.className = "received";
+    }
+
+    let formattedText = parseMessage(censorWord(messageData.text));
+    msgElement.innerHTML = `<div>${senderDisplayName}: ${formattedText}</div><div class='message-time' style='color:rgb(73, 73, 73); margin-top: 8px;'>${messageTime}</div>`;
+
+    messagesContainer.appendChild(msgElement); // Append the message
+
+    // Auto-scroll to bottom if the user was already there
+    if (shouldScroll) {
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    // Load dynamic badge from Firestore
+    loadDynamicBadgeForUser(messageData.senderUID, msgElement);
+  }
+
+  function loadDynamicBadgeForUser(userId, messageElement) {
+  console.log(`Loading badge for user ID: ${userId}`); // Debug log
+  if (!firestore) {
+    console.error("Firestore is not initialized!");
+    return;
+  }
+
+  const badgesRef = firestore.collection("userBadges").doc(userId);
+
+  badgesRef.get()
+    .then((doc) => {
+      if (doc.exists) {
+        const userBadge = doc.data();
+        console.log(`Badge data for ${userId}:`, userBadge); // Debug log
+
+        // Create the badge element
+        const badgeElement = document.createElement("span");
+        badgeElement.classList.add("dynamic-badge"); // Use the dynamic-badge class for base styling
+
+        // Apply the badge color from the database
+        badgeElement.style.backgroundColor = userBadge.color;
+
+        // Set the badge text from the database
+        badgeElement.textContent = userBadge.text;
+
+        // Insert the badge before the user's name in the chat
+        const senderElement = messageElement.querySelector(".sender-name");
+        if (senderElement) {
+          senderElement.prepend(badgeElement);
+          console.log(`Badge added to message for ${userId}`); // Debug log
         } else {
-          msgElement.className = "received";
+          console.error(`Failed to find sender element for ${userId}`);
         }
-
-        let formattedText = parseMessage(censorWord(messageData.text));
-        msgElement.innerHTML = `<div>${senderDisplayName}: ${formattedText}</div><div class='message-time' style='color:rgb(73, 73, 73); margin-top: 8px;'>${messageTime}</div>`;
-
-        messagesContainer.appendChild(msgElement); // Append the message
-
-        // Auto-scroll to bottom if the user was already there
-        if (shouldScroll) {
-          messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
+      } else {
+        console.log(`No badge found for user ID: ${userId}`); // Debug log
       }
+    })
+    .catch((error) => {
+      console.error(`Error loading badge for user ID ${userId}:`, error);
+    });
+}
 
       function isScrolledToBottom(element) {
         return (
