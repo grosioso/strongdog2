@@ -1,440 +1,16 @@
 <!DOCTYPE html>
+<script
+  async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1609993827735056"
+  crossorigin="anonymous"
+></script>
 <html lang="en">
-  <style>
-    body {
-      font-family: "Manrope", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      font-weight: 500;
-      margin: 0;
-      background-color: #555555;
-      color: #444;
-    }
-
-    #chat-app {
-      display: flex;
-      height: 100vh;
-      width: 100%;
-      position: absolute;
-      right: 0;
-    }
-
-    #chat-list {
-      background-color: gray;
-      overflow-y: auto;
-      margin: 11px;
-      border-radius: 5px;
-      flex-basis: 20%;
-      max-width: 300px;
-      min-width: 200px;
-      display: flex;
-      flex-direction: column;
-      box-sizing: border-box;
-      position: relative;
-    }
-
-    #new-chat-button {
-      width: 100%;
-      padding: 10px 20px;
-      background-color: #4caf50;
-      color: white;
-      border: none;
-      border-radius: 4px 4px 0 0;
-      cursor: pointer;
-      font-size: 16px;
-      box-shadow: 0 0 10px black;
-      transition-duration: 0.3s;
-      position: sticky;
-      top: 0;
-      margin-bottom: 10px;
-    }
-
-    #new-chat-button:hover {
-      background-color: #45a049;
-    }
-
-    #chats {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    #chats li {
-      cursor: pointer;
-      padding: 10px;
-      margin-bottom: 5px;
-      background-color: #7b7b7b;
-      border-radius: 4px;
-      transition: background-color 0.3s;
-      height: 20px;
-    }
-
-    #chats li:hover {
-      background-color: #636262;
-    }
-
-    #chats li:hover .remove-chat-button {
-      display: inline-block;
-    }
-
-    #chat-container {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      background-color: #7b7b7b;
-      padding: 20px;
-      border-radius: 5px;
-      margin: 10px;
-      position: relative;
-    }
-
-    #chat-header {
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      padding: 10px;
-      text-align: center;
-      margin-top: 0;
-      background-color: #6b6b6b;
-      font-size: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 0 30px black;
-      z-index: 2;
-    }
-
-    #messages {
-      position: absolute;
-      top: 27px;
-      bottom: 60px;
-      left: 0;
-      right: 0;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      list-style-type: none;
-      padding: 0;
-      flex-grow: 1;
-    }
-
-    #messages::-webkit-scrollbar {
-      display: none;
-    }
-
-    #messages li {
-      padding: 10px 15px;
-      margin-bottom: 10px;
-      border-radius: 18px;
-      max-width: 60%;
-      word-wrap: break-word;
-      line-height: 1.5;
-    }
-
-    .sent {
-      background-color: #007bff;
-      color: white;
-      align-self: flex-end;
-      margin-right: 5px;
-    }
-
-    .received {
-      background-color: #e0e0e0;
-      align-self: flex-start;
-      margin-left: 5px;
-    }
-
-    #input-container {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      display: flex;
-      margin-top: 20px;
-      padding-top: 20px;
-      padding: 10px;
-      background-color: #7b7b7b;
-      border-top: none;
-    }
-
-    #message-input {
-      flex-grow: 1;
-      padding: 10px;
-      border: 2px solid #ddd;
-      border-radius: 4px;
-      margin-right: 10px;
-    }
-
-    #send-message-button {
-      padding: 10px 20px;
-      background-color: #4caf50;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      transition-duration: 0.3s;
-      cursor: pointer;
-    }
-
-    #send-message-button:hover {
-      background-color: #45a049;
-    }
-
-    .remove-chat-button {
-      padding: 6px 8px !important;
-      font-size: 10px !important;
-      background-color: #ff4444 !important;
-      color: white !important;
-      border: none !important;
-      border-radius: 4px !important;
-      cursor: pointer !important;
-      margin-left: 5px !important;
-      line-height: normal !important;
-      float: right !important;
-      transition-duration: 0.3s !important;
-      display: none;
-      animation: 0.5s buttonSlide both;
-      overflow: hidden;
-    }
-
-    .remove-chat-button:hover {
-      background-color: #cc0000 !important;
-    }
-
-    .chat-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px;
-      background-color: #f8f8f8;
-    }
-
-    #login-status {
-      color: white;
-      text-align: center;
-      background-color: rgb(70, 70, 70);
-      padding: 10px;
-      margin: 11px;
-      border-radius: 5px;
-      overflow: auto;
-      max-height: 20px;
-      margin-bottom: 0;
-    }
-
-    #sign-out-button {
-      background-color: #ff4444;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      padding: 10px;
-      cursor: pointer;
-      transition-duration: 0.3s;
-      margin: 10px;
-    }
-
-    #sign-out-button:hover {
-      background-color: #cc0000;
-    }
-
-    .auth-button {
-      background-color: rgb(80, 80, 255);
-      color: white;
-      border: none;
-      border-radius: 4px;
-      padding: 10px;
-      cursor: pointer;
-      transition-duration: 0.3s;
-      margin: 10px;
-    }
-
-    .auth-button:hover {
-      background-color: rgb(60, 60, 255);
-    }
-
-    #settings-button {
-      background-color: rgb(80, 80, 255);
-      color: white;
-      border: none;
-      border-radius: 4px;
-      padding: 10px;
-      cursor: pointer;
-      transition-duration: 0.3s;
-      margin: 10px;
-    }
-
-    #settings-button:hover {
-      background-color: rgb(60, 60, 255);
-    }
-
-    .owner-badge,
-    .trex-badge,
-    .dev-badge,
-    .sigma-badge {
-      border-radius: 4px;
-      padding: 2px 6px;
-      margin-right: 5px;
-      font-size: 12px;
-    }
-
-    .owner-badge {
-      background-color: rgb(255, 200, 0);
-      color: rgb(0, 0, 0);
-    }
-
-    .trex-badge {
-      background-color: rgb(9, 255, 0);
-      color: rgb(0, 0, 0);
-    }
-
-    .dev-badge {
-      background-color: rgb(73, 227, 100);
-      color: rgb(0, 0, 0);
-    }
-
-    .sigma-badge {
-      background-color: rgb(255, 2, 175);
-      color: rgb(0, 0, 0);
-    }
-
-    #rickrollVideoContainer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: rgba(0, 0, 0, 0.8);
-      z-index: 1000;
-    }
-
-    #rickrollVideo {
-      width: 100%;
-      max-width: 640px;
-      height: 100%;
-    }
-
-    .new-message-indicator {
-      height: 10px;
-      width: 10px;
-      background-color: red;
-      border-radius: 50%;
-      display: inline-block;
-      margin-left: 7px;
-    }
-
-    .timestamp {
-      font-size: 0.8em;
-      color: rgb(73, 73, 73);
-      margin-top: 8px;
-      display: block;
-    }
-
-    @keyframes slideRight {
-      from {
-        left: -320px;
-      }
-      to {
-        left: 0px;
-      }
-    }
-
-    @keyframes slideLeft {
-      from {
-        left: 0px;
-      }
-      to {
-        left: -320px;
-      }
-    }
-
-    @keyframes squish {
-      from {
-        width: calc(100% - 10px);
-      }
-      to {
-        width: calc(100% - 330px);
-      }
-    }
-
-    @keyframes unsquish {
-      from {
-        width: calc(100% - 330px);
-      }
-      to {
-        width: calc(100% - 10px);
-      }
-    }
-
-    @keyframes buttonSlide {
-      from {
-        width: 10px;
-        opacity: 0;
-      }
-      to {
-        width: 60px;
-        opacity: 1;
-      }
-    }
-    /* General Badge Styling */
-    .dynamic-badge {
-      padding: 2px 6px;
-      margin-right: 5px;
-      font-size: 12px;
-      border-radius: 4px;
-      display: inline-block;
-      color: black;
-    }
-  </style>
   <head>
-    <meta charset="UTF-8" />
-    <title>Strongdog Chat</title>
-  </head>
-  <body>
-    <button id="settings-button" onclick="window.location.href='settings.html'">
-      Settings
-    </button>
-    <div id="login-status">Not logged in</div>
-    <button id="sign-out-button" style="display: none">Sign Out</button>
-    <button class="auth-button" onclick="window.location.href='signup.html'">
-      Sign Up
-    </button>
-    <button class="auth-button" onclick="window.location.href='login.html'">
-      Login
-    </button>
-    <div id="chat-app">
-      <div id="chat-list">
-        <button id="new-chat-button">New Chat</button>
-        <ul id="chats"></ul>
-      </div>
-      <div id="chat-container" style="display: none">
-        <div id="chat-header">Select a chat</div>
-        <ul id="messages"></ul>
-        <div id="input-container">
-          <input id="message-input" type="text" placeholder="Type here..." />
-          <button id="send-message-button" contenteditable="true">
-            Send Message
-          </button>
-        </div>
-      </div>
-    </div>
-    <div id="rickrollVideoContainer" style="display: none">
-      <video id="rickrollVideo" width="320" height="240" controls>
-        <source src="trolls/rickroll.mp4" type="video/mp4" />
-      </video>
-    </div>
-    <audio id="specialSound" src="trolls/egg1.mp3"></audio>
-    <audio id="monkey" src="trolls/monkey.mp3"></audio>
-
-    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
-    <link
-      href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-
-    <!-- Your web app's Firebase configuration -->
+    <!-- Include Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
     <script>
       const firebaseConfig = {
         apiKey: "AIzaSyBh-VnGiP4qZD0r14gfn9dr77GwtslpTqU",
@@ -449,1054 +25,1430 @@
 
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
-      const firestore = firebase.firestore();
-      var lastMessageTime = 0;
 
-      // Authentication State Change
-      firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-          // Fetch user's IP address and check for IP ban
-          fetch("https://api.ipify.org?format=json")
-            .then((results) => results.json())
+      // Initialize Firebase Authentication and Firestore
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+    </script>
+    <script>
+      // Self-executing function to load external cards automatically
+      (function () {
+        // The path to your external file containing the cards
+        const cardsFilePath = "./cards_data.html";
+
+        // Wait until the DOM is fully loaded
+        document.addEventListener("DOMContentLoaded", function () {
+          // Find the element with the ID 'allGameList'
+          const cardContainer = document.getElementById("allGameList");
+
+          // Fetch the external HTML file containing the cards
+          fetch(cardsFilePath)
+            .then((response) => response.text())
             .then((data) => {
-              const userIpAddress = data.ip; // Get the raw IP address
-              const timestamp = Date.now(); // Get the current timestamp
-              // Create an object to hold user's information
-              const userInfo = {
-                displayName: user.displayName,
-                ip: userIpAddress,
-                timestamp: timestamp,
-              };
-              // Store the user information in Firebase under their UID
-              firebase
-                .database()
-                .ref("userIps/" + user.uid)
-                .set(userInfo);
-              // Continue with your existing logic
-              const formattedIpAddress = userIpAddress.replace(/\./g, "-"); // Replace periods with hyphens for IP ban checks
-              listenForIpBan(formattedIpAddress); // Listen for real-time IP ban updates
-              listenForUserBan(user.displayName); // Listen for real-time user ban updates
-              checkForIpBan(formattedIpAddress, user);
+              // Insert the loaded HTML into the 'allGameList' element
+              cardContainer.innerHTML = data;
             })
-            .catch((error) => console.error("Error fetching IP:", error));
-        } else {
-          document.getElementById("login-status").textContent = "Not logged in";
-          document.getElementById("sign-out-button").style.display = "none";
-          document.getElementById("chats").innerHTML = ""; // Clear chat list
-          document.getElementById("chat-container").style.display = "none";
-        }
-      });
-
-      function listenForIpBan(ipAddress) {
-        firebase
-          .database()
-          .ref("ipBans/" + ipAddress)
-          .on("value", (snapshot) => {
-            if (snapshot.exists()) {
-              console.log("IP Ban detected. Signing out...");
-              signOutUser();
-            }
-          });
-      }
-
-      function listenForUserBan(displayName) {
-        firebase
-          .database()
-          .ref("bans/" + displayName)
-          .on("value", (snapshot) => {
-            if (snapshot.exists()) {
-              console.log("User Ban detected. Signing out...");
-              signOutUser();
-            }
-          });
-      }
-
-      function signOutUser() {
-        firebase
-          .auth()
-          .signOut()
-          .then(() => {
-            window.location.href = "login.html";
-          });
-      }
-
-      function checkForIpBan(ipAddress, user) {
-        const ipBansRef = firebase.database().ref("ipBans/" + ipAddress);
-        ipBansRef.once("value", (snapshot) => {
-          if (snapshot.exists()) {
-            const banInfo = snapshot.val();
-            if (!banInfo.permanent && banInfo.end && Date.now() > banInfo.end) {
-              // IP Ban expired, remove it
-              ipBansRef.remove().then(() => {
-                console.log("Expired IP ban removed.");
-                listenForBan(user); // Check for user ban
-              });
-            } else {
-              // IP still banned
-              alertBanInfo(banInfo, "IP");
-              signOutUser();
-            }
-          } else {
-            // No IP ban, check for user ban
-            listenForBan(user);
-          }
+            .catch((error) => console.error("Error loading the cards:", error));
         });
-      }
+      })();
+    </script>
 
-      function listenForBan(user) {
-        if (!user.displayName) {
-          console.log("DisplayName is missing.");
-          return;
-        }
+    <script src="appscript.js"></script>
+    <!-- Include your appscript.js here -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const topGameList = document.getElementById("topGameList");
+        const loadingContainerEl = document.createElement("div");
+        loadingContainerEl.className = "loading-container";
+        loadingContainerEl.innerHTML = `
+                    <div class="bars">
+                        <div class="bar bar-1"></div>
+                        <div class="bar bar-2"></div>
+                        <div class="bar bar-3"></div>
+                        <div class="bar bar-4"></div>
+                        <div class="bar bar-5"></div>
+                    </div>
+                `;
 
-        const userBanRef = firebase.database().ref("bans/" + user.displayName);
-        userBanRef.once("value", (snapshot) => {
-          if (snapshot.exists()) {
-            const banInfo = snapshot.val();
-            if (!banInfo.permanent && banInfo.end && Date.now() > banInfo.end) {
-              // User ban expired, remove it
-              userBanRef.remove().then(() => {
-                console.log("Expired user ban removed.");
-                proceedWithLogin(user);
-              });
-            } else {
-              // User still banned
-              alertBanInfo(banInfo, "User");
-              signOutUser();
-            }
-          } else {
-            // No user ban, proceed with login
-            proceedWithLogin(user);
-          }
-        });
-      }
+        // Append loadingContainerEl to topGameList
+        topGameList.appendChild(loadingContainerEl);
 
-      function alertBanInfo(banInfo, type) {
-        let banTypeMessage = type + " has been banned. ";
-        let banDurationMessage = banInfo.permanent
-          ? "Permanently"
-          : "Until " + formatTimestamp(banInfo.end);
-        alert(
-          banTypeMessage +
-            "Reason: " +
-            banInfo.reason +
-            ". Duration: " +
-            banDurationMessage
-        );
-      }
-
-      function signOutUser() {
-        firebase
-          .auth()
-          .signOut()
-          .then(() => {
-            window.location.href = "login.html";
-          });
-      }
-
-      function proceedWithLogin(user) {
-        document.getElementById("login-status").textContent =
-          "Logged in as: " + user.email;
-        document.getElementById("sign-out-button").style.display = "block";
-        loadChatList(); // Load chats or perform other actions necessary upon successful login
-      }
-
-      function formatBanDuration(milliseconds) {
-        const totalSeconds = Math.floor(milliseconds / 1000);
-        const days = Math.floor(totalSeconds / 86400);
-        const hours = Math.floor((totalSeconds % 86400) / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-
-        let durationMessage = "";
-        if (days > 0) durationMessage += days + " days ";
-        if (hours > 0) durationMessage += hours + " hours ";
-        if (minutes > 0) durationMessage += minutes + " minutes";
-
-        return durationMessage.trim();
-      }
-
-      function removeExpiredBans() {
-        const bansRef = firebase.database().ref("bans");
-        bansRef.once("value", (snapshot) => {
-          if (snapshot.exists()) {
-            snapshot.forEach((childSnapshot) => {
-              const banInfo = childSnapshot.val();
-              if (
-                !banInfo.permanent &&
-                banInfo.end &&
-                Date.now() > banInfo.end
-              ) {
-                // Ban has expired
-                bansRef.child(childSnapshot.key).remove();
-              }
-            });
-          }
-        });
-      }
-
-      document
-        .getElementById("sign-out-button")
-        .addEventListener("click", function () {
-          firebase.auth().signOut();
-        });
-
-      document
-        .getElementById("new-chat-button")
-        .addEventListener("click", function () {
-          if (firebase.auth().currentUser) {
-            var chatName = prompt("Enter chat name:");
-            if (chatName) {
-              joinChat(chatName);
-            }
-          } else {
-            alert("Please sign in to create a new chat.");
-          }
-        });
-
-      const forbiddenWords = [
-        "nigger",
-        "nigga",
-        "fuck",
-        "shit",
-        "ass",
-        "bitch",
-        "fucker",
-        "beiner",
-        "cunt",
-        "kkk",
-        "nigg@",
-        "n1gger",
-      ]; // Add your forbidden words here
-
-      function joinChat(chatName) {
-        // Check if the chat name contains any forbidden words
-        for (let word of forbiddenWords) {
-          if (chatName.toLowerCase().includes(word.toLowerCase())) {
-            alert(
-              "The chat name contains forbidden words. Please choose a different name."
-            );
-            return; // Exit the function
-          }
-        }
-
-        // Continue with the rest of the function
-        const chatRef = firebase.database().ref("chats/" + chatName);
-        const messagesRef = firebase.database().ref("messages/" + chatName);
-        const user = firebase.auth().currentUser;
-
-        chatRef.once("value", (snapshot) => {
-          if (snapshot.exists()) {
-            joinExistingChat(
-              chatRef,
-              messagesRef,
-              user,
-              chatName,
-              snapshot.val()
-            );
-          } else {
-            createNewChat(chatRef, messagesRef, user, chatName);
-          }
-        });
-      }
-
-      function createNewChat(chatRef, messagesRef, user, chatName) {
-        let hasPassword = prompt("Set a password for this chat? (y/n)") === "y";
-        let password = hasPassword ? prompt("Enter the chat password:") : null;
-
-        messagesRef.push({
-          text: "Creating new chat...",
-          sender: "System",
-          timestamp: firebase.database.ServerValue.TIMESTAMP,
-          isSystemMessage: true,
-        });
-
-        chatRef
-          .set({
-            createdOn: new Date().toISOString(),
-            participants: { [user.uid]: true },
-            password: password,
+        function fetchTopGames() {
+          fetch(targetUrl, {
+            // Use the targetUrl from appscript.js
+            method: "GET",
           })
-          .then(() => {
-            addUserChat(user.uid, chatName);
-            displayChat(chatName);
-          });
-      }
-
-      function joinExistingChat(
-        chatRef,
-        messagesRef,
-        user,
-        chatName,
-        chatData
-      ) {
-        if (chatData.password) {
-          let enteredPassword = prompt("Enter the chat password:");
-          if (enteredPassword !== chatData.password) {
-            alert("Incorrect password.");
-            return; // Exit without joining the chat
-          }
-        }
-
-        messagesRef.push({
-          text: (user.displayName || user.email) + " joined the chat!",
-          sender: "System",
-          timestamp: firebase.database.ServerValue.TIMESTAMP,
-          isSystemMessage: true,
-        });
-
-        chatRef
-          .child("participants/" + user.uid)
-          .set(true)
-          .then(() => {
-            addUserChat(user.uid, chatName);
-            displayChat(chatName);
-          });
-      }
-
-      function addUserChat(userId, chatName) {
-        const userChatsRef = firebase
-          .database()
-          .ref("userChats/" + userId + "/" + chatName);
-        userChatsRef.set(true);
-      }
-
-      function loadChatList() {
-        const user = firebase.auth().currentUser;
-        if (user) {
-          const userChatsRef = firebase.database().ref("userChats/" + user.uid);
-          userChatsRef.on("child_added", (snapshot) => {
-            const chatName = snapshot.key;
-            // Check if the user is still a participant of this chat
-            const chatRef = firebase
-              .database()
-              .ref("chats/" + chatName + "/participants/" + user.uid);
-            chatRef.once("value", (participantSnapshot) => {
-              if (participantSnapshot.exists()) {
-                // User is still a participant, add the chat to the list
-                addChatToList(chatName);
-              } else {
-                // User is no longer a participant, remove the chat from the list
-                removeChatFromUI(chatName);
-                // Also remove the chat from the user's chat list in the database
-                userChatsRef.child(chatName).remove();
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(
+                  "Network response was not ok " + response.statusText
+                );
               }
-            });
-          });
-        }
-      }
-
-      function addChatToList(chatName) {
-        const chatList = document.getElementById("chats");
-        const chatItem = document.createElement("li");
-        chatItem.className = "chat-item";
-        chatItem.setAttribute("data-chat-name", chatName);
-        checkForNewMessages(chatName, chatItem);
-        // Clickable chat name
-        const chatNameSpan = document.createElement("span");
-        chatNameSpan.textContent = chatName;
-        chatNameSpan.className = "chat-name";
-
-        // Remove button
-        const removeButton = document.createElement("button");
-        removeButton.textContent = "Remove";
-        removeButton.className = "remove-chat-button";
-        removeButton.onclick = (e) => {
-          e.stopPropagation(); // Prevents the entire list item click
-          removeChat(chatName);
-        };
-
-        chatItem.appendChild(chatNameSpan);
-        chatItem.appendChild(removeButton);
-
-        // Add click event to the entire list item
-        chatItem.onclick = () => displayChat(chatName);
-
-        chatList.appendChild(chatItem);
-      }
-
-      function displayChat(chatName) {
-        // Update the chat header and display the chat container
-        document.getElementById("chat-header").textContent = chatName;
-        document.getElementById("chat-container").style.display = "block";
-        document.getElementById("messages").innerHTML = ""; // Clear existing messages
-
-        // Update the last read timestamp for the newly opened chat
-        updateLastReadTimestamp(chatName);
-
-        // Start listening for new messages in the opened chat
-        listenForMessages(chatName);
-
-        // Remove new message indicator if present
-        removeNewMessageIndicator(chatName);
-      }
-
-      function removeNewMessageIndicator(chatName) {
-        const chatListItems = document
-          .getElementById("chats")
-          .querySelectorAll(".chat-item");
-        chatListItems.forEach((item) => {
-          if (item.getAttribute("data-chat-name") === chatName) {
-            const redDot = item.querySelector(".new-message-indicator");
-            if (redDot) {
-              redDot.remove();
-            }
-          }
-        });
-      }
-
-      var currentChatRef;
-
-      function listenForMessages(chatName) {
-        if (currentChatRef) {
-          currentChatRef.off(); // Stop listening to the previous chat
-        }
-        currentChatRef = firebase.database().ref("messages/" + chatName);
-        currentChatRef.on("child_added", function (snapshot) {
-          var childData = snapshot.val();
-          displayMessage(childData);
-        });
-      }
-      function displayMessage(messageData) {
-        console.log("Displaying message:", messageData); // Debug log
-        const messagesContainer = document.getElementById("messages");
-        const shouldScroll = isScrolledToBottom(messagesContainer);
-        const msgElement = document.createElement("li");
-        const user = firebase.auth().currentUser;
-
-        msgElement.setAttribute("data-sender-uid", messageData.senderUID);
-
-        let badge = "";
-        if (messageData.sender === "josh") {
-          badge = "<span class='owner-badge'>Owner</span> ";
-        } else if (messageData.sender === "trexdonuts (austin)") {
-          badge = "<span class='trex-badge'>da real trex</span> ";
-        } else if (messageData.sender === "Emmett") {
-          badge = "<span class='sigma-badge'>V.I.P.</span> ";
-        } else if (messageData.sender === "jamesm") {
-          badge = "<span class='dev-badge'>dev</span> ";
-        }
-
-        let senderDisplayName = `<span class="sender-name">${badge}${censorWord(
-          messageData.sender
-        )}</span>`;
-        let messageTime = formatTimestamp(messageData.timestamp);
-
-        if (messageData.senderUID === user.uid) {
-          msgElement.className = "sent";
-        } else if (messageData.isSystemMessage) {
-          msgElement.className = "system-message";
-        } else {
-          msgElement.className = "received";
-        }
-
-        let formattedText = parseMessage(censorWord(messageData.text));
-        msgElement.innerHTML = `<div>${senderDisplayName}: ${formattedText}</div><div class='message-time' style='color:rgb(73, 73, 73); margin-top: 8px;'>${messageTime}</div>`;
-
-        messagesContainer.appendChild(msgElement); // Append the message
-
-        // Auto-scroll to bottom if the user was already there
-        if (shouldScroll) {
-          messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        // Load dynamic badge from Firestore
-        loadDynamicBadgeForUser(messageData.senderUID, msgElement);
-      }
-
-      function loadDynamicBadgeForUser(userId, messageElement) {
-        console.log(`Loading badge for user ID: ${userId}`); // Debug log
-        if (!firestore) {
-          console.error("Firestore is not initialized!");
-          return;
-        }
-
-        const badgesRef = firestore.collection("userBadges").doc(userId);
-
-        badgesRef
-          .get()
-          .then((doc) => {
-            if (doc.exists) {
-              const userBadge = doc.data();
-              console.log(`Badge data for ${userId}:`, userBadge); // Debug log
-
-              // Create the badge element
-              const badgeElement = document.createElement("span");
-              badgeElement.classList.add("dynamic-badge"); // Use the dynamic-badge class for base styling
-
-              // Apply the badge color from the database
-              badgeElement.style.backgroundColor = userBadge.color;
-
-              // Set the badge text from the database
-              badgeElement.textContent = userBadge.text;
-
-              // Insert the badge before the user's name in the chat
-              const senderElement =
-                messageElement.querySelector(".sender-name");
-              if (senderElement) {
-                senderElement.prepend(badgeElement);
-                console.log(`Badge added to message for ${userId}`); // Debug log
+              return response.json();
+            })
+            .then((data) => {
+              if (data && data.content) {
+                const parsedData = JSON.parse(data.content);
+                console.log("Parsed data:", parsedData);
+                displayTopGames(parsedData);
               } else {
-                console.error(`Failed to find sender element for ${userId}`);
+                console.error("Invalid data format", data);
               }
-            } else {
-              console.log(`No badge found for user ID: ${userId}`); // Debug log
-            }
-          })
-          .catch((error) => {
-            console.error(`Error loading badge for user ID ${userId}:`, error);
-          });
-      }
-
-      function isScrolledToBottom(element) {
-        return (
-          element.scrollHeight - element.clientHeight <= element.scrollTop + 1
-        );
-      }
-
-      function formatTimestamp(timestamp) {
-        var date = new Date(timestamp);
-        var year = date.getFullYear();
-        var month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months start at 0
-        var day = date.getDate().toString().padStart(2, "0");
-        var hours = date.getHours();
-        var minutes = date.getMinutes().toString().padStart(2, "0");
-        var ampm = hours >= 12 ? "PM" : "AM";
-        hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
-
-        // Format: YYYY-MM-DD HH:MM AM/PM
-        return `${year}-${month}-${day} ${hours}:${minutes} ${ampm}`;
-      }
-
-      function censorWord(str) {
-        var forbiddenWords = [
-          "nigger",
-          "nigga",
-          "fuck",
-          "shit",
-          "ass",
-          "bitch",
-          "fucker",
-          "beiner",
-          "cunt",
-          "kkk",
-          "nigg@",
-          "n1gger",
-        ]; // Replace with actual words you want to filter
-        forbiddenWords.forEach((word) => {
-          var regex = new RegExp(
-            "\\b" + word.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1") + "\\b",
-            "gi"
-          );
-          str = str.replace(regex, "*".repeat(word.length));
-        });
-        return str;
-      }
-
-      function isScrolledToBottom(el) {
-        return el.scrollHeight - el.clientHeight <= el.scrollTop + 1;
-      }
-
-      function updateLastReadTimestamp(chatName) {
-        const user = firebase.auth().currentUser;
-        if (user) {
-          const lastReadRef = firebase
-            .database()
-            .ref("lastRead/" + user.uid + "/" + chatName);
-          lastReadRef.set(firebase.database.ServerValue.TIMESTAMP);
-        }
-      }
-
-      function checkForNewMessages() {
-        setInterval(function () {
-          const user = firebase.auth().currentUser;
-          if (user) {
-            const userChatsRef = firebase
-              .database()
-              .ref("userChats/" + user.uid);
-            userChatsRef.once("value", (snapshot) => {
-              snapshot.forEach((childSnapshot) => {
-                const chatName = childSnapshot.key;
-                const lastReadRef = firebase
-                  .database()
-                  .ref("lastRead/" + user.uid + "/" + chatName);
-                lastReadRef.once("value", (lastReadSnapshot) => {
-                  const lastReadTimestamp = lastReadSnapshot.val() || 0;
-                  const messagesRef = firebase
-                    .database()
-                    .ref("messages/" + chatName);
-                  messagesRef
-                    .orderByChild("timestamp")
-                    .startAt(lastReadTimestamp)
-                    .once("value", (messagesSnapshot) => {
-                      if (
-                        messagesSnapshot.exists() &&
-                        messagesSnapshot.numChildren() > 1
-                      ) {
-                        addNewMessageIndicator(chatName);
-                      }
-                    });
-                });
-              });
+            })
+            .catch((error) => console.error("Error:", error))
+            .finally(() => {
+              loadingContainerEl.style.display = "none";
             });
-          }
-        }, 1000); // Interval set to 1000 milliseconds (1 second)
-      }
-
-      function addNewMessageIndicator(chatName) {
-        const chatListItem = document.querySelector(
-          `[data-chat-name='${chatName}'] .chat-name`
-        );
-        if (
-          chatListItem &&
-          !chatListItem.querySelector(".new-message-indicator")
-        ) {
-          const redDot = document.createElement("span");
-          redDot.className = "new-message-indicator";
-          chatListItem.appendChild(redDot);
         }
-      }
 
-      document
-        .getElementById("send-message-button")
-        .addEventListener("click", function () {
-          var messageText = getQuillText();
-          const currentTime = Date.now();
-          const messageInput = document.getElementById("message-input");
-          var messageInputDiv = document.getElementById("message-input");
-          var messageText = messageInputDiv.textContent; // Get only the text content
-          var currentChat = document.getElementById("chat-header").textContent;
-          if (messageText && currentChat) {
-            sendMessage(currentChat, messageText);
-            messageInputDiv.innerHTML = ""; // Clear the input area
-          }
-        });
-
-      const MAX_CHARACTERS = 1000;
-      function sendMessage(chatName, messageText) {
-        if (messageText.length > MAX_CHARACTERS) {
-          alert(
-            "Message exceeds the character limit of " +
-              MAX_CHARACTERS +
-              " characters."
-          );
-          return; // Stop the function here
-        }
-        const user = firebase.auth().currentUser;
-        if (user) {
-          if (chatName.toLowerCase() === "bill") {
-            messageText = "bill";
-          }
-
-          if (messageText === "heil hitler") {
-            // Play the sound
-            document.getElementById("specialSound").play();
-
-            // Do not send the message, return early
+        function displayTopGames(games) {
+          if (!topGameList) {
+            console.error("Required element not found.");
             return;
           }
+          topGameList.innerHTML = "";
 
-          if (messageText === "monkey") {
-            // Play the sound
-            document.getElementById("monkey").play();
-          }
+          games.slice(1).forEach((game) => {
+            // Skip the first entry as it is the header
+            const gameName = game[0].toLowerCase();
+            const matchingCard = findMatchingCard(gameName);
+            if (matchingCard) {
+              topGameList.appendChild(matchingCard.cloneNode(true));
+            }
+          });
+        }
 
-          const messageData = {
-            text: messageText,
-            sender: user.displayName || user.email,
-            timestamp: firebase.database.ServerValue.TIMESTAMP,
-          };
-
-          if (messageText.toLowerCase() === "stop it") {
-            var videoContainer = document.getElementById(
-              "rickrollVideoContainer"
-            );
-            var video = document.getElementById("rickrollVideo");
-            var audio = document.getElementById("specialSound");
-
-            if (videoContainer && video) {
-              videoContainer.style.display = "block";
-              video.play();
-              enterFullscreen(video);
-
-              // Handle video container click event
-              videoContainer.onclick = function () {
-                video.currentTime = 0;
-                videoContainer.style.display = "none";
-                exitFullscreen();
-              };
+        function findMatchingCard(gameName) {
+          const cards = document.querySelectorAll("#allGameList .card");
+          for (let card of cards) {
+            const href = card.getAttribute("href");
+            const extractedGameName =
+              extractGameNameFromHref(href).toLowerCase();
+            if (extractedGameName === gameName) {
+              return card;
             }
           }
-          // Check if IP is banned
-          fetch("https://api.ipify.org?format=json")
-            .then((results) => results.json())
-            .then((data) => {
-              const userIpAddress = data.ip.replace(/\./g, "-"); // Replace periods with hyphens
-              firebase
-                .database()
-                .ref("ipBans/" + userIpAddress)
-                .once("value", (ipSnapshot) => {
-                  if (ipSnapshot.exists()) {
-                    alert("Your IP is banned from sending messages.");
-                  } else {
-                    // IP not banned, check for user ban
-                    firebase
-                      .database()
-                      .ref("bans/" + user.displayName)
-                      .once("value", (userSnapshot) => {
-                        if (userSnapshot.exists()) {
-                          const banInfo = userSnapshot.val();
-                          if (
-                            banInfo.permanent ||
-                            (banInfo.end && Date.now() < banInfo.end)
-                          ) {
-                            alert("You are banned from sending messages.");
-                          } else {
-                            // User not banned, proceed to send message
-                            sendChatMessage(chatName, messageText, user);
-                          }
-                        } else {
-                          // No user ban found, proceed to send message
-                          sendChatMessage(chatName, messageText, user);
-                        }
-                      });
-                  }
+          return null;
+        }
+
+        function extractGameNameFromHref(href) {
+          const parts = href.split("/");
+          return parts.length > 2 ? parts[2].toLowerCase() : "";
+        }
+
+        // Immediately invoked function to run fetchTopGames as soon as possible
+        (function () {
+          loadingContainerEl.style.display = "flex"; // Show spinner
+          fetchTopGames();
+        })();
+      });
+    </script>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StrongDog XP</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Nosifer&display=swap");
+      body {
+        font-family: "Nosifer", Arial, sans-serif; /* Apply Nosifer as the primary font */
+        margin: 0;
+        padding: 0;
+        background-color: #2e2e2e; /* Dark grey background */
+      }
+      .navbar {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .navbar .logo {
+        color: white;
+        font-weight: bold;
+      }
+      .navbar .logo .xp {
+        color: orange;
+      }
+      .navbar a,
+      .navbar a:visited,
+      .navbar .logo span {
+        text-decoration: none;
+        margin-right: 20px;
+      }
+      .search-bar {
+        padding: 7px;
+        padding-top: 10px;
+        font-size: 1em;
+        border-radius: 20%;
+        width: 100%;
+        border: none;
+        border-bottom: 5px solid gray;
+        background-color: transparent;
+        color: white;
+      }
+      .search-bar:focus {
+        outline: none;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+      .games-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        padding: 10px;
+        justify-content: center;
+      }
+      .card {
+        background-color: #fff;
+        border-radius: 10px;
+        margin: 5px;
+        width: 120px;
+        height: 120px;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        outline: 2px solid orange; /* Adds an orange outline to the card */
+      }
+
+      .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.29);
+        outline: 3px solid orange; /* Increases the outline thickness on hover */
+      }
+      .logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        /* Center the logo horizontally */
+        color: white;
+        font-weight: bold;
+      }
+      .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+      .card:hover img {
+        transform: scale(1.02); /* subtle zoom on the image */
+      }
+      .card figcaption {
+        font-size: 0.7em; /* Shrinks the text size in the card */
+        position: absolute;
+        bottom: -30px; /* start hidden */
+        left: 0;
+        width: 100%;
+        background-color: rgb(74, 74, 74);
+        color: white;
+        text-align: center;
+        padding: 5px;
+        transition: bottom 0.5s ease; /* smoother and slower */
+        overflow: hidden;
+      }
+      .card:hover figcaption {
+        bottom: 0; /* slide up on hover */
+      }
+      .card::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.3) 50%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        transform: rotate(30deg) translate(-50%, -50%);
+        transition: transform 0.5s, opacity 0.5s;
+        opacity: 0;
+        pointer-events: none; /* This ensures the shine doesn't interfere with clicking the card */
+      }
+
+      .card:hover::before {
+        transform: rotate(30deg) translate(100%, -50%);
+        opacity: 1;
+      }
+
+      .search-results {
+        position: absolute;
+        right: 20px;
+        top: 60px;
+        background-color: white;
+        color: black;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 250px; /* Adjusted for image display */
+        display: none;
+        z-index: 1000;
+        transform-origin: left; /* Anchor the transformation to the left */
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        border-radius: 5px; /* Rounded corners for the search results box */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .search-results a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: black;
+        border-bottom: 1px solid #eee;
+        padding: 5px;
+        transition: all 0.3s ease;
+      }
+
+      .search-results img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        margin-right: 10px;
+        border-radius: 5px;
+      }
+
+      .search-results a:last-child {
+        border-bottom: none;
+      }
+
+      .news-container {
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #444444; /* Light grey background */
+        border-radius: 8px;
+        max-width: 800px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+      }
+
+      .news {
+        color: #ffffff; /* Dark text for readability */
+      }
+
+      .credits-title {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+        color: #ffffff; /* Darker title color */
+        border-bottom: 2px solid #ddd; /* Subtle bottom border */
+        padding-bottom: 5px;
+      }
+
+      .credits-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+      }
+
+      .credits-role {
+        font-weight: bold;
+        color: #ffffff; /* Slightly lighter for role text */
+      }
+
+      .credits-names {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center; /* Center-aligns items vertically */
+      }
+
+      .credits-link {
+        color: #0073e6; /* Blue link color */
+        text-decoration: none;
+        font-weight: bold; /* Bold links for emphasis */
+      }
+
+      .credits-link:hover {
+        text-decoration: underline;
+      }
+
+      .credits-names span {
+        color: #c4c4c4; /* Slightly lighter for plain text */
+      }
+
+      /* Additional CSS for better spacing and style */
+      .credits-item:last-child .credits-names {
+        gap: 16px;
+      }
+
+      .credits-item:last-child .credits-link {
+        color: #00b3b3; /* Different link color for Other Links */
+      }
+
+      .credits-item:last-child .credits-link:hover {
+        text-decoration: underline;
+        color: #00cccc; /* Hover color for Other Links */
+      }
+
+      /* Styling for the All  label */
+      h2 {
+        text-align: center;
+        color: white;
+        margin: 20px 0; /* Spacing above and below */
+        font-size: 1.5em; /* Larger font size */
+      }
+
+      .card figcaption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(95, 95, 95, 0.8);
+        color: black;
+        padding: 5px 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        transform: translateY(100%); /* Start off-screen */
+        opacity: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-shadow: 0 0 2px white;
+        font-weight: 550;
+        border-radius: 10px;
+      }
+
+      .card:hover figcaption {
+        height: 30px; /* Show text on hover */
+        background-color: rgba(
+          95,
+          95,
+          95,
+          0.8
+        ); /* Non-transparent background on hover */
+        transform: translateY(0); /* Slide up to visible */
+        opacity: 1;
+      }
+
+      .pagination {
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      .pagination a {
+        color: white;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        border: 1px solid #444;
+        margin: 0 4px;
+        border-radius: 4px;
+        background-color: #333;
+      }
+
+      .pagination a.active {
+        background-color: #555;
+        border-color: #777;
+      }
+
+      .pagination a:hover:not(.active) {
+        background-color: #444;
+      }
+
+      .updates-paragraph-text {
+        color: white;
+        background-color: #a83632;
+        padding: 15px 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.05);
+        margin-bottom: 30px;
+      }
+      .updates-text-container {
+        margin-left: 30%;
+        margin-right: 30%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .loading-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .bars {
+        display: flex;
+        align-items: center;
+      }
+      .bar {
+        background-color: rgba(255, 255, 255, 0.3);
+        width: 20px;
+        height: 40px;
+        margin-right: 5px;
+        border-radius: 10px;
+        animation: load ease infinite 5s;
+      }
+      .bar-2,
+      .bar-4 {
+        height: 50px;
+      }
+      .bar-2 {
+        animation-delay: 0.1s;
+      }
+      .bar-3 {
+        height: 60px;
+        animation-delay: 0.2s;
+      }
+      .bar-4 {
+        animation-delay: 0.3s;
+      }
+      .bar-5 {
+        animation-delay: 0.4s;
+      }
+      @keyframes load {
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+        50% {
+          transform: rotate(720deg) rotateX(180deg);
+        }
+      }
+      #topGameList {
+        position: relative; /* Make sure topGameList is relatively positioned */
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background-color: #757575;
+        padding: 20px;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+      }
+
+      .modal-close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .modal-close:hover,
+      .modal-close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .modal-link {
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      #rightCobweb {
+        position: absolute;
+        width: 210px; /* Small size for the cobwebs */
+        pointer-events: none; /* Allow clicking through the image */
+        z-index: 2000; /* Ensure it stays on top visually */
+      }
+      #leftCobweb {
+        position: absolute;
+        width: 270px; /* Small size for the cobwebs */
+        pointer-events: none; /* Allow clicking through the image */
+        z-index: 2000; /* Ensure it stays on top visually */
+      }
+
+      #leftCobweb {
+        top: 0;
+        left: 0;
+      }
+
+      #rightCobweb {
+        top: 0;
+        right: 0;
+        transform: scaleX(-1); /* Mirror the image horizontally */
+      }
+      .menu-icon {
+        font-size: 2rem;
+        cursor: pointer;
+        margin-left: 20px;
+        /* Position the icon to the left */
+        color: white;
+        position: relative;
+        z-index: 1001;
+        /* Ensure it stays on top when clicking */
+      }
+
+      .slide-menu {
+        position: fixed;
+        top: 0;
+        height: 100%;
+        width: 350px;
+        background-color: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(10px);
+        /* You can adjust to preferred blurring */
+        color: white;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+        z-index: 1003;
+        /* Ensure it covers the menu icon when it slides in */
+        transition: transform 0.4s ease;
+        /* Smooth slide-in animation */
+        overflow-y: auto;
+        transform: translateX(-100%);
+        /* Start off-screen completely */
+      }
+
+      .profile-picture {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* Keeps the aspect-ratio of image normal - no distortions */
+      }
+
+      .profile-picture-container {
+        border-radius: 50%;
+        width: 100px;
+        aspect-ratio: 1;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      }
+
+      .user-details-container {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        gap: 20px;
+        padding-block: 40px;
+      }
+
+      .username-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .username-text {
+        font-size: 1.5rem;
+      }
+
+      .categories {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      /* Styling for links in the slide menu */
+      .categories > a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 20px;
+        text-decoration: none;
+        color: white;
+        transition: all 0.3s ease;
+        margin-left: 20px;
+        margin-right: 20px;
+        text-align: center;
+        font-size: 1.1rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .categories > a::after {
+        content: "";
+        background: rgba(255, 255, 255, 0.1);
+        /* You can change the color to your liking */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        width: 0;
+        height: 0;
+        transition: 0.4s ease-out;
+        /* z-index: -1; */
+      }
+
+      .categories > a:hover::after {
+        width: 400px;
+        height: 400px;
+      }
+
+      .categories > a:hover {
+        transform: scale(0.95);
+      }
+
+      /* Styling for the "new" tags */
+      span.new-feature-tag {
+        background: orange;
+        border-radius: 100vw;
+        /* Completely rounded edges */
+        padding: 0.2rem 0.4rem;
+        margin-left: 1rem;
+        /* Separate the tag from the left text */
+        font-size: 0.6rem;
+        color: black;
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="halloween/web1.png" id="leftCobweb" alt="Cobweb" />
+    <img src="halloween/web1.png" id="rightCobweb" alt="Mirrored Cobweb" />
+    <div
+      id="secretLink"
+      style="
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+      "
+    ></div>
+    <div class="navbar">
+      <div class="menu-icon" id="menuIcon">&#9776;</div>
+      <a href="index.html" class="logo">StrongDog<span class="xp">XP</span></a>
+
+      <div class="search-container">
+        <input
+          type="text"
+          class="search-bar"
+          placeholder="Search for games..."
+          id="searchInput"
+          autocomplete="off"
+        />
+        <div class="search-results" id="searchResults"></div>
+      </div>
+    </div>
+    <div class="updates-text-container">
+      <p class="updates-paragraph-text">
+        Strongdog now has accounts! We also brought strongdog chat back!!! You
+        can find it on the second page.
+      </p>
+    </div>
+    <div class="modal" id="popupModal">
+      <div class="modal-content">
+        <span class="modal-close" id="closeModal">&times;</span>
+        <p>
+          The strongdog discord server is a place for strongdog users to chill,
+          play games together, request ideas, and have fun!
+        </p>
+        <p>
+          If you want to help on strongdog, there is a chat where you can get
+          help downloading games, and you can upload games YOU download to add
+          to strongdog! (and yes, you will get credit for downloading games)
+        </p>
+        <p>
+          Ready to join? Click
+          <a href="https://discord.gg/pWjfQ4Sz5c" target="_blank">here</a> to
+          join the Discord server!
+        </p>
+      </div>
+    </div>
+    <div class="pagination">
+      <a href="/#" id="page1-link">1</a>
+      <a href="/strongdog2/index.html" id="page2-link">2</a>
+    </div>
+    <h2 style="text-align: center"><strong>Top 10</strong></h2>
+    <div class="games-grid" id="topGameList"></div>
+
+    <h2 style="text-align: center"><strong>All</strong></h2>
+    <div class="games-grid" id="allGameList"></div>
+
+    <h2 style="text-align: center"><strong>StrongDogXP LLC</strong></h2>
+
+    <div class="news-container">
+      <div class="news">
+        <div class="credits-item">
+          <div class="credits-role">CEO</div>
+          <div class="credits-names">
+            <a
+              href="https://github.com/jman1593"
+              target="_blank"
+              class="credits-link"
+              >Joshua Pettit</a
+            >
+          </div>
+        </div>
+        <div class="credits-item">
+          <div class="credits-role">Developers</div>
+          <div class="credits-names">
+            <a
+              href="https://github.com/jman1593"
+              target="_blank"
+              class="credits-link"
+              >Joshua Pettit</a
+            >
+            <span>|</span>
+            <a
+              href="https://github.com/JamesMeadows4"
+              target="_blank"
+              class="credits-link"
+              >James Meadows</a
+            >
+          </div>
+        </div>
+        <div class="credits-item">
+          <div class="credits-role">Game Downloaders</div>
+          <div class="credits-names">
+            <a
+              href="https://github.com/jman1593"
+              target="_blank"
+              class="credits-link"
+              >Joshua Pettit</a
+            >
+          </div>
+        </div>
+        <div class="credits-item">
+          <div class="credits-role">Canvas Designer</div>
+          <div class="credits-names">
+            <span>Noah Ross</span>
+          </div>
+        </div>
+        <div class="credits-item">
+          <div class="credits-role">Other Links</div>
+          <div class="credits-names">
+            <a
+              href="https://mathcord.netlify.app"
+              target="_blank"
+              class="credits-link"
+              >mathcord.netlify.app</a
+            >
+            <span>|</span>
+            <a
+              href="https://strongdog.onrender.com"
+              target="_blank"
+              class="credits-link"
+              >strongdog.onrender.com</a
+            >
+            <span>|</span>
+            <a
+              href="https://jman1593.github.io"
+              target="_blank"
+              class="credits-link"
+              >jman1593.github.io</a
+            >
+            <span>|</span>
+            <a
+              href="https://strongdog.netlify.app"
+              target="_blank"
+              class="credits-link"
+              >strongdog.netlify.app</a
+            >
+            <span>|</span>
+            <a
+              href="https://strongdog-1.vercel.app"
+              target="_blank"
+              class="credits-link"
+              >strongdog-1.vercel.app</a
+            >
+            <span>|</span>
+            <a href="https://mathcord.com" target="_blank" class="credits-link"
+              >mathcord.com</a
+            >
+            <span>|</span>
+            <a href="https://strongdog.com" target="_blank" class="credits-link"
+              >strongdog.com</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-menu" id="slideMenu">
+      <div class="user-details-container">
+        <div class="profile-picture-container">
+          <a href="settings.html">
+            <img class="profile-picture" src="img/default-avatar.png" />
+          </a>
+        </div>
+        <div class="username-container">
+          <p class="username-text">Your Username</p>
+        </div>
+      </div>
+      <!-- Categories / options -->
+      <div class="categories">
+        <a href="favs.html" class="option-link">Favorites</a>
+        <a href="#" id="randomGame" class="option-link">Random Game</a>
+        <a href="#" id="blockLanschool" class="option-link">Block Lanschool</a>
+        <a href="about.html" class="option-link"
+          >About / Report Bugs / Request Games</a
+        >
+        <a href="https://discord.gg/pWjfQ4Sz5c" class="option-link"
+          >Discord Server<span class="new-feature-tag">new</span></a
+        >
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const menuIcon = document.getElementById("menuIcon");
+        const slideMenu = document.createElement("div");
+        slideMenu.className = "slide-menu";
+        
+        // Define gameCards globally so that all functions can access it
+        let gameCards = []; // Array to hold all loaded game cards
+    
+        // Clone the categories
+        const originalCategories = document.querySelector(".categories");
+        const categories = originalCategories.cloneNode(true);
+    
+        // Append the categories to the slideMenu
+        slideMenu.appendChild(categories);
+        document.body.appendChild(slideMenu);
+    
+        // Add click event to toggle the sliding menu
+        menuIcon.addEventListener("click", function (event) {
+          event.stopPropagation(); // Prevent click event from bubbling up
+          if (slideMenu.style.transform === "translateX(0%)") {
+            slideMenu.style.transform = "translateX(-100%)"; // Hide menu by sliding out
+          } else {
+            slideMenu.style.transform = "translateX(0%)"; // Show menu by sliding in
+          }
+        });
+    
+        // Close the menu when clicking outside of it
+        window.addEventListener("click", function (event) {
+          if (event.target !== menuIcon && !slideMenu.contains(event.target)) {
+            slideMenu.style.transform = "translateX(-100%)"; // Hide menu
+          }
+        });
+    
+        // Check authentication state
+        auth.onAuthStateChanged(async (user) => {
+          let userDetailsContainer;
+    
+          if (user) {
+            // User is signed in, fetch their profile picture and username
+    
+            // Clone the user-details-container
+            const originalUserDetailsContainer = document.querySelector(
+              ".user-details-container"
+            );
+            userDetailsContainer = originalUserDetailsContainer.cloneNode(true);
+    
+            // Get elements inside userDetailsContainer
+            const profilePictureElement =
+              userDetailsContainer.querySelector(".profile-picture");
+            const usernameElement =
+              userDetailsContainer.querySelector(".username-text");
+    
+            // Set profile picture
+            if (user.photoURL) {
+              profilePictureElement.src = user.photoURL;
+            } else {
+              profilePictureElement.src = "img/default-avatar.png"; // Fallback to default image
+            }
+    
+            // Set username
+            const userId = user.uid;
+            const userDocRef = db.collection("usernames").doc(userId);
+            const userDoc = await userDocRef.get();
+    
+            if (userDoc.exists) {
+              const userData = userDoc.data();
+              usernameElement.textContent = userData.username || "Username";
+            } else {
+              usernameElement.textContent = user.displayName || "Username";
+            }
+    
+            // Make profile picture clickable and direct to settings page
+            profilePictureElement.parentElement.addEventListener(
+              "click",
+              () => {
+                window.location.href = "settings.html";
+              }
+            );
+    
+            // Insert the userDetailsContainer at the top of the slideMenu
+            slideMenu.insertBefore(userDetailsContainer, categories);
+    
+            // Create the "Log Out" button as a menu item
+            const logoutLink = document.createElement("a");
+            logoutLink.href = "#";
+            logoutLink.className = "option-link";
+            logoutLink.textContent = "Log Out";
+            logoutLink.style.backgroundColor = "#dc3545"; // Red color for the button
+            logoutLink.style.color = "white";
+    
+            // Add click event to the "Log Out" link
+            logoutLink.addEventListener("click", function (e) {
+              e.preventDefault();
+              auth
+                .signOut()
+                .then(() => {
+                  // Sign-out successful.
+                  window.location.reload();
+                })
+                .catch((error) => {
+                  // An error happened.
+                  console.error("Error signing out:", error);
                 });
-            })
-            .catch((error) => console.error("Error fetching IP:", error));
-
-          if (messageText.toLowerCase() === "easter egg") {
-            showEasterEgg();
+            });
+    
+            // Insert the "Log Out" link above the "Favorites" link
+            const favoritesLink = categories.querySelector(
+              'a[href="favs.html"]'
+            );
+            categories.insertBefore(logoutLink, favoritesLink);
+          } else {
+            // User is not signed in, display "Not logged in" and a "Log In" button
+    
+            // Create a new userDetailsContainer
+            userDetailsContainer = document.createElement("div");
+            userDetailsContainer.className = "user-details-container";
+    
+            // Create a container for the text
+            const notLoggedInContainer = document.createElement("div");
+            notLoggedInContainer.className = "username-container";
+    
+            // Create the "Not logged in" text
+            const notLoggedInText = document.createElement("p");
+            notLoggedInText.className = "username-text";
+            notLoggedInText.textContent = "Not logged in";
+    
+            // Append the text to the container
+            notLoggedInContainer.appendChild(notLoggedInText);
+    
+            // Create the "Log In" button
+            const loginButton = document.createElement("button");
+            loginButton.textContent = "Log In";
+            loginButton.style.backgroundColor = "#007bff"; // Blue color
+            loginButton.style.color = "white";
+            loginButton.style.border = "none";
+            loginButton.style.padding = "10px 20px";
+            loginButton.style.fontSize = "16px";
+            loginButton.style.borderRadius = "5px";
+            loginButton.style.cursor = "pointer";
+            loginButton.style.marginTop = "5px";
+    
+            // Add click event to the "Log In" button
+            loginButton.addEventListener("click", function () {
+              window.location.href = "login.html";
+            });
+    
+            // Center the content
+            userDetailsContainer.style.display = "flex";
+            userDetailsContainer.style.flexDirection = "column";
+            userDetailsContainer.style.alignItems = "center";
+            userDetailsContainer.style.paddingBlock = "40px"; // Ensure consistent padding
+    
+            // Append the text and button to the userDetailsContainer
+            userDetailsContainer.appendChild(notLoggedInContainer);
+            userDetailsContainer.appendChild(loginButton);
+    
+            // Insert the userDetailsContainer at the top of the slideMenu
+            slideMenu.insertBefore(userDetailsContainer, categories);
           }
-          if (messageText.toLowerCase() === "caseoh") {
-            crashPage();
+    
+          // Add event listeners to the relevant buttons in the sliding menu
+          categories
+            .querySelector("#randomGame")
+            .addEventListener("click", function (e) {
+              e.preventDefault();
+              handleRandomGameClick();
+            });
+    
+          categories
+            .querySelector("#blockLanschool")
+            .addEventListener("click", function (e) {
+              e.preventDefault();
+              handleBlockLanschoolClick();
+            });
+    
+          function handleRandomGameClick() {
+            if (gameCards.length > 0) {
+              const randomIndex = Math.floor(Math.random() * gameCards.length);
+              const randomCardHref =
+                gameCards[randomIndex].getAttribute("href");
+              window.location.href = randomCardHref;
+            } else {
+              console.error("No game cards found to select a random game.");
+            }
           }
-        }
-        setTimeout(function () {
-          canSendMessage = true;
-        }, 2000);
-      }
-
-      function showEasterEgg() {
-        const img = document.createElement("img");
-        img.src = "trolls/easter egg.jpg"; // Make sure the path is correct
-        img.style.position = "fixed";
-        img.style.width = "100px"; // Set the size of the image
-        document.body.appendChild(img);
-
-        let dx = 5; // Speed of movement in the x direction
-        let dy = 5; // Speed of movement in the y direction
-        let x = 0;
-        let y = 0;
-
-        function animate() {
-          x += dx;
-          y += dy;
-
-          // Bounce off edges
-          if (x <= 0 || x + img.offsetWidth >= window.innerWidth) {
-            dx = -dx;
+    
+          function handleBlockLanschoolClick() {
+            var url = "https://strongdog.netlify.app";
+            var newTab = window.open();
+            newTab.document.write(`
+              <html>
+                <body style="margin: 0; height: 100vh;">
+                  <iframe src="${url}" style="border: none; width: 100%; height: 100%;"></iframe>
+                </body>
+              </html>
+            `);
+            newTab.document.close();
           }
-          if (y <= 0 || y + img.offsetHeight >= window.innerHeight) {
-            dy = -dy;
+    
+          async function loadCardData() {
+            try {
+              const response = await fetch("cards_data.html");
+              const text = await response.text();
+    
+              // Create a temporary DOM element to parse the fetched HTML
+              const tempDiv = document.createElement("div");
+              tempDiv.innerHTML = text;
+    
+              // Assuming each card has a class of 'card' in cards_data.html
+              const cards = tempDiv.querySelectorAll(".card");
+              cards.forEach((card) => {
+                gameCards.push(card);
+              });
+    
+              // Enable random game functionality after cards are loaded
+              enableRandomGameFeature();
+            } catch (error) {
+              console.error("Error loading card data:", error);
+            }
           }
-
-          img.style.left = x + "px";
-          img.style.top = y + "px";
-
-          requestAnimationFrame(animate);
-        }
-
-        animate();
-      }
-
-      function crashPage() {
-        alert("This image is too big to show on the screen.");
-
-        // Creating an infinite loop to hang/crash the page
-        while (true) {
-          // This loop will run indefinitely, causing the browser tab to hang or crash
-        }
-      }
-      // Function to enter fullscreen mode for the video
-      function enterFullscreen(element) {
-        if (element.requestFullscreen) {
-          element.requestFullscreen();
-        } else if (element.webkitRequestFullscreen) {
-          // Safari
-          element.webkitRequestFullscreen();
-        }
-      }
-
-      // Function to exit fullscreen
-      function exitFullscreen() {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-          // Safari
-          document.webkitExitFullscreen();
-        }
-      }
-
-      function sendChatMessage(chatName, messageText, user) {
-        const censoredText = censorWord(messageText);
-        const messageData = {
-          text: censoredText,
-          sender: user.displayName || user.email, // Use displayName if available
-          senderUID: user.uid, // Add the sender's UID
-          timestamp: firebase.database.ServerValue.TIMESTAMP,
-        };
-        firebase
-          .database()
-          .ref("messages/" + chatName)
-          .push(messageData);
-      }
-
-      function handleKeyPress(event) {
-        if (event.key === "Enter") {
-          event.preventDefault(); // Prevents form submission
-          const messageInput = document.getElementById("message-input");
-          const messageText = messageInput.value;
-          const currentChat =
-            document.getElementById("chat-header").textContent;
-          if (messageText && currentChat) {
-            sendMessage(currentChat, messageText);
-            messageInput.value = "";
+    
+          function enableRandomGameFeature() {
+            const randomGameButton = document.getElementById("randomGame");
+            if (gameCards.length > 0) {
+              randomGameButton.addEventListener("click", function (e) {
+                e.preventDefault();
+                const randomIndex = Math.floor(
+                  Math.random() * gameCards.length
+                );
+                const randomCardHref =
+                  gameCards[randomIndex].getAttribute("href");
+                window.location.href = randomCardHref;
+              });
+            } else {
+              console.error("No game cards found to select a random game.");
+            }
           }
+    
+          // Call the loadCardData function to populate gameCards
+          loadCardData();
+        });
+      });
+    </script>
+    
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const discordLink = document.getElementById("discordLink");
+        const modal = document.getElementById("popupModal");
+        const closeModal = document.getElementById("closeModal");
+
+        discordLink.addEventListener("click", function () {
+          modal.style.display = "flex";
+        });
+
+        closeModal.addEventListener("click", function () {
+          modal.style.display = "none";
+        });
+
+        window.addEventListener("click", function (event) {
+          if (event.target === modal) {
+            modal.style.display = "none";
+          }
+        });
+      });
+    </script>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Ensure the DOM is fully loaded and elements exist
+  const searchInput = document.querySelector(".search-bar");
+  const searchResults = document.getElementById("searchResults");
+
+  // Check if the elements are found
+  if (!searchInput || !searchResults) {
+    console.error("Search input or results container not found in the DOM.");
+    return; // Exit the function if elements are missing
+  }
+
+  let gameCards = []; // Array to hold game data
+
+  // Function to load card data from external file
+  async function loadCardData() {
+    try {
+      const response = await fetch("cards_data.html");
+      const text = await response.text();
+
+      // Create a temporary DOM element to parse the fetched HTML
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = text;
+
+      // Assuming each card has a class of 'card' in cards_data.html
+      const cards = tempDiv.querySelectorAll(".card");
+      cards.forEach((card) => {
+        gameCards.push(card); // Add each card to the array
+      });
+
+      return gameCards; // Return the populated gameCards array
+    } catch (error) {
+      console.error("Error loading card data:", error);
+      return [];
+    }
+  }
+
+  // Show results when the search bar is focused
+  searchInput.addEventListener("focus", function () {
+    searchResults.style.display = "block";
+    updateSearchResults(); // Call to display initial results (if any)
+  });
+
+  // Update the search results based on the input
+  searchInput.addEventListener("input", updateSearchResults);
+
+  // Hide results when clicking outside the search bar and results
+  document.addEventListener("click", function (event) {
+    if (
+      !searchInput.contains(event.target) &&
+      !searchResults.contains(event.target)
+    ) {
+      searchResults.style.display = "none";
+    }
+  });
+
+  // Function to update the search results
+  function updateSearchResults() {
+    const searchText = searchInput.value.toLowerCase();
+    const filteredCards = gameCards
+      .filter(
+        (card) => card.querySelector("figcaption").textContent.toLowerCase().includes(searchText) // Filter based on figcaption text
+      )
+      .slice(0, 7); // Top 7 results
+
+    searchResults.innerHTML = ""; // Clear previous results
+    filteredCards.forEach((card) => {
+      const cardImg = card.querySelector("img").src;
+      const cardTitle = card.querySelector("figcaption").textContent;
+      const cardHref = card.getAttribute("href");
+
+      const resultLink = document.createElement("a");
+      resultLink.href = cardHref;
+      resultLink.innerHTML = `<img src="${cardImg}" alt="${cardTitle}"><span>${cardTitle}</span>`;
+      searchResults.appendChild(resultLink);
+    });
+
+    // Show or hide the results container based on whether there are results
+    searchResults.style.display = filteredCards.length ? "block" : "none";
+  }
+
+  // Load card data when the page loads
+  loadCardData();
+});
+
+    </script>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const randomGameButton = document.getElementById("randomGame");
+      const blockLanschoolButton = document.getElementById("blockLanschool");
+
+      let gameCards = []; // Array to hold all loaded game cards
+
+      // Load card data from cards_data.html
+      async function loadCardData() {
+        try {
+          const response = await fetch("cards_data.html");
+          const text = await response.text();
+
+          // Create a temporary DOM element to parse the fetched HTML
+          const tempDiv = document.createElement("div");
+          tempDiv.innerHTML = text;
+
+          // Assuming each card has a class of 'card' in cards_data.html
+          const cards = tempDiv.querySelectorAll(".card");
+          cards.forEach((card) => {
+            const gameTitle = card.querySelector("figcaption").textContent;
+            const gameImage = card.querySelector("img").src;
+            const gameHref = card.getAttribute("href");
+
+            // Store the game info in the gameCards array
+            gameCards.push(card);
+          });
+
+          // Add cards to the DOM (if needed)
+          const allGameList = document.getElementById("allGameList");
+          allGameList.append(...gameCards);
+
+          // Enable random game functionality after cards are loaded
+          enableRandomGameFeature();
+        } catch (error) {
+          console.error("Error loading card data:", error);
         }
       }
 
-      function removeChat(chatName) {
-        const chatRef = firebase.database().ref("chats/" + chatName);
-        const user = firebase.auth().currentUser;
+      function enableRandomGameFeature() {
+        if (gameCards.length > 0) {
+          randomGameButton.addEventListener("click", function (e) {
+            e.preventDefault();
+            const randomIndex = Math.floor(Math.random() * gameCards.length);
+            const randomCardHref = gameCards[randomIndex].getAttribute("href");
+            window.location.href = randomCardHref;
+          });
+        } else {
+          console.error("No game cards found to select a random game.");
+        }
+      }
 
-        if (!user) {
-          console.log("User not signed in");
+      // Load the card data after DOM is ready
+      loadCardData();
+
+      blockLanschoolButton.addEventListener("click", function (e) {
+        e.preventDefault();
+        var url = "https://strongdog.netlify.app";
+        var newTab = window.open();
+        newTab.document.write(`
+        <html>
+          <body style="margin: 0; height: 100vh;">
+            <iframe src="${url}" style="border: none; width: 100%; height: 100%;"></iframe>
+          </body>
+        </html>
+      `);
+        newTab.document.close();
+      });
+
+      loadCardData();
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const page1Link = document.getElementById("page1-link");
+      const page2Link = document.getElementById("page2-link");
+
+      const hostname = window.location.hostname;
+
+      if (hostname.includes("github.io")) {
+        page1Link.href = "/#";
+        page2Link.href = "/strongdog2/index.html";
+      } else if (hostname.includes("vercel.app")) {
+        page1Link.href = "https://strongdog-1.vercel.app";
+        page2Link.href = "https://strongdog2.vercel.app";
+      } else if (hostname.includes("strongdog.netlify.app")) {
+        page1Link.href = "https://strongdog.netlify.app";
+        page2Link.href = "https://strongdog2.netlify.app";
+      } else if (hostname.includes("strongdog2.netlify.app")) {
+        page1Link.href = "https://strongdog.netlify.app";
+        page2Link.href = "https://strongdog2.netlify.app";
+      } else if (hostname.includes("mathcord.netlify.app")) {
+        page1Link.href = "https://mathcord.netlify.app";
+        page2Link.href = "https://mathcord2.netlify.app";
+      } else if (hostname.includes("mathcord2.netlify.app")) {
+        page1Link.href = "https://mathcord.netlify.app";
+        page2Link.href = "https://mathcord2.netlify.app";
+      } else if (hostname.includes("onrender.com")) {
+        page1Link.href = "https://strongdog.onrender.com";
+        page2Link.href = "https://strongdog2.onrender.com";
+      }
+    });
+  </script>
+  <script>
+    document
+      .getElementById("secretLink")
+      .addEventListener("click", function () {
+        window.location.href = "secret-menu.html";
+      });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const discordLink = document.getElementById("discordLink");
+      const modal = document.getElementById("popupModal");
+      const closeModal = document.getElementById("closeModal");
+
+      discordLink.addEventListener("click", function () {
+        modal.style.display = "flex";
+      });
+
+      closeModal.addEventListener("click", function () {
+        modal.style.display = "none";
+      });
+
+      window.addEventListener("click", function (event) {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const cardContainer = document.getElementById("allGameList");
+      const cobwebImageSrc = "halloween/web1.png"; // Ensure this path is correct
+
+      function addCobwebsToCards() {
+        const allCards = cardContainer.querySelectorAll(".card");
+        if (allCards.length === 0) {
+          console.log("No cards found. Ensure the cards are present.");
           return;
         }
 
-        chatRef.once(
-          "value",
-          (snapshot) => {
-            const chatData = snapshot.val();
-            if (
-              chatData &&
-              chatData.participants &&
-              chatData.participants[user.uid]
-            ) {
-              const isOnlyParticipant =
-                Object.keys(chatData.participants).length === 1;
-              const leaveMessage = {
-                text: (user.displayName || user.email) + " left the chat!",
-                sender: "System",
-                timestamp: firebase.database.ServerValue.TIMESTAMP,
-                isSystemMessage: true,
-              };
+        console.log(`Found ${allCards.length} cards.`);
 
-              if (isOnlyParticipant) {
-                // Remove chat and messages
-                chatRef.remove();
-                firebase
-                  .database()
-                  .ref("messages/" + chatName)
-                  .remove();
-              } else {
-                // Remove user from chat participants
-                chatRef.child("participants/" + user.uid).remove();
-                firebase
-                  .database()
-                  .ref("messages/" + chatName)
-                  .push(leaveMessage);
-              }
+        let cardsSinceLastCobweb = 0;
+        let nextCobwebInterval = getRandomInterval(7, 14);
 
-              // Remove chat from user's chat list
-              const userChatRef = firebase
-                .database()
-                .ref("userChats/" + user.uid + "/" + chatName);
-              userChatRef.remove().then(() => {
-                removeChatFromUI(chatName);
+        allCards.forEach((card, index) => {
+          cardsSinceLastCobweb++;
 
-                if (currentChat === chatName) {
-                  closeChatDisplay();
-                }
-                alert("Chat '" + chatName + "' has been removed.");
-              });
-            } else {
-              alert(
-                "You are not a participant of this chat or chat does not exist."
-              );
-            }
-          },
-          (error) => {
-            console.error("Error reading chat data: ", error);
-          }
-        );
-      }
-
-      function removeChatFromUI(chatName) {
-        const chatList = document.getElementById("chats");
-        const chatItems = chatList.querySelectorAll(".chat-item");
-        chatItems.forEach((chatItem) => {
-          if (chatItem.getAttribute("data-chat-name") === chatName) {
-            chatList.removeChild(chatItem);
+          if (cardsSinceLastCobweb >= nextCobwebInterval) {
+            addCobwebToCard(card, cobwebImageSrc);
+            cardsSinceLastCobweb = 0;
+            nextCobwebInterval = getRandomInterval(7, 14);
           }
         });
       }
 
-      function closeChatDisplay() {
-        document.getElementById("chat-container").style.display = "none";
-        document.getElementById("chat-header").textContent = "Select a chat";
-        document.getElementById("messages").innerHTML = "";
+      function getRandomInterval(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
       }
 
-      function closeChatDisplay() {
-        document.getElementById("chat-container").style.display = "none";
-        document.getElementById("chat-header").textContent = "Select a chat";
-        document.getElementById("messages").innerHTML = "";
+      function addCobwebToCard(card, cobwebImageSrc) {
+        const cobwebDiv = document.createElement("div");
+        cobwebDiv.innerHTML = `<img src="${cobwebImageSrc}" alt="Cobweb" style="width: 100%; height: auto;" />`;
+
+        cobwebDiv.style.position = "absolute";
+        cobwebDiv.style.top = "0";
+        cobwebDiv.style.left = "0";
+        cobwebDiv.style.width = "100%";
+        cobwebDiv.style.height = "100%";
+        cobwebDiv.style.pointerEvents = "none";
+        cobwebDiv.style.zIndex = "10000";
+
+        card.style.position = "relative";
+
+        card.appendChild(cobwebDiv);
       }
 
-      function removeChatFromUI(chatName) {
-        const chatList = document.getElementById("chats");
-        const chatItems = chatList.querySelectorAll(".chat-item");
-
-        chatItems.forEach((chatItem) => {
-          if (chatItem.getAttribute("data-chat-name") === chatName) {
-            chatList.removeChild(chatItem);
-          }
-        });
-      }
-
-      function deleteOldMessages() {
-        const messagesRef = firebase.database().ref("messages");
-        const oneMonthAgo = Date.now() - 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
-
-        messagesRef.once("value", (snapshot) => {
-          snapshot.forEach((chatSnapshot) => {
-            chatSnapshot.forEach((messageSnapshot) => {
-              if (messageSnapshot.val().timestamp < oneMonthAgo) {
-                messageSnapshot.ref.remove();
-              }
-            });
-          });
-        });
-      }
-
-      // Ensure Firebase is initialized before calling this function
-      firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-          // Existing authentication state change logic...
-          deleteOldMessages(); // Call this function here
-        }
-      });
-
-      function leaveChat(chatName) {
-        const chatRef = firebase
-          .database()
-          .ref(
-            "chats/" +
-              chatName +
-              "/participants/" +
-              firebase.auth().currentUser.uid
-          );
-        chatRef.remove();
-      }
-
-      document
-        .getElementById("message-input")
-        .addEventListener("keypress", handleKeyPress);
-
-      function formatTextWithCodes(text) {
-        const colorAndStyleMappings = {
-          "§0": '<span style="color: #000000;">',
-          "§1": '<span style="color: #0000AA;">',
-          "§2": '<span style="color: #00AA00;">',
-          "§3": '<span style="color: #00AAAA;">',
-          "§4": '<span style="color: #AA0000;">',
-          "§5": '<span style="color: #AA00AA;">',
-          "§6": '<span style="color: #FFAA00;">',
-          "§7": '<span style="color: #AAAAAA;">',
-          "§8": '<span style="color: #555555;">',
-          "§9": '<span style="color: #5555FF;">',
-          "§a": '<span style="color: #55FF55;">',
-          "§b": '<span style="color: #55FFFF;">',
-          "§c": '<span style="color: #FF5555;">',
-          "§d": '<span style="color: #FF55FF;">',
-          "§e": '<span style="color: #FFFF55;">',
-          "§f": '<span style="color: #FFFFFF;">',
-          "§l": '<span style="font-weight: bold;">',
-          "§m": '<span style="text-decoration: line-through;">',
-          "§n": '<span style="text-decoration: underline;">',
-          "§o": '<span style="font-style: italic;">',
-          "§r": "</span>", // Reset
-        };
-
-        // Split text at every §r and process each part separately
-        const parts = text.split("§r");
-        for (let i = 0; i < parts.length; i++) {
-          // Replace the color and style codes with HTML spans in each part
-          Object.keys(colorAndStyleMappings).forEach((code) => {
-            parts[i] = parts[i].replace(
-              new RegExp(code, "g"),
-              colorAndStyleMappings[code]
+      const observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          if (mutation.addedNodes.length) {
+            const addedCards = Array.from(mutation.addedNodes).filter(
+              (node) => node.classList && node.classList.contains("card")
             );
-          });
-
-          // Close any open HTML spans in each part
-          let openSpans = (parts[i].match(/<span/g) || []).length;
-          let closeSpans = (parts[i].match(/<\/span>/g) || []).length;
-          parts[i] += "</span>".repeat(openSpans - closeSpans);
-        }
-
-        // Join the parts back together, adding the closing span tags for reset
-        let formattedText = parts.join("</span>");
-
-        console.log("Formatted text:", formattedText);
-        return formattedText;
-      }
-
-      function parseMessage(message) {
-        console.log("Parsing message:", message);
-
-        // You can call the formatTextWithCodes function here if needed
-        let parsedMessage = formatTextWithCodes(message);
-
-        console.log("Parsed message:", parsedMessage);
-        return parsedMessage;
-      }
-
-      document
-        .getElementById("message-input")
-        .addEventListener("input", function () {
-          var rawText = this.textContent;
-          // Temporarily disable event listener to avoid recursion
-          this.removeEventListener("input", arguments.callee);
-          // Update the formatted content
-          this.innerHTML = formatTextWithCodes(rawText);
-          // Re-enable the event listener
-          this.addEventListener("input", arguments.callee);
+            if (addedCards.length > 0) {
+              addCobwebsToCards();
+              observer.disconnect();
+            }
+          }
         });
-
-      var quill = new Quill("#editor-container", {
-        theme: "snow", // Specify theme
       });
 
-      function getQuillText() {
-        return quill.root.innerHTML;
-      }
-      function updateUsernameInMessages(newUsername, userUID) {
-        const messagesRef = firebase.database().ref("messages");
+      observer.observe(cardContainer, { childList: true });
 
-        messagesRef.once("value", (snapshot) => {
-          snapshot.forEach((chatSnapshot) => {
-            chatSnapshot.forEach((messageSnapshot) => {
-              const message = messageSnapshot.val();
-              if (message.senderUID === userUID) {
-                messageSnapshot.ref.update({ sender: newUsername });
-              }
-            });
-          });
-        });
-      }
-    </script>
-  </body>
+      setTimeout(function () {
+        addCobwebsToCards();
+        observer.disconnect();
+      }, 5000);
+    });
+  </script>
+
+  <footer style="text-align: center; color: orange; padding: 20px">
+    <p>🎃 Happy Halloween from StrongDogXP 🎃</p>
+  </footer>
 </html>
