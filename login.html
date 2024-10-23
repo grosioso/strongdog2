@@ -262,7 +262,7 @@
         const errorMessage = document.getElementById("error-message");
         const togglePasswordBtns = document.querySelectorAll(".show-password");
         const loadingAnimationContainer = document.querySelector(".loading-animation-container");
-        const loadingAnimation = document.querySelector(".loading-nimation");
+        const loadingAnimation = document.querySelector(".loading-animation");
 
         loginForm.addEventListener("submit", e => {
           e.preventDefault();
@@ -281,45 +281,52 @@
             });
         });
 
-        function toggleLoadingAnimation() {
+      function toggleLoadingAnimation() {
+        const loadingAnimationContainer = document.querySelector(".loading-animation-container");
+        const loadingAnimation = document.querySelector(".loading-animation"); // Corrected selector
+
+        if (loadingAnimationContainer && loadingAnimation) {
           const isHidden = loadingAnimationContainer.style.display === "none";
+          
           loadingAnimationContainer.style.display = isHidden ? "grid" : "none";
-          loadingAnimation.style.animation = !isHidden ? "flip 2s ease-in-out infinite" : "none";
+          loadingAnimation.style.animation = isHidden ? "flip 2s ease-in-out infinite" : "none";
+        } else {
+          console.error("Loading animation elements not found");
         }
+      }
 
+      googleSignInBtn.addEventListener("click", () => {
+        signInWithPopup(auth, provider)
+          .then(async (result) => {
+            const user = result.user;
+            let isNewUser = false;
 
-        googleSignInBtn.addEventListener("click", () => {
-          signInWithPopup(auth, provider)
-            .then(async (result) => {
-              const user = result.user;
-              let isNewUser = false;
+            // Check if additionalUserInfo is available
+            if (
+              result.additionalUserInfo &&
+              typeof result.additionalUserInfo.isNewUser !== "undefined"
+            ) {
+              isNewUser = result.additionalUserInfo.isNewUser;
+            } else {
+              // Fallback: Check in Firestore if the user has set a username
+              const usernameDoc = await getDoc(
+                doc(db, "usernames", user.uid)
+              );
+              isNewUser = !usernameDoc.exists();
+            }
 
-              // Check if additionalUserInfo is available
-              if (
-                result.additionalUserInfo &&
-                typeof result.additionalUserInfo.isNewUser !== "undefined"
-              ) {
-                isNewUser = result.additionalUserInfo.isNewUser;
-              } else {
-                // Fallback: Check in Firestore if the user has set a username
-                const usernameDoc = await getDoc(
-                  doc(db, "usernames", user.uid)
-                );
-                isNewUser = !usernameDoc.exists();
-              }
-
-              if (isNewUser) {
-                // Hide login form and show username prompt
-                document.querySelector(".form-container").style.display = "none";
-                usernamePrompt.style.display = "block";
-              } else {
-                window.location.href = "index.html";
-              }
-            })
-            .catch(error => {
-              errorMessage.textContent = `Error: ${error.message}`;
-            });
-        });
+            if (isNewUser) {
+              toggleLoadingAnimation();
+              document.querySelector(".form-container").style.display = "none";
+              usernamePrompt.style.display = "block";
+            } else {
+              window.location.href = "index.html";
+            }
+          })
+          .catch(error => {
+            errorMessage.textContent = `Error: ${error.message}`;
+          });
+      });
 
         usernameForm.addEventListener("submit", async e => {
           e.preventDefault();
@@ -445,12 +452,14 @@
     const googleSignInBtnEl = document.getElementById("google-signin"),
           loginButtonEl = document.getElementById("loginBtn"),
           changeUsernameBtnEl = document.getElementById("changeUsernameBtn"),
-          usernameForm = document.getElementById("username-form"),
+          usernameForm = document.getElementById("username-prompt"),
           word = "Google".split(""),
           googleColors = ["#4889f4", "#eb493b", "#fbbe0d", "#4889f4", "#3aab58", "#eb493b"];
+
     googleSignInBtnEl.innerHTML = "Sign in with " + word.map((char, i) => (
         `<span style="color: ${googleColors[i]}">${char}</span>`
     )).join("");
+
     document.addEventListener("keydown", e => {
         const isEditingUsername = usernameForm.style.display === "block";
         if (e.key === "Enter") {
