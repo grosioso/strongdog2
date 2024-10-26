@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"
+    />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login | StrongDogXP</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap"
+      rel="stylesheet"
+    />
     <style>
       /* Variables */
       :root {
@@ -12,33 +19,33 @@
           --clr-bg-loading-animation-overlay: rgba(0, 0, 0, 0.8);
           --clr-text: #dfdfdf;
           --clr-err: #fa4b4b;
-          
+
           --ff: "Quicksand", Ariel, sans-serif;
           --font-size-main: clamp(14px, 2vw, 18px);
-          
+
           --shadow-dark-clr: #1e2124;
           --shadow-light-clr: #33373d;
-          
-          --lg-outwards-shadow: 
+
+          --lg-outwards-shadow:
               18px 18px 20px var(--shadow-dark-clr),
               -18px -18px 20px var(--shadow-light-clr);
-          
-          --sm-outward-shadow: 
+
+          --sm-outward-shadow:
               4px 4px 7px var(--shadow-dark-clr),
               -4px -4px 7px var(--shadow-light-clr);
-          
-          --sm-inward-shadow: 
+
+          --sm-inward-shadow:
               inset 4px 4px 10px var(--shadow-dark-clr),
               inset -4px -4px 10px var(--shadow-light-clr);
-          
+
           --border-radius-lg: 40px;
           --border-radius-sm: 10px;
-          
+
           --link-color: #5875e8;
       }
       /* If a user has their settings to be light theme */
       @media (prefers-color-scheme: light) {
-          :root { 
+          :root {
               --clr-bg-main: #e9edf0;
               --clr-text: #444;
               --shadow-dark-clr: #bababa;
@@ -79,17 +86,17 @@
 
           /* Don't allow the user to select any text */
           user-select: none;
-          
+
           background-color: var(--clr-bg-main);
           color: var(--clr-text);
           font-family: var(--ff);
           font-size: var(--font-size-main);
-          
+
           height: 100vh;
           display: grid;
           place-items: center; /* Center all items */
-          
-          perspective: 1000px; /* For 3D elements */ 
+
+          perspective: 1000px; /* For 3D elements */
       }
       h1 {
           font-size: clamp(2rem, 5vw, 3.5rem);
@@ -97,13 +104,13 @@
       /* For both containers... */
       .username-prompt, .form-container {
           width: clamp(400px, 50%, 700px);
-          
+
           padding: 2em;
-          
+
           border-radius: var(--border-radius-lg);
           box-shadow: var(--lg-outwards-shadow);
       }
-      input {  
+      input {
           box-shadow: var(--sm-inward-shadow);
           /* Only allow users to select stuff in the input boxes */
           user-select: all;
@@ -171,7 +178,7 @@
       #hide-password-svg {
           display: none; /* Hide the crossed-through eye by default */
       }
-  </style>
+    </style>
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
       import {
@@ -180,7 +187,7 @@
         GoogleAuthProvider,
         signInWithPopup,
         updateProfile,
-        onAuthStateChanged
+        onAuthStateChanged,
       } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
       import {
         getFirestore,
@@ -190,7 +197,7 @@
         collection,
         query,
         where,
-        getDocs
+        getDocs,
       } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
       const firebaseConfig = {
@@ -228,7 +235,7 @@
         "n!gger",
         "n!gga",
         "n!ga",
-        "n!ger"
+        "n!ger",
       ];
 
       // Function to check for disallowed words
@@ -245,7 +252,9 @@
         // Remove special characters
         normalizedUsername = normalizedUsername.replace(/[^a-zA-Z]/g, "");
 
-        return disallowedWords.some(word => normalizedUsername.includes(word));
+        return disallowedWords.some((word) =>
+          normalizedUsername.includes(word)
+        );
       }
 
       // Function to check username availability
@@ -273,10 +282,12 @@
         const usernameForm = document.getElementById("username-form");
         const errorMessage = document.getElementById("error-message");
         const togglePasswordBtns = document.querySelectorAll(".show-password");
-        const loadingAnimationContainer = document.querySelector(".loading-animation-container");
+        const loadingAnimationContainer = document.querySelector(
+          ".loading-animation-container"
+        );
         const loadingAnimation = document.querySelector(".loading-animation");
 
-        loginForm.addEventListener("submit", e => {
+        loginForm.addEventListener("submit", (e) => {
           e.preventDefault();
           // Have the loading animation appear
           showLoadingAnimation();
@@ -284,69 +295,70 @@
           const password = document.getElementById("password").value;
 
           signInWithEmailAndPassword(auth, email, password)
-            .then(() => window.location.href = "index.html") // Send user back to the homepage
+            .then(() => (window.location.href = "index.html")) // Send user back to the homepage
             .catch(error => {
               hideLoadingAnimation(); // Stop the loading animation to show the user an error
               errorMessage.textContent = `Error: ${error.message}`;
             });
         });
 
-      // function toggleLoadingAnimation() {
-      //   const loadingAnimationContainer = document.querySelector(".loading-animation-container");
-      //   const loadingAnimation = document.querySelector(".loading-animation"); // Corrected selector
+        // function toggleLoadingAnimation() {
+        //   const loadingAnimationContainer = document.querySelector(".loading-animation-container");
+        //   const loadingAnimation = document.querySelector(".loading-animation"); // Corrected selector
 
-      //   if (loadingAnimationContainer && loadingAnimation) {
-      //     const isHidden = loadingAnimationContainer.style.display === "none";
-          
-      //     loadingAnimationContainer.style.display = isHidden ? "grid" : "none";
-      //     loadingAnimation.style.animation = isHidden ? "flip 2s ease-in-out infinite" : "none";
-      //   } else {
-      //     console.error("Loading animation elements not found");
-      //   }
-      // }
-      function showLoadingAnimation() {
-        loadingAnimationContainer.style.display = "grid";
-        loadingAnimation.style.animation = "flip 2s ease-in-out infinite";
-      }
-      function hideLoadingAnimation() {
-        loadingAnimationContainer.style.display = "none"
-        loadingAnimation.style.animation = "none";
-      }
+        //   if (loadingAnimationContainer && loadingAnimation) {
+        //     const isHidden = loadingAnimationContainer.style.display === "none";
 
-      googleSignInBtn.addEventListener("click", () => {
-        signInWithPopup(auth, provider)
-          .then(async (result) => {
-            const user = result.user;
-            let isNewUser = false;
+        //     loadingAnimationContainer.style.display = isHidden ? "grid" : "none";
+        //     loadingAnimation.style.animation = isHidden ? "flip 2s ease-in-out infinite" : "none";
+        //   } else {
+        //     console.error("Loading animation elements not found");
+        //   }
+        // }
+        function showLoadingAnimation() {
+          loadingAnimationContainer.style.display = "grid";
+          loadingAnimation.style.animation = "flip 2s ease-in-out infinite";
+        }
+        function hideLoadingAnimation() {
+          loadingAnimationContainer.style.display = "none";
+          loadingAnimation.style.animation = "none";
+        }
 
-            // Check if additionalUserInfo is available
-            if (
-              result.additionalUserInfo &&
-              typeof result.additionalUserInfo.isNewUser !== "undefined"
-            ) {
-              isNewUser = result.additionalUserInfo.isNewUser;
-            } else {
-              // Fallback: Check in Firestore if the user has set a username
-              const usernameDoc = await getDoc(
-                doc(db, "usernames", user.uid)
-              );
-              isNewUser = !usernameDoc.exists();
-            }
+        googleSignInBtn.addEventListener("click", () => {
+          signInWithPopup(auth, provider)
+            .then(async (result) => {
+              const user = result.user;
+              let isNewUser = false;
 
-            if (isNewUser) {
-              showLoadingAnimation();
-              document.querySelector(".form-container").style.display = "none";
-              usernamePrompt.style.display = "block";
-            } else {
-              window.location.href = "index.html";
-            }
-          })
-          .catch(error => {
-            errorMessage.textContent = `Error: ${error.message}`;
-          });
-      });
+              // Check if additionalUserInfo is available
+              if (
+                result.additionalUserInfo &&
+                typeof result.additionalUserInfo.isNewUser !== "undefined"
+              ) {
+                isNewUser = result.additionalUserInfo.isNewUser;
+              } else {
+                // Fallback: Check in Firestore if the user has set a username
+                const usernameDoc = await getDoc(
+                  doc(db, "usernames", user.uid)
+                );
+                isNewUser = !usernameDoc.exists();
+              }
 
-        usernameForm.addEventListener("submit", async e => {
+              if (isNewUser) {
+                showLoadingAnimation();
+                document.querySelector(".form-container").style.display =
+                  "none";
+                usernamePrompt.style.display = "block";
+              } else {
+                window.location.href = "index.html";
+              }
+            })
+            .catch((error) => {
+              errorMessage.textContent = `Error: ${error.message}`;
+            });
+        });
+
+        usernameForm.addEventListener("submit", async (e) => {
           e.preventDefault();
           showLoadingAnimation();
           const usernameInput = document.getElementById("username");
@@ -359,14 +371,16 @@
           // Check if username exceeds 16 characters
           if (username.length > 16) {
             hideLoadingAnimation();
-            usernameError.textContent = "Username cannot be longer than 16 characters.";
+            usernameError.textContent =
+              "Username cannot be longer than 16 characters.";
             return;
           }
 
           // Username validation for disallowed words
           if (containsDisallowedWords(username)) {
             hideLoadingAnimation();
-            usernameError.textContent = "Username contains inappropriate language. Please choose another.";
+            usernameError.textContent =
+              "Username contains inappropriate language. Please choose another.";
             return;
           }
 
@@ -375,7 +389,8 @@
             const isAvailable = await checkUsernameAvailability(username);
             if (!isAvailable) {
               hideLoadingAnimation();
-              usernameError.textContent = "Username is already taken. Please choose another.";
+              usernameError.textContent =
+                "Username is already taken. Please choose another.";
               return;
             }
 
@@ -418,34 +433,62 @@
   <body>
     <!-- Login Form -->
     <div class="form-container">
-  
       <h1 class="title">Login</h1>
-      
+
       <form id="login-form">
-          
         <div class="input-container">
-            <input type="email" id="email" placeholder="Email" required />
-            <input type="password" id="password" placeholder="Password" required>
-            <!-- This is the NOT crossed-through eye svg -->
-            <svg class="show-password-svg" id="show-password-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path id="show-password-svg-path" fill-rule="evenodd" clip-rule="evenodd" d="M6.30147 15.5771C4.77832 14.2684 3.6904 12.7726 3.18002 12C3.6904 11.2274 4.77832 9.73158 6.30147 8.42294C7.87402 7.07185 9.81574 6 12 6C14.1843 6 16.1261 7.07185 17.6986 8.42294C19.2218 9.73158 20.3097 11.2274 20.8201 12C20.3097 12.7726 19.2218 14.2684 17.6986 15.5771C16.1261 16.9282 14.1843 18 12 18C9.81574 18 7.87402 16.9282 6.30147 15.5771ZM12 4C9.14754 4 6.75717 5.39462 4.99812 6.90595C3.23268 8.42276 2.00757 10.1376 1.46387 10.9698C1.05306 11.5985 1.05306 12.4015 1.46387 13.0302C2.00757 13.8624 3.23268 15.5772 4.99812 17.0941C6.75717 18.6054 9.14754 20 12 20C14.8525 20 17.2429 18.6054 19.002 17.0941C20.7674 15.5772 21.9925 13.8624 22.5362 13.0302C22.947 12.4015 22.947 11.5985 22.5362 10.9698C21.9925 10.1376 20.7674 8.42276 19.002 6.90595C17.2429 5.39462 14.8525 4 12 4ZM10 12C10 10.8954 10.8955 10 12 10C13.1046 10 14 10.8954 14 12C14 13.1046 13.1046 14 12 14C10.8955 14 10 13.1046 10 12ZM12 8C9.7909 8 8.00004 9.79086 8.00004 12C8.00004 14.2091 9.7909 16 12 16C14.2092 16 16 14.2091 16 12C16 9.79086 14.2092 8 12 8Z" fill="var(--clr-text)"></path>
-            </svg>
-            <!-- This is the crossed-through eye svg -->
-            <svg class="show-password-svg" id="hide-password-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M19.7071 5.70711C20.0976 5.31658 20.0976 4.68342 19.7071 4.29289C19.3166 3.90237 18.6834 3.90237 18.2929 4.29289L14.032 8.55382C13.4365 8.20193 12.7418 8 12 8C9.79086 8 8 9.79086 8 12C8 12.7418 8.20193 13.4365 8.55382 14.032L4.29289 18.2929C3.90237 18.6834 3.90237 19.3166 4.29289 19.7071C4.68342 20.0976 5.31658 20.0976 5.70711 19.7071L9.96803 15.4462C10.5635 15.7981 11.2582 16 12 16C14.2091 16 16 14.2091 16 12C16 11.2582 15.7981 10.5635 15.4462 9.96803L19.7071 5.70711ZM12.518 10.0677C12.3528 10.0236 12.1792 10 12 10C10.8954 10 10 10.8954 10 12C10 12.1792 10.0236 12.3528 10.0677 12.518L12.518 10.0677ZM11.482 13.9323L13.9323 11.482C13.9764 11.6472 14 11.8208 14 12C14 13.1046 13.1046 14 12 14C11.8208 14 11.6472 13.9764 11.482 13.9323ZM15.7651 4.8207C14.6287 4.32049 13.3675 4 12 4C9.14754 4 6.75717 5.39462 4.99812 6.90595C3.23268 8.42276 2.00757 10.1376 1.46387 10.9698C1.05306 11.5985 1.05306 12.4015 1.46387 13.0302C1.92276 13.7326 2.86706 15.0637 4.21194 16.3739L5.62626 14.9596C4.4555 13.8229 3.61144 12.6531 3.18002 12C3.6904 11.2274 4.77832 9.73158 6.30147 8.42294C7.87402 7.07185 9.81574 6 12 6C12.7719 6 13.5135 6.13385 14.2193 6.36658L15.7651 4.8207ZM12 18C11.2282 18 10.4866 17.8661 9.78083 17.6334L8.23496 19.1793C9.37136 19.6795 10.6326 20 12 20C14.8525 20 17.2429 18.6054 19.002 17.0941C20.7674 15.5772 21.9925 13.8624 22.5362 13.0302C22.947 12.4015 22.947 11.5985 22.5362 10.9698C22.0773 10.2674 21.133 8.93627 19.7881 7.62611L18.3738 9.04043C19.5446 10.1771 20.3887 11.3469 20.8201 12C20.3097 12.7726 19.2218 14.2684 17.6986 15.5771C16.1261 16.9282 14.1843 18 12 18Z" fill="var(--clr-text)"></path>
-            </svg>
+          <input type="email" id="email" placeholder="Email" required />
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+          <!-- This is the NOT crossed-through eye svg -->
+          <svg
+            class="show-password-svg"
+            id="show-password-svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              id="show-password-svg-path"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M6.30147 15.5771C4.77832 14.2684 3.6904 12.7726 3.18002 12C3.6904 11.2274 4.77832 9.73158 6.30147 8.42294C7.87402 7.07185 9.81574 6 12 6C14.1843 6 16.1261 7.07185 17.6986 8.42294C19.2218 9.73158 20.3097 11.2274 20.8201 12C20.3097 12.7726 19.2218 14.2684 17.6986 15.5771C16.1261 16.9282 14.1843 18 12 18C9.81574 18 7.87402 16.9282 6.30147 15.5771ZM12 4C9.14754 4 6.75717 5.39462 4.99812 6.90595C3.23268 8.42276 2.00757 10.1376 1.46387 10.9698C1.05306 11.5985 1.05306 12.4015 1.46387 13.0302C2.00757 13.8624 3.23268 15.5772 4.99812 17.0941C6.75717 18.6054 9.14754 20 12 20C14.8525 20 17.2429 18.6054 19.002 17.0941C20.7674 15.5772 21.9925 13.8624 22.5362 13.0302C22.947 12.4015 22.947 11.5985 22.5362 10.9698C21.9925 10.1376 20.7674 8.42276 19.002 6.90595C17.2429 5.39462 14.8525 4 12 4ZM10 12C10 10.8954 10.8955 10 12 10C13.1046 10 14 10.8954 14 12C14 13.1046 13.1046 14 12 14C10.8955 14 10 13.1046 10 12ZM12 8C9.7909 8 8.00004 9.79086 8.00004 12C8.00004 14.2091 9.7909 16 12 16C14.2092 16 16 14.2091 16 12C16 9.79086 14.2092 8 12 8Z"
+              fill="var(--clr-text)"
+            ></path>
+          </svg>
+          <!-- This is the crossed-through eye svg -->
+          <svg
+            class="show-password-svg"
+            id="hide-password-svg"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M19.7071 5.70711C20.0976 5.31658 20.0976 4.68342 19.7071 4.29289C19.3166 3.90237 18.6834 3.90237 18.2929 4.29289L14.032 8.55382C13.4365 8.20193 12.7418 8 12 8C9.79086 8 8 9.79086 8 12C8 12.7418 8.20193 13.4365 8.55382 14.032L4.29289 18.2929C3.90237 18.6834 3.90237 19.3166 4.29289 19.7071C4.68342 20.0976 5.31658 20.0976 5.70711 19.7071L9.96803 15.4462C10.5635 15.7981 11.2582 16 12 16C14.2091 16 16 14.2091 16 12C16 11.2582 15.7981 10.5635 15.4462 9.96803L19.7071 5.70711ZM12.518 10.0677C12.3528 10.0236 12.1792 10 12 10C10.8954 10 10 10.8954 10 12C10 12.1792 10.0236 12.3528 10.0677 12.518L12.518 10.0677ZM11.482 13.9323L13.9323 11.482C13.9764 11.6472 14 11.8208 14 12C14 13.1046 13.1046 14 12 14C11.8208 14 11.6472 13.9764 11.482 13.9323ZM15.7651 4.8207C14.6287 4.32049 13.3675 4 12 4C9.14754 4 6.75717 5.39462 4.99812 6.90595C3.23268 8.42276 2.00757 10.1376 1.46387 10.9698C1.05306 11.5985 1.05306 12.4015 1.46387 13.0302C1.92276 13.7326 2.86706 15.0637 4.21194 16.3739L5.62626 14.9596C4.4555 13.8229 3.61144 12.6531 3.18002 12C3.6904 11.2274 4.77832 9.73158 6.30147 8.42294C7.87402 7.07185 9.81574 6 12 6C12.7719 6 13.5135 6.13385 14.2193 6.36658L15.7651 4.8207ZM12 18C11.2282 18 10.4866 17.8661 9.78083 17.6334L8.23496 19.1793C9.37136 19.6795 10.6326 20 12 20C14.8525 20 17.2429 18.6054 19.002 17.0941C20.7674 15.5772 21.9925 13.8624 22.5362 13.0302C22.947 12.4015 22.947 11.5985 22.5362 10.9698C22.0773 10.2674 21.133 8.93627 19.7881 7.62611L18.3738 9.04043C19.5446 10.1771 20.3887 11.3469 20.8201 12C20.3097 12.7726 19.2218 14.2684 17.6986 15.5771C16.1261 16.9282 14.1843 18 12 18Z"
+              fill="var(--clr-text)"
+            ></path>
+          </svg>
         </div>
-        
+
         <p class="error" id="error-message"></p>
-        
+
         <div class="sign-in-btns">
-            <button type="submit">Login</button>
-            <button id="google-signin" class="google-btn">Sign in with Google</button>
+          <button type="submit">Login</button>
+          <button id="google-signin" class="google-btn">
+            Sign in with Google
+          </button>
         </div>
       </form>
-      
-      <p class="bottom-text">Don't have a StronDogXP account? <a href="signup.html">Sign up</a></p>
-      
+
+      <p class="bottom-text">
+        Don't have a StronDogXP account? <a href="signup.html">Sign up</a>
+      </p>
     </div>
 
     <!-- Username Prompt -->
@@ -457,7 +500,7 @@
         <button type="submit">Continue</button>
       </form>
     </div>
-    
+
     <!-- Loading animation with layover -->
     <div class="loading-animation-container">
       <div>
@@ -469,24 +512,33 @@
   <script>
     // Change the colors of the Google text inside the sign in with Google button
     const googleSignInBtnEl = document.getElementById("google-signin"),
-          loginButtonEl = document.getElementById("loginBtn"),
-          changeUsernameBtnEl = document.getElementById("changeUsernameBtn"),
-          usernameForm = document.getElementById("username-prompt"),
-          word = "Google".split(""),
-          googleColors = ["#4889f4", "#eb493b", "#fbbe0d", "#4889f4", "#3aab58", "#eb493b"];
+      loginButtonEl = document.getElementById("loginBtn"),
+      changeUsernameBtnEl = document.getElementById("changeUsernameBtn"),
+      usernameForm = document.getElementById("username-prompt"),
+      word = "Google".split(""),
+      googleColors = [
+        "#4889f4",
+        "#eb493b",
+        "#fbbe0d",
+        "#4889f4",
+        "#3aab58",
+        "#eb493b",
+      ];
 
-    googleSignInBtnEl.innerHTML = "Sign in with " + word.map((char, i) => (
-        `<span style="color: ${googleColors[i]}">${char}</span>`
-    )).join("");
+    googleSignInBtnEl.innerHTML =
+      "Sign in with " +
+      word
+        .map(
+          (char, i) => `<span style="color: ${googleColors[i]}">${char}</span>`
+        )
+        .join("");
 
-    document.addEventListener("keydown", e => {
-        const isEditingUsername = usernameForm.style.display === "block";
-        // Click the login / change username button when the user presses the enter key
-        if (e.key === "Enter") {
-            isEditingUsername
-                ? changeUsernameBtnEl.click()
-                : loginButtonEl.click();
-        }
+    document.addEventListener("keydown", (e) => {
+      const isEditingUsername = usernameForm.style.display === "block";
+      // Click the login / change username button when the user presses the enter key
+      if (e.key === "Enter") {
+        isEditingUsername ? changeUsernameBtnEl.click() : loginButtonEl.click();
+      }
     });
   </script>
   <script>
@@ -495,12 +547,12 @@
     const hidePasswordSvg = document.getElementById("hide-password-svg");
     const passwordInputEl = document.getElementById("password");
 
-  // Function to toggle password visibility
+    // Function to toggle password visibility
     function togglePasswordVisibility() {
-        canSeePassword = !canSeePassword;
-        showPasswordSvg.style.display = canSeePassword ? "none" : "block";
-        hidePasswordSvg.style.display = canSeePassword ? "block" : "none";
-        passwordInputEl.type = canSeePassword ? "text" : "password";
+      canSeePassword = !canSeePassword;
+      showPasswordSvg.style.display = canSeePassword ? "none" : "block";
+      hidePasswordSvg.style.display = canSeePassword ? "block" : "none";
+      passwordInputEl.type = canSeePassword ? "text" : "password";
     }
 
     // Add event listeners for both SVGs
