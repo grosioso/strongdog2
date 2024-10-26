@@ -279,30 +279,38 @@
         loginForm.addEventListener("submit", e => {
           e.preventDefault();
           // Have the loading animation appear
-          toggleLoadingAnimation();
+          showLoadingAnimation();
           const email = document.getElementById("email").value;
           const password = document.getElementById("password").value;
 
           signInWithEmailAndPassword(auth, email, password)
             .then(() => window.location.href = "index.html") // Send user back to the homepage
             .catch(error => {
-              toggleLoadingAnimation(); // Stop the loading animation to show the user an error
+              hideLoadingAnimation(); // Stop the loading animation to show the user an error
               errorMessage.textContent = `Error: ${error.message}`;
             });
         });
 
-      function toggleLoadingAnimation() {
-        const loadingAnimationContainer = document.querySelector(".loading-animation-container");
-        const loadingAnimation = document.querySelector(".loading-animation"); // Corrected selector
+      // function toggleLoadingAnimation() {
+      //   const loadingAnimationContainer = document.querySelector(".loading-animation-container");
+      //   const loadingAnimation = document.querySelector(".loading-animation"); // Corrected selector
 
-        if (loadingAnimationContainer && loadingAnimation) {
-          const isHidden = loadingAnimationContainer.style.display === "none";
+      //   if (loadingAnimationContainer && loadingAnimation) {
+      //     const isHidden = loadingAnimationContainer.style.display === "none";
           
-          loadingAnimationContainer.style.display = isHidden ? "grid" : "none";
-          loadingAnimation.style.animation = isHidden ? "flip 2s ease-in-out infinite" : "none";
-        } else {
-          console.error("Loading animation elements not found");
-        }
+      //     loadingAnimationContainer.style.display = isHidden ? "grid" : "none";
+      //     loadingAnimation.style.animation = isHidden ? "flip 2s ease-in-out infinite" : "none";
+      //   } else {
+      //     console.error("Loading animation elements not found");
+      //   }
+      // }
+      function showLoadingAnimation() {
+        loadingAnimationContainer.style.display = "grid";
+        loadingAnimation.style.animation = "flip 2s ease-in-out infinite";
+      }
+      function hideLoadingAnimation() {
+        loadingAnimationContainer.style.display = "none"
+        loadingAnimation.style.animation = "none";
       }
 
       googleSignInBtn.addEventListener("click", () => {
@@ -326,7 +334,7 @@
             }
 
             if (isNewUser) {
-              toggleLoadingAnimation();
+              showLoadingAnimation();
               document.querySelector(".form-container").style.display = "none";
               usernamePrompt.style.display = "block";
             } else {
@@ -340,7 +348,7 @@
 
         usernameForm.addEventListener("submit", async e => {
           e.preventDefault();
-          toggleLoadingAnimation();
+          showLoadingAnimation();
           const usernameInput = document.getElementById("username");
           const usernameError = document.getElementById("username-error");
           const username = usernameInput.value.trim();
@@ -350,14 +358,14 @@
 
           // Check if username exceeds 16 characters
           if (username.length > 16) {
-            toggleLoadingAnimation();
+            hideLoadingAnimation();
             usernameError.textContent = "Username cannot be longer than 16 characters.";
             return;
           }
 
           // Username validation for disallowed words
           if (containsDisallowedWords(username)) {
-            toggleLoadingAnimation();
+            hideLoadingAnimation();
             usernameError.textContent = "Username contains inappropriate language. Please choose another.";
             return;
           }
@@ -366,7 +374,7 @@
             // Check if username is available
             const isAvailable = await checkUsernameAvailability(username);
             if (!isAvailable) {
-              toggleLoadingAnimation();
+              hideLoadingAnimation();
               usernameError.textContent = "Username is already taken. Please choose another.";
               return;
             }
@@ -386,7 +394,7 @@
             // Redirect to main page
             window.location.href = "index.html";
           } catch (error) {
-            toggleLoadingAnimation();
+            hideLoadingAnimation();
             console.error("Error during username setup:", error);
             usernameError.textContent = `Error: ${error.message}`;
           }
