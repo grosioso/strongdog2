@@ -112,6 +112,7 @@
           display: flex;
           flex-direction: column;
           gap: 1em;
+          position: relative;
       }
       button {
           box-shadow: var(--sm-outward-shadow);
@@ -179,7 +180,7 @@
         GoogleAuthProvider,
         signInWithPopup,
         updateProfile,
-        onAuthStateChanged,
+        onAuthStateChanged
       } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
       import {
         getFirestore,
@@ -189,7 +190,7 @@
         collection,
         query,
         where,
-        getDocs,
+        getDocs
       } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
       const firebaseConfig = {
@@ -283,11 +284,9 @@
           const password = document.getElementById("password").value;
 
           signInWithEmailAndPassword(auth, email, password)
-            .then(() => {
-              window.location.href = "index.html";
-            })
+            .then(() => window.location.href = "index.html") // Send user back to the homepage
             .catch(error => {
-              toggleLoadingAnimation();
+              toggleLoadingAnimation(); // Stop the loading animation to show the user an error
               errorMessage.textContent = `Error: ${error.message}`;
             });
         });
@@ -352,16 +351,14 @@
           // Check if username exceeds 16 characters
           if (username.length > 16) {
             toggleLoadingAnimation();
-            usernameError.textContent =
-              "Username cannot be longer than 16 characters.";
+            usernameError.textContent = "Username cannot be longer than 16 characters.";
             return;
           }
 
           // Username validation for disallowed words
           if (containsDisallowedWords(username)) {
             toggleLoadingAnimation();
-            usernameError.textContent =
-              "Username contains inappropriate language. Please choose another.";
+            usernameError.textContent = "Username contains inappropriate language. Please choose another.";
             return;
           }
 
@@ -370,8 +367,7 @@
             const isAvailable = await checkUsernameAvailability(username);
             if (!isAvailable) {
               toggleLoadingAnimation();
-              usernameError.textContent =
-                "Username is already taken. Please choose another.";
+              usernameError.textContent = "Username is already taken. Please choose another.";
               return;
             }
 
@@ -436,10 +432,7 @@
         
         <div class="sign-in-btns">
             <button type="submit">Login</button>
-            <button id="google-signin" class="google-btn">
-                <!-- <img src="/img/google.jpeg"> -->
-                Sign in with Google
-            </button>
+            <button id="google-signin" class="google-btn">Sign in with Google</button>
         </div>
       </form>
       
@@ -459,10 +452,10 @@
     
     <!-- Loading animation with layover -->
     <div class="loading-animation-container">
-        <div>
-            <div class="loading-animation"></div>
-            <h2 class="loading-text">Loading...</h2>
-        </div>
+      <div>
+        <div class="loading-animation"></div>
+        <h2 class="loading-text">Loading...</h2>
+      </div>
     </div>
   </body>
   <script>
@@ -480,6 +473,7 @@
 
     document.addEventListener("keydown", e => {
         const isEditingUsername = usernameForm.style.display === "block";
+        // Click the login / change username button when the user presses the enter key
         if (e.key === "Enter") {
             isEditingUsername
                 ? changeUsernameBtnEl.click()
