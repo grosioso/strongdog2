@@ -452,7 +452,7 @@
 			</div>
 			<h3>Submitting form</h3>
 		</div>
-		<script>
+		<script type="module">
 			import { updates } from "about-page-data.js";
 			// The "reduce()" method is very concise and clean, but it isn't as efficient when dealing with a
 			// large array.
@@ -466,7 +466,7 @@
 			const updatesHTMLStr = updatesHTMLArray.join("");
 			document.querySelector("#patches").innerHTML = updatesHTMLStr;
 		</script>
-		<script>
+		<script type="module">
 			import { modes } from "about-page-data.js";
 			const sliderCheckbox = document.getElementById("checkbox");
 			const userPreference = localStorage.getItem("isDarkMode");
