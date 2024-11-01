@@ -406,9 +406,7 @@
 			</p>
 		</div>
 
-		<div class="content" id="patches" style="display:none;">
-			<h1>Updates / Changelog</h1>
-		</div>
+		<div class="content" id="patches" style="display:none;"></div>
 
 		<div class="content" id="report-bug" style="display:none;">
 			<h1>Report a Bug</h1>
@@ -461,7 +459,7 @@
 			// Because of this, we'll be using the fastest method, just a classic C-style loop and
 			// pushing to an array, then using .join() (faster than += with a string)
 			// const updatesHTML = updates.reduce((acc, update) => acc += `<p>${update.date}: ${update.content}</p>`, "");
-			let updatesHTMLArray = [];
+			let updatesHTMLArray = ["<h1>Updates / Changelog</h1>"];
 			for (let i = 0; i < updates.length; ++i) {
 				updatesHTMLArray.push(`<p>${updates[i].date}: ${updates[i].content}</p>`);
 			}
