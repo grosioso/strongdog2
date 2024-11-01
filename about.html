@@ -453,7 +453,7 @@
 			<h3>Submitting form</h3>
 		</div>
 		<script type="module">
-			import { updates } from "about-page-data.js";
+			import { updates } from "/about-page-data.js";
 			// The "reduce()" method is very concise and clean, but it isn't as efficient when dealing with a
 			// large array.
 			// Because of this, we'll be using the fastest method, just a classic C-style loop and
@@ -467,7 +467,7 @@
 			document.querySelector("#patches").innerHTML = updatesHTMLStr;
 		</script>
 		<script type="module">
-			import { modes } from "about-page-data.js";
+			import { modes } from "/about-page-data.js";
 			const sliderCheckbox = document.getElementById("checkbox");
 			const userPreference = localStorage.getItem("isDarkMode");
 
