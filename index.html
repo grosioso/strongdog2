@@ -31,26 +31,50 @@
 			const db = firebase.firestore();
 		</script>
 		<script>
+			import games from "/cards-data.js";
+
+			function getCardHTML(gameObject) {
+				const { href, imgSrc, name } = gameObject;
+				return `
+					<a href="${href}" class="card">
+						<img src="./img/${imgSrc}">
+						<figcaption>${name}</figcaption>
+					</a>
+				`;
+			}
+
+			let cardsHTMLArr = [];
+
+			for (let i = 0; i < games.length; ++i) {
+				cardsHTMLArr.push(getCardHTML(games[i]));
+			}
+
+			const cardsHTMLStr = cardsHTMLArr.join("");
+
+			document.addEventListener(
+				"DOMContentLoaded",
+				() => (document.getElementById("allGameList").innerHTML = cardsHTMLStr)
+			);
 			// Self-executing function to load external cards automatically
-			(function () {
-				// The path to your external file containing the cards
-				const cardsFilePath = "./cards_data.html";
+			// (function () {
+			// 	// The path to your external file containing the cards
+			// 	const cardsFilePath = "./cards_data.html";
 
-				// Wait until the DOM is fully loaded
-				document.addEventListener("DOMContentLoaded", function () {
-					// Find the element with the ID 'allGameList'
-					const cardContainer = document.getElementById("allGameList");
+			// 	// Wait until the DOM is fully loaded
+			// 	document.addEventListener("DOMContentLoaded", function () {
+			// 		// Find the element with the ID 'allGameList'
+			// 		const cardContainer = document.getElementById("allGameList");
 
-					// Fetch the external HTML file containing the cards
-					fetch(cardsFilePath)
-						.then(response => response.text())
-						.then(data => {
-							// Insert the loaded HTML into the 'allGameList' element
-							cardContainer.innerHTML = data;
-						})
-						.catch(error => console.error("Error loading the cards:", error));
-				});
-			})();
+			// 		// Fetch the external HTML file containing the cards
+			// 		fetch(cardsFilePath)
+			// 			.then(response => response.text())
+			// 			.then(data => {
+			// 				// Insert the loaded HTML into the 'allGameList' element
+			// 				cardContainer.innerHTML = data;
+			// 			})
+			// 			.catch(error => console.error("Error loading the cards:", error));
+			// 	});
+			// })();
 		</script>
 
 		<script src="appscript.js"></script>
@@ -145,585 +169,585 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>StrongDog XP</title>
 		<style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #2e2e2e;
-        /* Dark grey background */
-      }
-
-      .navbar {
-        background-color: #333;
-        color: white;
-        padding: 10px 20px;
-        display: flex;
-        align-items: center;
-        position: relative;
-        justify-content: space-between;
-        /* Keep items spread out */
-      }
-
-      .logo {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        /* Center the logo horizontally */
-        color: white;
-        font-weight: bold;
-      }
-
-      /* Style for the menu icon */
-      .menu-icon {
-        font-size: 2rem;
-        cursor: pointer;
-        margin-left: 20px;
-        /* Position the icon to the left */
-        color: white;
-        position: relative;
-        z-index: 1001;
-        /* Ensure it stays on top when clicking */
-      }
-
-      .slide-menu {
-        position: fixed;
-        top: 0;
-        height: 100%;
-        width: 350px;
-        background-color: rgba(0, 0, 0, 0.4);
-        backdrop-filter: blur(10px);
-        /* You can adjust to preferred blurring */
-        color: white;
-        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-        z-index: 1003;
-        /* Ensure it covers the menu icon when it slides in */
-        transition: transform 0.4s ease;
-        /* Smooth slide-in animation */
-        overflow-y: auto;
-        transform: translateX(-100%);
-        /* Start off-screen completely */
-      }
-
-      .profile-picture {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        /* Keeps the aspect-ratio of image normal - no distortions */
-      }
-
-      .profile-picture-container {
-        border-radius: 50%;
-        width: 100px;
-        aspect-ratio: 1;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-      }
-
-      .user-details-container {
-        display: flex;
-        width: 100%;
-        justify-content: center;
-        gap: 20px;
-        padding-block: 40px;
-      }
-
-      .username-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .username-text {
-        font-size: 1.5rem;
-      }
-
-      .categories {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      /* Styling for links in the slide menu */
-      .categories > a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-        background: rgba(0, 0, 0, 0.3);
-        border-radius: 20px;
-        text-decoration: none;
-        color: white;
-        transition: all 0.3s ease;
-        margin-left: 20px;
-        margin-right: 20px;
-        text-align: center;
-        font-size: 1.1rem;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .categories > a::after {
-        content: "";
-        background: rgba(255, 255, 255, 0.1);
-        /* You can change the color to your liking */
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        width: 0;
-        height: 0;
-        transition: 0.4s ease-out;
-        /* z-index: -1; */
-      }
-
-      .categories > a:hover::after {
-        width: 400px;
-        height: 400px;
-      }
-
-      .categories > a:hover {
-        transform: scale(0.95);
-      }
-
-      /* Styling for the "new" tags */
-      span.new-feature-tag {
-        background: orange;
-        border-radius: 100vw;
-        /* Completely rounded edges */
-        padding: 0.2rem 0.4rem;
-        margin-left: 1rem;
-        /* Separate the tag from the left text */
-        font-size: 0.6rem;
-        color: black;
-        text-transform: uppercase;
-      }
-
-      .navbar .logo {
-        color: white;
-        font-weight: bold;
-      }
-
-      .navbar .logo .xp {
-        color: orange;
-      }
-
-      .navbar a,
-      .navbar a:visited,
-      .navbar .logo span {
-        text-decoration: none;
-        margin-right: 20px;
-      }
-
-      .search-bar {
-        padding: 7px;
-        padding-top: 10px;
-        font-size: 1em;
-        border-radius: 20%;
-        width: 100%;
-        border: none;
-        border-bottom: 5px solid gray;
-        background-color: transparent;
-        color: white;
-      }
-
-      .search-bar:focus {
-        outline: none;
-        background-color: rgba(255, 255, 255, 0.1);
-      }
-
-      .games-grid {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 10px;
-        justify-content: center;
-      }
-
-      .card {
-        background-color: #fff;
-        border-radius: 10px;
-        margin: 5px;
-        /* Reduced margin */
-        width: 120px;
-        height: 120px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        position: relative;
-      }
-
-      .card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.29);
-      }
-
-      .card img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-      }
-
-      .card:hover img {
-        transform: scale(1.02);
-        /* subtle zoom on the image */
-      }
-
-      .card figcaption {
-        position: absolute;
-        bottom: -30px;
-        /* start hidden */
-        left: 0;
-        width: 100%;
-        background-color: rgb(74, 74, 74);
-        color: white;
-        text-align: center;
-        padding: 5px;
-        transition: bottom 0.5s ease;
-        /* smoother and slower */
-        overflow: hidden;
-      }
-
-      .card:hover figcaption {
-        bottom: 0;
-        /* slide up on hover */
-      }
-
-      .card::before {
-        content: "";
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: linear-gradient(
-          to right,
-          rgba(255, 255, 255, 0) 0%,
-          rgba(255, 255, 255, 0.3) 50%,
-          rgba(255, 255, 255, 0) 100%
-        );
-        transform: rotate(30deg) translate(-50%, -50%);
-        transition: transform 0.5s, opacity 0.5s;
-        opacity: 0;
-        pointer-events: none;
-        /* This ensures the shine doesn't interfere with clicking the card */
-      }
-
-      .card:hover::before {
-        transform: rotate(30deg) translate(100%, -50%);
-        opacity: 1;
-      }
-
-      .search-results {
-        position: absolute;
-        right: 20px;
-        top: 60px;
-        background-color: white;
-        color: black;
-        border: 1px solid #ccc;
-        width: 250px;
-        /* Adjusted for image display */
-        display: none;
-        z-index: 1000;
-        transform-origin: left;
-        /* Anchor the transformation to the left */
-        transition: transform 0.3s ease, background-color 0.3s ease;
-        border-radius: 5px;
-        /* Rounded corners for the search results box */
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      }
-
-      .search-results a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        color: black;
-        border-bottom: 1px solid #eee;
-        padding: 5px;
-        transition: all 0.3s ease;
-      }
-
-      .search-results img {
-        width: 50px;
-        height: 50px;
-        object-fit: cover;
-        margin-right: 10px;
-        border-radius: 5px;
-      }
-
-      .search-results a:last-child {
-        border-bottom: none;
-      }
-
-      .news-container {
-        margin: 20px auto;
-        padding: 20px;
-        background-color: #444444;
-        /* Light grey background */
-        border-radius: 8px;
-        max-width: 800px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        /* Subtle shadow for depth */
-      }
-
-      .news {
-        color: #ffffff;
-        /* Dark text for readability */
-      }
-
-      .credits-title {
-        font-size: 1.5em;
-        margin-bottom: 15px;
-        color: #ffffff;
-        /* Darker title color */
-        border-bottom: 2px solid #ddd;
-        /* Subtle bottom border */
-        padding-bottom: 5px;
-      }
-
-      .credits-item {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 15px;
-      }
-
-      .credits-role {
-        font-weight: bold;
-        color: #ffffff;
-        /* Slightly lighter for role text */
-      }
-
-      .credits-names {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        align-items: center;
-        /* Center-aligns items vertically */
-      }
-
-      .credits-link {
-        color: #0073e6;
-        /* Blue link color */
-        text-decoration: none;
-        font-weight: bold;
-        /* Bold links for emphasis */
-      }
-
-      .credits-link:hover {
-        text-decoration: underline;
-      }
-
-      .credits-names span {
-        color: #c4c4c4;
-        /* Slightly lighter for plain text */
-      }
-
-      /* Additional CSS for better spacing and style */
-      .credits-item:last-child .credits-names {
-        gap: 16px;
-      }
-
-      .credits-item:last-child .credits-link {
-        color: #00b3b3;
-        /* Different link color for Other Links */
-      }
-
-      .credits-item:last-child .credits-link:hover {
-        text-decoration: underline;
-        color: #00cccc;
-        /* Hover color for Other Links */
-      }
-
-      /* Styling for the All  label */
-      h2 {
-        text-align: center;
-        color: white;
-        margin: 20px 0;
-        /* Spacing above and below */
-        font-size: 1.5em;
-        /* Larger font size */
-      }
-
-      .card figcaption {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background-color: rgba(95, 95, 95, 0.8);
-        color: black;
-        padding: 5px 0;
-        transition: transform 0.3s ease, opacity 0.3s ease;
-        transform: translateY(100%);
-        /* Start off-screen */
-        opacity: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-shadow: 0 0 2px white;
-        font-weight: 550;
-        border-radius: 10px;
-      }
-
-      .card:hover figcaption {
-        height: 30px;
-        /* Show text on hover */
-        background-color: rgba(95, 95, 95, 0.8);
-        /* Non-transparent background on hover */
-        transform: translateY(0);
-        /* Slide up to visible */
-        opacity: 1;
-      }
-
-      .pagination {
-        text-align: center;
-        margin: 20px 0;
-      }
-
-      .pagination a {
-        color: white;
-        padding: 8px 16px;
-        text-decoration: none;
-        transition: background-color 0.3s;
-        border: 1px solid #444;
-        margin: 0 4px;
-        border-radius: 4px;
-        background-color: #333;
-      }
-
-      .pagination a.active {
-        background-color: #555;
-        border-color: #777;
-      }
-
-      .pagination a:hover:not(.active) {
-        background-color: #444;
-      }
-
-      .updates-paragraph-text {
-        color: white;
-        background-color: #a83632;
-        padding: 15px 10px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.05);
-        margin-bottom: 30px;
-      }
-
-      .updates-text-container {
-        margin-left: 30%;
-        margin-right: 30%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .loading-container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .bars {
-        display: flex;
-        align-items: center;
-      }
-
-      .bar {
-        background-color: rgba(255, 255, 255, 0.3);
-        width: 20px;
-        height: 40px;
-        margin-right: 5px;
-        border-radius: 10px;
-        animation: load ease infinite 5s;
-      }
-
-      .bar-2,
-      .bar-4 {
-        height: 50px;
-      }
-
-      .bar-2 {
-        animation-delay: 0.1s;
-      }
-
-      .bar-3 {
-        height: 60px;
-        animation-delay: 0.2s;
-      }
-
-      .bar-4 {
-        animation-delay: 0.3s;
-      }
-
-      .bar-5 {
-        animation-delay: 0.4s;
-      }
-
-      @keyframes load {
-        0%,
-        100% {
-          transform: rotate(0deg);
-        }
-
-        50% {
-          transform: rotate(720deg) rotateX(180deg);
-        }
-      }
-
-      #topGameList {
-        position: relative;
-        /* Make sure topGameList is relatively positioned */
-      }
-
-      .modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        justify-content: center;
-        align-items: center;
-      }
-
-      .modal-content {
-        background-color: #757575;
-        padding: 20px;
-        border-radius: 10px;
-        width: 90%;
-        max-width: 400px;
-        text-align: center;
-      }
-
-      .modal-close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-      }
-
-      .modal-close:hover,
-      .modal-close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
-      }
-
-      .modal-link {
-        color: blue;
-        text-decoration: underline;
-        cursor: pointer;
-      }
+			body {
+			  font-family: Arial, sans-serif;
+			  margin: 0;
+			  padding: 0;
+			  background-color: #2e2e2e;
+			  /* Dark grey background */
+			}
+
+			.navbar {
+			  background-color: #333;
+			  color: white;
+			  padding: 10px 20px;
+			  display: flex;
+			  align-items: center;
+			  position: relative;
+			  justify-content: space-between;
+			  /* Keep items spread out */
+			}
+
+			.logo {
+			  position: absolute;
+			  left: 50%;
+			  transform: translateX(-50%);
+			  /* Center the logo horizontally */
+			  color: white;
+			  font-weight: bold;
+			}
+
+			/* Style for the menu icon */
+			.menu-icon {
+			  font-size: 2rem;
+			  cursor: pointer;
+			  margin-left: 20px;
+			  /* Position the icon to the left */
+			  color: white;
+			  position: relative;
+			  z-index: 1001;
+			  /* Ensure it stays on top when clicking */
+			}
+
+			.slide-menu {
+			  position: fixed;
+			  top: 0;
+			  height: 100%;
+			  width: 350px;
+			  background-color: rgba(0, 0, 0, 0.4);
+			  backdrop-filter: blur(10px);
+			  /* You can adjust to preferred blurring */
+			  color: white;
+			  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+			  z-index: 1003;
+			  /* Ensure it covers the menu icon when it slides in */
+			  transition: transform 0.4s ease;
+			  /* Smooth slide-in animation */
+			  overflow-y: auto;
+			  transform: translateX(-100%);
+			  /* Start off-screen completely */
+			}
+
+			.profile-picture {
+			  width: 100%;
+			  height: 100%;
+			  object-fit: cover;
+			  /* Keeps the aspect-ratio of image normal - no distortions */
+			}
+
+			.profile-picture-container {
+			  border-radius: 50%;
+			  width: 100px;
+			  aspect-ratio: 1;
+			  overflow: hidden;
+			  display: flex;
+			  justify-content: center;
+			  align-items: center;
+			  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+			}
+
+			.user-details-container {
+			  display: flex;
+			  width: 100%;
+			  justify-content: center;
+			  gap: 20px;
+			  padding-block: 40px;
+			}
+
+			.username-container {
+			  display: flex;
+			  align-items: center;
+			  justify-content: center;
+			}
+
+			.username-text {
+			  font-size: 1.5rem;
+			}
+
+			.categories {
+			  display: flex;
+			  flex-direction: column;
+			  gap: 10px;
+			}
+
+			/* Styling for links in the slide menu */
+			.categories > a {
+			  display: flex;
+			  justify-content: center;
+			  align-items: center;
+			  padding: 20px;
+			  background: rgba(0, 0, 0, 0.3);
+			  border-radius: 20px;
+			  text-decoration: none;
+			  color: white;
+			  transition: all 0.3s ease;
+			  margin-left: 20px;
+			  margin-right: 20px;
+			  text-align: center;
+			  font-size: 1.1rem;
+			  position: relative;
+			  overflow: hidden;
+			}
+
+			.categories > a::after {
+			  content: "";
+			  background: rgba(255, 255, 255, 0.1);
+			  /* You can change the color to your liking */
+			  position: absolute;
+			  top: 50%;
+			  left: 50%;
+			  transform: translate(-50%, -50%);
+			  border-radius: 50%;
+			  width: 0;
+			  height: 0;
+			  transition: 0.4s ease-out;
+			  /* z-index: -1; */
+			}
+
+			.categories > a:hover::after {
+			  width: 400px;
+			  height: 400px;
+			}
+
+			.categories > a:hover {
+			  transform: scale(0.95);
+			}
+
+			/* Styling for the "new" tags */
+			span.new-feature-tag {
+			  background: orange;
+			  border-radius: 100vw;
+			  /* Completely rounded edges */
+			  padding: 0.2rem 0.4rem;
+			  margin-left: 1rem;
+			  /* Separate the tag from the left text */
+			  font-size: 0.6rem;
+			  color: black;
+			  text-transform: uppercase;
+			}
+
+			.navbar .logo {
+			  color: white;
+			  font-weight: bold;
+			}
+
+			.navbar .logo .xp {
+			  color: orange;
+			}
+
+			.navbar a,
+			.navbar a:visited,
+			.navbar .logo span {
+			  text-decoration: none;
+			  margin-right: 20px;
+			}
+
+			.search-bar {
+			  padding: 7px;
+			  padding-top: 10px;
+			  font-size: 1em;
+			  border-radius: 20%;
+			  width: 100%;
+			  border: none;
+			  border-bottom: 5px solid gray;
+			  background-color: transparent;
+			  color: white;
+			}
+
+			.search-bar:focus {
+			  outline: none;
+			  background-color: rgba(255, 255, 255, 0.1);
+			}
+
+			.games-grid {
+			  display: flex;
+			  flex-wrap: wrap;
+			  padding: 10px;
+			  justify-content: center;
+			}
+
+			.card {
+			  background-color: #fff;
+			  border-radius: 10px;
+			  margin: 5px;
+			  /* Reduced margin */
+			  width: 120px;
+			  height: 120px;
+			  transition: transform 0.3s ease, box-shadow 0.3s ease;
+			  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			  overflow: hidden;
+			  position: relative;
+			}
+
+			.card:hover {
+			  transform: scale(1.05);
+			  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.29);
+			}
+
+			.card img {
+			  width: 100%;
+			  height: 100%;
+			  object-fit: cover;
+			  transition: transform 0.3s ease;
+			}
+
+			.card:hover img {
+			  transform: scale(1.02);
+			  /* subtle zoom on the image */
+			}
+
+			.card figcaption {
+			  position: absolute;
+			  bottom: -30px;
+			  /* start hidden */
+			  left: 0;
+			  width: 100%;
+			  background-color: rgb(74, 74, 74);
+			  color: white;
+			  text-align: center;
+			  padding: 5px;
+			  transition: bottom 0.5s ease;
+			  /* smoother and slower */
+			  overflow: hidden;
+			}
+
+			.card:hover figcaption {
+			  bottom: 0;
+			  /* slide up on hover */
+			}
+
+			.card::before {
+			  content: "";
+			  position: absolute;
+			  top: -50%;
+			  left: -50%;
+			  width: 200%;
+			  height: 200%;
+			  background: linear-gradient(
+			    to right,
+			    rgba(255, 255, 255, 0) 0%,
+			    rgba(255, 255, 255, 0.3) 50%,
+			    rgba(255, 255, 255, 0) 100%
+			  );
+			  transform: rotate(30deg) translate(-50%, -50%);
+			  transition: transform 0.5s, opacity 0.5s;
+			  opacity: 0;
+			  pointer-events: none;
+			  /* This ensures the shine doesn't interfere with clicking the card */
+			}
+
+			.card:hover::before {
+			  transform: rotate(30deg) translate(100%, -50%);
+			  opacity: 1;
+			}
+
+			.search-results {
+			  position: absolute;
+			  right: 20px;
+			  top: 60px;
+			  background-color: white;
+			  color: black;
+			  border: 1px solid #ccc;
+			  width: 250px;
+			  /* Adjusted for image display */
+			  display: none;
+			  z-index: 1000;
+			  transform-origin: left;
+			  /* Anchor the transformation to the left */
+			  transition: transform 0.3s ease, background-color 0.3s ease;
+			  border-radius: 5px;
+			  /* Rounded corners for the search results box */
+			  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+			}
+
+			.search-results a {
+			  display: flex;
+			  align-items: center;
+			  text-decoration: none;
+			  color: black;
+			  border-bottom: 1px solid #eee;
+			  padding: 5px;
+			  transition: all 0.3s ease;
+			}
+
+			.search-results img {
+			  width: 50px;
+			  height: 50px;
+			  object-fit: cover;
+			  margin-right: 10px;
+			  border-radius: 5px;
+			}
+
+			.search-results a:last-child {
+			  border-bottom: none;
+			}
+
+			.news-container {
+			  margin: 20px auto;
+			  padding: 20px;
+			  background-color: #444444;
+			  /* Light grey background */
+			  border-radius: 8px;
+			  max-width: 800px;
+			  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			  /* Subtle shadow for depth */
+			}
+
+			.news {
+			  color: #ffffff;
+			  /* Dark text for readability */
+			}
+
+			.credits-title {
+			  font-size: 1.5em;
+			  margin-bottom: 15px;
+			  color: #ffffff;
+			  /* Darker title color */
+			  border-bottom: 2px solid #ddd;
+			  /* Subtle bottom border */
+			  padding-bottom: 5px;
+			}
+
+			.credits-item {
+			  display: flex;
+			  justify-content: space-between;
+			  margin-bottom: 15px;
+			}
+
+			.credits-role {
+			  font-weight: bold;
+			  color: #ffffff;
+			  /* Slightly lighter for role text */
+			}
+
+			.credits-names {
+			  display: flex;
+			  flex-wrap: wrap;
+			  gap: 8px;
+			  align-items: center;
+			  /* Center-aligns items vertically */
+			}
+
+			.credits-link {
+			  color: #0073e6;
+			  /* Blue link color */
+			  text-decoration: none;
+			  font-weight: bold;
+			  /* Bold links for emphasis */
+			}
+
+			.credits-link:hover {
+			  text-decoration: underline;
+			}
+
+			.credits-names span {
+			  color: #c4c4c4;
+			  /* Slightly lighter for plain text */
+			}
+
+			/* Additional CSS for better spacing and style */
+			.credits-item:last-child .credits-names {
+			  gap: 16px;
+			}
+
+			.credits-item:last-child .credits-link {
+			  color: #00b3b3;
+			  /* Different link color for Other Links */
+			}
+
+			.credits-item:last-child .credits-link:hover {
+			  text-decoration: underline;
+			  color: #00cccc;
+			  /* Hover color for Other Links */
+			}
+
+			/* Styling for the All  label */
+			h2 {
+			  text-align: center;
+			  color: white;
+			  margin: 20px 0;
+			  /* Spacing above and below */
+			  font-size: 1.5em;
+			  /* Larger font size */
+			}
+
+			.card figcaption {
+			  position: absolute;
+			  bottom: 0;
+			  left: 0;
+			  width: 100%;
+			  background-color: rgba(95, 95, 95, 0.8);
+			  color: black;
+			  padding: 5px 0;
+			  transition: transform 0.3s ease, opacity 0.3s ease;
+			  transform: translateY(100%);
+			  /* Start off-screen */
+			  opacity: 0;
+			  display: flex;
+			  justify-content: center;
+			  align-items: center;
+			  text-shadow: 0 0 2px white;
+			  font-weight: 550;
+			  border-radius: 10px;
+			}
+
+			.card:hover figcaption {
+			  height: 30px;
+			  /* Show text on hover */
+			  background-color: rgba(95, 95, 95, 0.8);
+			  /* Non-transparent background on hover */
+			  transform: translateY(0);
+			  /* Slide up to visible */
+			  opacity: 1;
+			}
+
+			.pagination {
+			  text-align: center;
+			  margin: 20px 0;
+			}
+
+			.pagination a {
+			  color: white;
+			  padding: 8px 16px;
+			  text-decoration: none;
+			  transition: background-color 0.3s;
+			  border: 1px solid #444;
+			  margin: 0 4px;
+			  border-radius: 4px;
+			  background-color: #333;
+			}
+
+			.pagination a.active {
+			  background-color: #555;
+			  border-color: #777;
+			}
+
+			.pagination a:hover:not(.active) {
+			  background-color: #444;
+			}
+
+			.updates-paragraph-text {
+			  color: white;
+			  background-color: #a83632;
+			  padding: 15px 10px;
+			  border-radius: 10px;
+			  box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.05);
+			  margin-bottom: 30px;
+			}
+
+			.updates-text-container {
+			  margin-left: 30%;
+			  margin-right: 30%;
+			  display: flex;
+			  justify-content: center;
+			  align-items: center;
+			}
+
+			.loading-container {
+			  position: absolute;
+			  top: 50%;
+			  left: 50%;
+			  transform: translate(-50%, -50%);
+			  display: flex;
+			  flex-direction: column;
+			  justify-content: center;
+			  align-items: center;
+			}
+
+			.bars {
+			  display: flex;
+			  align-items: center;
+			}
+
+			.bar {
+			  background-color: rgba(255, 255, 255, 0.3);
+			  width: 20px;
+			  height: 40px;
+			  margin-right: 5px;
+			  border-radius: 10px;
+			  animation: load ease infinite 5s;
+			}
+
+			.bar-2,
+			.bar-4 {
+			  height: 50px;
+			}
+
+			.bar-2 {
+			  animation-delay: 0.1s;
+			}
+
+			.bar-3 {
+			  height: 60px;
+			  animation-delay: 0.2s;
+			}
+
+			.bar-4 {
+			  animation-delay: 0.3s;
+			}
+
+			.bar-5 {
+			  animation-delay: 0.4s;
+			}
+
+			@keyframes load {
+			  0%,
+			  100% {
+			    transform: rotate(0deg);
+			  }
+
+			  50% {
+			    transform: rotate(720deg) rotateX(180deg);
+			  }
+			}
+
+			#topGameList {
+			  position: relative;
+			  /* Make sure topGameList is relatively positioned */
+			}
+
+			.modal {
+			  display: none;
+			  position: fixed;
+			  z-index: 1000;
+			  left: 0;
+			  top: 0;
+			  width: 100%;
+			  height: 100%;
+			  background-color: rgba(0, 0, 0, 0.5);
+			  justify-content: center;
+			  align-items: center;
+			}
+
+			.modal-content {
+			  background-color: #757575;
+			  padding: 20px;
+			  border-radius: 10px;
+			  width: 90%;
+			  max-width: 400px;
+			  text-align: center;
+			}
+
+			.modal-close {
+			  color: #aaa;
+			  float: right;
+			  font-size: 28px;
+			  font-weight: bold;
+			  cursor: pointer;
+			}
+
+			.modal-close:hover,
+			.modal-close:focus {
+			  color: #000;
+			  text-decoration: none;
+			  cursor: pointer;
+			}
+
+			.modal-link {
+			  color: blue;
+			  text-decoration: underline;
+			  cursor: pointer;
+			}
 		</style>
 	</head>
 	<body>
