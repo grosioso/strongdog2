@@ -31,7 +31,7 @@
 			const db = firebase.firestore();
 		</script>
 		<script type="module">
-			import games from "/cards-data.js";
+			import games from "./cards-data.js";
 
 			function getCardHTML(gameObject) {
 				const { href, imgSrc, name } = gameObject;
@@ -55,26 +55,6 @@
 				"DOMContentLoaded",
 				() => (document.getElementById("allGameList").innerHTML = cardsHTMLStr)
 			);
-			// Self-executing function to load external cards automatically
-			// (function () {
-			// 	// The path to your external file containing the cards
-			// 	const cardsFilePath = "./cards_data.html";
-
-			// 	// Wait until the DOM is fully loaded
-			// 	document.addEventListener("DOMContentLoaded", function () {
-			// 		// Find the element with the ID 'allGameList'
-			// 		const cardContainer = document.getElementById("allGameList");
-
-			// 		// Fetch the external HTML file containing the cards
-			// 		fetch(cardsFilePath)
-			// 			.then(response => response.text())
-			// 			.then(data => {
-			// 				// Insert the loaded HTML into the 'allGameList' element
-			// 				cardContainer.innerHTML = data;
-			// 			})
-			// 			.catch(error => console.error("Error loading the cards:", error));
-			// 	});
-			// })();
 		</script>
 
 		<script src="appscript.js"></script>
@@ -752,16 +732,34 @@
 	</head>
 	<body>
 		<div
-			id="secretLink"
-			style="
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        width: 20px;
-        height: 20px;
-        cursor: pointer;
-      "
-		></div>
+		id="secretLink"
+		title="Secret Menu"
+		style="
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			width: 10px;
+			height: 10px;
+			cursor: pointer;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			z-index: 1000; /* Ensure it is on top */
+		"
+	>
+	</div>
+	
+	<script>
+		// Ensure the secretLink event listener is set up after the element is loaded
+		window.addEventListener("load", function () {
+			const secretLink = document.getElementById("secretLink");
+			secretLink.addEventListener("click", function () {
+				window.location.href = "secret-menu.html";
+			});
+		});
+	</script>
+	
 		<div class="navbar">
 			<div class="menu-icon" id="menuIcon">&#9776;</div>
 			<a href="index.html" class="logo">StrongDog<span class="xp">XP</span></a>
@@ -1076,14 +1074,13 @@
 
 					async function loadCardData() {
 						try {
-							const response = await fetch("cards_data.html");
+							const response = await fetch("cards-data.js");
 							const text = await response.text();
 
 							// Create a temporary DOM element to parse the fetched HTML
 							const tempDiv = document.createElement("div");
 							tempDiv.innerHTML = text;
 
-							// Assuming each card has a class of 'card' in cards_data.html
 							const cards = tempDiv.querySelectorAll(".card");
 							cards.forEach(card => {
 								gameCards.push(card);
@@ -1154,14 +1151,13 @@
 				// Function to load card data from external file
 				async function loadCardData() {
 					try {
-						const response = await fetch("cards_data.html");
+						const response = await fetch("cards-data.js");
 						const text = await response.text();
 
 						// Create a temporary DOM element to parse the fetched HTML
 						const tempDiv = document.createElement("div");
 						tempDiv.innerHTML = text;
 
-						// Assuming each card has a class of 'card' in cards_data.html
 						const cards = tempDiv.querySelectorAll(".card");
 						cards.forEach(card => {
 							gameCards.push(card); // Add each card to the array
@@ -1220,78 +1216,42 @@
 			});
 		</script>
 	</body>
-	<script>
+	<script type="module">
+		import games from "./cards-data.js";
+	
 		document.addEventListener("DOMContentLoaded", function () {
 			const randomGameButton = document.getElementById("randomGame");
-			const blockLanschoolButton = document.getElementById("blockLanschool");
-
-			let gameCards = []; // Array to hold all loaded game cards
-
-			// Load card data from cards_data.html
-			async function loadCardData() {
-				try {
-					const response = await fetch("cards_data.html");
-					const text = await response.text();
-
-					// Create a temporary DOM element to parse the fetched HTML
-					const tempDiv = document.createElement("div");
-					tempDiv.innerHTML = text;
-
-					// Assuming each card has a class of 'card' in cards_data.html
-					const cards = tempDiv.querySelectorAll(".card");
-					cards.forEach(card => {
-						const gameTitle = card.querySelector("figcaption").textContent;
-						const gameImage = card.querySelector("img").src;
-						const gameHref = card.getAttribute("href");
-
-						// Store the game info in the gameCards array
-						gameCards.push(card);
-					});
-
-					// Add cards to the DOM (if needed)
-					const allGameList = document.getElementById("allGameList");
-					allGameList.append(...gameCards);
-
-					// Enable random game functionality after cards are loaded
-					enableRandomGameFeature();
-				} catch (error) {
-					console.error("Error loading card data:", error);
-				}
+			let gameCards = []; // Array to hold game paths only
+	
+			// Function to load game paths from games array
+			function loadGamePaths() {
+				games.forEach(game => {
+					// Add each game path (href) to gameCards array
+					gameCards.push(game.href);
+				});
+	
+				// Enable random game feature after paths are loaded
+				enableRandomGameFeature();
 			}
-
+	
 			function enableRandomGameFeature() {
 				if (gameCards.length > 0) {
 					randomGameButton.addEventListener("click", function (e) {
 						e.preventDefault();
 						const randomIndex = Math.floor(Math.random() * gameCards.length);
-						const randomCardHref = gameCards[randomIndex].getAttribute("href");
-						window.location.href = randomCardHref;
+						const randomGamePath = gameCards[randomIndex];
+						window.location.href = randomGamePath;
 					});
 				} else {
-					console.error("No game cards found to select a random game.");
+					console.error("No game paths found to select a random game.");
 				}
 			}
-
-			// Load the card data after DOM is ready
-			loadCardData();
-
-			blockLanschoolButton.addEventListener("click", function (e) {
-				e.preventDefault();
-				var url = "https://strongdog.netlify.app";
-				var newTab = window.open();
-				newTab.document.write(`
-        <html>
-          <body style="margin: 0; height: 100vh;">
-            <iframe src="${url}" style="border: none; width: 100%; height: 100%;"></iframe>
-          </body>
-        </html>
-      `);
-				newTab.document.close();
-			});
-
-			loadCardData();
+	
+			// Load the game paths after DOM is ready
+			loadGamePaths();
 		});
 	</script>
+	
 	<script>
 		document.addEventListener("DOMContentLoaded", function () {
 			const page1Link = document.getElementById("page1-link");
@@ -1330,9 +1290,9 @@
 		});
 	</script>
 	<script>
-		document.getElementById("secretLink").addEventListener("click", function () {
-			window.location.href = "secret-menu.html";
-		});
+document.getElementById("secretLink").addEventListener("click", function () {
+	window.location.href = "secret-menu.html";
+});
 	</script>
 	<script>
 		document.addEventListener("DOMContentLoaded", function () {
