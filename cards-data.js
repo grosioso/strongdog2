@@ -1,4 +1,10 @@
 export default [
+{ href: './html/zombs royale/index.html', imgSrc: 'zombs royale.jpg', name: 'zombs royale' },
+{ href: './html/we become what we behold/index.html', imgSrc: 'we become what we behold.jpg', name: 'we become what we behold' },
+{ href: './html/idle lumber inc/index.html', imgSrc: 'idle lumber inc.jpg', name: 'idle lumber inc' },
+{ href: './html/idle digging tycoon/index.html', imgSrc: 'idle digging tycoon.jpg', name: 'idle digging tycoon' },
+{ href: './html/bomber royale/index.html', imgSrc: 'bomber royale.jpg', name: 'bomber royale' },
+{ href: './html/blumgi paintball/index.html', imgSrc: 'blumgi paintball.jpg', name: 'blumgi paintball' },
 { href: "./html/badegg.io/index.html", imgSrc: "badegg.io.jpg", name: "badegg.io" },
 { href: "./swf/cactus mccoy/index.html", imgSrc: "cactus mccoy.jpg", name: "cactus mccoy" },
 { href: "./swf/cactus mccoy 2/index.html", imgSrc: "cactus mccoy 2.jpg", name: "cactus mccoy 2" },
