@@ -11,6 +11,32 @@
 		<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+		<script type="module">
+			import games from "./cards-data.js";
+			
+			function getCardHTML(gameObject) {
+				const { href, imgSrc, name } = gameObject;
+				return `
+				<a href="${href}" class="card">
+						<img src="./img/${imgSrc}">
+						<figcaption>${name}</figcaption>
+					</a>
+				`;
+			}
+
+			let cardsHTMLArr = [];
+			// For loop is fastest and most efficient method
+			for (let i = 0; i < games.length; ++i) {
+				cardsHTMLArr.push(getCardHTML(games[i]));
+			}
+
+			const cardsHTMLStr = cardsHTMLArr.join("");
+
+			document.addEventListener(
+				"DOMContentLoaded",
+				() => (document.getElementById("allGameList").innerHTML = cardsHTMLStr)
+			);
+		</script>
 		<script>
 			const firebaseConfig = {
 				apiKey: "AIzaSyBh-VnGiP4qZD0r14gfn9dr77GwtslpTqU",
@@ -30,35 +56,7 @@
 			const auth = firebase.auth();
 			const db = firebase.firestore();
 		</script>
-		<script type="module">
-			import games from "./cards-data.js";
-
-			function getCardHTML(gameObject) {
-				const { href, imgSrc, name } = gameObject;
-				return `
-					<a href="${href}" class="card">
-						<img src="./img/${imgSrc}">
-						<figcaption>${name}</figcaption>
-					</a>
-				`;
-			}
-
-			let cardsHTMLArr = [];
-
-			for (let i = 0; i < games.length; ++i) {
-				cardsHTMLArr.push(getCardHTML(games[i]));
-			}
-
-			const cardsHTMLStr = cardsHTMLArr.join("");
-
-			document.addEventListener(
-				"DOMContentLoaded",
-				() => (document.getElementById("allGameList").innerHTML = cardsHTMLStr)
-			);
-		</script>
-
 		<script src="appscript.js"></script>
-		<!-- Include your appscript.js here -->
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
 				const topGameList = document.getElementById("topGameList");
@@ -749,7 +747,6 @@
 		"
 	>
 	</div>
-	
 	<script>
 		// Ensure the secretLink event listener is set up after the element is loaded
 		window.addEventListener("load", function () {
@@ -821,11 +818,11 @@
 				<div class="credits-item">
 					<div class="credits-role">Developers</div>
 					<div class="credits-names">
-						<a href="https://github.com/jman1593" target="_blank" class="credits-link">Joshua Pettit</a>
-						<span>|</span>
 						<a href="https://github.com/JamesMeadows4" target="_blank" class="credits-link"
-							>James Meadows</a
+						>James Meadows</a
 						>
+						<span>|</span>
+						<a href="https://github.com/jman1593" target="_blank" class="credits-link">Joshua Pettit</a>
 					</div>
 				</div>
 				<div class="credits-item">
@@ -1076,7 +1073,6 @@
 				});
 			});
 		</script>
-		
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
 				const discordLink = document.getElementById("discordLink");
@@ -1181,46 +1177,38 @@
 		</script>
 	</body>
 	<script>
-		document.addEventListener("DOMContentLoaded", function () {
+		document.addEventListener("DOMContentLoaded", () => {
 			const page1Link = document.getElementById("page1-link");
 			const page2Link = document.getElementById("page2-link");
-
 			const hostname = window.location.hostname;
-
-			if (hostname.includes("github.io")) {
-				page1Link.href = "/#";
-				page2Link.href = "/strongdog2/index.html";
-			} else if (hostname.includes("vercel.app")) {
-				page1Link.href = "https://strongdog-1.vercel.app";
-				page2Link.href = "https://strongdog2.vercel.app";
-			} else if (hostname.includes("strongdog.netlify.app")) {
-				page1Link.href = "https://strongdog.netlify.app";
-				page2Link.href = "https://strongdog2.netlify.app";
-			} else if (hostname.includes("strongdog2.netlify.app")) {
-				page1Link.href = "https://strongdog.netlify.app";
-				page2Link.href = "https://strongdog2.netlify.app";
-			} else if (hostname.includes("mathcord.netlify.app")) {
-				page1Link.href = "https://mathcord.netlify.app";
-				page2Link.href = "https://mathcord2.netlify.app";
-			} else if (hostname.includes("mathcord2.netlify.app")) {
-				page1Link.href = "https://mathcord.netlify.app";
-				page2Link.href = "https://mathcord2.netlify.app";
-			} else if (hostname.includes("onrender.com")) {
-				page1Link.href = "https://strongdog.onrender.com";
-				page2Link.href = "https://strongdog2.onrender.com";
-			} else if (hostname.includes("stroongdog.netlify.app")) {
-				page1Link.href = "https://stroongdog.netlify.app";
-				page2Link.href = "https://stroongdog2.netlify.app";
-			} else if (hostname.includes("stroongdog2.netlify.app")) {
-				page1Link.href = "https://stroongdog.netlify.app";
-				page2Link.href = "https://stroongdog2.netlify.app";
+	
+			// Configuration object mapping hostnames to link values
+			const linkMap = {
+				"github.io": { page1: "/#", page2: "/strongdog2/index.html" },
+				"vercel.app": { page1: "https://strongdog-1.vercel.app", page2: "https://strongdog2.vercel.app" },
+				"strongdog.netlify.app": { page1: "https://strongdog.netlify.app", page2: "https://strongdog2.netlify.app" },
+				"strongdog2.netlify.app": { page1: "https://strongdog.netlify.app", page2: "https://strongdog2.netlify.app" },
+				"mathcord.netlify.app": { page1: "https://mathcord.netlify.app", page2: "https://mathcord2.netlify.app" },
+				"mathcord2.netlify.app": { page1: "https://mathcord.netlify.app", page2: "https://mathcord2.netlify.app" },
+				"onrender.com": { page1: "https://strongdog.onrender.com", page2: "https://strongdog2.onrender.com" },
+				"stroongdog.netlify.app": { page1: "https://stroongdog.netlify.app", page2: "https://stroongdog2.netlify.app" },
+				"stroongdog2.netlify.app": { page1: "https://stroongdog.netlify.app", page2: "https://stroongdog2.netlify.app" }
+			};
+	
+			// Find matching hostname and set hrefs accordingly
+			for (const key in linkMap) {
+				if (hostname.includes(key)) {
+					page1Link.href = linkMap[key].page1;
+					page2Link.href = linkMap[key].page2;
+					break; // stop once a match is found
+				}
 			}
 		});
 	</script>
 	<script>
-document.getElementById("secretLink").addEventListener("click", function () {
-	window.location.href = "secret-menu.html";
-});
+		document.getElementById("secretLink").addEventListener("click", function () {
+			window.location.href = "secret-menu.html";
+		});
 	</script>
 	<script>
 		document.addEventListener("DOMContentLoaded", function () {
@@ -1243,28 +1231,28 @@ document.getElementById("secretLink").addEventListener("click", function () {
 			});
 		});
 	</script>
-<script type="module">
-    import games from './cards-data.js';
+	<script type="module">
+		import games from './cards-data.js';
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const randomGameButton = document.getElementById("randomGame");
+		document.addEventListener("DOMContentLoaded", function () {
+			const randomGameButton = document.getElementById("randomGame");
 
-        function handleRandomGameClick() {
-            if (games.length > 0) {
-                const randomIndex = Math.floor(Math.random() * games.length);
-                const randomGamePath = games[randomIndex].href;
-                window.location.href = randomGamePath;
-            } else {
-                console.error("No game paths available for selection.");
-            }
-        }
+			function handleRandomGameClick() {
+				if (games.length > 0) {
+					const randomIndex = Math.floor(Math.random() * games.length);
+					const randomGamePath = games[randomIndex].href;
+					window.location.href = randomGamePath;
+				} else {
+					console.error("No game paths available for selection.");
+				}
+			}
 
-        // Add event listener to Random Game button
-        randomGameButton.addEventListener("click", function (event) {
-            event.preventDefault();
-            handleRandomGameClick();
-        });
-    });
-</script>
+			// Add event listener to Random Game button
+			randomGameButton.addEventListener("click", function (event) {
+				event.preventDefault();
+				handleRandomGameClick();
+			});
+		});
+	</script>
 
 </html>

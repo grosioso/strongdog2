@@ -26,8 +26,10 @@ export const modes = [
 
 // All of the updates and their corresponding dates that will be dynamically added in the updates section on about page
 export const updates = [
-	{ date: "10/29/24", content: "Added Jacksmith" },
-	{ date: "10/24/24", content: "Added Pre Civilization Bronze Age" },
+	{ date: "10/4/24", content: "Added zombs royale, we become what we behold, idle lumber inc, idle digging tycoon, bomber royale, and blumgi paintball." },
+	{ date: "10/31/24", content: "Added bad egg, cactus mccoy, cactus mccoy 2, territorial.io, and just passing 2." },
+	{ date: "10/29/24", content: "Added jacksmith" },
+	{ date: "10/24/24", content: "Added pre civilization bronze age" },
 	{ date: "10/21/24", content: "Updated login page UI" },
 	{ date: "10/20/24", content: "Restored Strongdog chat, added StrongDogXP accounts, Halloween update" },
 	{ date: "10/19/24", content: "Added conq.io and shipo.io" },
