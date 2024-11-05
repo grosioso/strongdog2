@@ -1094,87 +1094,64 @@
 				});
 			});
 		</script>
-		<script>
-			document.addEventListener("DOMContentLoaded", function () {
-				// Ensure the DOM is fully loaded and elements exist
-				const searchInput = document.querySelector(".search-bar");
-				const searchResults = document.getElementById("searchResults");
-
-				// Check if the elements are found
-				if (!searchInput || !searchResults) {
-					console.error("Search input or results container not found in the DOM.");
-					return; // Exit the function if elements are missing
-				}
-
-				let gameCards = []; // Array to hold game data
-
-				// Function to load card data from external file
-				async function loadCardData() {
-					try {
-						const response = await fetch("cards-data.js");
-						const text = await response.text();
-
-						// Create a temporary DOM element to parse the fetched HTML
-						const tempDiv = document.createElement("div");
-						tempDiv.innerHTML = text;
-
-						const cards = tempDiv.querySelectorAll(".card");
-						cards.forEach(card => {
-							gameCards.push(card); // Add each card to the array
-						});
-
-						return gameCards; // Return the populated gameCards array
-					} catch (error) {
-						console.error("Error loading card data:", error);
-						return [];
-					}
-				}
-
-				// Show results when the search bar is focused
-				searchInput.addEventListener("focus", function () {
-					searchResults.style.display = "block";
-					updateSearchResults(); // Call to display initial results (if any)
-				});
-
-				// Update the search results based on the input
-				searchInput.addEventListener("input", updateSearchResults);
-
-				// Hide results when clicking outside the search bar and results
-				document.addEventListener("click", function (event) {
-					if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
-						searchResults.style.display = "none";
-					}
-				});
-
-				// Function to update the search results
-				function updateSearchResults() {
-					const searchText = searchInput.value.toLowerCase();
-					const filteredCards = gameCards
-						.filter(
-							card => card.querySelector("figcaption").textContent.toLowerCase().includes(searchText) // Filter based on figcaption text
-						)
-						.slice(0, 7); // Top 7 results
-
-					searchResults.innerHTML = ""; // Clear previous results
-					filteredCards.forEach(card => {
-						const cardImg = card.querySelector("img").src;
-						const cardTitle = card.querySelector("figcaption").textContent;
-						const cardHref = card.getAttribute("href");
-
-						const resultLink = document.createElement("a");
-						resultLink.href = cardHref;
-						resultLink.innerHTML = `<img src="${cardImg}" alt="${cardTitle}"><span>${cardTitle}</span>`;
-						searchResults.appendChild(resultLink);
-					});
-
-					// Show or hide the results container based on whether there are results
-					searchResults.style.display = filteredCards.length ? "block" : "none";
-				}
-
-				// Load card data when the page loads
-				loadCardData();
-			});
-		</script>
+<script type="module">
+	import games from './cards-data.js';
+  
+	document.addEventListener("DOMContentLoaded", function () {
+	  const searchInput = document.querySelector(".search-bar");
+	  const searchResults = document.getElementById("searchResults");
+  
+	  if (!searchInput || !searchResults) {
+		console.error("Search input or results container not found in the DOM.");
+		return;
+	  }
+  
+	  // Show results when the search bar is focused
+	  searchInput.addEventListener("focus", function () {
+		updateSearchResults(); // Display initial results if any
+	  });
+  
+	  // Update the search results based on the input
+	  searchInput.addEventListener("input", updateSearchResults);
+  
+	  // Hide results when clicking outside the search bar and results
+	  document.addEventListener("click", function (event) {
+		if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
+		  searchResults.style.display = "none";
+		}
+	  });
+  
+	  function updateSearchResults() {
+		const searchText = searchInput.value.toLowerCase();
+		const filteredGames = games
+		  .filter(game => game.name.toLowerCase().includes(searchText))
+		  .slice(0, 7); // Limit to top 7 results
+  
+		searchResults.innerHTML = ""; // Clear previous results
+  
+		if (filteredGames.length === 0) {
+		  searchResults.style.display = "none";
+		  return;
+		}
+  
+		filteredGames.forEach(game => {
+		  const cardImg = './img/' + game.imgSrc;
+		  const cardTitle = game.name;
+		  const cardHref = game.href;
+  
+		  const resultLink = document.createElement("a");
+		  resultLink.href = cardHref;
+		  resultLink.innerHTML = `
+			<img src="${cardImg}" alt="${cardTitle}">
+			<span>${cardTitle}</span>
+		  `;
+		  searchResults.appendChild(resultLink);
+		});
+  
+		searchResults.style.display = "block"; // Show results
+	  }
+	});
+  </script>  
 	</body>
 	<script>
 		document.addEventListener("DOMContentLoaded", () => {
