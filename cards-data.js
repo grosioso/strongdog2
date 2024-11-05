@@ -1,5 +1,4 @@
 export default [
-{ href: './html/zombs royale/index.html', imgSrc: 'zombs royale.jpg', name: 'zombs royale' },
 { href: './html/we become what we behold/index.html', imgSrc: 'we become what we behold.jpg', name: 'we become what we behold' },
 { href: './html/idle lumber inc/index.html', imgSrc: 'idle lumber inc.jpg', name: 'idle lumber inc' },
 { href: './html/idle digging tycoon/index.html', imgSrc: 'idle digging tycoon.jpg', name: 'idle digging tycoon' },
