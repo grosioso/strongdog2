@@ -3,7 +3,7 @@ import shutil
 import re
 
 # Define the base directory
-base_dir = os.path.abspath('./html/')
+base_dir = os.path.abspath('./swf/')
 # The path to games.html (assumed to be in the current working directory)
 games_html_path = os.path.abspath('./games.html')
 
@@ -22,7 +22,11 @@ for subdir_name in os.listdir(base_dir):
             with open(index_html_path, 'r', encoding='utf-8') as f:
                 content = f.read()
             # Find the line with embedGame
-            match = re.search(r"embedGame\('(.+?)',\s*'(.+?)'\);", content)
+            match = re.search(
+                r"embedGame\(\s*['\"](.+?)['\"],\s*['\"](.+?)['\"]\s*\);",
+                content,
+                re.DOTALL,
+            )
             if match:
                 game_path = match.group(1)
                 game_name = match.group(2)

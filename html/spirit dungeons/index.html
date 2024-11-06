@@ -321,69 +321,120 @@
           .catch((error) => console.error("Error:", error));
       };
     </script>
-    <script type="module">
-      import games from "../../cards-data.js";
+<script type="module">
+  import games from "../../cards-data.js";
+  import { siteMapping } from "../../site-mapping.js";
 
-      document.addEventListener("DOMContentLoaded", function () {
-        const cardContainer = document.getElementById("cardContainer");
+  document.addEventListener("DOMContentLoaded", function () {
+    const cardContainer = document.getElementById("cardContainer");
 
-        // Set the number of directories to go back for href
-        const hrefDirectoryDepth = 2; // Adjust this value as needed for hrefs
+    // Function to get the Page 1 host and protocol based on current host
+    function getPage1HostAndProtocol() {
+      const currentHost = window.location.hostname;
 
-        function adjustHrefPath(path) {
-          // Remove leading './' or '/' from the path
-          path = path.replace(/^\.\//, "").replace(/^\//, "");
+      // Iterate over the siteMapping to find the current host as a value
+      for (const [page1Host, page2URL] of Object.entries(siteMapping)) {
+        try {
+          const page2URLObj = new URL(page2URL);
+          const page2Host = page2URLObj.hostname;
+          const protocol = page2URLObj.protocol; // e.g., 'http:' or 'https:'
 
-          // Build the prefix with the desired number of '../'
-          const prefix = "../".repeat(hrefDirectoryDepth);
-
-          return prefix + path;
+          if (page2Host === currentHost) {
+            return { page1Host, protocol };
+          }
+        } catch (error) {
+          console.error(`Invalid URL in siteMapping: ${page2URL}`, error);
         }
+      }
+      return null;
+    }
 
-        function adjustImgPath(path) {
-          // Remove leading './', '/', or 'img/' from the path
-          path = path
-            .replace(/^\.\//, "")
-            .replace(/^\//, "")
-            .replace(/^img\//, "");
+    function adjustHrefPath(path, page) {
+      // Remove leading './' or '/' from the path
+      path = path.replace(/^\.\//, "").replace(/^\//, "");
 
-          // Build the prefix: go back two directories, then into 'img/'
-          const prefix = "../".repeat(2) + "img/";
-
-          return prefix + path;
+      if (page === undefined || page != 2) {
+        // For Page 1 games
+        const page1Info = getPage1HostAndProtocol();
+        if (page1Info) {
+          const { page1Host, protocol } = page1Info;
+          const adjustedFirstPageLink =
+            protocol + "//" + page1Host.replace(/\/$/, "");
+          const adjustedPath = "/" + path;
+          return adjustedFirstPageLink + adjustedPath;
+        } else {
+          // If currentHost not found in siteMapping values, log an error
+          console.error(
+            `Current host not found in siteMapping values. Unable to adjust href for Page 1 game.`
+          );
+          return "#"; // Fallback href
         }
+      } else {
+        // For Page 2 games, adjust the path to go back two directories
+        return "../../" + path;
+      }
+    }
 
-        function getCardHTML(gameObject) {
-          const { href, imgSrc, name } = gameObject;
+    function adjustImgPath(path, page) {
+      // Remove leading './', '/', or 'img/' from the path
+      path = path
+        .replace(/^\.\//, "")
+        .replace(/^\//, "")
+        .replace(/^img\//, "");
 
-          // Adjust the href and imgSrc paths
-          const adjustedHref = adjustHrefPath(href);
-          const adjustedImgSrc = adjustImgPath(imgSrc);
-
-          // Create the card element
-          const card = document.createElement("a");
-          card.className = "card";
-          card.href = adjustedHref;
-
-          const img = document.createElement("img");
-          img.src = adjustedImgSrc;
-          img.alt = name;
-          card.appendChild(img);
-
-          const figcaption = document.createElement("figcaption");
-          figcaption.textContent = name;
-          card.appendChild(figcaption);
-
-          return card;
+      if (page === undefined || page != 2) {
+        // For Page 1 games, get image from the first page link
+        const page1Info = getPage1HostAndProtocol();
+        if (page1Info) {
+          const { page1Host, protocol } = page1Info;
+          const adjustedFirstPageLink =
+            protocol + "//" + page1Host.replace(/\/$/, "");
+          const adjustedPath = "/img/" + path;
+          return adjustedFirstPageLink + adjustedPath;
+        } else {
+          // If currentHost not found in siteMapping values, log an error
+          console.error(
+            `Current host not found in siteMapping values. Unable to adjust image path for Page 1 game.`
+          );
+          return "../../img/" + path; // Fallback to local image
         }
+      } else {
+        // For Page 2 games, adjust the path to go back two directories
+        return "../../img/" + path;
+      }
+    }
 
-        // Generate and display random recommended games
-        const randomGames = games.sort(() => 0.5 - Math.random()).slice(0, 10);
-        randomGames.forEach((game) => {
-          const card = getCardHTML(game);
-          cardContainer.appendChild(card);
-        });
-      });
-    </script>
+    function getCardHTML(gameObject) {
+      const { href, imgSrc, name, page } = gameObject;
+
+      // Adjust the href and imgSrc paths
+      const adjustedHref = adjustHrefPath(href, page);
+      const adjustedImgSrc = adjustImgPath(imgSrc, page);
+
+      // Create the card element
+      const card = document.createElement("a");
+      card.className = "card";
+      card.href = adjustedHref;
+
+      const img = document.createElement("img");
+      img.src = adjustedImgSrc;
+      img.alt = name;
+      card.appendChild(img);
+
+      const figcaption = document.createElement("figcaption");
+      figcaption.textContent = name;
+      card.appendChild(figcaption);
+
+      return card;
+    }
+
+    // Generate and display random recommended games
+    const randomGames = games.sort(() => 0.5 - Math.random()).slice(0, 10);
+    randomGames.forEach((game) => {
+      const card = getCardHTML(game);
+      cardContainer.appendChild(card);
+    });
+  });
+</script>
   </body>
 </html>
