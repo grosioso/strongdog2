@@ -1,5 +1,11 @@
 export default [
-{    href: './html/tiny heist/index.html', imgSrc: 'tiny heist.jpg', name: 'tiny heist' , 'page': 2},
+	{ href: './html/westoon/index.html', imgSrc: 'westoon.jpg', name: 'westoon' , 'page': 2},
+	{ href: './html/thumb fighter christmas/index.html', imgSrc: 'thumb fighter christmas.jpg', name: 'thumb fighter christmas' , 'page': 2},
+	{ href: './html/sink it/index.html', imgSrc: 'sink it.jpg', name: 'sink it' , 'page': 2},
+	{ href: './html/minibattles/index.html', imgSrc: 'minibattles.jpg', name: 'minibattles' , 'page': 2},
+	{ href: './html/gunspin/index.html', imgSrc: 'gunspin.jpg', name: 'gunspin' , 'page': 2},
+	{ href: './html/blocky snakes/index.html', imgSrc: 'blocky snakes.jpg', name: 'blocky snakes' , 'page': 2},
+	{ href: './html/tiny heist/index.html', imgSrc: 'tiny heist.jpg', name: 'tiny heist' , 'page': 2},
 	{ href: './html/poker/index.html', imgSrc: 'poker.jpg', name: 'poker' , 'page': 2},
 	{ href: './html/blackjack/index.html', imgSrc: 'blackjack.jpg', name: 'blackjack' , "page": 2},
 	{ href: "./html/leader-strike/index.html", imgSrc: "leader-strike.jfif", name: "leader strike" , "page": 2},
