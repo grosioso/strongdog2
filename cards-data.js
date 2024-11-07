@@ -1,4 +1,5 @@
 export default [
+{    href: './html/Throw a Potato/index.html', imgSrc: 'Throw a Potato.png', name: 'Throw a Potato' , 'page': 2},
 	{ href: './html/westoon/index.html', imgSrc: 'westoon.jpg', name: 'westoon' , 'page': 2},
 	{ href: './html/thumb fighter christmas/index.html', imgSrc: 'thumb fighter christmas.jpg', name: 'thumb fighter christmas' , 'page': 2},
 	{ href: './html/sink it/index.html', imgSrc: 'sink it.jpg', name: 'sink it' , 'page': 2},
@@ -631,7 +632,6 @@ export default [
 	{ href: "./html/pizzachallenge/game/pizzachallenge.html", imgSrc: "pizzachallenge.png", name: "Pizza Challange" },
 	{ href: "./html/retro speed/game/retro speed.html speed.html", imgSrc: "retro speed.png", name: "Retro Speed" },
 	{ href: "./html/tank trouble 2.html", imgSrc: "tank trouble 2.png", name: "Tank Trouble 2" },
-	{ href: "./html/throwapotato.html", imgSrc: "throwapotato.png", name: "Throw a Potato" },
 	{ href: "./html/throwapotato2.html", imgSrc: "throwapotato2.png", name: "Throw a Potato 2" },
 	{ href: "./html/throwapotato3.html", imgSrc: "throwapotato3.png", name: "Throw a Potato in Space" },
 ];
