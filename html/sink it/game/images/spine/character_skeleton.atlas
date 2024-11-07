@@ -1,0 +1,830 @@
+
+character_skeleton.png
+size: 580,580
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bandana_skin01
+  rotate: true
+  xy: 221, 225
+  size: 42, 71
+  orig: 42, 71
+  offset: 0, 0
+  index: -1
+bandana_skin02
+  rotate: true
+  xy: 432, 90
+  size: 41, 63
+  orig: 41, 63
+  offset: 0, 0
+  index: -1
+boat_body1_skin01
+  rotate: false
+  xy: 238, 286
+  size: 128, 133
+  orig: 128, 133
+  offset: 0, 0
+  index: -1
+boat_body2_skin01
+  rotate: false
+  xy: 238, 421
+  size: 138, 157
+  orig: 138, 157
+  offset: 0, 0
+  index: -1
+boat_body_skin01
+  rotate: false
+  xy: 2, 269
+  size: 234, 309
+  orig: 234, 309
+  offset: 0, 0
+  index: -1
+boat_bouyant_skin01
+  rotate: false
+  xy: 463, 36
+  size: 46, 52
+  orig: 46, 52
+  offset: 0, 0
+  index: -1
+boat_cannon_skin01
+  rotate: true
+  xy: 191, 26
+  size: 99, 52
+  orig: 99, 52
+  offset: 0, 0
+  index: -1
+boat_debris1_skin01
+  rotate: false
+  xy: 497, 94
+  size: 42, 37
+  orig: 42, 37
+  offset: 0, 0
+  index: -1
+boat_debris2_skin01
+  rotate: false
+  xy: 403, 45
+  size: 58, 38
+  orig: 58, 38
+  offset: 0, 0
+  index: -1
+boat_pole_skin01
+  rotate: false
+  xy: 2, 23
+  size: 69, 244
+  orig: 69, 244
+  offset: 0, 0
+  index: -1
+boat_sail2_skin01
+  rotate: false
+  xy: 378, 467
+  size: 128, 111
+  orig: 128, 111
+  offset: 0, 0
+  index: -1
+boat_sail4_skin01
+  rotate: false
+  xy: 73, 127
+  size: 146, 140
+  orig: 146, 140
+  offset: 0, 0
+  index: -1
+boat_sail_skin01
+  rotate: true
+  xy: 73, 2
+  size: 123, 116
+  orig: 123, 116
+  offset: 0, 0
+  index: -1
+eyes_closed_skin01
+  rotate: false
+  xy: 502, 411
+  size: 68, 43
+  orig: 68, 43
+  offset: 0, 0
+  index: -1
+eyes_closed_skin02
+  rotate: false
+  xy: 294, 241
+  size: 68, 43
+  orig: 68, 43
+  offset: 0, 0
+  index: -1
+eyes_happy_skin01
+  rotate: true
+  xy: 306, 161
+  size: 78, 49
+  orig: 78, 49
+  offset: 0, 0
+  index: -1
+eyes_happy_skin02
+  rotate: false
+  xy: 357, 174
+  size: 78, 49
+  orig: 78, 49
+  offset: 0, 0
+  index: -1
+eyes_idle_skin01
+  rotate: false
+  xy: 440, 133
+  size: 75, 43
+  orig: 75, 43
+  offset: 0, 0
+  index: -1
+eyes_idle_skin02
+  rotate: true
+  xy: 517, 138
+  size: 75, 43
+  orig: 75, 43
+  offset: 0, 0
+  index: -1
+eyes_squint_skin01
+  rotate: false
+  xy: 437, 178
+  size: 77, 35
+  orig: 77, 35
+  offset: 0, 0
+  index: -1
+eyes_squint_skin02
+  rotate: true
+  xy: 290, 63
+  size: 77, 35
+  orig: 77, 35
+  offset: 0, 0
+  index: -1
+eyes_wide skin01
+  rotate: false
+  xy: 327, 89
+  size: 74, 43
+  orig: 74, 43
+  offset: 0, 0
+  index: -1
+eyes_wide_skin02
+  rotate: false
+  xy: 327, 44
+  size: 74, 43
+  orig: 74, 43
+  offset: 0, 0
+  index: -1
+fly
+  rotate: true
+  xy: 357, 228
+  size: 11, 9
+  orig: 11, 9
+  offset: 0, 0
+  index: -1
+hat_octo1
+  rotate: true
+  xy: 508, 456
+  size: 122, 60
+  orig: 122, 60
+  offset: 0, 0
+  index: -1
+hat_octo2
+  rotate: false
+  xy: 378, 405
+  size: 122, 60
+  orig: 122, 60
+  offset: 0, 0
+  index: -1
+headasset_skin01
+  rotate: true
+  xy: 221, 127
+  size: 96, 43
+  orig: 96, 43
+  offset: 0, 0
+  index: -1
+headasset_skin02
+  rotate: true
+  xy: 245, 29
+  size: 96, 43
+  orig: 96, 43
+  offset: 0, 0
+  index: -1
+mond_squint_skin01
+  rotate: false
+  xy: 2, 3
+  size: 23, 18
+  orig: 23, 18
+  offset: 0, 0
+  index: -1
+mond_squint_skin02
+  rotate: false
+  xy: 191, 6
+  size: 23, 18
+  orig: 23, 18
+  offset: 0, 0
+  index: -1
+mouth_happy_skin01
+  rotate: true
+  xy: 327, 134
+  size: 25, 27
+  orig: 25, 27
+  offset: 0, 0
+  index: -1
+mouth_happy_skin02
+  rotate: true
+  xy: 245, 2
+  size: 25, 27
+  orig: 25, 27
+  offset: 0, 0
+  index: -1
+mouth_open_skin01
+  rotate: true
+  xy: 511, 29
+  size: 26, 31
+  orig: 26, 31
+  offset: 0, 0
+  index: -1
+mouth_open_skin02
+  rotate: false
+  xy: 541, 105
+  size: 26, 31
+  orig: 26, 31
+  offset: 0, 0
+  index: -1
+mouth_wide_skin01
+  rotate: false
+  xy: 403, 85
+  size: 27, 47
+  orig: 27, 47
+  offset: 0, 0
+  index: -1
+mouth_wide_skin02
+  rotate: true
+  xy: 448, 7
+  size: 27, 47
+  orig: 27, 47
+  offset: 0, 0
+  index: -1
+octo_body_skin01
+  rotate: true
+  xy: 469, 305
+  size: 98, 88
+  orig: 98, 88
+  offset: 0, 0
+  index: -1
+octo_body_skin02
+  rotate: false
+  xy: 469, 215
+  size: 98, 88
+  orig: 98, 88
+  offset: 0, 0
+  index: -1
+shine
+  rotate: false
+  xy: 511, 57
+  size: 34, 35
+  orig: 34, 35
+  offset: 0, 0
+  index: -1
+tent _mid_skin01
+  rotate: false
+  xy: 266, 142
+  size: 38, 81
+  orig: 38, 81
+  offset: 0, 0
+  index: -1
+tent_left_skin01
+  rotate: true
+  xy: 290, 2
+  size: 40, 77
+  orig: 40, 77
+  offset: 0, 0
+  index: -1
+tent_left_skin02
+  rotate: true
+  xy: 369, 2
+  size: 40, 77
+  orig: 40, 77
+  offset: 0, 0
+  index: -1
+tent_mid_skin02
+  rotate: true
+  xy: 357, 134
+  size: 38, 81
+  orig: 38, 81
+  offset: 0, 0
+  index: -1
+tent_right_skin01
+  rotate: false
+  xy: 368, 315
+  size: 99, 88
+  orig: 99, 88
+  offset: 0, 0
+  index: -1
+tent_right_skin02
+  rotate: false
+  xy: 368, 225
+  size: 99, 88
+  orig: 99, 88
+  offset: 0, 0
+  index: -1
+
+character_skeleton2.png
+size: 532,532
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+enemies/bandana_skin03
+  rotate: true
+  xy: 422, 303
+  size: 20, 65
+  orig: 20, 65
+  offset: 0, 0
+  index: -1
+enemies/boat_anchor_skin02
+  rotate: true
+  xy: 431, 134
+  size: 43, 57
+  orig: 43, 57
+  offset: 0, 0
+  index: -1
+enemies/boat_body_skin02
+  rotate: false
+  xy: 2, 223
+  size: 225, 307
+  orig: 225, 307
+  offset: 0, 0
+  index: -1
+enemies/boat_cannon_skin02
+  rotate: false
+  xy: 2, 9
+  size: 99, 46
+  orig: 99, 46
+  offset: 0, 0
+  index: -1
+enemies/boat_debris1_skin02
+  rotate: false
+  xy: 352, 35
+  size: 42, 37
+  orig: 42, 37
+  offset: 0, 0
+  index: -1
+enemies/boat_debris2_skin02
+  rotate: true
+  xy: 312, 29
+  size: 58, 38
+  orig: 58, 38
+  offset: 0, 0
+  index: -1
+enemies/boat_sail_skin02
+  rotate: false
+  xy: 229, 402
+  size: 98, 128
+  orig: 98, 128
+  offset: 0, 0
+  index: -1
+enemies/enemy022_arm_right
+  rotate: true
+  xy: 229, 213
+  size: 69, 127
+  orig: 69, 127
+  offset: 0, 0
+  index: -1
+enemies/enemy022_backitem
+  rotate: true
+  xy: 229, 284
+  size: 116, 92
+  orig: 116, 92
+  offset: 0, 0
+  index: -1
+enemies/enemy02_arm_left
+  rotate: true
+  xy: 197, 10
+  size: 32, 57
+  orig: 32, 57
+  offset: 0, 0
+  index: -1
+enemies/enemy02_arm_mid
+  rotate: true
+  xy: 359, 143
+  size: 34, 70
+  orig: 34, 70
+  offset: 0, 0
+  index: -1
+enemies/enemy02_arm_right
+  rotate: true
+  xy: 223, 151
+  size: 60, 134
+  orig: 60, 134
+  offset: 0, 0
+  index: -1
+enemies/enemy02_backitem
+  rotate: true
+  xy: 129, 104
+  size: 117, 92
+  orig: 117, 92
+  offset: 0, 0
+  index: -1
+enemies/enemy02_eyes_closed
+  rotate: true
+  xy: 511, 443
+  size: 58, 13
+  orig: 58, 13
+  offset: 0, 0
+  index: -1
+enemies/enemy02_eyes_happy
+  rotate: false
+  xy: 479, 210
+  size: 51, 24
+  orig: 51, 24
+  offset: 0, 0
+  index: -1
+enemies/enemy02_eyes_idle
+  rotate: false
+  xy: 419, 102
+  size: 60, 30
+  orig: 60, 30
+  offset: 0, 0
+  index: -1
+enemies/enemy02_eyes_squint
+  rotate: false
+  xy: 352, 74
+  size: 57, 30
+  orig: 57, 30
+  offset: 0, 0
+  index: -1
+enemies/enemy02_eyes_wide
+  rotate: false
+  xy: 323, 286
+  size: 30, 15
+  orig: 30, 15
+  offset: 0, 0
+  index: -1
+enemies/enemy02_frontitem
+  rotate: true
+  xy: 489, 265
+  size: 58, 41
+  orig: 58, 41
+  offset: 0, 0
+  index: -1
+enemies/enemy02_hat
+  rotate: false
+  xy: 329, 373
+  size: 104, 58
+  orig: 104, 58
+  offset: 0, 0
+  index: -1
+enemies/enemy02_head
+  rotate: false
+  xy: 323, 303
+  size: 97, 68
+  orig: 97, 68
+  offset: 0, 0
+  index: -1
+enemies/enemy02_nose
+  rotate: false
+  xy: 511, 428
+  size: 12, 13
+  orig: 12, 13
+  offset: 0, 0
+  index: -1
+enemies/enemy03_eyes_closed
+  rotate: false
+  xy: 256, 12
+  size: 54, 30
+  orig: 54, 30
+  offset: 0, 0
+  index: -1
+enemies/enemy03_eyes_happy
+  rotate: false
+  xy: 312, 10
+  size: 37, 17
+  orig: 37, 17
+  offset: 0, 0
+  index: -1
+enemies/enemy03_eyes_idle
+  rotate: false
+  xy: 479, 236
+  size: 51, 27
+  orig: 51, 27
+  offset: 0, 0
+  index: -1
+enemies/enemy03_eyes_squint
+  rotate: true
+  xy: 103, 2
+  size: 53, 24
+  orig: 53, 24
+  offset: 0, 0
+  index: -1
+enemies/enemy03_eyes_wide
+  rotate: true
+  xy: 438, 179
+  size: 56, 39
+  orig: 56, 39
+  offset: 0, 0
+  index: -1
+enemies/enemy03_hat
+  rotate: false
+  xy: 505, 325
+  size: 22, 39
+  orig: 22, 39
+  offset: 0, 0
+  index: -1
+enemies/enemy03_head
+  rotate: false
+  xy: 2, 57
+  size: 125, 164
+  orig: 125, 164
+  offset: 0, 0
+  index: -1
+enemies/enemy03_mouth_happy
+  rotate: true
+  xy: 396, 52
+  size: 20, 12
+  orig: 20, 12
+  offset: 0, 0
+  index: -1
+enemies/enemy03_mouth_idle
+  rotate: true
+  xy: 512, 144
+  size: 21, 16
+  orig: 21, 16
+  offset: 0, 0
+  index: -1
+enemies/enemy03_mouth_squint
+  rotate: false
+  xy: 512, 167
+  size: 18, 15
+  orig: 18, 15
+  offset: 0, 0
+  index: -1
+enemies/eyes_closed_skin03
+  rotate: true
+  xy: 435, 237
+  size: 64, 42
+  orig: 64, 42
+  offset: 0, 0
+  index: -1
+enemies/eyes_happy_skin03
+  rotate: false
+  xy: 129, 50
+  size: 83, 52
+  orig: 83, 52
+  offset: 0, 0
+  index: -1
+enemies/eyes_idle_skin03
+  rotate: false
+  xy: 435, 366
+  size: 74, 42
+  orig: 74, 42
+  offset: 0, 0
+  index: -1
+enemies/eyes_squint_skin03
+  rotate: false
+  xy: 350, 106
+  size: 67, 35
+  orig: 67, 35
+  offset: 0, 0
+  index: -1
+enemies/eyes_wide_skin03
+  rotate: false
+  xy: 129, 6
+  size: 66, 42
+  orig: 66, 42
+  offset: 0, 0
+  index: -1
+enemies/hat05_crown
+  rotate: true
+  xy: 439, 410
+  size: 120, 70
+  orig: 120, 70
+  offset: 0, 0
+  index: -1
+enemies/hat_crown
+  rotate: true
+  xy: 439, 410
+  size: 120, 70
+  orig: 120, 70
+  offset: 0, 0
+  index: -1
+enemies/hat_octo3
+  rotate: false
+  xy: 223, 89
+  size: 125, 60
+  orig: 125, 60
+  offset: 0, 0
+  index: -1
+enemies/headasset_skin03
+  rotate: false
+  xy: 214, 44
+  size: 96, 43
+  orig: 96, 43
+  offset: 0, 0
+  index: -1
+enemies/mond_happy_skin03
+  rotate: true
+  xy: 490, 134
+  size: 48, 20
+  orig: 48, 20
+  offset: 0, 0
+  index: -1
+enemies/mond_squint_skin03
+  rotate: true
+  xy: 511, 503
+  size: 27, 19
+  orig: 27, 19
+  offset: 0, 0
+  index: -1
+enemies/mouth_open_skin03
+  rotate: false
+  xy: 481, 108
+  size: 28, 24
+  orig: 28, 24
+  offset: 0, 0
+  index: -1
+enemies/mouth_wide_skin03
+  rotate: true
+  xy: 479, 184
+  size: 24, 45
+  orig: 24, 45
+  offset: 0, 0
+  index: -1
+enemies/octo_body_skin03
+  rotate: false
+  xy: 329, 433
+  size: 108, 97
+  orig: 108, 97
+  offset: 0, 0
+  index: -1
+enemies/tent_left_skin03
+  rotate: true
+  xy: 359, 179
+  size: 43, 77
+  orig: 43, 77
+  offset: 0, 0
+  index: -1
+enemies/tent_mid_skin03
+  rotate: true
+  xy: 422, 325
+  size: 39, 81
+  orig: 39, 81
+  offset: 0, 0
+  index: -1
+enemies/tent_right_skin03
+  rotate: false
+  xy: 358, 224
+  size: 75, 77
+  orig: 75, 77
+  offset: 0, 0
+  index: -1
+
+character_skeleton3.png
+size: 444,444
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+hats/fly
+  rotate: true
+  xy: 90, 287
+  size: 11, 9
+  orig: 11, 9
+  offset: 0, 0
+  index: -1
+hats/hat00_octo1
+  rotate: false
+  xy: 120, 287
+  size: 122, 60
+  orig: 122, 60
+  offset: 0, 0
+  index: -1
+hats/hat00_octo2
+  rotate: false
+  xy: 90, 135
+  size: 122, 60
+  orig: 122, 60
+  offset: 0, 0
+  index: -1
+hats/hat04_bowler
+  rotate: false
+  xy: 264, 285
+  size: 121, 67
+  orig: 121, 67
+  offset: 0, 0
+  index: -1
+hats/hat05_crown
+  rotate: false
+  xy: 209, 213
+  size: 120, 70
+  orig: 120, 70
+  offset: 0, 0
+  index: -1
+hats/hat06_paper
+  rotate: false
+  xy: 84, 45
+  size: 116, 88
+  orig: 116, 88
+  offset: 0, 0
+  index: -1
+hats/hat07_bunny
+  rotate: false
+  xy: 2, 300
+  size: 116, 142
+  orig: 116, 142
+  offset: 0, 0
+  index: -1
+hats/hat08_kabouter
+  rotate: false
+  xy: 331, 179
+  size: 99, 104
+  orig: 99, 104
+  offset: 0, 0
+  index: -1
+hats/hat09_muts
+  rotate: false
+  xy: 90, 197
+  size: 117, 88
+  orig: 117, 88
+  offset: 0, 0
+  index: -1
+hats/hat10_motordude
+  rotate: false
+  xy: 202, 54
+  size: 115, 62
+  orig: 115, 62
+  offset: 0, 0
+  index: -1
+hats/hat11_pith
+  rotate: true
+  xy: 2, 5
+  size: 141, 80
+  orig: 141, 80
+  offset: 0, 0
+  index: -1
+hats/hat12_viking
+  rotate: false
+  xy: 214, 118
+  size: 110, 93
+  orig: 110, 93
+  offset: 0, 0
+  index: -1
+hats/hat13_witch
+  rotate: false
+  xy: 120, 349
+  size: 142, 93
+  orig: 142, 93
+  offset: 0, 0
+  index: -1
+hats/hat14_spanish
+  rotate: true
+  xy: 2, 148
+  size: 150, 86
+  orig: 150, 86
+  offset: 0, 0
+  index: -1
+hats/hat15_beanie
+  rotate: false
+  xy: 264, 354
+  size: 121, 88
+  orig: 121, 88
+  offset: 0, 0
+  index: -1
+hats/hat15_propellor
+  rotate: false
+  xy: 244, 311
+  size: 17, 36
+  orig: 17, 36
+  offset: 0, 0
+  index: -1
+hats/hat16_drol
+  rotate: false
+  xy: 326, 87
+  size: 106, 90
+  orig: 106, 90
+  offset: 0, 0
+  index: -1
+hats/item02_bandanared1
+  rotate: true
+  xy: 387, 346
+  size: 96, 43
+  orig: 96, 43
+  offset: 0, 0
+  index: -1
+hats/item02_bandanared2
+  rotate: true
+  xy: 202, 10
+  size: 42, 71
+  orig: 42, 71
+  offset: 0, 0
+  index: -1
+hats/item03_bandanablue1
+  rotate: false
+  xy: 319, 42
+  size: 96, 43
+  orig: 96, 43
+  offset: 0, 0
+  index: -1
+hats/item03_bandanablue2
+  rotate: true
+  xy: 84, 2
+  size: 41, 63
+  orig: 41, 63
+  offset: 0, 0
+  index: -1
+hats/item14_moustache
+  rotate: true
+  xy: 417, 22
+  size: 63, 22
+  orig: 63, 22
+  offset: 0, 0
+  index: -1

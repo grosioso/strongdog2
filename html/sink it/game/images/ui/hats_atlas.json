@@ -1,0 +1,376 @@
+{
+	"textures": [
+		{
+			"image": "hats_atlas.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 451,
+				"h": 525
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "spanish",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 86
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 148,
+						"h": 84
+					},
+					"frame": {
+						"x": 4,
+						"y": 4,
+						"w": 148,
+						"h": 84
+					}
+				},
+				{
+					"filename": "rabbit",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 116,
+						"h": 142
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 0,
+						"w": 114,
+						"h": 141
+					},
+					"frame": {
+						"x": 4,
+						"y": 96,
+						"w": 114,
+						"h": 141
+					}
+				},
+				{
+					"filename": "witch",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 142,
+						"h": 93
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 140,
+						"h": 90
+					},
+					"frame": {
+						"x": 160,
+						"y": 4,
+						"w": 140,
+						"h": 90
+					}
+				},
+				{
+					"filename": "pith",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 141,
+						"h": 80
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 139,
+						"h": 78
+					},
+					"frame": {
+						"x": 126,
+						"y": 102,
+						"w": 139,
+						"h": 78
+					}
+				},
+				{
+					"filename": "beanie",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 121,
+						"h": 88
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 120,
+						"h": 87
+					},
+					"frame": {
+						"x": 4,
+						"y": 245,
+						"w": 120,
+						"h": 87
+					}
+				},
+				{
+					"filename": "fishbone",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 122,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 120,
+						"h": 58
+					},
+					"frame": {
+						"x": 132,
+						"y": 188,
+						"w": 120,
+						"h": 58
+					}
+				},
+				{
+					"filename": "starfish",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 122,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 120,
+						"h": 58
+					},
+					"frame": {
+						"x": 132,
+						"y": 254,
+						"w": 120,
+						"h": 58
+					}
+				},
+				{
+					"filename": "bowler",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 121,
+						"h": 67
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 119,
+						"h": 65
+					},
+					"frame": {
+						"x": 308,
+						"y": 4,
+						"w": 119,
+						"h": 65
+					}
+				},
+				{
+					"filename": "crown",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 120,
+						"h": 70
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 118,
+						"h": 68
+					},
+					"frame": {
+						"x": 308,
+						"y": 77,
+						"w": 118,
+						"h": 68
+					}
+				},
+				{
+					"filename": "muts",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 117,
+						"h": 88
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 115,
+						"h": 86
+					},
+					"frame": {
+						"x": 273,
+						"y": 153,
+						"w": 115,
+						"h": 86
+					}
+				},
+				{
+					"filename": "paperhat",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 116,
+						"h": 88
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 114,
+						"h": 86
+					},
+					"frame": {
+						"x": 4,
+						"y": 340,
+						"w": 114,
+						"h": 86
+					}
+				},
+				{
+					"filename": "biker",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 115,
+						"h": 62
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 113,
+						"h": 59
+					},
+					"frame": {
+						"x": 126,
+						"y": 340,
+						"w": 113,
+						"h": 59
+					}
+				},
+				{
+					"filename": "viking",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 110,
+						"h": 93
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 108,
+						"h": 91
+					},
+					"frame": {
+						"x": 247,
+						"y": 320,
+						"w": 108,
+						"h": 91
+					}
+				},
+				{
+					"filename": "bandanablue",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 107,
+						"h": 90
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 104,
+						"h": 87
+					},
+					"frame": {
+						"x": 4,
+						"y": 434,
+						"w": 104,
+						"h": 87
+					}
+				},
+				{
+					"filename": "bandanared",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 107,
+						"h": 90
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 104,
+						"h": 89
+					},
+					"frame": {
+						"x": 126,
+						"y": 407,
+						"w": 104,
+						"h": 89
+					}
+				},
+				{
+					"filename": "turd",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 106,
+						"h": 90
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 104,
+						"h": 88
+					},
+					"frame": {
+						"x": 238,
+						"y": 419,
+						"w": 104,
+						"h": 88
+					}
+				},
+				{
+					"filename": "gnome",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 99,
+						"h": 104
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 97,
+						"h": 102
+					},
+					"frame": {
+						"x": 350,
+						"y": 419,
+						"w": 97,
+						"h": 102
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "http://free-tex-packer.com",
+		"version": "0.6.6"
+	}
+}

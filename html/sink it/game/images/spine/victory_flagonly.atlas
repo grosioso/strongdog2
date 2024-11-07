@@ -1,0 +1,20 @@
+
+victory_flagonly.png
+size: 232,232
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+flag_p1
+  rotate: false
+  xy: 2, 116
+  size: 137, 112
+  orig: 137, 112
+  offset: 0, 0
+  index: -1
+flag_p2
+  rotate: false
+  xy: 2, 2
+  size: 137, 112
+  orig: 137, 112
+  offset: 0, 0
+  index: -1

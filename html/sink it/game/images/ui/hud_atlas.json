@@ -1,0 +1,628 @@
+{
+	"textures": [
+		{
+			"image": "hud_atlas.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 831,
+				"h": 863
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "menu_mobile",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 276,
+						"h": 102
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 0,
+						"w": 270,
+						"h": 98
+					},
+					"frame": {
+						"x": 4,
+						"y": 4,
+						"w": 270,
+						"h": 98
+					}
+				},
+				{
+					"filename": "enterbar_down",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 92
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 10,
+						"w": 256,
+						"h": 82
+					},
+					"frame": {
+						"x": 4,
+						"y": 110,
+						"w": 256,
+						"h": 82
+					}
+				},
+				{
+					"filename": "spacebar_down",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 92
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 10,
+						"w": 256,
+						"h": 82
+					},
+					"frame": {
+						"x": 4,
+						"y": 200,
+						"w": 256,
+						"h": 82
+					}
+				},
+				{
+					"filename": "healthbar_empty",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 236,
+						"h": 36
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 235,
+						"h": 35
+					},
+					"frame": {
+						"x": 282,
+						"y": 4,
+						"w": 235,
+						"h": 35
+					}
+				},
+				{
+					"filename": "octop2_win",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 223,
+						"h": 208
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 0,
+						"w": 221,
+						"h": 201
+					},
+					"frame": {
+						"x": 282,
+						"y": 47,
+						"w": 221,
+						"h": 201
+					}
+				},
+				{
+					"filename": "octop1_win",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 223,
+						"h": 208
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 0,
+						"w": 220,
+						"h": 205
+					},
+					"frame": {
+						"x": 4,
+						"y": 290,
+						"w": 220,
+						"h": 205
+					}
+				},
+				{
+					"filename": "enterbar",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 92
+					},
+					"spriteSourceSize": {
+						"x": 25,
+						"y": 5,
+						"w": 209,
+						"h": 82
+					},
+					"frame": {
+						"x": 268,
+						"y": 256,
+						"w": 209,
+						"h": 82
+					}
+				},
+				{
+					"filename": "spacebar",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 92
+					},
+					"spriteSourceSize": {
+						"x": 25,
+						"y": 5,
+						"w": 209,
+						"h": 82
+					},
+					"frame": {
+						"x": 232,
+						"y": 346,
+						"w": 209,
+						"h": 82
+					}
+				},
+				{
+					"filename": "octop1_lose",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 223,
+						"h": 208
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 0,
+						"w": 194,
+						"h": 205
+					},
+					"frame": {
+						"x": 4,
+						"y": 503,
+						"w": 194,
+						"h": 205
+					}
+				},
+				{
+					"filename": "octop2_lose",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 224,
+						"h": 208
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 0,
+						"w": 195,
+						"h": 202
+					},
+					"frame": {
+						"x": 206,
+						"y": 503,
+						"w": 195,
+						"h": 202
+					}
+				},
+				{
+					"filename": "anvil",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 200,
+						"h": 200
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 19,
+						"w": 196,
+						"h": 172
+					},
+					"frame": {
+						"x": 525,
+						"y": 4,
+						"w": 196,
+						"h": 172
+					}
+				},
+				{
+					"filename": "finger_p0_2",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 135,
+						"h": 201
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 12,
+						"w": 127,
+						"h": 185
+					},
+					"frame": {
+						"x": 511,
+						"y": 184,
+						"w": 127,
+						"h": 185
+					}
+				},
+				{
+					"filename": "finger_p0_3",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 135,
+						"h": 201
+					},
+					"spriteSourceSize": {
+						"x": 20,
+						"y": 25,
+						"w": 113,
+						"h": 172
+					},
+					"frame": {
+						"x": 409,
+						"y": 436,
+						"w": 113,
+						"h": 172
+					}
+				},
+				{
+					"filename": "pickup_health",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 19,
+						"w": 145,
+						"h": 113
+					},
+					"frame": {
+						"x": 530,
+						"y": 377,
+						"w": 145,
+						"h": 113
+					}
+				},
+				{
+					"filename": "pickup_bomb",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 5,
+						"w": 144,
+						"h": 139
+					},
+					"frame": {
+						"x": 530,
+						"y": 498,
+						"w": 144,
+						"h": 139
+					}
+				},
+				{
+					"filename": "pickup_freeze",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 19,
+						"y": 0,
+						"w": 117,
+						"h": 143
+					},
+					"frame": {
+						"x": 4,
+						"y": 716,
+						"w": 117,
+						"h": 143
+					}
+				},
+				{
+					"filename": "pickup_ammo",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 4,
+						"y": 15,
+						"w": 142,
+						"h": 121
+					},
+					"frame": {
+						"x": 129,
+						"y": 716,
+						"w": 142,
+						"h": 121
+					}
+				},
+				{
+					"filename": "aim_target",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 140,
+						"h": 140
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 0,
+						"w": 137,
+						"h": 140
+					},
+					"frame": {
+						"x": 279,
+						"y": 713,
+						"w": 137,
+						"h": 140
+					}
+				},
+				{
+					"filename": "finger_p0_1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 135,
+						"h": 201
+					},
+					"spriteSourceSize": {
+						"x": 26,
+						"y": 60,
+						"w": 107,
+						"h": 140
+					},
+					"frame": {
+						"x": 424,
+						"y": 645,
+						"w": 107,
+						"h": 140
+					}
+				},
+				{
+					"filename": "pickup_chest",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 20,
+						"w": 135,
+						"h": 111
+					},
+					"frame": {
+						"x": 539,
+						"y": 645,
+						"w": 135,
+						"h": 111
+					}
+				},
+				{
+					"filename": "coin",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 98,
+						"h": 116
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 98,
+						"h": 116
+					},
+					"frame": {
+						"x": 729,
+						"y": 4,
+						"w": 98,
+						"h": 116
+					}
+				},
+				{
+					"filename": "boss_icon",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 78,
+						"h": 70
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 1,
+						"w": 78,
+						"h": 68
+					},
+					"frame": {
+						"x": 729,
+						"y": 128,
+						"w": 78,
+						"h": 68
+					}
+				},
+				{
+					"filename": "coinbar1",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 57,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 57,
+						"h": 64
+					},
+					"frame": {
+						"x": 424,
+						"y": 793,
+						"w": 57,
+						"h": 64
+					}
+				},
+				{
+					"filename": "coinbar2",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 34,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 12,
+						"w": 34,
+						"h": 41
+					},
+					"frame": {
+						"x": 683,
+						"y": 184,
+						"w": 34,
+						"h": 41
+					}
+				},
+				{
+					"filename": "coinbar3",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 35,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 12,
+						"w": 35,
+						"h": 41
+					},
+					"frame": {
+						"x": 449,
+						"y": 377,
+						"w": 35,
+						"h": 41
+					}
+				},
+				{
+					"filename": "text_p2",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 42,
+						"h": 36
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 41,
+						"h": 35
+					},
+					"frame": {
+						"x": 232,
+						"y": 436,
+						"w": 41,
+						"h": 35
+					}
+				},
+				{
+					"filename": "text_p1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 42,
+						"h": 36
+					},
+					"spriteSourceSize": {
+						"x": 4,
+						"y": 1,
+						"w": 35,
+						"h": 35
+					},
+					"frame": {
+						"x": 281,
+						"y": 436,
+						"w": 35,
+						"h": 35
+					}
+				},
+				{
+					"filename": "snowflake",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 1,
+						"w": 24,
+						"h": 21
+					},
+					"frame": {
+						"x": 409,
+						"y": 616,
+						"w": 24,
+						"h": 21
+					}
+				},
+				{
+					"filename": "target",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 22,
+						"h": 22
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 22,
+						"h": 22
+					},
+					"frame": {
+						"x": 449,
+						"y": 346,
+						"w": 22,
+						"h": 22
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "http://free-tex-packer.com",
+		"version": "0.6.6"
+	}
+}

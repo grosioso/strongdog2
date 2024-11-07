@@ -1,0 +1,62 @@
+
+victory_cannons.png
+size: 480,476
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+victory_boat
+  rotate: true
+  xy: 2, 5
+  size: 367, 165
+  orig: 367, 165
+  offset: 0, 0
+  index: -1
+victory_cannon
+  rotate: true
+  xy: 169, 5
+  size: 314, 112
+  orig: 314, 112
+  offset: 0, 0
+  index: -1
+victory_flag1
+  rotate: false
+  xy: 283, 79
+  size: 156, 240
+  orig: 156, 240
+  offset: 0, 0
+  index: -1
+victory_flag2
+  rotate: false
+  xy: 375, 321
+  size: 93, 153
+  orig: 93, 153
+  offset: 0, 0
+  index: -1
+victory_gold1
+  rotate: false
+  xy: 192, 339
+  size: 22, 33
+  orig: 22, 33
+  offset: 0, 0
+  index: -1
+victory_gold2
+  rotate: false
+  xy: 169, 337
+  size: 21, 35
+  orig: 21, 35
+  offset: 0, 0
+  index: -1
+victory_pole1
+  rotate: false
+  xy: 2, 374
+  size: 371, 100
+  orig: 371, 100
+  offset: 0, 0
+  index: -1
+victory_pole2
+  rotate: true
+  xy: 441, 37
+  size: 282, 35
+  orig: 282, 35
+  offset: 0, 0
+  index: -1

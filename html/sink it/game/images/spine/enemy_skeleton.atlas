@@ -1,0 +1,118 @@
+
+enemy_skeleton.png
+size: 560,560
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+enemy01_arm
+  rotate: true
+  xy: 462, 283
+  size: 173, 51
+  orig: 173, 51
+  offset: 0, 0
+  index: -1
+enemy01_boat
+  rotate: false
+  xy: 2, 302
+  size: 378, 256
+  orig: 378, 256
+  offset: 0, 0
+  index: -1
+enemy01_cannon
+  rotate: false
+  xy: 382, 458
+  size: 170, 100
+  orig: 170, 100
+  offset: 0, 0
+  index: -1
+enemy01_dude
+  rotate: false
+  xy: 2, 2
+  size: 202, 155
+  orig: 202, 155
+  offset: 0, 0
+  index: -1
+enemy01_engine
+  rotate: true
+  xy: 458, 13
+  size: 90, 56
+  orig: 90, 56
+  offset: 0, 0
+  index: -1
+enemy01_eyes_idle
+  rotate: true
+  xy: 402, 4
+  size: 99, 54
+  orig: 99, 54
+  offset: 0, 0
+  index: -1
+enemy01_eyes_squint
+  rotate: true
+  xy: 402, 105
+  size: 102, 65
+  orig: 102, 65
+  offset: 0, 0
+  index: -1
+enemy01_eyes_wide
+  rotate: true
+  xy: 469, 179
+  size: 102, 72
+  orig: 102, 72
+  offset: 0, 0
+  index: -1
+enemy01_flag
+  rotate: false
+  xy: 206, 2
+  size: 194, 155
+  orig: 194, 155
+  offset: 0, 0
+  index: -1
+enemy01_flagpole
+  rotate: true
+  xy: 2, 159
+  size: 141, 325
+  orig: 141, 325
+  offset: 0, 0
+  index: -1
+enemy01_hat
+  rotate: false
+  xy: 329, 209
+  size: 115, 62
+  orig: 115, 62
+  offset: 0, 0
+  index: -1
+enemy01_mouth_happy
+  rotate: false
+  xy: 329, 283
+  size: 49, 17
+  orig: 49, 17
+  offset: 0, 0
+  index: -1
+enemy01_mouth_idle
+  rotate: true
+  xy: 446, 244
+  size: 27, 13
+  orig: 27, 13
+  offset: 0, 0
+  index: -1
+enemy01_mouth_scared
+  rotate: true
+  xy: 371, 172
+  size: 35, 24
+  orig: 35, 24
+  offset: 0, 0
+  index: -1
+enemy01_pipes
+  rotate: true
+  xy: 382, 273
+  size: 183, 78
+  orig: 183, 78
+  offset: 0, 0
+  index: -1
+smoke
+  rotate: false
+  xy: 329, 166
+  size: 40, 41
+  orig: 40, 41
+  offset: 0, 0
+  index: -1
