@@ -1,4 +1,5 @@
 export default [
+{    href: './html/tiny heist/index.html', imgSrc: 'tiny heist.jpg', name: 'tiny heist' , 'page': 2},
 	{ href: './html/poker/index.html', imgSrc: 'poker.jpg', name: 'poker' , 'page': 2},
 	{ href: './html/blackjack/index.html', imgSrc: 'blackjack.jpg', name: 'blackjack' , "page": 2},
 	{ href: "./html/leader-strike/index.html", imgSrc: "leader-strike.jfif", name: "leader strike" , "page": 2},

@@ -26,7 +26,8 @@ export const modes = [
 
 // All of the updates and their corresponding dates that will be dynamically added in the updates section on about page
 export const updates = [
-	{ date: "10/4/24", content: "Added zombs royale, we become what we behold, idle lumber inc, idle digging tycoon, bomber royale, and blumgi paintball." },
+	{ date: "11/6/24", content: "Added tiny heist, poker, blackjack, and fixed leader strike." },
+	{ date: "11/4/24", content: "Added zombs royale, we become what we behold, idle lumber inc, idle digging tycoon, bomber royale, and blumgi paintball." },
 	{ date: "10/31/24", content: "Added bad egg, cactus mccoy, cactus mccoy 2, territorial.io, and just passing 2." },
 	{ date: "10/29/24", content: "Added jacksmith" },
 	{ date: "10/24/24", content: "Added pre civilization bronze age" },
