@@ -1,5 +1,5 @@
 export default [
-{    href: './html/Throw a Potato/index.html', imgSrc: 'Throw a Potato.png', name: 'Throw a Potato' , 'page': 2},
+	{  href: './html/Throw a Potato/index.html', imgSrc: 'Throw a Potato.png', name: 'Throw a Potato' , 'page': 2},
 	{ href: './html/westoon/index.html', imgSrc: 'westoon.jpg', name: 'westoon' , 'page': 2},
 	{ href: './html/thumb fighter christmas/index.html', imgSrc: 'thumb fighter christmas.jpg', name: 'thumb fighter christmas' , 'page': 2},
 	{ href: './html/sink it/index.html', imgSrc: 'sink it.jpg', name: 'sink it' , 'page': 2},
