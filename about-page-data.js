@@ -1,31 +1,6 @@
-// This holds all of the color themes for light/dark mode
-export const modes = [
-	{
-		mode: "light",
-		properties: {
-			"--text-color": "rgba(0, 0, 0, 0.6)",
-			"--body-background-gradient": "linear-gradient(30deg, #b3e5fc, #ffcc80)",
-			"--blob-1-gradient": "linear-gradient(0deg, #ffcc80, #ffab40)",
-			"--blob-2-gradient": "linear-gradient(0deg, #b3e5fc, #4fc3f7)",
-			"--blob-3-gradient": "linear-gradient(0deg, #c8e6c9, #81c784)",
-			"--link-color": "#7152ff",
-		},
-	},
-	{
-		mode: "dark",
-		properties: {
-			"--text-color": "rgba(255, 255, 255, 0.9)",
-			"--body-background-gradient": "linear-gradient(30deg, #010101, #000000)",
-			"--blob-1-gradient": "linear-gradient(72deg, #ff2079, #0400eb)",
-			"--blob-2-gradient": "linear-gradient(0deg, #440bd4, #e92efb)",
-			"--blob-3-gradient": "linear-gradient(220deg, #ff2079, #0400eb)",
-			"--link-color": "#9178ff",
-		},
-	},
-];
-
 // All of the updates and their corresponding dates that will be dynamically added in the updates section on about page
 export const updates = [
+	{ date: "11/4/24", content: "Added zombs royale, we become what we behold, idle lumber inc, idle digging tycoon, bomber royale, and blumgi paintball." },
 	{ date: "11/6/24", content: "Added tiny heist, poker, blackjack, and fixed leader strike." },
 	{ date: "11/4/24", content: "Added zombs royale, we become what we behold, idle lumber inc, idle digging tycoon, bomber royale, and blumgi paintball." },
 	{ date: "10/31/24", content: "Added bad egg, cactus mccoy, cactus mccoy 2, territorial.io, and just passing 2." },
@@ -51,4 +26,30 @@ export const updates = [
 	{ date: "5/14/24", content: "Removed tabs on page 1; improved About section" },
 	{ date: "5/13/24", content: "Optimized top 10 load speed; added loading icons; improved styling" },
 	{ date: "5/12/24", content: "Added About section" },
+];
+
+// This holds all of the color themes for light/dark mode
+export const modes = [
+	{
+		mode: "light",
+		properties: {
+			"--text-color": "rgba(0, 0, 0, 0.6)",
+			"--body-background-gradient": "linear-gradient(30deg, #b3e5fc, #ffcc80)",
+			"--blob-1-gradient": "linear-gradient(0deg, #ffcc80, #ffab40)",
+			"--blob-2-gradient": "linear-gradient(0deg, #b3e5fc, #4fc3f7)",
+			"--blob-3-gradient": "linear-gradient(0deg, #c8e6c9, #81c784)",
+			"--link-color": "#7152ff",
+		},
+	},
+	{
+		mode: "dark",
+		properties: {
+			"--text-color": "rgba(255, 255, 255, 0.9)",
+			"--body-background-gradient": "linear-gradient(30deg, #010101, #000000)",
+			"--blob-1-gradient": "linear-gradient(72deg, #ff2079, #0400eb)",
+			"--blob-2-gradient": "linear-gradient(0deg, #440bd4, #e92efb)",
+			"--blob-3-gradient": "linear-gradient(220deg, #ff2079, #0400eb)",
+			"--link-color": "#9178ff",
+		},
+	},
 ];

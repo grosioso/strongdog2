@@ -14,60 +14,60 @@
 		<script type="module">
 			import games from "./cards-data.js";
 			import { siteMapping } from "./site-mapping.js";
-		  
+
 			function getCardHTML(gameObject) {
-			  const { href, imgSrc, name, page } = gameObject;
-			  let adjustedHref = href;
-			  let adjustedImgSrc = `./img/${imgSrc}`; // Default img src
-		  
-			  if (page === 2) {
-				// Get the current hostname
-				const hostname = window.location.hostname;
-		  
-				// Determine the base URL for page 2
-				let page2BaseURL = "";
-		  
-				// Find the base URL for page 2 based on the current hostname
-				for (const key in siteMapping) {
-				  if (hostname.includes(key)) {
-					page2BaseURL = siteMapping[key];
-					break;
-				  }
+				const { href, imgSrc, name, page } = gameObject;
+				let adjustedHref = href;
+				let adjustedImgSrc = `./img/${imgSrc}`; // Default img src
+
+				if (page === 2) {
+					// Get the current hostname
+					const hostname = window.location.hostname;
+
+					// Determine the base URL for page 2
+					let page2BaseURL = "";
+
+					// Find the base URL for page 2 based on the current hostname
+					for (const key in siteMapping) {
+						if (hostname.includes(key)) {
+							page2BaseURL = siteMapping[key];
+							break;
+						}
+					}
+
+					if (page2BaseURL) {
+						// Remove leading './' from href and imgSrc if present
+						const adjustedGameHref = href.replace(/^\.\//, "");
+						adjustedHref = `${page2BaseURL}/${adjustedGameHref}`;
+
+						const adjustedImgPath = imgSrc.replace(/^\.\//, "");
+						adjustedImgSrc = `${page2BaseURL}/img/${adjustedImgPath}`;
+					} else {
+						// If no matching hostname is found, default to the original href
+						console.warn(`No page 2 site mapping found for hostname: ${hostname}`);
+					}
 				}
-		  
-				if (page2BaseURL) {
-				  // Remove leading './' from href and imgSrc if present
-				  const adjustedGameHref = href.replace(/^\.\//, "");
-				  adjustedHref = `${page2BaseURL}/${adjustedGameHref}`;
-		  
-				  const adjustedImgPath = imgSrc.replace(/^\.\//, "");
-				  adjustedImgSrc = `${page2BaseURL}/img/${adjustedImgPath}`;
-				} else {
-				  // If no matching hostname is found, default to the original href
-				  console.warn(`No page 2 site mapping found for hostname: ${hostname}`);
-				}
-			  }
-		  
-			  return `
-				<a href="${adjustedHref}" class="card">
-				  <img src="${adjustedImgSrc}">
-				  <figcaption>${name}</figcaption>
-				</a>
-			  `;
+
+				return `
+					<a href="${adjustedHref}" class="card">
+					<img src="${adjustedImgSrc}">
+					<figcaption>${name}</figcaption>
+					</a>
+			  	`;
 			}
-		  
+
 			// Generate the cards
 			let cardsHTMLArr = [];
 			for (let i = 0; i < games.length; ++i) {
-			  cardsHTMLArr.push(getCardHTML(games[i]));
+				cardsHTMLArr.push(getCardHTML(games[i]));
 			}
-		  
+
 			const cardsHTMLStr = cardsHTMLArr.join("");
-		  
+
 			document.addEventListener("DOMContentLoaded", () => {
-			  document.getElementById("allGameList").innerHTML = cardsHTMLStr;
+				document.getElementById("allGameList").innerHTML = cardsHTMLStr;
 			});
-		  </script>			  
+		</script>
 		<script>
 			const firebaseConfig = {
 				apiKey: "AIzaSyBh-VnGiP4qZD0r14gfn9dr77GwtslpTqU",
@@ -761,9 +761,9 @@
 	</head>
 	<body>
 		<div
-		id="secretLink"
-		title="Secret Menu"
-		style="
+			id="secretLink"
+			title="Secret Menu"
+			style="
 			position: absolute;
 			top: 10px;
 			right: 10px;
@@ -776,18 +776,17 @@
 			justify-content: center;
 			z-index: 1000; /* Ensure it is on top */
 		"
-	>
-	</div>
-	<script>
-		// Ensure the secretLink event listener is set up after the element is loaded
-		window.addEventListener("load", function () {
-			const secretLink = document.getElementById("secretLink");
-			secretLink.addEventListener("click", function () {
-				window.location.href = "secret-menu.html";
+		></div>
+		<script>
+			// Ensure the secretLink event listener is set up after the element is loaded
+			window.addEventListener("load", function () {
+				const secretLink = document.getElementById("secretLink");
+				secretLink.addEventListener("click", function () {
+					window.location.href = "secret-menu.html";
+				});
 			});
-		});
-	</script>
-	
+		</script>
+
 		<div class="navbar">
 			<div class="menu-icon" id="menuIcon">&#9776;</div>
 			<a href="index.html" class="logo">StrongDog<span class="xp">XP</span></a>
@@ -805,7 +804,8 @@
 		</div>
 		<div class="updates-text-container">
 			<p class="updates-paragraph-text">
-				All games from StrongDog page 1 and 2 have been merged together! If you find bugs please report them <a href="/about.html">here</a>!
+				All games from StrongDog page 1 and 2 have been merged together! If you find bugs, please report them
+				<a href="/about.html">here</a>!
 			</p>
 		</div>
 		<div class="modal" id="popupModal">
@@ -846,7 +846,7 @@
 					<div class="credits-role">Developers</div>
 					<div class="credits-names">
 						<a href="https://github.com/JamesMeadows4" target="_blank" class="credits-link"
-						>James Meadows</a
+							>James Meadows</a
 						>
 						<span>|</span>
 						<a href="https://github.com/jman1593" target="_blank" class="credits-link">Joshua Pettit</a>
@@ -912,21 +912,21 @@
 			</div>
 		</div>
 		<script type="module">
-			import games from './cards-data.js';
-		
+			import games from "./cards-data.js";
+
 			document.addEventListener("DOMContentLoaded", function () {
 				const menuIcon = document.getElementById("menuIcon");
 				const slideMenu = document.createElement("div");
 				slideMenu.className = "slide-menu";
-		
+
 				// Clone the categories
 				const originalCategories = document.querySelector(".categories");
 				const categories = originalCategories.cloneNode(true);
-		
+
 				// Append the categories to the slideMenu
 				slideMenu.appendChild(categories);
 				document.body.appendChild(slideMenu);
-		
+
 				// Add click event to toggle the sliding menu
 				menuIcon.addEventListener("click", function (event) {
 					event.stopPropagation(); // Prevent click event from bubbling up
@@ -936,56 +936,56 @@
 						slideMenu.style.transform = "translateX(0%)"; // Show menu by sliding in
 					}
 				});
-		
+
 				// Close the menu when clicking outside of it
 				window.addEventListener("click", function (event) {
 					if (event.target !== menuIcon && !slideMenu.contains(event.target)) {
 						slideMenu.style.transform = "translateX(-100%)"; // Hide menu
 					}
 				});
-		
+
 				// Check authentication state
 				auth.onAuthStateChanged(async user => {
 					let userDetailsContainer;
-		
+
 					if (user) {
 						// User is signed in, fetch their profile picture and username
-		
+
 						// Clone the user-details-container
 						const originalUserDetailsContainer = document.querySelector(".user-details-container");
 						userDetailsContainer = originalUserDetailsContainer.cloneNode(true);
-		
+
 						// Get elements inside userDetailsContainer
 						const profilePictureElement = userDetailsContainer.querySelector(".profile-picture");
 						const usernameElement = userDetailsContainer.querySelector(".username-text");
-		
+
 						// Set profile picture
 						if (user.photoURL) {
 							profilePictureElement.src = user.photoURL;
 						} else {
 							profilePictureElement.src = "img/default-avatar.png"; // Fallback to default image
 						}
-		
+
 						// Set username
 						const userId = user.uid;
 						const userDocRef = db.collection("usernames").doc(userId);
 						const userDoc = await userDocRef.get();
-		
+
 						if (userDoc.exists) {
 							const userData = userDoc.data();
 							usernameElement.textContent = userData.username || "Username";
 						} else {
 							usernameElement.textContent = user.displayName || "Username";
 						}
-		
+
 						// Make profile picture clickable and direct to settings page
 						profilePictureElement.parentElement.addEventListener("click", () => {
 							window.location.href = "settings.html";
 						});
-		
+
 						// Insert the userDetailsContainer at the top of the slideMenu
 						slideMenu.insertBefore(userDetailsContainer, categories);
-		
+
 						// Create the "Log Out" button as a menu item
 						const logoutLink = document.createElement("a");
 						logoutLink.href = "#";
@@ -993,7 +993,7 @@
 						logoutLink.textContent = "Log Out";
 						logoutLink.style.backgroundColor = "#dc3545"; // Red color for the button
 						logoutLink.style.color = "white";
-		
+
 						// Add click event to the "Log Out" link
 						logoutLink.addEventListener("click", function (e) {
 							e.preventDefault();
@@ -1007,29 +1007,29 @@
 									console.error("Error signing out:", error);
 								});
 						});
-		
+
 						// Insert the "Log Out" link above the "Favorites" link
 						const favoritesLink = categories.querySelector('a[href="favs.html"]');
 						categories.insertBefore(logoutLink, favoritesLink);
 					} else {
 						// User is not signed in, display "Not logged in" and a "Log In" button
-		
+
 						// Create a new userDetailsContainer
 						userDetailsContainer = document.createElement("div");
 						userDetailsContainer.className = "user-details-container";
-		
+
 						// Create a container for the text
 						const notLoggedInContainer = document.createElement("div");
 						notLoggedInContainer.className = "username-container";
-		
+
 						// Create the "Not logged in" text
 						const notLoggedInText = document.createElement("p");
 						notLoggedInText.className = "username-text";
 						notLoggedInText.textContent = "Not logged in";
-		
+
 						// Append the text to the container
 						notLoggedInContainer.appendChild(notLoggedInText);
-		
+
 						// Create the "Log In" button
 						const loginButton = document.createElement("button");
 						loginButton.textContent = "Log In";
@@ -1041,37 +1041,37 @@
 						loginButton.style.borderRadius = "5px";
 						loginButton.style.cursor = "pointer";
 						loginButton.style.marginTop = "5px";
-		
+
 						// Add click event to the "Log In" button
 						loginButton.addEventListener("click", function () {
 							window.location.href = "login.html";
 						});
-		
+
 						// Center the content
 						userDetailsContainer.style.display = "flex";
 						userDetailsContainer.style.flexDirection = "column";
 						userDetailsContainer.style.alignItems = "center";
 						userDetailsContainer.style.paddingBlock = "40px"; // Ensure consistent padding
-		
+
 						// Append the text and button to the userDetailsContainer
 						userDetailsContainer.appendChild(notLoggedInContainer);
 						userDetailsContainer.appendChild(loginButton);
-		
+
 						// Insert the userDetailsContainer at the top of the slideMenu
 						slideMenu.insertBefore(userDetailsContainer, categories);
 					}
-		
+
 					// Add event listeners to the relevant buttons in the sliding menu
 					categories.querySelector("#randomGame").addEventListener("click", function (e) {
 						e.preventDefault();
 						handleRandomGameClick();
 					});
-		
+
 					categories.querySelector("#blockLanschool").addEventListener("click", function (e) {
 						e.preventDefault();
 						handleBlockLanschoolClick();
 					});
-		
+
 					function handleRandomGameClick() {
 						if (games.length > 0) {
 							const randomIndex = Math.floor(Math.random() * games.length);
@@ -1081,7 +1081,7 @@
 							console.error("No game paths available for selection.");
 						}
 					}
-		
+
 					function handleBlockLanschoolClick() {
 						var url = "https://strongdog.netlify.app";
 						var newTab = window.open();
@@ -1094,7 +1094,7 @@
 						`);
 						newTab.document.close();
 					}
-		
+
 					// Since we're importing games directly, there's no need to load card data
 					// You can remove the loadCardData function and related code
 				});
@@ -1121,120 +1121,144 @@
 				});
 			});
 		</script>
-<script type="module">
-	import games from "./cards-data.js";
-	import { siteMapping } from "./site-mapping.js";
-  
-	document.addEventListener("DOMContentLoaded", function () {
-	  const searchInput = document.querySelector(".search-bar");
-	  const searchResults = document.getElementById("searchResults");
-  
-	  if (!searchInput || !searchResults) {
-		console.error("Search input or results container not found in the DOM.");
-		return;
-	  }
-  
-	  // Show results when the search bar is focused
-	  searchInput.addEventListener("focus", function () {
-		updateSearchResults(); // Display initial results if any
-	  });
-  
-	  // Update the search results based on the input
-	  searchInput.addEventListener("input", updateSearchResults);
-  
-	  // Hide results when clicking outside the search bar and results
-	  document.addEventListener("click", function (event) {
-		if (
-		  !searchInput.contains(event.target) &&
-		  !searchResults.contains(event.target)
-		) {
-		  searchResults.style.display = "none";
-		}
-	  });
-  
-	  function updateSearchResults() {
-		const searchText = searchInput.value.toLowerCase();
-		const filteredGames = games
-		  .filter((game) => game.name.toLowerCase().includes(searchText))
-		  .slice(0, 7); // Limit to top 7 results
-  
-		searchResults.innerHTML = ""; // Clear previous results
-  
-		if (filteredGames.length === 0) {
-		  searchResults.style.display = "none";
-		  return;
-		}
-  
-		filteredGames.forEach((game) => {
-		  const { href, imgSrc, name, page } = game;
-		  let adjustedHref = href;
-		  let adjustedImgSrc = `./img/${imgSrc}`; // Default img src
-  
-		  if (page === 2) {
-			// Get the current hostname
-			const hostname = window.location.hostname;
-  
-			// Determine the base URL for page 2
-			let page2BaseURL = "";
-  
-			// Find the base URL for page 2 based on the current hostname
-			for (const key in siteMapping) {
-			  if (hostname.includes(key)) {
-				page2BaseURL = siteMapping[key];
-				break;
-			  }
-			}
-  
-			if (page2BaseURL) {
-			  // Remove leading './' from href and imgSrc if present
-			  const adjustedGameHref = href.replace(/^\.\//, "");
-			  adjustedHref = `${page2BaseURL}/${adjustedGameHref}`;
-  
-			  const adjustedImgPath = imgSrc.replace(/^\.\//, "");
-			  adjustedImgSrc = `${page2BaseURL}/img/${adjustedImgPath}`;
-			} else {
-			  console.warn(
-				`No page 2 site mapping found for hostname: ${hostname}`
-			  );
-			}
-		  }
-  
-		  const resultLink = document.createElement("a");
-		  resultLink.href = adjustedHref;
-		  resultLink.innerHTML = `
+		<script type="module">
+			import games from "./cards-data.js";
+			import { siteMapping } from "./site-mapping.js";
+
+			document.addEventListener("DOMContentLoaded", function () {
+				const searchInput = document.querySelector(".search-bar");
+				const searchResults = document.getElementById("searchResults");
+
+				if (!searchInput || !searchResults) {
+					console.error("Search input or results container not found in the DOM.");
+					return;
+				}
+
+				// Show results when the search bar is focused
+				searchInput.addEventListener("focus", function () {
+					updateSearchResults(); // Display initial results if any
+				});
+
+				// Update the search results based on the input
+				searchInput.addEventListener("input", updateSearchResults);
+
+				// Hide results when clicking outside the search bar and results
+				document.addEventListener("click", function (event) {
+					if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
+						searchResults.style.display = "none";
+					}
+				});
+
+				function updateSearchResults() {
+					const searchText = searchInput.value.toLowerCase();
+					const filteredGames = games
+						.filter(game => game.name.toLowerCase().includes(searchText))
+						.slice(0, 7); // Limit to top 7 results
+
+					searchResults.innerHTML = ""; // Clear previous results
+
+					if (filteredGames.length === 0) {
+						searchResults.style.display = "none";
+						return;
+					}
+
+					filteredGames.forEach(game => {
+						const { href, imgSrc, name, page } = game;
+						let adjustedHref = href;
+						let adjustedImgSrc = `./img/${imgSrc}`; // Default img src
+
+						if (page === 2) {
+							// Get the current hostname
+							const hostname = window.location.hostname;
+
+							// Determine the base URL for page 2
+							let page2BaseURL = "";
+
+							// Find the base URL for page 2 based on the current hostname
+							for (const key in siteMapping) {
+								if (hostname.includes(key)) {
+									page2BaseURL = siteMapping[key];
+									break;
+								}
+							}
+
+							if (page2BaseURL) {
+								// Remove leading './' from href and imgSrc if present
+								const adjustedGameHref = href.replace(/^\.\//, "");
+								adjustedHref = `${page2BaseURL}/${adjustedGameHref}`;
+
+								const adjustedImgPath = imgSrc.replace(/^\.\//, "");
+								adjustedImgSrc = `${page2BaseURL}/img/${adjustedImgPath}`;
+							} else {
+								console.warn(`No page 2 site mapping found for hostname: ${hostname}`);
+							}
+						}
+
+						const resultLink = document.createElement("a");
+						resultLink.href = adjustedHref;
+						resultLink.innerHTML = `
 			<img src="${adjustedImgSrc}" alt="${name}">
 			<span>${name}</span>
 		  `;
-		  searchResults.appendChild(resultLink);
-		});
-  
-		searchResults.style.display = "block"; // Show results
-	  }
-	});
-  </script>
-  
+						searchResults.appendChild(resultLink);
+					});
+
+					searchResults.style.display = "block"; // Show results
+				}
+			});
+		</script>
 	</body>
 	<script>
 		document.addEventListener("DOMContentLoaded", () => {
 			const page1Link = document.getElementById("page1-link");
 			const page2Link = document.getElementById("page2-link");
 			const hostname = window.location.hostname;
-	
+
 			// Configuration object mapping hostnames to link values
 			const linkMap = {
 				"jman1593.github.io": { page1: "/#", page2: "/strongdog2/index.html" },
-				"strongdog-1.vercel.app": { page1: "https://strongdog-1.vercel.app", page2: "https://strongdog2.vercel.app" },
-				"strongdog2.vercel.app": { page1: "https://strongdog-1.vercel.app", page2: "https://strongdog2.vercel.app" },
-				"strongdog.netlify.app": { page1: "https://strongdog.netlify.app", page2: "https://strongdog2.netlify.app" },
-				"strongdog2.netlify.app": { page1: "https://strongdog.netlify.app", page2: "https://strongdog2.netlify.app" },
-				"mathcord.netlify.app": { page1: "https://mathcord.netlify.app", page2: "https://mathcord2.netlify.app" },
-				"mathcord2.netlify.app": { page1: "https://mathcord.netlify.app", page2: "https://mathcord2.netlify.app" },
-				"strongdog.onrender.com": { page1: "https://strongdog.onrender.com", page2: "https://strongdog2.onrender.com" },
-				"strongdog2.onrender.com": { page1: "https://strongdog.onrender.com", page2: "https://strongdog2.onrender.com" },
-				"stroongdog.netlify.app": { page1: "https://stroongdog.netlify.app", page2: "https://stroongdog2.netlify.app" },
-				"stroongdog2.netlify.app": { page1: "https://stroongdog.netlify.app", page2: "https://stroongdog2.netlify.app" }
+				"strongdog-1.vercel.app": {
+					page1: "https://strongdog-1.vercel.app",
+					page2: "https://strongdog2.vercel.app",
+				},
+				"strongdog2.vercel.app": {
+					page1: "https://strongdog-1.vercel.app",
+					page2: "https://strongdog2.vercel.app",
+				},
+				"strongdog.netlify.app": {
+					page1: "https://strongdog.netlify.app",
+					page2: "https://strongdog2.netlify.app",
+				},
+				"strongdog2.netlify.app": {
+					page1: "https://strongdog.netlify.app",
+					page2: "https://strongdog2.netlify.app",
+				},
+				"mathcord.netlify.app": {
+					page1: "https://mathcord.netlify.app",
+					page2: "https://mathcord2.netlify.app",
+				},
+				"mathcord2.netlify.app": {
+					page1: "https://mathcord.netlify.app",
+					page2: "https://mathcord2.netlify.app",
+				},
+				"strongdog.onrender.com": {
+					page1: "https://strongdog.onrender.com",
+					page2: "https://strongdog2.onrender.com",
+				},
+				"strongdog2.onrender.com": {
+					page1: "https://strongdog.onrender.com",
+					page2: "https://strongdog2.onrender.com",
+				},
+				"stroongdog.netlify.app": {
+					page1: "https://stroongdog.netlify.app",
+					page2: "https://stroongdog2.netlify.app",
+				},
+				"stroongdog2.netlify.app": {
+					page1: "https://stroongdog.netlify.app",
+					page2: "https://stroongdog2.netlify.app",
+				},
 			};
-	
+
 			// Find matching hostname and set hrefs accordingly
 			for (const key in linkMap) {
 				if (hostname.includes(key)) {
@@ -1272,7 +1296,7 @@
 		});
 	</script>
 	<script type="module">
-		import games from './cards-data.js';
+		import games from "./cards-data.js";
 
 		document.addEventListener("DOMContentLoaded", function () {
 			const randomGameButton = document.getElementById("randomGame");
@@ -1294,5 +1318,4 @@
 			});
 		});
 	</script>
-
 </html>

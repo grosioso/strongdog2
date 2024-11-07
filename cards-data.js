@@ -629,3 +629,4 @@ export default [
 	{ href: "./html/throwapotato2.html", imgSrc: "throwapotato2.png", name: "Throw a Potato 2" },
 	{ href: "./html/throwapotato3.html", imgSrc: "throwapotato3.png", name: "Throw a Potato in Space" },
 ];
+
