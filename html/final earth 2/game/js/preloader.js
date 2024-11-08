@@ -76,13 +76,11 @@ for (var i = window.gamePreloadsBefore.length - 1; i >= 0; i--) {
     }
 
     window.removeLoadingExplainer = function() {
-        if (loadingExplainer != null && loadingExplainer.parentNode != null)
-            document.body.removeChild(loadingExplainer);
+        document.body.removeChild(loadingExplainer);
     }
     
     window.removeLoadingTextP = function(loadingTextP) {
-        if (loadingTextP != null && loadingTextP.parentNode != null)
-            document.body.removeChild(loadingTextP);
+        document.body.removeChild(loadingTextP);
     }
 
     /* Preload the following:

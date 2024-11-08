@@ -25,40 +25,20 @@ Pathfinder.prototype = {
 			break;
 		case 2:
 			break;
-		case 3:
-			this.handleGetEntertainmentInfo(data);
-			break;
 		}
 	}
 	,findPaths: function(data) {
-		var dataPos = 3;
+		var dataPos = 2;
 		var numberOfPaths = data[1];
-		var teleportersEnabled = data[2] == 1;
 		var _g = 0;
 		var _g1 = numberOfPaths;
 		while(_g < _g1) {
 			var i = _g++;
-			var data0 = data[dataPos++];
-			var data1 = data[dataPos++];
-			var goalType = data[dataPos++];
-			var goal = data[dataPos++];
-			var privateTeleporter = data[dataPos++];
-			var maxDistance = data[dataPos++];
-			var multiGoals = null;
-			if(goalType == 2) {
-				multiGoals = [];
-				var _g2 = 0;
-				var _g3 = goal;
-				while(_g2 < _g3) {
-					var i1 = _g2++;
-					multiGoals.push(data[dataPos++]);
-				}
-			}
-			this.findPath(data0,data1,goalType,goal,privateTeleporter,numberOfPaths - i,teleportersEnabled,maxDistance,multiGoals);
+			this.findPath(data[dataPos++],data[dataPos++],data[dataPos++],data[dataPos++],numberOfPaths - i);
 		}
 		this.sendPathsMessage();
 	}
-	,findPath: function(data0,data1,goalType,goal,privateTeleporter,pathsLeft,teleportersEnabled,maxDistance,multiGoals) {
+	,findPath: function(data0,data1,goal,privateTeleporter,pathsLeft) {
 		var _gthis = this;
 		this.pathQueue.clear();
 		if(this.seen == null || this.seen.length != this.amountOfBuildings) {
@@ -88,21 +68,8 @@ Pathfinder.prototype = {
 		if(!startsOutsideOfBuilding) {
 			var building = this.buildingsByID.h[data1];
 			if(building == null) {
-				var extraLen = 0;
-				if(goalType == 2) {
-					extraLen = 1 + multiGoals.length;
-				}
-				this.generateNewPathsArrayIfNeeded(1 + extraLen,pathsLeft);
+				this.generateNewPathsArrayIfNeeded(1,pathsLeft);
 				this.finalPaths[0] += 1;
-				if(goalType == 2) {
-					this.finalPaths[this.finalPathsPos++] = multiGoals.length;
-					var _g = 0;
-					var _g1 = multiGoals.length;
-					while(_g < _g1) {
-						var i = _g++;
-						this.finalPaths[this.finalPathsPos++] = i;
-					}
-				}
 				this.finalPaths[this.finalPathsPos++] = 1;
 				this.finalPaths[this.finalPathsPos++] = -1;
 				return;
@@ -130,27 +97,10 @@ Pathfinder.prototype = {
 				this.seen[building.continuousID] = 1;
 			}
 		}
-		var handledTeleporterConnections = !teleportersEnabled;
-		var totalGoalsReached = 0;
+		var handledTeleporterConnections = false;
 		while(this.pathQueue.mSize != 0) {
 			var currentBuilding = this.pathQueue.dequeue();
-			var reachedGoal = false;
-			if(goalType == 0) {
-				reachedGoal = currentBuilding.id == goal;
-			} else if(goalType == 1) {
-				reachedGoal = goal == -1 && currentBuilding.isEntertainmentPossibleWithType >= 0 || goal > 0 && currentBuilding.isEntertainmentPossibleWithType > 0 && (goal & currentBuilding.isEntertainmentPossibleWithType) > 0;
-			} else if(goalType == 2) {
-				var _g = 0;
-				while(_g < multiGoals.length) {
-					var partGoal = multiGoals[_g];
-					++_g;
-					reachedGoal = reachedGoal || currentBuilding.id == partGoal;
-					if(currentBuilding.id == partGoal) {
-						++totalGoalsReached;
-					}
-				}
-			}
-			if(reachedGoal) {
+			if(currentBuilding.id == goal) {
 				var pathLength = 0;
 				var backtraceBuilding = currentBuilding;
 				while(backtraceBuilding.previousBuilding != null) {
@@ -160,33 +110,8 @@ Pathfinder.prototype = {
 				if(startsOutsideOfBuilding) {
 					++pathLength;
 				}
-				var extraPathLength = 0;
-				if(goalType == 2) {
-					extraPathLength = 1;
-					var _g1 = 0;
-					while(_g1 < multiGoals.length) {
-						var partGoal1 = multiGoals[_g1];
-						++_g1;
-						if(currentBuilding.id == partGoal1) {
-							++extraPathLength;
-						}
-					}
-				}
-				this.generateNewPathsArrayIfNeeded(pathLength * 2 + extraPathLength,pathsLeft);
+				this.generateNewPathsArrayIfNeeded(pathLength * 2,pathsLeft);
 				this.finalPaths[0] += 1;
-				if(goalType == 2) {
-					this.finalPaths[this.finalPathsPos++] = extraPathLength - 1;
-					var _g2 = 0;
-					var _g3 = multiGoals.length;
-					while(_g2 < _g3) {
-						var i = _g2++;
-						var partGoal2 = multiGoals[i];
-						if(currentBuilding.id == partGoal2) {
-							this.finalPaths[this.finalPathsPos++] = i;
-							multiGoals[i] = -1;
-						}
-					}
-				}
 				this.finalPaths[this.finalPathsPos++] = pathLength * 2;
 				this.finalPathsPos += pathLength * 2;
 				var backtraceBuilding1 = currentBuilding;
@@ -202,23 +127,18 @@ Pathfinder.prototype = {
 					this.finalPaths[this.finalPathsPos + 1] = backtraceBuilding1.id;
 				}
 				this.finalPathsPos += pathLength * 2;
-				if(goalType != 2 || totalGoalsReached >= multiGoals.length) {
-					return;
-				}
-			}
-			if(currentBuilding.priority > maxDistance) {
-				break;
+				return;
 			}
 			this.seen[currentBuilding.continuousID] = 2;
-			var _g4 = 0;
-			var _g5 = currentBuilding.connections;
-			while(_g4 < _g5.length) {
-				var connectionList = _g5[_g4];
-				++_g4;
-				var _g6 = 0;
-				while(_g6 < connectionList.length) {
-					var connection = connectionList[_g6];
-					++_g6;
+			var _g = 0;
+			var _g1 = currentBuilding.connections;
+			while(_g < _g1.length) {
+				var connectionList = _g1[_g];
+				++_g;
+				var _g2 = 0;
+				while(_g2 < connectionList.length) {
+					var connection = connectionList[_g2];
+					++_g2;
 					var newPriority = currentBuilding.priority + connection.extraPriorityIfKnown;
 					var buildingTo = connection.to;
 					switch(_gthis.seen[buildingTo.continuousID]) {
@@ -245,11 +165,11 @@ Pathfinder.prototype = {
 				if(this.handledAirConnections[airGroup] < 5) {
 					var x = this.worldX[currentBuilding.world] + currentBuilding.x;
 					var y = this.worldY[currentBuilding.world] - currentBuilding.get_y();
-					var _g7 = 0;
-					var _g8 = this.airGroupConnections[airGroup];
-					while(_g7 < _g8.length) {
-						var landingSite = _g8[_g7];
-						++_g7;
+					var _g3 = 0;
+					var _g4 = this.airGroupConnections[airGroup];
+					while(_g3 < _g4.length) {
+						var landingSite = _g4[_g3];
+						++_g3;
 						var buildingTo1 = landingSite.to;
 						if(buildingTo1 == currentBuilding) {
 							continue;
@@ -259,12 +179,12 @@ Pathfinder.prototype = {
 							var maxY = 0;
 							var val1 = currentBuilding.xIndex;
 							var val2 = buildingTo1.xIndex;
-							var _g9 = val2 < val1 ? val2 : val1;
+							var _g5 = val2 < val1 ? val2 : val1;
 							var val11 = currentBuilding.xIndex;
 							var val21 = buildingTo1.xIndex;
-							var _g10 = 1 + (val21 > val11 ? val21 : val11);
-							while(_g9 < _g10) {
-								var xx = _g9++;
+							var _g6 = 1 + (val21 > val11 ? val21 : val11);
+							while(_g5 < _g6) {
+								var xx = _g5++;
 								var val22 = this.worldFlyingLowestTunnel[currentBuilding.world][xx];
 								if(val22 > maxY) {
 									maxY = val22;
@@ -272,7 +192,7 @@ Pathfinder.prototype = {
 							}
 							var val23 = buildingTo1.yIndex;
 							var val24 = currentBuilding.yIndex;
-							estimatedPriorityAdd = 10 + (Math.abs(buildingTo1.x - currentBuilding.x) + 20 * Math.max(Math.abs(currentBuilding.yIndex - buildingTo1.yIndex),(val23 > maxY ? val23 : maxY) - buildingTo1.yIndex + (val24 > maxY ? val24 : maxY) - currentBuilding.yIndex)) / 3;
+							estimatedPriorityAdd = 10 + (Math.abs(buildingTo1.x - currentBuilding.x) + 20 * ((val23 > maxY ? val23 : maxY) - buildingTo1.yIndex + (val24 > maxY ? val24 : maxY) - currentBuilding.yIndex)) / 3;
 						} else {
 							estimatedPriorityAdd = (Math.abs(this.worldX[buildingTo1.world] + buildingTo1.x - x) + Math.abs(this.worldY[buildingTo1.world] - buildingTo1.get_y() - y)) / 1.5;
 						}
@@ -301,16 +221,12 @@ Pathfinder.prototype = {
 			} else if(!handledTeleporterConnections) {
 				var isPersonalTeleporter = currentBuilding.id == privateTeleporter;
 				if(currentBuilding.isTeleporter || isPersonalTeleporter) {
-					var rnd = Random.getFloat(2);
-					var tp = 0;
-					var len = this.teleporterConnections.length;
-					var invlen = 2 / len;
-					var _g11 = 0;
-					var _g12 = this.teleporterConnections;
-					while(_g11 < _g12.length) {
-						var connection1 = _g12[_g11];
-						++_g11;
-						var newPriority2 = currentBuilding.priority + connection1.extraPriorityIfKnown + (rnd + tp * invlen) % 2.0;
+					var _g7 = 0;
+					var _g8 = this.teleporterConnections;
+					while(_g7 < _g8.length) {
+						var connection1 = _g8[_g7];
+						++_g7;
+						var newPriority2 = currentBuilding.priority + connection1.extraPriorityIfKnown;
 						var buildingTo3 = connection1.to;
 						switch(_gthis.seen[buildingTo3.continuousID]) {
 						case 0:
@@ -356,11 +272,11 @@ Pathfinder.prototype = {
 				}
 			}
 			if(currentBuilding.isBottomBuilding && (currentBuilding.inEdge == null || currentBuilding.inEdge.type != 5)) {
-				var _g13 = 0;
-				var _g14 = this.bottomBuildingsOfWorlds[currentBuilding.world];
-				while(_g13 < _g14.length) {
-					var connection3 = _g14[_g13];
-					++_g13;
+				var _g9 = 0;
+				var _g10 = this.bottomBuildingsOfWorlds[currentBuilding.world];
+				while(_g9 < _g10.length) {
+					var connection3 = _g10[_g9];
+					++_g9;
 					var building = connection3.to;
 					var val = building.x - currentBuilding.x;
 					var newPriority4 = currentBuilding.priority + (val < 0 ? -val : val);
@@ -384,23 +300,8 @@ Pathfinder.prototype = {
 				}
 			}
 		}
-		var extraLen = 0;
-		if(goalType == 2) {
-			extraLen = 1 + (multiGoals.length - totalGoalsReached);
-		}
-		this.generateNewPathsArrayIfNeeded(1 + extraLen,pathsLeft);
+		this.generateNewPathsArrayIfNeeded(1,pathsLeft);
 		this.finalPaths[0] += 1;
-		if(goalType == 2) {
-			this.finalPaths[this.finalPathsPos++] = multiGoals.length - totalGoalsReached;
-			var _g = 0;
-			var _g1 = multiGoals.length;
-			while(_g < _g1) {
-				var i = _g++;
-				if(multiGoals[i] != -1) {
-					this.finalPaths[this.finalPathsPos++] = i;
-				}
-			}
-		}
 		this.finalPaths[this.finalPathsPos++] = 1;
 		this.finalPaths[this.finalPathsPos++] = -1;
 	}
@@ -418,20 +319,6 @@ Pathfinder.prototype = {
 			this.thread.postInt32Array(this.finalPaths);
 			this.finalPaths = null;
 			this.finalPathsPos = 1;
-		}
-	}
-	,handleGetEntertainmentInfo: function(data) {
-		if(this.buildingsByID != null) {
-			var i = 1;
-			var numberOfPermanentsInData = data[i++];
-			var _g = 0;
-			var _g1 = numberOfPermanentsInData;
-			while(_g < _g1) {
-				var j = _g++;
-				var pmId = data[i++];
-				var pm = this.buildingsByID.h[pmId];
-				pm.isEntertainmentPossibleWithType = data[i++];
-			}
 		}
 	}
 	,handleGetFullWorldInfo: function(data) {
@@ -477,9 +364,8 @@ Pathfinder.prototype = {
 						++distanceToPreviousElevatorBuilding;
 						var buildingType = data[i++];
 						var isRooftopBuilding = buildingType % 2 == 1;
-						var isLeftRightInaccessible = (buildingType & 2) > 0;
-						buildingType >>= 2;
-						var thisBuilding = new PathfindingBuilding(buildingID,continuousBuildingID++,buildingType,b * 20,w,bl,isRooftopBuilding,isLeftRightInaccessible);
+						buildingType >>= 1;
+						var thisBuilding = new PathfindingBuilding(buildingID,continuousBuildingID++,buildingType,b * 20,w,bl,isRooftopBuilding);
 						if(bl == 0) {
 							thisBuilding.isBottomBuilding = true;
 							worldBottomBuildings.push(new PathfindingEdge(5,thisBuilding));
@@ -533,12 +419,11 @@ Pathfinder.prototype = {
 					if(thisBuilding1.isNonBuildingPermanent) {
 						continue;
 					}
-					var thisIsLeftRightInaccessible = buildingArray[x][y].isLeftRightInaccessible;
 					var thisIsRooftopBuilding = buildingArray[x][y].isRooftopBuilding;
-					if(x > 0 && y > 0 && buildingArray[x - 1].length > y && !thisIsLeftRightInaccessible && buildingArray[x - 1][y] != null && !buildingArray[x - 1][y].isLeftRightInaccessible) {
+					if(x > 0 && y > 0 && buildingArray[x - 1].length > y && !thisIsRooftopBuilding && buildingArray[x - 1][y] != null && !buildingArray[x - 1][y].isRooftopBuilding) {
 						walkThroughEdges.push(new PathfindingEdge(2,buildingArray[x - 1][y]));
 					}
-					if(x < numberOfBuildingArrays - 1 && y > 0 && buildingArray[x + 1].length > y && !thisIsLeftRightInaccessible && buildingArray[x + 1][y] != null && !buildingArray[x + 1][y].isLeftRightInaccessible) {
+					if(x < numberOfBuildingArrays - 1 && y > 0 && buildingArray[x + 1].length > y && !thisIsRooftopBuilding && buildingArray[x + 1][y] != null && !buildingArray[x + 1][y].isRooftopBuilding) {
 						walkThroughEdges.push(new PathfindingEdge(3,buildingArray[x + 1][y]));
 					}
 					if(y < buildingArray[x].length - 1 && buildingArray[x][y + 1] != null && !buildingArray[x][y].isRooftopBuilding) {
@@ -559,7 +444,7 @@ Pathfinder.prototype = {
 			var connectionType = data[i++];
 			var thisBuilding = this.buildingsByID.h[data[i++]];
 			var otherBuilding = this.buildingsByID.h[data[i++]];
-			this.worlds[thisBuilding.world][thisBuilding.x / 20 | 0][thisBuilding.yIndex].connections.push([new PathfindingEdge(connectionType,otherBuilding,data[i++])]);
+			this.worlds[thisBuilding.world][thisBuilding.x / 20 | 0][thisBuilding.yIndex].connections.push([new PathfindingEdge(connectionType,otherBuilding)]);
 		}
 		var airConnectionGroupsNumber = data[i++];
 		this.airGroupLength = 0;
@@ -614,7 +499,7 @@ PathfinderThread.prototype = {
 		PathfinderThread.__internal__self.onMessage(e);
 	}
 };
-var PathfindingBuilding = function(id,continuousID,type,x,world,yIndex,isRooftopBuilding,isLeftRightInaccessible) {
+var PathfindingBuilding = function(id,continuousID,type,x,world,yIndex,isRooftopBuilding) {
 	this.connections = [];
 	this.id = id;
 	this.continuousID = continuousID;
@@ -624,7 +509,6 @@ var PathfindingBuilding = function(id,continuousID,type,x,world,yIndex,isRooftop
 	this.world = world;
 	this.yIndex = yIndex;
 	this.isRooftopBuilding = isRooftopBuilding;
-	this.isLeftRightInaccessible = isLeftRightInaccessible;
 };
 PathfindingBuilding.prototype = {
 	get_y: function() {
@@ -638,18 +522,6 @@ var PathfindingEdge = function(type,to,extraPriority) {
 	this.type = type;
 	this.to = to;
 	this.extraPriorityIfKnown = extraPriority;
-};
-var Random = function() { };
-Random.getFloat = function(val0,val1) {
-	var min = 0;
-	var max = 1;
-	if(val0 != null && val1 != null) {
-		min = val0;
-		max = val1;
-	} else if(val0 != null) {
-		max = val0;
-	}
-	return Math.random() * (max - min) + min;
 };
 var haxe_Exception = function(message,previous,native) {
 	Error.call(this,message);

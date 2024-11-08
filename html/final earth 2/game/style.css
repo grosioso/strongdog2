@@ -2,12 +2,6 @@ html, body, canvas {
     margin: 0;
     padding: 0;
     touch-action: none;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 }
 
 body {
@@ -48,11 +42,4 @@ html {
 	100% {
 		opacity: 0.8;
 	}
-}
-
-:root {
-    --safe-space-top-var: env(safe-area-inset-top);
-    --safe-space-right-var: env(safe-area-inset-right);
-    --safe-space-bottom-var: env(safe-area-inset-bottom);
-    --safe-space-left-var: env(safe-area-inset-left);
 }

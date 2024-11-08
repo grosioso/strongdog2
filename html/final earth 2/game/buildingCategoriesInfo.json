@@ -30,8 +30,8 @@
         "image": "spr_icon_specialbuildings"
     },
     {
-        "description": "Place decoration on the ground, and plant forests.",
         "name": "Decoration & Nature",
+        "description": "Place decoration on the ground, and plant forests.",
         "image": "spr_nature"
     }
 ]
