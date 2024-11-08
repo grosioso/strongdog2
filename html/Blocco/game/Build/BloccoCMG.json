@@ -1,0 +1,17 @@
+{
+"companyName": "DefaultCompany",
+"productName": "Buildable",
+"productVersion": "0.1",
+"dataUrl": "BloccoCMG.data.unityweb",
+"wasmCodeUrl": "BloccoCMG.wasm.code.unityweb",
+"wasmFrameworkUrl": "BloccoCMG.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"backgroundUrl": "BloccoCMG.jpg",
+"splashScreenStyle": "Dark",
+"backgroundColor": "#FFFFFF",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.2.10f1"
+}
