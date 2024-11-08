@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui>
+	<str id="load">Продолжить</str>
+	<str id="play">Новая Игра</str>
+	<str id="options">Настройки</str>
+	<str id="credits">Титры</str>
+	<str id="quit">Выход</str>
+	<str id="credits_roll">-Титры-
+
+Автор - Владимир "Wolod" Якубович
+Сделано в Construct 2
+Muzt Die Studios, Украина, Львов, 2018</str>
+	<str id="skip">-Жмите любую клавишу, чтобы пропустить-</str>
+	<str id="options_title">-Настройки-</str>
+	<str id="window">В Окне</str>
+	<str id="music">Музыка</str>
+	<str id="sound">Звук</str>
+	<str id="autosave">Автосейв</str>
+	<str id="on">Да</str>
+	<str id="off">Нет</str>
+	<str id="language">Язык</str>
+	<str id="en">EN</str>
+	<str id="ru">RU</str>
+	<str id="ua">UA</str>
+	<str id="confirm_title" type="main_menu">-Выйти в меню?-</str>
+	<str id="confirm_title" type="quit">-Выйти из игры?-</str>
+	<str id="confirm_title" type="play">-Удалить сохранение?-</str>
+	<str id="yes">Да</str>
+	<str id="no">Нет</str>
+	<str id="pause_title">-Пауза-</str>
+	<str id="resume">Продолжить</str>
+	<str id="main_menu">Главное Меню</str>
+	<str id="save">-Игра Сохранена-</str>
+	<str id="sword">-Особо Острый Меч-
+Махайте им в направлении противника. Не победили? Повторите шаг 1.</str>
+	<str id="shield">-Щит Защиты-
+Направьте в сторону опасности. Вот так вот, легко и просто.</str>
+	<str id="ring">-Кольцо Шустрости-
+Позволяет перемещаться рывками, потому что ходить - медленно и скучно.</str>
+	<str id="amulet">-Призрачный Амулет-
+Делает вас неуязвимыми! Но только после получения урона...</str>
+	<str id="potion">-Большой Красный Эликсир-
+Укрепляет здоровье. Не вызывает побочных эффектов.</str>
+	<str id="key">-Золотой Ключ-
+Очевидно, что открывает дверь с золотым замком.</str>
+	<str id="boss">-Квауг-
+Почти дракон</str>
+</ui>

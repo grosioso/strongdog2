@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui>
+	<str id="load">Продовжити</str>
+	<str id="play">Нова Гра</str>
+	<str id="options">Налаштування</str>
+	<str id="credits">Титри</str>
+	<str id="quit">Вихід</str>
+	<str id="credits_roll">-Титри-
+
+Автор - Володимир "Wolod" Якубович
+Зроблено в Construct 2
+Muzt Die Studios, Україна, Львів, 2018</str>
+	<str id="skip">-Натисніть будь-яку клавішу, щоб пропустити-</str>
+	<str id="options_title">-Налаштування-</str>
+	<str id="window">У Вікні</str>
+	<str id="music">Музика</str>
+	<str id="sound">Звук</str>
+	<str id="autosave">Автосейв</str>
+	<str id="on">Так</str>
+	<str id="off">Ні</str>
+	<str id="language">Мова</str>
+	<str id="en">EN</str>
+	<str id="ru">RU</str>
+	<str id="ua">UA</str>
+	<str id="confirm_title" type="main_menu">-Вийти в меню?-</str>
+	<str id="confirm_title" type="quit">-Вийти з гри?-</str>
+	<str id="confirm_title" type="play">-Стерти збереження?-</str>
+	<str id="yes">Так</str>
+	<str id="no">Ні</str>
+	<str id="pause_title">-Пауза-</str>
+	<str id="resume">Продовжити</str>
+	<str id="main_menu">Головне Меню</str>
+	<str id="save">-Гру Збережено-</str>
+	<str id="sword">-Гострющий Меч-
+Махайте ним в напрямку противника. Не перемогли? Повторіть крок 1.</str>
+	<str id="shield">-Щит Захисту-
+Направте в сторону небезпеки. Ось так от, легко і просто.</str>
+	<str id="ring">-Перстень Спритності-
+Дозволяє переміщатися ривками, тому що ходити - повільно і нудно.</str>
+	<str id="amulet">-Примарний Амулет-
+Робить вас невразливими! Але тільки після поранення...</str>
+	<str id="potion">-Великий Червоний Еліксир-
+Укріпляє здоров'я. Не викликає побічних ефектів.</str>
+	<str id="key">-Золотий Ключ-
+Очевидно, що відчиняє двері з золотим замком.</str>
+	<str id="boss">-Квауг-
+Майже дракон</str>
+</ui>

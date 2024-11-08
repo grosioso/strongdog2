@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dark Tomb</title>
+
+<style type="text/css">
+
+html,body {
+	margin: 0;
+	font: 16px Helvetica, Arial, sans-serif;
+	background: black;
+}
+div.holder {
+  background: black;
+  padding: 0; margin: 0;
+  width: 512px;
+}
+canvas#canvas {
+  width: 512px; height: 512px;
+  image-rendering: optimizeSpeed;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: optimize-contrast;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+  border: 0px
+}
+.btns {
+  width: 528px;
+  padding: 0;
+	display: flex;
+	margin-top: 1px;
+}
+.btns .spacer {
+	flex-grow: 1;
+	background: black;
+}
+.btns a {
+	display: block;
+	box-sizing: border-box;
+	background: #000;
+	color: #9ac;
+	flex-grow: 0;
+	text-align: center;
+	margin: 0 1px;
+	vertical-align: middle;
+	width: 30px;
+	height: 30px;
+	padding-top: 9px;
+	font-weight: bold;
+	text-decoration: none;
+	transition: all 0.2s ease-out;
+}
+.btns a:hover {
+	background:#224;
+}
+
+div#holder.fullscreen {
+  width: 100% !important;
+}
+canvas#canvas.fullscreen {
+  position: absolute;
+}
+.mcontrols, .mextra {
+  display:none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  z-index: 10;
+}
+.visible { display: block; }
+.mstick { left:0; }
+.mbuttons { right:0; }
+.mextra { right: 0; }
+.mbtn {
+  position: absolute; width: 49%; height: 49%;
+  image-rendering: optimizeSpeed;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: optimize-contrast;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+  background-size: 90%;
+  background-repeat: no-repeat;
+}
+.mbtn1, .mbtn2, .mbtn4, .mbtn8 {
+  background-position: center center;
+}
+.mbtn1 {
+  background-image: url(mobile-controls/controls1.png);
+  top: 25%; left: 1%;
+}
+.mbtn1.pressed { background-image: url(mobile-controls/controls2.png)}
+.mbtn2 {
+  background-image: url(mobile-controls/controls3.png);
+  top: 25%; right: 1%;
+}
+.mbtn2.pressed { background-image: url(mobile-controls/controls4.png)}
+.mbtn4 {
+  background-image: url(mobile-controls/controls5.png);
+  top: 1%; left: 25%;
+}
+.mbtn4.pressed { background-image: url(mobile-controls/controls6.png)}
+.mbtn8 {
+  background-image: url(mobile-controls/controls7.png);
+  bottom: 1%; left: 25%;
+}
+.mbtn8.pressed { background-image: url(mobile-controls/controls8.png)}
+.mbtn16 {
+  left: 0; bottom: 10%;
+  background-image: url(mobile-controls/controls9.png);
+  background-position: top right;
+}
+.mbtn16.pressed {
+  background-image: url(mobile-controls/controls10.png);
+}
+.mbtn32 {
+  right: 0; top: 10%;
+  background-image: url(mobile-controls/controls11.png);
+  background-position: bottom left;
+}
+.mbtn32.pressed {
+  background-image: url(mobile-controls/controls12.png);
+}
+.mbtn64 {
+  left: 0; top: 0; width: 100%; height: 100%;
+  background-image: url(mobile-controls/controls13.png);
+  background-position: center center;
+}
+.mbtn64.pressed {
+  background-image: url(mobile-controls/controls14.png);
+}
+
+</style>
+</head>
+
+<body onload="window.focus()">
+	<div id="holder" class="holder">
+    <div class="mcontrols mstick">
+      <div class="mbtn mbtn1"></div>
+      <div class="mbtn mbtn2"></div>
+      <div class="mbtn mbtn4"></div>
+      <div class="mbtn mbtn8"></div>
+    </div>
+		<canvas class="emscripten" id="canvas"></canvas>
+    <div class="mcontrols mbuttons">
+      <div class="mbtn mbtn16"></div>
+      <div class="mbtn mbtn32"></div>
+    </div>
+    <div class="mextra">
+      <div class="mbtn mbtn64"></div>
+    </div>
+  </div>
+	<div class="btns pico8_el">
+		<div class="spacer"></div>
+		<a class="btn" href="javascript:Module.pico8Reset();" title="Restart"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAaklEQVR4Ae2dOwoAMQhE15A+rfc/3bZ7AlMnQfywCkKsfcgMM9ZP+QHtIn0vLeBAFduiFdQ/0DmvtR5LXJ6CPSXe2ZXcFNlTxFbemKrbZPs35XogeS9xeQr+anT6LzoOwEDwZJ7jwhXUnwkTTiDQ2Ja34AAAABB0RVh0TG9kZVBORwAyMDExMDIyMeNZtsEAAAAASUVORK5CYII=" width="12" height="12"/></a>
+		<a class="btn" href="javascript:Module.pico8ToggleSound();" title="Sound"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAXklEQVR4Ae2doQ4AIQxD4YLH8v9fh+ULhjpxxSwLg2uyapr1JRu1iV5Z+1BGl4+xNpX38SYo2uRvYiT5LwEmt+ocgXVLrhPEgBiw8Q5w7/kueSkK+D2tJO4E/I3GrwkqQCBabEj/4QAAABB0RVh0TG9kZVBORwAyMDExMDIyMeNZtsEAAAAASUVORK5CYII=" width="12" height="12"/></a>
+		<a class="btn" href="javascript:Module.pico8TogglePaused();" title="Pause"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAPUlEQVR4Ae3doQ0AIAxEUWABLPtPh2WCq26DwFSU/JPNT166QSu/Hg86W9dwLte+diP7AwAAAAAAgD+A+jM2ZAgo84I0PgAAABB0RVh0TG9kZVBORwAyMDExMDIyMeNZtsEAAAAASUVORK5CYII=" width="12" height="12"></a>
+		<a class="btn" href="javascript:Module.requestFullScreen(true, false);" title="Fullscreen"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAaklEQVR4Ae2dsQ1AIQhExfze1v2ns3UCrfgFhmgUUAoGgHscp21wX9BqaZoDojbB96OkDJKNcTN2BHTyYNYmoT2BlPL7BKgcPfHjAVXKKadkHOn9K1r16N0czN6a95N8mnA7Aq2fTZ3Af3UKmCSMazL8HwAAABB0RVh0TG9kZVBORwAyMDExMDIyMeNZtsEAAAAASUVORK5CYII=" width="12" height="12"></a>
+	</div>
+	<script type="text/javascript">
+		var canvas = document.getElementById("canvas");
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+
+    // pick cart based on performance
+    var refTime = new Date().getTime(), perf = 0, total = 0;
+    while ((new Date().getTime()) <= refTime + 20) {
+      for (var i = 0; i < 100; i++)
+        total += Math.sin(perf) * Math.cos(perf);
+      perf++;
+    }
+    window.perf = perf; window._preventOptimizingOut = total;
+    var cart = (perf < 1000) ? "darktombm.p8.png" : "darktombp.p8.png";
+
+		// show Emscripten environment where the canvas is
+		// arguments are passed to PICO-8
+		var Module = {
+			arguments: [cart, "-width","128", "-height","128"],
+      canvas: canvas
+		};
+	</script>
+  <script src="jquery-3.2.1.slim.min.js"></script>
+	<script src="pico8gamepad.js"></script>
+  <script src="mobilesupport.js"></script>
+  <script src="pico8_0110c.js"></script>
+  <script>
+    // pick the right interface
+    var forceMobile = window.location.href.match(/\?mobile/);
+    var looksMobile = navigator.userAgent.match(/Android|webOS|iPhone|iPad|iPod|Windows Phone|Blackberry|Mobile/i);
+    var hasTouch = (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
+    if ((looksMobile && hasTouch) || forceMobile) {
+      startMobile(false);
+    }
+  </script>
+	<script>
+		function onKeyDown_blocker(event) {
+			event = event || window.event;
+			var o = document.activeElement;
+			if (!o || $.contains(document, o))
+			{
+				if ([32, 37, 38, 39, 40].indexOf(event.keyCode) > -1)
+				{
+					if (event.preventDefault) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+				}
+			}
+		}
+		$(document).on('keydown', onKeyDown_blocker);
+	</script>
+</body>
+</html>
