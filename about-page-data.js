@@ -1,5 +1,6 @@
 // All of the updates and their corresponding dates that will be dynamically added in the updates section on about page
 export const updates = [
+	{ date: "11/7/24", content: "Added three goblets, the final earth, super pickelball adventure, squareX, metrocubevania, knightin, ISLANDER, delia the traveling witch, dark tomb, another gentlemans adventure, and fixed final earth 2." },
 	{ date: "11/6/24", content: "Added tiny heist, poker, blackjack, westoon, thumb fighter christmas, sink it, minibattles, blocky snake, and fixed leader strike." },
 	{ date: "11/4/24", content: "Added we become what we behold, idle lumber inc, idle digging tycoon, bomber royale, and blumgi paintball." },
 	{ date: "10/31/24", content: "Added bad egg, cactus mccoy, cactus mccoy 2, territorial.io, and just passing 2." },
