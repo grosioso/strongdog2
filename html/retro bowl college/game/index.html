@@ -1,139 +1,177 @@
-
 <!DOCTYPE html>
-<html lang="en" crosspilot="">
+<html lang="en-us">
+
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta charset="utf-8">
-
-    <!-- Set the title bar of the page -->
-    <title>Retro Bowl College</title>
-
+    <title>Burrito Bison Unblocked - ubg235 GameMonetize</title>
     <style>
+        html {
+            box-sizing: border-box;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+
         body {
+            margin: 0;
             background: #000000;
-            color: #cccccc;
-            margin: 0px;
-            padding: 0px;
-            border: 0px;
+        }
+
+        #gameContainer {
+            width: 100vw;
+            height: 100vh;
         }
 
         canvas {
-            image-rendering: pixelated;
-            -webkit-interpolation-mode: nearest-neighbor;
-            -ms-touch-action: none;
-            touch-action: none;
-            margin: 0px;
-            padding: 0px;
-            border: 0px;
-        }
-
-        :-webkit-full-screen #canvas {
             width: 100%;
             height: 100%;
+            display: block;
         }
 
-        :-webkit-full-screen {
-            width: 100%;
-            height: 100%;
+        .logo {
+            display: block;
+            width: max-width: 100vw;
+            height: max-height: 70vh;
         }
 
-        /* Custom Runner Styles */
-        div.gm4html5_div_class {
-            margin: 0px;
-            padding: 0px;
-            border: 0px;
+        .progress {
+            margin: 1.5em;
+            border: 1px solid white;
+            width: 50vw;
+            display: none;
         }
 
-        div.gm4html5_login {
-            padding: 20px;
+        .progress .full {
+            margin: 2px;
+            background: white;
+            height: 1em;
+            transform-origin: top left;
+        }
+
+        #loader {
             position: absolute;
-            border: solid 2px #000000;
-            background-color: #404040;
-            color: #00ff00;
-            border-radius: 15px;
-            box-shadow: #101010 20px 20px 40px;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        div.gm4html5_cancel_button {
-            float: right;
+        .spinner,
+        .spinner:after {
+            border-radius: 50%;
+            width: 5em;
+            height: 5em;
         }
 
-        div.gm4html5_login_button {
-            float: left;
+        .spinner {
+            margin: 10px;
+            font-size: 10px;
+            position: relative;
+            text-indent: -9999em;
+            border-top: 1.1em solid rgba(255, 255, 255, 0.2);
+            border-right: 1.1em solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
+            border-left: 1.1em solid #ffffff;
+            transform: translateZ(0);
+            animation: spinner-spin 1.1s infinite linear;
         }
 
-        div.gm4html5_login_header {
-            text-align: center;
-        }
-
-        /* END - Custom Runner Styles */
-        :-webkit-full-screen {
-            width: 100%;
-            height: 100%;
+        @keyframes spinner-spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="gm4html5_div_class" id="gm4html5_div_id">
-
-        <!-- Builtin injector for splash screen -->
-        <img src="html5game/splash.png" id="GM4HTML5_loadingscreen" alt="GameMaker:HTML5 loading screen"
-            style="display:none;">
-
-        <!-- Create the canvas element the game draws to -->
-        <canvas id="canvas" width="640" height="360"
-            style="position: absolute; inset: 50% -50% -50% 50%; transform: translate(-50%, -50%); touch-action: none;">
-            <p>Your browser doesn't support HTML5 canvas.</p>
-        </canvas>
+    <div id="gameContainer"></div>
+    <div id="loader">
+        <img class="logo" src="Build/logo.png">
+        <div class="spinner"></div>
+        <div class="progress">
+            <div class="full"></div>
+        </div>
     </div>
-
-    <!-- Run the game code -->
-    <script type="text/javascript" src="html5game/RetroBowl.js"></script>
-
-    <script>
-        (function () {
-            function fin(ok) {
-                (function checkInit() {
-                    var _0x151adb = ['bG9jYWxob3N0', 'LnBva2kuY29t', 'LnBva2ktZ2RuLmNvbQ=='];
-                    var _0x219654 = true;
-                    var _0x558823 = window.location.hostname;
-                    for (var _0x220888 = 0x0; _0x220888 < _0x151adb.length; _0x220888++) {
-                        var _0x4a2f49 = atob(_0x151adb[_0x220888]);
-                        if (_0x558823.indexOf(_0x4a2f49, _0x558823.length - _0x4a2f49.length) !== -0x1) {
-                            _0x219654 = true;
-                            break;
-                        }
-                    }
-                    if (!_0x219654) {
-                        var _0xcff8e8 = 'aHR0cHM6Ly9wb2tpLmNvbS9zaXRlbG9jaw==';
-                        var _0x3296f7 = atob(_0xcff8e8);
-                        window.location.href = _0x3296f7;
-                        this.top.location !== this.location && (this.top.location = this.location);
-                    }
-                }());
-                window.PokiSDK_OK = ok;
-                GameMaker_Init();
-            }
-            window.addEventListener("load", function (_) {
-                window.PokiSDK_loadState = 0;
-                if (window.PokiSDK) {
-                    PokiSDK.init().then(function () {
-                        fin(true);
-                    }).catch(function () {
-                        fin(false);
-                    });
-                } else {
-                    window.PokiSDK = null;
-                    fin(false);
-                }
-            });
-        })();
-
-    </script>
 </body>
+  <script>
+            window.SDK_OPTIONS = {
+            gameId: "3y0u39hov0jpi100t1sfqkmzu15cmkiv",
+            onEvent: function(a) {
+                switch (a.name) {
+                    case "SDK_GAME_PAUSE":
+                        // pause game logic / mute audio
+                        break;
+                    case "SDK_GAME_START":
+                        // advertisement done, resume game logic and unmute audio
+                        break;
+                    case "SDK_READY":
+                        // when sdk is ready
+                        break;
+                }
+            }
+        };
+        (function(a, b, c) {
+            var d = a.getElementsByTagName(b)[0];
+            a.getElementById(c) || (a = a.createElement(b), a.id = c, a.src = "patch/js/gm-sdk.js", d.parentNode.insertBefore(a, d))
+        })(document, "script", "gamemonetize-sdk");
 
+    function google_analytics() {
+        if (typeof sdk !== 'undefined' && sdk.showBanner !== 'undefined') {
+            sdk.showBanner();
+        }
+    };
+
+    function google_analytics_ID() {
+        if (typeof sdk !== 'undefined' && sdk.showBanner !== 'undefined') {
+            sdk.showBanner();
+        }
+    };
+    setTimeout(function() {
+        google_analytics();
+    }, 1000);
+    
+
+  </script>
+
+<script src="Build/UnityLoader.js"></script>
+<script src='Build/kongregate_api.js'></script>
+<script>
+    var gameInstance = UnityLoader.instantiate("gameContainer", "Build/Web.json", {
+        onProgress: UnityProgress
+    });
+
+    function UnityProgress(gameInstance, progress) {
+        if (!gameInstance.Module) {
+            return;
+        }
+        const loader = document.querySelector("#loader");
+        if (!gameInstance.progress) {
+            const progress = document.querySelector("#loader .progress");
+            progress.style.display = "block";
+            gameInstance.progress = progress.querySelector(".full");
+            loader.querySelector(".spinner").style.display = "none";
+        }
+        gameInstance.progress.style.transform = `scaleX(${progress})`;
+        if (progress === 1 && !gameInstance.removeTimeout) {
+            loader.style.display = "none";
+        }
+    }
+</script>
+<script src="js/analytics_ubg_v1_4.js"></script>
+<script src="js/slopegame-gitlab-io.js"></script>
+<!-- <script src="js/redirect_v1_0.js"></script>
+<script>
+  doRedirect("https://slopegame.gitlab.io/burrito-bison-launcha-libre-unblocked.html");
+</script> -->
 </html>
