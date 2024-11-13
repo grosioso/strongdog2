@@ -1,4 +1,6 @@
 export default [
+      { href: './html/Blocco/index.html', imgSrc: 'Blocco.jpg', name: 'Blocco' , 'page': 2},
+];
 	{ href: './html/block shooter frenzy/index.html', imgSrc: 'block shooter frenzy.jpg', name: 'block shooter frenzy' , 'page': 2},
 	{ href: './html/Blocco/index.html', imgSrc: 'Blocco.jpg', name: 'Blocco' , 'page': 2},
   	{ href: './html/three goblets/index.html', imgSrc: 'three goblets.png', name: 'three goblets' , 'page': 2},
