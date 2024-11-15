@@ -1,4 +1,5 @@
 export default [
+	{ href: './html/block shooter frenzy/index.html', imgSrc: 'block shooter frenzy.jpg', name: 'block shooter frenzy' , 'page': 2},
   	{ href: './html/three goblets/index.html', imgSrc: 'three goblets.png', name: 'three goblets' , 'page': 2},
   	{ href: './html/super pickleball adventure/index.html', imgSrc: 'super pickleball adventure.png', name: 'super pickleball adventure' , 'page': 2},
   	{ href: './html/squareX/index.html', imgSrc: 'squarex.jpg', name: 'squareX' , 'page': 2},
