@@ -1,4 +1,5 @@
 export default [
+      { href: './swf/twin shot 2/index.html', imgSrc: 'twin shot 2.jpg', name: 'twin shot 2' , 'page': 2},
 	{ href: './html/block shooter frenzy/index.html', imgSrc: 'block shooter frenzy.jpg', name: 'block shooter frenzy' , 'page': 2},
   	{ href: './html/three goblets/index.html', imgSrc: 'three goblets.png', name: 'three goblets' , 'page': 2},
   	{ href: './html/super pickleball adventure/index.html', imgSrc: 'super pickleball adventure.png', name: 'super pickleball adventure' , 'page': 2},

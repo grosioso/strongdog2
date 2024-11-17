@@ -1,5 +1,6 @@
 // All of the updates and their corresponding dates that will be dynamically added in the updates section on about page
 export const updates = [
+	{ date: "11/16/24", content: "Added twin shot, twin shot 2, red ball 4, cannon basketball 1, cannon basketball 2, cannon basketball 3, chicken hike, cherry on the ice cream, candy clicker, beavus, baw, b-side, assembloid, ARROW, and antiban to the game testing page." },
 	{ date: "11/7/24", content: "Added three goblets, the final earth, super pickelball adventure, squareX, metrocubevania, knightin, ISLANDER, delia the traveling witch, dark tomb, another gentlemans adventure, and fixed final earth 2." },
 	{ date: "11/6/24", content: "Added tiny heist, poker, blackjack, westoon, thumb fighter christmas, sink it, minibattles, blocky snake, and fixed leader strike." },
 	{ date: "11/4/24", content: "Added we become what we behold, idle lumber inc, idle digging tycoon, bomber royale, and blumgi paintball." },
