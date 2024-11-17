@@ -1,0 +1,518 @@
+{
+"frames": {
+  "gameName": {
+    "frame": { "x":2, "y":2, "w":627, "h":491 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":627, "h":491 },
+    "sourceSize": { "w":627, "h":491 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnCreditsMenu": {
+    "frame": { "x":633, "y":2, "w":180, "h":180 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":180, "h":180 },
+    "sourceSize": { "w":180, "h":180 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnNumLevel1": {
+    "frame": { "x":817, "y":2, "w":120, "h":120 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":120, "h":120 },
+    "sourceSize": { "w":120, "h":120 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnMusicOn": {
+    "frame": { "x":941, "y":2, "w":120, "h":120 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":120, "h":120 },
+    "sourceSize": { "w":120, "h":120 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnMusicOff": {
+    "frame": { "x":1065, "y":2, "w":120, "h":120 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":120, "h":120 },
+    "sourceSize": { "w":120, "h":120 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnSoundOn": {
+    "frame": { "x":1189, "y":2, "w":120, "h":120 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":120, "h":120 },
+    "sourceSize": { "w":120, "h":120 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnSoundOff": {
+    "frame": { "x":1313, "y":2, "w":120, "h":120 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":120, "h":120 },
+    "sourceSize": { "w":120, "h":120 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "tutorial1_2": {
+    "frame": { "x":817, "y":126, "w":820, "h":80 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":820, "h":80 },
+    "sourceSize": { "w":820, "h":80 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnNextComplete": {
+    "frame": { "x":633, "y":186, "w":180, "h":180 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":180, "h":180 },
+    "sourceSize": { "w":180, "h":180 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnRestartComplete": {
+    "frame": { "x":1641, "y":2, "w":180, "h":180 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":180, "h":180 },
+    "sourceSize": { "w":180, "h":180 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnMenuComplete": {
+    "frame": { "x":1825, "y":2, "w":180, "h":180 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":180, "h":180 },
+    "sourceSize": { "w":180, "h":180 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnFire": {
+    "frame": { "x":817, "y":210, "w":512, "h":480 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":512, "h":480 },
+    "sourceSize": { "w":512, "h":480 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "tutorial1_1": {
+    "frame": { "x":2, "y":694, "w":1104, "h":126 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":1104, "h":126 },
+    "sourceSize": { "w":1104, "h":126 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "aim": {
+    "frame": { "x":1437, "y":2, "w":100, "h":100 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":100, "h":100 },
+    "sourceSize": { "w":100, "h":100 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnFireBlink": {
+    "frame": { "x":633, "y":370, "w":179, "h":179 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":179, "h":179 },
+    "sourceSize": { "w":179, "h":179 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelsBoard1": {
+    "frame": { "x":2, "y":824, "w":1204, "h":364 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":1204, "h":364 },
+    "sourceSize": { "w":1204, "h":364 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnBackLevels": {
+    "frame": { "x":2, "y":497, "w":140, "h":140 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":140, "h":140 },
+    "sourceSize": { "w":140, "h":140 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnNumLevel2": {
+    "frame": { "x":146, "y":553, "w":120, "h":120 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":120, "h":120 },
+    "sourceSize": { "w":120, "h":120 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnRestartGame": {
+    "frame": { "x":2, "y":641, "w":43, "h":43 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":43, "h":43 },
+    "sourceSize": { "w":43, "h":43 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnMenuGame": {
+    "frame": { "x":49, "y":641, "w":43, "h":43 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":43, "h":43 },
+    "sourceSize": { "w":43, "h":43 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnSoundGameOn": {
+    "frame": { "x":96, "y":641, "w":29, "h":47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":29, "h":47 },
+    "sourceSize": { "w":29, "h":47 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnMusicGameOn": {
+    "frame": { "x":1541, "y":2, "w":43, "h":45 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":43, "h":45 },
+    "sourceSize": { "w":43, "h":45 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnSoundGameOff": {
+    "frame": { "x":1588, "y":2, "w":33, "h":47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":33, "h":47 },
+    "sourceSize": { "w":33, "h":47 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnMusicGameOff": {
+    "frame": { "x":1541, "y":53, "w":47, "h":48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":47, "h":48 },
+    "sourceSize": { "w":47, "h":48 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "icoStarLevelBtn": {
+    "frame": { "x":1592, "y":53, "w":34, "h":33 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":34, "h":33 },
+    "sourceSize": { "w":34, "h":33 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "toolbarStarPlace": {
+    "frame": { "x":270, "y":497, "w":54, "h":53 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":54, "h":53 },
+    "sourceSize": { "w":54, "h":53 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "toolbarStar": {
+    "frame": { "x":146, "y":497, "w":54, "h":52 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":54, "h":52 },
+    "sourceSize": { "w":54, "h":52 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "starComplete": {
+    "frame": { "x":328, "y":497, "w":169, "h":163 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":169, "h":163 },
+    "sourceSize": { "w":169, "h":163 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnPlayMenu": {
+    "frame": { "x":1641, "y":186, "w":240, "h":240 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":240, "h":240 },
+    "sourceSize": { "w":240, "h":240 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelsBoard2": {
+    "frame": { "x":2, "y":1192, "w":1204, "h":364 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":1204, "h":364 },
+    "sourceSize": { "w":1204, "h":364 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelCompleted": {
+    "frame": { "x":1210, "y":694, "w":720, "h":500 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":720, "h":500 },
+    "sourceSize": { "w":720, "h":500 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelsBoard": {
+    "frame": { "x":1210, "y":1198, "w":653, "h":578 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":653, "h":578 },
+    "sourceSize": { "w":653, "h":578 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "btnBackCredits": {
+    "frame": { "x":1885, "y":186, "w":140, "h":140 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":140, "h":140 },
+    "sourceSize": { "w":140, "h":140 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0001": {
+    "frame": { "x":2009, "y":2, "w":27, "h":58 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":27, "h":58 },
+    "sourceSize": { "w":27, "h":58 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0002": {
+    "frame": { "x":2009, "y":64, "w":35, "h":59 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":35, "h":59 },
+    "sourceSize": { "w":35, "h":59 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0003": {
+    "frame": { "x":270, "y":554, "w":36, "h":60 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":36, "h":60 },
+    "sourceSize": { "w":36, "h":60 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0004": {
+    "frame": { "x":270, "y":618, "w":38, "h":58 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":38, "h":58 },
+    "sourceSize": { "w":38, "h":58 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0005": {
+    "frame": { "x":1110, "y":694, "w":37, "h":59 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":37, "h":59 },
+    "sourceSize": { "w":37, "h":59 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0006": {
+    "frame": { "x":1110, "y":757, "w":37, "h":60 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":37, "h":60 },
+    "sourceSize": { "w":37, "h":60 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0007": {
+    "frame": { "x":1151, "y":694, "w":30, "h":58 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":30, "h":58 },
+    "sourceSize": { "w":30, "h":58 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0008": {
+    "frame": { "x":1151, "y":756, "w":36, "h":60 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":36, "h":60 },
+    "sourceSize": { "w":36, "h":60 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0009": {
+    "frame": { "x":501, "y":497, "w":37, "h":60 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":37, "h":60 },
+    "sourceSize": { "w":37, "h":60 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0010": {
+    "frame": { "x":542, "y":497, "w":68, "h":60 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":68, "h":60 },
+    "sourceSize": { "w":68, "h":60 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0011": {
+    "frame": { "x":614, "y":553, "w":57, "h":58 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":57, "h":58 },
+    "sourceSize": { "w":57, "h":58 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0012": {
+    "frame": { "x":501, "y":561, "w":66, "h":59 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":66, "h":59 },
+    "sourceSize": { "w":66, "h":59 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0013": {
+    "frame": { "x":571, "y":615, "w":68, "h":60 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":68, "h":60 },
+    "sourceSize": { "w":68, "h":60 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0014": {
+    "frame": { "x":643, "y":615, "w":68, "h":58 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":68, "h":58 },
+    "sourceSize": { "w":68, "h":58 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0015": {
+    "frame": { "x":715, "y":553, "w":68, "h":59 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":68, "h":59 },
+    "sourceSize": { "w":68, "h":59 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0016": {
+    "frame": { "x":715, "y":616, "w":69, "h":60 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":69, "h":60 },
+    "sourceSize": { "w":69, "h":60 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0017": {
+    "frame": { "x":501, "y":624, "w":60, "h":58 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":60, "h":58 },
+    "sourceSize": { "w":60, "h":58 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0018": {
+    "frame": { "x":1885, "y":330, "w":68, "h":60 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":68, "h":60 },
+    "sourceSize": { "w":68, "h":60 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0019": {
+    "frame": { "x":1885, "y":394, "w":69, "h":60 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":69, "h":60 },
+    "sourceSize": { "w":69, "h":60 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0020": {
+    "frame": { "x":1957, "y":330, "w":75, "h":60 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":75, "h":60 },
+    "sourceSize": { "w":75, "h":60 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0021": {
+    "frame": { "x":1333, "y":430, "w":64, "h":59 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":64, "h":59 },
+    "sourceSize": { "w":64, "h":59 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0022": {
+    "frame": { "x":1333, "y":210, "w":73, "h":59 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":73, "h":59 },
+    "sourceSize": { "w":73, "h":59 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0023": {
+    "frame": { "x":1333, "y":273, "w":74, "h":60 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":74, "h":60 },
+    "sourceSize": { "w":74, "h":60 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0024": {
+    "frame": { "x":1410, "y":210, "w":73, "h":59 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":73, "h":59 },
+    "sourceSize": { "w":73, "h":59 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0025": {
+    "frame": { "x":1333, "y":337, "w":75, "h":60 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":75, "h":60 },
+    "sourceSize": { "w":75, "h":60 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0026": {
+    "frame": { "x":1411, "y":273, "w":75, "h":60 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":75, "h":60 },
+    "sourceSize": { "w":75, "h":60 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0027": {
+    "frame": { "x":1487, "y":210, "w":67, "h":59 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":67, "h":59 },
+    "sourceSize": { "w":67, "h":59 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0028": {
+    "frame": { "x":1558, "y":210, "w":75, "h":60 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":75, "h":60 },
+    "sourceSize": { "w":75, "h":60 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0029": {
+    "frame": { "x":1490, "y":274, "w":75, "h":60 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":75, "h":60 },
+    "sourceSize": { "w":75, "h":60 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "levelNumbers_0030": {
+    "frame": { "x":1401, "y":401, "w":77, "h":60 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w":77, "h":60 },
+    "sourceSize": { "w":77, "h":60 },
+    "pivot": { "x": 0.5, "y": 0.5 }
+  }
+},
+
+"meta": {
+    "app": "NepixGamesAtlasTool",
+    "version": "1.0",
+    "image": "atlasUI.png",
+    "format": "RGBA8888",
+    "size": { "w": 2048, "h": 2048},
+    "scale": "1"
+  }
+
+}

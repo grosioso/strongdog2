@@ -1,0 +1,24 @@
+<TextureAtlas imagePath="atlasUI">
+  <SubTexture name="levelCompleted" x="2" y="2" width="1440" height="1000" frameX="0" frameY="0" frameWidth="1440" frameHeight="1000"/>
+  <SubTexture name="gameName" x="2" y="1006" width="920" height="262" frameX="0" frameY="0" frameWidth="920" frameHeight="262"/>
+  <SubTexture name="btnPlayMenu" x="926" y="1006" width="400" height="106" frameX="0" frameY="0" frameWidth="400" frameHeight="106"/>
+  <SubTexture name="btnCreditsMenu" x="1330" y="1006" width="400" height="106" frameX="0" frameY="0" frameWidth="400" frameHeight="106"/>
+  <SubTexture name="dialog" x="1446" y="2" width="600" height="319" frameX="0" frameY="0" frameWidth="600" frameHeight="319"/>
+  <SubTexture name="btnNumLevel" x="1446" y="325" width="80" height="80" frameX="0" frameY="0" frameWidth="80" frameHeight="80"/>
+  <SubTexture name="btnRestartGame" x="1530" y="325" width="139" height="68" frameX="0" frameY="0" frameWidth="139" frameHeight="68"/>
+  <SubTexture name="btnMenuGame" x="1673" y="325" width="139" height="68" frameX="0" frameY="0" frameWidth="139" frameHeight="68"/>
+  <SubTexture name="btnMusicOn" x="1530" y="397" width="74" height="74" frameX="0" frameY="0" frameWidth="74" frameHeight="74"/>
+  <SubTexture name="btnMusicOff" x="1446" y="409" width="74" height="74" frameX="0" frameY="0" frameWidth="74" frameHeight="74"/>
+  <SubTexture name="btnSoundOn" x="1608" y="397" width="74" height="74" frameX="0" frameY="0" frameWidth="74" frameHeight="74"/>
+  <SubTexture name="btnSoundOff" x="1686" y="397" width="74" height="74" frameX="0" frameY="0" frameWidth="74" frameHeight="74"/>
+  <SubTexture name="tutorial1_2" x="926" y="1116" width="813" height="92" frameX="0" frameY="0" frameWidth="813" frameHeight="92"/>
+  <SubTexture name="tutorial2" x="1446" y="487" width="525" height="92" frameX="0" frameY="0" frameWidth="525" frameHeight="92"/>
+  <SubTexture name="btnNextComplete" x="1816" y="325" width="213" height="102" frameX="0" frameY="0" frameWidth="213" frameHeight="102"/>
+  <SubTexture name="icoLock" x="1764" y="397" width="31" height="41" frameX="0" frameY="0" frameWidth="31" frameHeight="41"/>
+  <SubTexture name="btnRestartComplete" x="1734" y="583" width="213" height="102" frameX="0" frameY="0" frameWidth="213" frameHeight="102"/>
+  <SubTexture name="btnMenuComplete" x="1446" y="583" width="213" height="102" frameX="0" frameY="0" frameWidth="213" frameHeight="102"/>
+  <SubTexture name="btnFire" x="1734" y="689" width="300" height="300" frameX="0" frameY="0" frameWidth="300" frameHeight="300"/>
+  <SubTexture name="tutorial1_1" x="2" y="1272" width="1188" height="179" frameX="0" frameY="0" frameWidth="1188" frameHeight="179"/>
+  <SubTexture name="aim" x="1734" y="993" width="100" height="100" frameX="0" frameY="0" frameWidth="100" frameHeight="100"/>
+  <SubTexture name="btnFireBlink" x="1446" y="689" width="142" height="142" frameX="0" frameY="0" frameWidth="142" frameHeight="142"/>
+</TextureAtlas>

@@ -1,0 +1,34 @@
+<TextureAtlas imagePath="atlasUI">
+  <SubTexture name="levelCompleted" x="2" y="2" width="1440" height="1000" frameX="0" frameY="0" frameWidth="1440" frameHeight="1000"/>
+  <SubTexture name="gameName" x="2" y="1006" width="773" height="223" frameX="0" frameY="0" frameWidth="773" frameHeight="223"/>
+  <SubTexture name="btnPlayMenu" x="1446" y="2" width="416" height="104" frameX="0" frameY="0" frameWidth="416" frameHeight="104"/>
+  <SubTexture name="btnCreditsMenu" x="1446" y="110" width="416" height="104" frameX="0" frameY="0" frameWidth="416" frameHeight="104"/>
+  <SubTexture name="btnNumLevel1" x="1866" y="2" width="96" height="96" frameX="0" frameY="0" frameWidth="96" frameHeight="96"/>
+  <SubTexture name="btnMusicOn" x="1866" y="102" width="96" height="96" frameX="0" frameY="0" frameWidth="96" frameHeight="96"/>
+  <SubTexture name="btnMusicOff" x="1866" y="202" width="96" height="96" frameX="0" frameY="0" frameWidth="96" frameHeight="96"/>
+  <SubTexture name="btnSoundOn" x="1446" y="218" width="96" height="96" frameX="0" frameY="0" frameWidth="96" frameHeight="96"/>
+  <SubTexture name="btnSoundOff" x="1546" y="218" width="96" height="96" frameX="0" frameY="0" frameWidth="96" frameHeight="96"/>
+  <SubTexture name="tutorial1_2" x="779" y="1006" width="836" height="80" frameX="0" frameY="0" frameWidth="836" frameHeight="80"/>
+  <SubTexture name="tutorial2" x="1446" y="318" width="533" height="50" frameX="0" frameY="0" frameWidth="533" frameHeight="50"/>
+  <SubTexture name="btnNextComplete" x="1446" y="372" width="416" height="104" frameX="0" frameY="0" frameWidth="416" frameHeight="104"/>
+  <SubTexture name="btnRestartComplete" x="1446" y="480" width="416" height="104" frameX="0" frameY="0" frameWidth="416" frameHeight="104"/>
+  <SubTexture name="btnMenuComplete" x="1446" y="588" width="416" height="104" frameX="0" frameY="0" frameWidth="416" frameHeight="104"/>
+  <SubTexture name="btnFire" x="779" y="1090" width="600" height="600" frameX="0" frameY="0" frameWidth="600" frameHeight="600"/>
+  <SubTexture name="tutorial1_1" x="2" y="1694" width="1137" height="130" frameX="0" frameY="0" frameWidth="1137" frameHeight="130"/>
+  <SubTexture name="aim" x="1446" y="696" width="100" height="100" frameX="0" frameY="0" frameWidth="100" frameHeight="100"/>
+  <SubTexture name="btnFireBlink" x="1446" y="800" width="142" height="142" frameX="0" frameY="0" frameWidth="142" frameHeight="142"/>
+  <SubTexture name="levelsBoard" x="1383" y="1090" width="653" height="578" frameX="0" frameY="0" frameWidth="653" frameHeight="578"/>
+  <SubTexture name="btnBackLevels" x="1592" y="696" width="416" height="106" frameX="0" frameY="0" frameWidth="416" frameHeight="106"/>
+  <SubTexture name="btnNumLevel2" x="1646" y="218" width="96" height="96" frameX="0" frameY="0" frameWidth="96" frameHeight="96"/>
+  <SubTexture name="btnNumLevel3" x="1746" y="218" width="96" height="96" frameX="0" frameY="0" frameWidth="96" frameHeight="96"/>
+  <SubTexture name="btnRestartGame" x="1966" y="2" width="59" height="52" frameX="0" frameY="0" frameWidth="59" frameHeight="52"/>
+  <SubTexture name="btnMenuGame" x="1966" y="58" width="56" height="48" frameX="0" frameY="0" frameWidth="56" frameHeight="48"/>
+  <SubTexture name="btnSoundGameOn" x="1966" y="110" width="44" height="64" frameX="0" frameY="0" frameWidth="44" frameHeight="64"/>
+  <SubTexture name="btnMusicGameOn" x="1966" y="178" width="55" height="58" frameX="0" frameY="0" frameWidth="55" frameHeight="58"/>
+  <SubTexture name="btnSoundGameOff" x="1966" y="240" width="64" height="67" frameX="0" frameY="0" frameWidth="64" frameHeight="67"/>
+  <SubTexture name="btnMusicGameOff" x="1866" y="372" width="65" height="64" frameX="0" frameY="0" frameWidth="65" frameHeight="64"/>
+  <SubTexture name="icoStarLevelBtn" x="1550" y="696" width="34" height="33" frameX="0" frameY="0" frameWidth="34" frameHeight="33"/>
+  <SubTexture name="toolbarStarPlace" x="1983" y="311" width="54" height="53" frameX="0" frameY="0" frameWidth="54" frameHeight="53"/>
+  <SubTexture name="toolbarStar" x="1983" y="368" width="54" height="52" frameX="0" frameY="0" frameWidth="54" frameHeight="52"/>
+  <SubTexture name="starComplete" x="1866" y="440" width="155" height="149" frameX="0" frameY="0" frameWidth="155" frameHeight="149"/>
+</TextureAtlas>
