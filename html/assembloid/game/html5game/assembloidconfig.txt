@@ -1,0 +1,4 @@
+//Change the WIDTH of the game window. Looks best as a multiple of 144. 576 by default.
+576
+//Change the HEIGHT of the game window. Looks best as a multiple of 144. 576 by default.
+576

@@ -1,0 +1,16 @@
+{
+"companyName": "VierM Games",
+"productName": "Chicken Hike",
+"productVersion": "1.0",
+"dataUrl": "coolmathgames.data.unityweb",
+"wasmCodeUrl": "coolmathgames.wasm.code.unityweb",
+"wasmFrameworkUrl": "coolmathgames.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#242424",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.4.3f1"
+}
