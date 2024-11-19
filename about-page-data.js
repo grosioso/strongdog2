@@ -1,10 +1,11 @@
 // All of the updates and their corresponding dates that will be dynamically added in the updates section on about page
 export const updates = [
-	{ date: "11/16/24", content: "Added twin shot, twin shot 2, red ball 4, cannon basketball 1, cannon basketball 2, cannon basketball 3, chicken hike, cherry on the ice cream, candy clicker, beavus, baw, b-side, assembloid, ARROW, crossy cat, coco monkey, cities of babylon, babel tower, and antiban to the game testing page." },
+	{ date: "11/17/24", content: "Added zompocalypse, zack vs musk beatdown, ultimate offroad simulator, turn turn, tube clicker, tricksplit.io, trafficmania, tower defense 2d, top speed 3d, time shooter 3, timber man, tap tap shots, idle ants, and gunblood to the game testing page" },
+	{ date: "11/16/24", content: "Added twin shot, twin shot 2, red ball 4, cannon basketball 1, cannon basketball 2, cannon basketball 3, chicken hike, cherry on the ice cream, candy clicker, beavus, baw, b-side, assembloid, ARROW, crossy cat, coco monkey, cities of babylon, babel tower, and antiban to the game testing page" },
 	{ date: "11/7/24", content: "Added three goblets, the final earth, super pickelball adventure, squareX, metrocubevania, knightin, ISLANDER, delia the traveling witch, dark tomb, another gentlemans adventure, and fixed final earth 2." },
-	{ date: "11/6/24", content: "Added tiny heist, poker, blackjack, westoon, thumb fighter christmas, sink it, minibattles, blocky snake, and fixed leader strike." },
+	{ date: "11/6/24", content: "Added tiny heist, poker, blackjack, westoon, thumb fighter christmas, sink it, minibattles, blocky snake, and fixed leader strike" },
 	{ date: "11/4/24", content: "Added we become what we behold, idle lumber inc, idle digging tycoon, bomber royale, and blumgi paintball." },
-	{ date: "10/31/24", content: "Added bad egg, cactus mccoy, cactus mccoy 2, territorial.io, and just passing 2." },
+	{ date: "10/31/24", content: "Added bad egg, cactus mccoy, cactus mccoy 2, territorial.io, and just passing 2" },
 	{ date: "10/29/24", content: "Added jacksmith" },
 	{ date: "10/24/24", content: "Added pre civilization bronze age" },
 	{ date: "10/21/24", content: "Updated login page UI" },
