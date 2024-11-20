@@ -1,5 +1,6 @@
 // All of the updates and their corresponding dates that will be dynamically added in the updates section on about page
 export const updates = [
+	{ date: "11/18/24", content: "Added stickman boost, stickman boost 2, stick duel battle, stick archers battle, starblast.io, sprinter, soccer skills euro cup, snow battle.io, sniper shot, snay.io, small world cup, and tennis random to the game testing page" },
 	{ date: "11/17/24", content: "Added zompocalypse, zack vs musk beatdown, ultimate offroad simulator, turn turn, tube clicker, tricksplit.io, trafficmania, tower defense 2d, top speed 3d, time shooter 3, timber man, tap tap shots, idle ants, and gunblood to the game testing page" },
 	{ date: "11/16/24", content: "Added twin shot, twin shot 2, red ball 4, cannon basketball 1, cannon basketball 2, cannon basketball 3, chicken hike, cherry on the ice cream, candy clicker, beavus, baw, b-side, assembloid, ARROW, crossy cat, coco monkey, cities of babylon, babel tower, and antiban to the game testing page" },
 	{ date: "11/7/24", content: "Added three goblets, the final earth, super pickelball adventure, squareX, metrocubevania, knightin, ISLANDER, delia the traveling witch, dark tomb, another gentlemans adventure, and fixed final earth 2." },
