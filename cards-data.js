@@ -1,4 +1,7 @@
 export default [
+  { href: './html/rocket soccer durbey/index.html', imgSrc: 'rocket soccer durbey.jpg', name: 'rocket soccer durbey' , 'page': 3},
+  { href: './html/rolly vortex ball/index.html', imgSrc: 'rolly vortex ball.jpg', name: 'rolly vortex ball' , 'page': 3},
+  { href: './html/pacman remake/index.html', imgSrc: 'pacman remake.png', name: 'pacman remake' , 'page': 3},
   { href: './html/cannon basketball 3/index.html', imgSrc: 'cannon basketball 3.jpg', name: 'cannon basketball 3' , 'page': 2},
   { href: './html/trafficmania/index.html', imgSrc: 'trafficmania.jpg', name: 'trafficmania' , 'page': 2},
 	{ href: './html/red ball 4/index.html', imgSrc: 'red ball 4.jpg', name: 'red ball 4' , 'page': 2},
