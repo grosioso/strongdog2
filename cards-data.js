@@ -1,4 +1,10 @@
 export default [
+  { href: './html/skyblock/index.html', imgSrc: 'skyblock.jpg', name: 'skyblock' , 'page': 3},
+  { href: './html/cannon basketball/index.html', imgSrc: 'cannon basketball.jpg', name: 'cannon basketball' , 'page': 2},
+  { href: './html/cannon basketball 2/index.html', imgSrc: 'cannon basketball 2.jpg', name: 'cannon basketball 2' , 'page': 2},
+  { href: './html/president simulator/index.html', imgSrc: 'president simulator.jpg', name: 'president simulator' , 'page': 3},
+  { href: './html/sausage flipping/index.html', imgSrc: 'sausage flip.jpg', name: 'sausage flipping' , 'page': 3},
+  { href: './html/pixel smash duel/index.html', imgSrc: 'pixel smash duel.jpg', name: 'pixel smash duel' , 'page': 3},
   { href: './html/rocket soccer durbey/index.html', imgSrc: 'rocket soccer durbey.jpg', name: 'rocket soccer durbey' , 'page': 3},
   { href: './html/rolly vortex ball/index.html', imgSrc: 'rolly vortex ball.jpg', name: 'rolly vortex ball' , 'page': 3},
   { href: './html/pacman remake/index.html', imgSrc: 'pacman remake.png', name: 'pacman remake' , 'page': 3},
