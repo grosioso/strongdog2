@@ -1,4 +1,6 @@
 export default [
+  { href: './html/idle tree city/index.html', imgSrc: 'idle tree city.jpg', name: 'idle tree city' , 'page': 3},
+  { href: './html/little alchemy 2/index.html', imgSrc: 'little alchemy 2.jpg', name: 'little alchemy 2' , 'page': 3},
   { href: './html/hanger/index.html', imgSrc: 'hanger.jpg', name: 'hanger' , 'page': 3},
   { href: './html/get on top/index.html', imgSrc: 'get on top.jpg', name: 'get on top' , 'page': 3},
   { href: './html/running fred/index.html', imgSrc: 'running fred.jpg', name: 'running fred' , 'page': 3},
@@ -375,7 +377,6 @@ export default [
 	{ href: "./html/beam/index.html", imgSrc: "beam.png", name: "Beam" },
 	{ href: "./html/a grim love tale/index.html", imgSrc: "a grim love tale.jpg", name: "A Grim Love Tale" },
 	{ href: "./html/a grim chase/index.html", imgSrc: "a grim chase.jpg", name: "A Grim Chase" },
-	{ href: "./html/babel tower/index.html", imgSrc: "Babel tower.avif", name: "Babel Tower" },
 	{ href: "./html/tavern master/index.html", imgSrc: "tavern master.png", name: "Tavern Master" },
 	{ href: "./html/green/index.html", imgSrc: "green.png", name: "Green" },
 	{ href: "./swf/stealing the diamond/base.html", imgSrc: "stealing the diamond.jpg", name: "Stealing the Diamond" },
