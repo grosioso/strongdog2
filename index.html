@@ -2,54 +2,127 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Site Redirector</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
   <div id="redirect-message"></div>
-
   <script>
-    const siteMapping = {
-      "mathcord.netlify.app": ["https://mathcord2.netlify.app", "https://mathcord3.netlify.app"],
-      "mathcord2.netlify.app": ["https://mathcord.netlify.app", "https://mathcord3.netlify.app"],
-      "mathcord3.netlify.app": ["https://mathcord.netlify.app", "https://mathcord2.netlify.app"],
-      "strongdog.netlify.app": ["https://strongdog2.netlify.app", "https://strongdog3.netlify.app"],
-      "strongdog2.netlify.app": ["https://strongdog.netlify.app", "https://strongdog3.netlify.app"],
-      "strongdog3.netlify.app": ["https://strongdog.netlify.app", "https://strongdog2.netlify.app"],
-      "stroongdog.netlify.app": ["https://stroongdog2.netlify.app", "https://stroongdog3.netlify.app"],
-      "stroongdog2.netlify.app": ["https://stroongdog.netlify.app", "https://stroongdog3.netlify.app"],
-      "stroongdog3.netlify.app": ["https://stroongdog.netlify.app", "https://stroongdog2.netlify.app"],
-      "jman1593.github.io": ["https://jman1593.github.io/strongdog2", "https://jman1593.github.io/strongdog3"],
-      "strongdog-1.vercel.app": ["https://strongdog2.vercel.app", "https://strongdog3.vercel.app"],
-      "strongdog2.vercel.app": ["https://strongdog.vercel.app", "https://strongdog3.vercel.app"],
-      "strongdog3.vercel.app": ["https://strongdog.vercel.app", "https://strongdog2.vercel.app"],
-      "strongdog.onrender.com": ["https://strongdog2.onrender.com", "https://strongdog3.onrender.com"],
-      "strongdog2.onrender.com": ["https://strongdog.onrender.com", "https://strongdog3.onrender.com"],
-      "strongdog3.onrender.com": ["https://strongdog.onrender.com", "https://strongdog2.onrender.com"],
-      "127.0.0.1": ["http://127.0.0.1:8080/strongdog2", "http://127.0.0.1:8080/strongdog3"],
-      "mathcord.com": ["https://mathcord.com/strongdog2", "https://mathcord.com/strongdog3"],
-      "strongdog.com": ["https://strongdog.com/strongdog2", "https://strongdog.com/strongdog3"]
-    };
+    (function() {
+      // Define site groups with main site and aliases
+      const siteGroups = [
+        {
+          mainSite: "https://mathcord.netlify.app",
+          aliasHostnames: [
+            "mathcord2.netlify.app",
+            "mathcord3.netlify.app",
+          ],
+        },
+        {
+          mainSite: "https://strongdog.netlify.app",
+          aliasHostnames: [
+            "strongdog2.netlify.app",
+            "strongdog3.netlify.app",
+          ],
+        },
+        {
+          mainSite: "https://stroongdog.netlify.app",
+          aliasHostnames: [
+            "stroongdog2.netlify.app",
+            "stroongdog3.netlify.app",
+          ],
+        },
+        {
+          mainSite: "https://jman1593.github.io",
+          aliasHostnames: [],
+          aliasPaths: [
+            "/strongdog2",
+            "/strongdog3",
+          ],
+        },
+        {
+          mainSite: "https://strongdog-1.vercel.app",
+          aliasHostnames: [
+            "strongdog2.vercel.app",
+            "strongdog3.vercel.app",
+          ],
+        },
+        {
+          mainSite: "http://127.0.0.1:8080/strongdog",
+          aliasHostnames: [
+            "127.0.0.1/strongdog",
+          ],
+          aliasPaths: [
+            "/strongdog2",
+            "/strongdog3",
+          ],
+        },
+        {
+          mainSite: "https://strongdog.com",
+          aliasHostnames: [],
+          aliasPaths: [
+            "/strongdog2",
+            "/strongdog3",
+          ],
+        },
+        {
+          mainSite: "https://mathcord.com",
+          aliasHostnames: [],
+          aliasPaths: [
+            "/strongdog2",
+            "/strongdog3",
+          ],
+        },
+        {
+          mainSite: "https://strongdogxp.github.io",
+          aliasHostnames: [],
+          aliasPaths: [
+            "/strongdog2",
+            "/strongdog3",
+          ],
+        },
+      ];
 
-    // Get the current hostname
-    const currentHostname = window.location.hostname;
+      // Get the current URL components
+      const currentUrl = new URL(window.location.href);
+      const currentHostname = currentUrl.hostname.toLowerCase();
+      const currentPathname = currentUrl.pathname;
 
-    // Check if the hostname exists in siteMapping
-    if (siteMapping[currentHostname]) {
-      // Redirect to the first mapping by default
-      window.location.href = siteMapping[currentHostname][0];
-    } else {
-      // Show a list of all available sites if the hostname isn't in siteMapping
-      const redirectMessage = document.getElementById("redirect-message");
-      redirectMessage.innerHTML = "<h1>Available Sites:</h1><ul>" +
-        Object.keys(siteMapping).map(host => `
-          <li>${host}
-            <ul>
-              ${siteMapping[host].map(link => `<li><a href="${link}" target="_blank">${link}</a></li>`).join("")}
-            </ul>
-          </li>`).join("") +
-        "</ul>";
-    }
+      let redirected = false;
+
+      for (const group of siteGroups) {
+        const mainSiteUrl = new URL(group.mainSite);
+        const mainHostname = mainSiteUrl.hostname.toLowerCase();
+
+        // Check if current hostname is an alias hostname
+        if (group.aliasHostnames && group.aliasHostnames.includes(currentHostname)) {
+          // Redirect to the main site
+          window.location.href = group.mainSite;
+          redirected = true;
+          break;
+        }
+
+        // Check if the current hostname matches the main site but the path is an alias path
+        if (currentHostname === mainHostname && group.aliasPaths) {
+          for (const aliasPath of group.aliasPaths) {
+            if (currentPathname.startsWith(aliasPath)) {
+              // Redirect to the main site
+              window.location.href = group.mainSite;
+              redirected = true;
+              break;
+            }
+          }
+          if (redirected) {
+            break;
+          }
+        }
+      }
+
+      if (!redirected) {
+        // Optionally, display a message or perform other actions if no redirection occurred
+        // For example, you can list the available sites or do nothing
+      }
+    })();
   </script>
 </body>
 </html>
