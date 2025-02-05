@@ -27,4 +27,7 @@ export const siteMapping = {
   "mathcordxp.github.io": ["https://mathcordxp.github.io/strongdog2", "https://mathcordxp.github.io/strongdog3"],
   "mathcordxp.github.io/strongdog2": ["https://mathcordxp.github.io", "https://mathcordxp.github.io/strongdog3"],
   "mathcordxp.github.io/strongdog3": ["https://mathcordxp.github.io", "https://mathcordxp.github.io/strongdog2"],
+  "strongdogunblocked.github.io": ["https://strongdogunblocked.github.io/strongdog2", "https://strongdogunblocked.github.io/strongdog3"],
+  "strongdogunblocked.github.io/strongdog2": ["https://strongdogunblocked.github.io", "https://strongdogunblocked.github.io/strongdog3"],
+  "strongdogunblocked.github.io/strongdog3": ["https://strongdogunblocked.github.io", "https://strongdogunblocked.github.io/strongdog2"],
 };
