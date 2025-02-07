@@ -1,9 +1,8 @@
 name: Upload Repository to strongdog2 Folder
 
 on:
-  push:
-    branches:
-      - master
+  schedule:
+    - cron: "0 0 * * 0" # Runs every Sunday at midnight UTC
 
 jobs:
   deploy:
@@ -11,13 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-
       # Create strongdog2 directory and move all files into it
       - name: Reorganize files
         run: |
           mkdir strongdog2
           find . -maxdepth 1 -not -name 'strongdog2' -not -name '.' -exec mv {} strongdog2/ \;
-
       # Sync with S3
       - uses: jakejarvis/s3-sync-action@master
         with:
