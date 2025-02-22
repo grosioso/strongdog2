@@ -4,25 +4,63 @@ on:
   push:
     branches:
       - master
-  schedule:
-    - cron: "0 0 * * 0" # Runs every Sunday at midnight UTC
+  workflow_dispatch:
 
 jobs:
   deploy:
-    if: github.event.repository.fork == false
+    if: github.event.repository.fork == false && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      # Create strongdog2 directory and move all files into it
-      - name: Reorganize files
-        run: |
-          mkdir strongdog2
-          find . -maxdepth 1 -not -name 'strongdog2' -not -name '.' -exec mv {} strongdog2/ \;
-      # Sync with S3 (only changed files will be uploaded)
-      - uses: jakejarvis/s3-sync-action@master
+      - name: Checkout Code
+        uses: actions/checkout@v2
         with:
-          args: --acl public-read --follow-symlinks --delete --size-only --exclude '.git*/*' --exclude '*' --include 'strongdog2/*'
-        env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          fetch-depth: 0  # Ensure full history is available for git diff
+
+      - name: Collect Changed Files
+        run: |
+          mkdir -p changed
+          # If no previous commit exists (first push or manual trigger), copy everything (excluding unwanted files via rsync)
+          if [ "${{ github.event.before }}" = "0000000000000000000000000000000000000000" ]; then
+            echo "No previous commit found; copying entire directory excluding unwanted files."
+            rsync -av --exclude='.git' --exclude='.github' --exclude='.vscode' --exclude='.gitattributes' --exclude='.gitignore' ./ changed/
+          else
+            # Only consider Added (A) or Modified (M) files
+            CHANGED_FILES=$(git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}")
+            echo "Changed files: $CHANGED_FILES"
+            for file in $CHANGED_FILES; do
+              # Check if the file exists (skip deleted files)
+              if [ -f "$file" ]; then
+                mkdir -p "changed/$(dirname "$file")"
+                cp --parents "$file" changed/
+              else
+                echo "Skipping '$file' as it no longer exists."
+              fi
+            done
+          fi
+
+      - name: Reorganize Files for strongdog2
+        run: |
+          mkdir -p changed/strongdog2
+          # Enable extended globbing to move all items except the strongdog2 folder itself
+          shopt -s extglob
+          mv changed/!(strongdog2) changed/strongdog2/
+
+      - name: Remove Unwanted Files from Changed Directory
+        run: |
+          rm -rf changed/strongdog2/.git changed/strongdog2/.github changed/strongdog2/.vscode
+          rm -f changed/strongdog2/.gitattributes changed/strongdog2/.gitignore
+
+      - name: Upload Changed Files to Cloudflare R2 (strongdog2)
+        uses: ryand56/r2-upload-action@latest
+        with:
+          r2-account-id: ${{ secrets.CLOUDFLARE_R2_ACCOUNT_ID }}
+          r2-access-key-id: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
+          r2-secret-access-key: ${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}
+          r2-bucket: ${{ secrets.CLOUDFLARE_R2_BUCKET }}
+          source-dir: './changed/strongdog2'
+          destination-dir: 'strongdog2/'  # Files will be uploaded into this folder in R2
+          output-file-url: true
+          multipart-size: 100
+          max-retries: 5
+          multipart-concurrent: true
+          keep-file-fresh: false
