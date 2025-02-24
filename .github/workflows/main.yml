@@ -17,35 +17,47 @@ jobs:
           fetch-depth: 0  # Ensure full history is available for git diff
 
       - name: Collect Changed Files
+        shell: bash
         run: |
           mkdir -p changed
-          # If no previous commit exists (first push or manual trigger), copy everything (excluding unwanted files via rsync)
           if [ "${{ github.event.before }}" = "0000000000000000000000000000000000000000" ]; then
             echo "No previous commit found; copying entire directory excluding unwanted files."
-            rsync -av --exclude='.git' --exclude='.github' --exclude='.vscode' --exclude='.gitattributes' --exclude='.gitignore' ./ changed/
+            rsync -av \
+              --exclude='.git' \
+              --exclude='.github' \
+              --exclude='.vscode' \
+              --exclude='.gitattributes' \
+              --exclude='.gitignore' \
+              ./ changed/
           else
-            # Only consider Added (A) or Modified (M) files
-            CHANGED_FILES=$(git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}")
-            echo "Changed files: $CHANGED_FILES"
-            for file in $CHANGED_FILES; do
-              # Check if the file exists (skip deleted files)
+            echo "Detecting files changed between ${{ github.event.before }} and ${{ github.sha }}:"
+            # Save list of added, modified, or renamed files with null terminators
+            git diff --name-only -z --diff-filter=AMR "${{ github.event.before }}" "${{ github.sha }}" > changed_files.txt
+            # Debug: Show the list of changed files
+            echo "Changed files:"
+            cat changed_files.txt | xargs -0 -I {} echo "'{}'"
+            # Copy each file
+            while IFS= read -r -d '' file; do
               if [ -f "$file" ]; then
+                echo "Copying '$file' to changed/$file"
                 mkdir -p "changed/$(dirname "$file")"
-                cp --parents "$file" changed/
+                cp "$file" "changed/$file"
               else
                 echo "Skipping '$file' as it no longer exists."
               fi
-            done
+            done < <(cat changed_files.txt)
           fi
 
       - name: Reorganize Files for strongdog2
+        shell: bash
         run: |
           mkdir -p changed/strongdog2
           # Enable extended globbing to move all items except the strongdog2 folder itself
           shopt -s extglob
-          mv changed/!(strongdog2) changed/strongdog2/
+          mv changed/!(strongdog2) changed/strongdog2/ 2>/dev/null || echo "No files to move (might be empty)"
 
       - name: Remove Unwanted Files from Changed Directory
+        shell: bash
         run: |
           rm -rf changed/strongdog2/.git changed/strongdog2/.github changed/strongdog2/.vscode
           rm -f changed/strongdog2/.gitattributes changed/strongdog2/.gitignore
