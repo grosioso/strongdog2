@@ -11,152 +11,101 @@
       (function () {
         // Define site groups with main site and aliases
         const siteGroups = [
-        {
-          mainSite: "https://jman1593.github.io",
-          aliasHostnames: [],
-          aliasPaths: [
-            "/strongdog2",
-            "/strongdog3",
-          ],
-        },
-        {
-          mainSite: "https://strongdog-1.vercel.app",
-          aliasHostnames: [
-            "strongdog2.vercel.app",
-            "strongdog3.vercel.app",
-          ],
-        },
-        {
-          mainSite: "http://127.0.0.1:8080/strongdog",
-          aliasHostnames: [
-            "127.0.0.1/strongdog",
-          ],
-          aliasPaths: [
-            "/strongdog2",
-            "/strongdog3",
-          ],
-        },
-        {
-          mainSite: "https://strongdog.com",
-          aliasHostnames: [],
-          aliasPaths: [
-            "/strongdog2",
-            "/strongdog3",
-          ],
-        },
-        {
-          mainSite: "https://mathcord.com",
-          aliasHostnames: [],
-          aliasPaths: [
-            "/strongdog2",
-            "/strongdog3",
-          ],
-        },
-        {
-          mainSite: "https://strongdogxp.github.io",
-          aliasHostnames: [],
-          aliasPaths: [
-            "/strongdog2",
-            "/strongdog3",
-          ],
-        },
-        {
-          mainSite: "https://mathcordxp.github.io",
-          aliasHostnames: [],
-          aliasPaths: [
-            "/strongdog2",
-            "/strongdog3",
-          ],
-        },
-        {
-          mainSite: "https://stroongdog.github.io",
-          aliasHostnames: [],
-          aliasPaths: [
-            "/strongdog2",
-            "/strongdog3",
-          ],
-        },
-        {
-          mainSite: "https://weakcatxp.github.io",
-          aliasHostnames: [],
-          aliasPaths: [
-            "/strongdog2",
-            "/strongdog3",
-          ],
-          mainSite: "https://strongdogunblocked.github.io",
-          aliasHostnames: [],
-          aliasPaths: [
-            "/strongdog2",
-            "/strongdog3",
-          ],
-          mainSite: "https://iloveshorty.github.io",
-          aliasHostnames: [],
-          aliasPaths: [
-            "/strongdog2",
-            "/strongdog3",
-          ],
-          mainSite: "https://strongdogexp.github.io",
-          aliasHostnames: [],
-          aliasPaths: [
-            "/strongdog2",
-            "/strongdog3",
-          ],
-          mainSite: "https://gametreexp.github.io",
-          aliasHostnames: [],
-          aliasPaths: [
-            "/strongdog2",
-            "/strongdog3",
-          ],
-          mainSite: "https://hateroll.com",
-          aliasHostnames: [],
-          aliasPaths: [
-            "/strongdog2",
-            "/strongdog3",
-          ],
-          mainSite: "https://65s.org",
-          aliasHostnames: [],
-          aliasPaths: [
-            "/strongdog2",
-            "/strongdog3",
-          ],
-          mainSite: "https://gametree.net",
-          aliasHostnames: [],
-          aliasPaths: [
-            "/strongdog2",
-            "/strongdog3",
-          ],
-          mainSite: "https://xpixelcoderx.github.io",
-          aliasHostnames: [],
-          aliasPaths: [
-            "/strongdog2",
-            "/strongdog3",
-          ],
-          mainSite: "https://algebra-is-fun.github.io",
-          aliasHostnames: [],
-          aliasPaths: [
-            "/strongdog2",
-            "/strongdog3",
-          ],
-          mainSite: "https://fundle.org",
-          aliasHostnames: [],
-          aliasPaths: [
-            "/strongdog2",
-            "/strongdog3",
-          ],
-          mainSite: "https://mastersite.org",
-          aliasHostnames: [],
-          aliasPaths: [
-            "/strongdog2",
-            "/strongdog3",
-          ],
-          mainSite: "https://65a.org.org",
-          aliasHostnames: [],
-          aliasPaths: [
-            "/strongdog2",
-            "/strongdog3",
-          ],
-        }, 
-      ];
+          {
+            mainSite: "https://jman1593.github.io",
+            aliasHostnames: [],
+            aliasPaths: ["/strongdog2", "/strongdog3", "/strongdog4"],
+          },
+          {
+            mainSite: "https://strongdog-1.vercel.app",
+            aliasHostnames: ["strongdog2.vercel.app", "strongdog3.vercel.app"],
+          },
+          {
+            mainSite: "http://127.0.0.1:8080/strongdog",
+            aliasHostnames: ["127.0.0.1/strongdog"],
+            aliasPaths: ["/strongdog2", "/strongdog3", "/strongdog4"],
+          },
+          {
+            mainSite: "https://strongdog.com",
+            aliasHostnames: [],
+            aliasPaths: ["/strongdog2", "/strongdog3", "/strongdog4"],
+          },
+          {
+            mainSite: "https://mathcord.com",
+            aliasHostnames: [],
+            aliasPaths: ["/strongdog2", "/strongdog3", "/strongdog4"],
+          },
+          {
+            mainSite: "https://strongdogxp.github.io",
+            aliasHostnames: [],
+            aliasPaths: ["/strongdog2", "/strongdog3", "/strongdog4"],
+          },
+          {
+            mainSite: "https://mathcordxp.github.io",
+            aliasHostnames: [],
+            aliasPaths: ["/strongdog2", "/strongdog3", "/strongdog4"],
+          },
+          {
+            mainSite: "https://stroongdog.github.io",
+            aliasHostnames: [],
+            aliasPaths: ["/strongdog2", "/strongdog3", "/strongdog4"],
+          },
+          {
+            mainSite: "https://weakcatxp.github.io",
+            aliasHostnames: [],
+            aliasPaths: ["/strongdog2", "/strongdog3", "/strongdog4"],
+          },
+          {
+            mainSite: "https://strongdogunblocked.github.io",
+            aliasHostnames: [],
+            aliasPaths: ["/strongdog2", "/strongdog3", "/strongdog4"],
+          },
+          {
+            mainSite: "https://iloveshorty.github.io",
+            aliasHostnames: [],
+            aliasPaths: ["/strongdog2", "/strongdog3", "/strongdog4"],
+          },
+          {
+            mainSite: "https://strongdogexp.github.io",
+            aliasHostnames: [],
+            aliasPaths: ["/strongdog2", "/strongdog3", "/strongdog4"],
+          },
+          {
+            mainSite: "https://gametreexp.github.io",
+            aliasHostnames: [],
+            aliasPaths: ["/strongdog2", "/strongdog3", "/strongdog4"],
+          },
+          {
+            mainSite: "https://hateroll.com",
+            aliasHostnames: [],
+            aliasPaths: ["/strongdog2", "/strongdog3", "/strongdog4"],
+          },
+          {
+            mainSite: "https://65s.org",
+            aliasHostnames: [],
+            aliasPaths: ["/strongdog2", "/strongdog3", "/strongdog4"],
+          },
+          {
+            mainSite: "https://gametree.net",
+            aliasHostnames: [],
+            aliasPaths: ["/strongdog2", "/strongdog3", "/strongdog4"],
+          },
+          {
+            mainSite: "https://fundle.org",
+            aliasHostnames: [],
+            aliasPaths: ["/strongdog2", "/strongdog3", "/strongdog4"],
+          },
+          {
+            mainSite: "https://mastersite.org",
+            aliasHostnames: [],
+            aliasPaths: ["/strongdog2", "/strongdog3", "/strongdog4"],
+          },
+          {
+            mainSite: "https://65a.org.org",
+            aliasHostnames: [],
+            aliasPaths: ["/strongdog2", "/strongdog3", "/strongdog4"],
+          },
+        ];
 
         // Get the current URL components
         const currentUrl = new URL(window.location.href);
